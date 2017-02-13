@@ -3,8 +3,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Show Me The Cards</title>
-    
+	<title>Show Me The Cards</title>    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -71,16 +70,29 @@
     <!-- Google Map -->
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="resources/assets/js/google-map-init.js"></script>    
-    
-   <script>
+
+    <script>
 	$(document).ready(function(){
-   		$("#loginbtn").click(function(){
+		$("#loginbtn").click(function(){
    	    	$("#loginModal").modal();
     	});
 
    		$("#registerbtn").click(function(){
    			$("#registerModal").modal();
    		});
+   		
+  		var confirm = false;
+		$("#join").click(function(){	
+			//회원가입시 중복확인을 안한 경우
+			if (!confirm) {
+				alert("아이디 중복 확인을 해주세요.");
+			} else if ($("#mPassword").val() == $("#mPasswordConfirm").val()) {
+				alert("비밀번호가 일치하지 않습니다.");
+			} else {
+				$("#registerForm").submit();
+				confirm = false;
+			}
+		});
    		
    		$("#confirmId").click(function(){
    			if ( $("#mId").val() =="") {
@@ -94,44 +106,48 @@
    					success : function(data, status, xhr) {
    						if (data == "fail") {
    							alert("중복된 아이디입니다.");
-   							$("#mId").val()="";
+   							$("#mId").val("");
    						} else {
    							alert("사용 가능한 아이디입니다.");
+   							confirm = true;
    						}
    					}
    				});
-   			}
-   			
-   		});
-   		
+   			}	
+   		});   		   		
 	});
-	
-	
 	</script>
 </head>
 <body class="index">
 <c:choose>
  	<c:when test="${ empty sessionScope.loginuser }">
     	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
+    	<!-- Start Header Section -->
+	    <section class="header" id="home">
+        	<div class="container">
+           		<div class="intro-text">
+                	<h1>Show Me the <span>Cards</span></h1>
+                	<button type="button" id="loginbtn" class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp; LOGIN &nbsp;&nbsp;</button>
+                	<button type="button" id="registerbtn" class="page-scroll waves-effect btn btn-primary">&nbsp; JOIN US &nbsp;&nbsp;</button>
+            	</div>
+        	</div>
+    	</section>
    	</c:when>
    	<c:otherwise>
    		<c:import url="/WEB-INF/views/include/navigator.jsp" />
+   		<!-- Start Header Section -->
+	    <section class="header" id="home">
+        	<div class="container">
+           		<div class="intro-text">
+                	<h1>Show Me the <span>Cards</span></h1>
+                	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
+                	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
+            	</div>
+        	</div>
+    	</section>
    	</c:otherwise>
 </c:choose>
         
-    <!-- ***************************************************************** -->
-    <!-- Start Header Section -->
-    <!-- ***************************************************************** -->
-    <section class="header" id="home">
-        <div class="container">
-            <div class="intro-text">
-                <h1>Show Me the <span>Cards</span></h1>
-                <button type="button" id="loginbtn" class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp; LOGIN &nbsp;&nbsp;</button>
-                <button type="button" id="registerbtn" class="page-scroll waves-effect btn btn-primary">&nbsp; JOIN US &nbsp;&nbsp;</button>
-            </div>
-        </div>
-    </section>
-	
 	<!-- Login Modal -->
 	<div class="container">
 		<div class="modal fade" id="loginModal" role="dialog">
@@ -167,7 +183,7 @@
                             		<div class="modal-footer"> 
                             			<div class="col-lg-12 text-center">
                                 			<div id="success"></div>
-                                			<button type="submit" class="btn btn-primary waves-effect">LOGIN</button>
+                                			<button type="submit" id="login" class="btn btn-primary waves-effect">&nbsp;&nbsp;LOGIN&nbsp;&nbsp;</button>
                                 			<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">CANCEL</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      			       	</div>
         			               </div>
@@ -200,7 +216,7 @@
       			<div class="modal-body">
       				<div class="row">
 		                <div class="col-lg-12">
-        		            <form name="sentMessage" action="/showmethecard/member/register.action" method="post" id="contactForm" novalidate>
+        		            <form name="sentMessage" action="/showmethecard/member/register.action" method="post" id="registerForm" novalidate>
                        		    <div class="row">
                        		    	<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                        		      		<div class="form-group">
@@ -210,6 +226,8 @@
 	       		    	                    <br/><br/>
   		        	                        <input style="height: 40;" type="password" class="form-control" placeholder="Password *" id="mPassword" name="mPassword" required data-validation-required-message="Please enter your password.">
                                		        <p class="help-block text-danger"></p>
+                               		        <input style="height: 40;" type="password" class="form-control" placeholder="Confirm Password *" id="mPasswordConfirm" required data-validation-required-message="Please enter your password.">
+                                    		<p class="help-block text-danger"></p>
                                     		<input style="height: 40;" type="text" class="form-control" placeholder="Name *" id="mName" name="mName" required data-validation-required-message="Please enter your name.">
                                     		<p class="help-block text-danger"></p>
                                   			<input style="height: 40;" type="tel" class="form-control" placeholder="Phone *" id="mPhone" name="mPhone" required data-validation-required-message="Please enter your phone number.">
@@ -222,7 +240,7 @@
                             		<div class="modal-footer"> 
                             			<div class="col-lg-12 text-center">
                                				<div id="success"></div>
-                               		 		<button type="submit" class="btn btn-primary waves-effect">JOIN</button>
+                               		 		<button type="button" id="join" class="btn btn-primary waves-effect">&nbsp;&nbsp;&nbsp;JOIN&nbsp;&nbsp;&nbsp;</button>
                                 			<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">CANCEL</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             			</div>
                             		</div>
@@ -235,10 +253,7 @@
     	    </div>
 		</div>
 	</div>
-    <!-- End Header Section -->
-    
-    
-    
+    <!-- End Header Section -->    
     
     <!-- Start About Us Section -->
     <section id="about-us" class="about-us-section-1">
@@ -285,9 +300,7 @@
         </div><!-- /.container -->
     </section>
     <!-- End About Us Section -->
-    
-    
-    
+        
     <!-- Start About Us Section 2 -->
     <div class="about-us-section-2">
         <div class="container">
@@ -986,46 +999,6 @@
             </div>
         </div>        
     </section>
-    
-    <!-- Start Login -->
-    <section id="contact" class="contact contact-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>LOGIN</h2>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
-                        <div class="row">
-                            <div class="col-md-6 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
-                                <div class="form-group waves-effect">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group waves-effect">
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-lg-12 text-center">
-                                <div id="success"></div>
-                                <button type="submit" class="btn btn-primary waves-effect">Send Message</button>
-                                <button type="submit" class="btn btn-primary waves-effect">Send Message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-    </section>   
-    
     
     <!-- Start Map Section -->
     <div class="google-map">

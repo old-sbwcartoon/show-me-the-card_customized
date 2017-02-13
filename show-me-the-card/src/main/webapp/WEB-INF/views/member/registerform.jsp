@@ -83,7 +83,7 @@
                 <div class="col-lg-12">
                     <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
                         <h2>Join Us</h2>
-                        <p>Show Me The Cards</p>
+                        <p>Show Me The Card</p>
                     </div>
                 </div>
             </div>

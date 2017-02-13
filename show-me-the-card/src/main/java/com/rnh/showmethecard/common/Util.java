@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Util {
-	//msmsms2
+	//msmsms2ms3
 	/**
 	 * 지정된 암호화 알고리즘에 따라 문자열 데이터를 암호화 처리
 	 * 

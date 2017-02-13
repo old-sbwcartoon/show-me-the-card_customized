@@ -21,6 +21,7 @@
 				<a href="#latest-news" class="page-scroll waves-effect"><i class="fa fa-fw fa-mortar-board"></i><span>Latest News</span></a>
 				<a href="#client" class="page-scroll waves-effect"><i class="fa fa-fw fa-comment-o"></i><span>Testimonial</span></a>
 				<a href="#contact" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>Contact</span></a>
+				<a href="/showmethecard/webscrapping/urlsearch.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>CardTest</span></a>
 			</div>
 		</nav>
 		<button class="close-button" id="close-button">Close Menu</button>

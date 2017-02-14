@@ -141,7 +141,7 @@
         	<div class="container">
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
-                	<button type="button"  id="#" class="page-scroll waves-effect btn btn-primary"> <a href="/showmethecard/account/logout.action"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
+                	<button type="button"  id="#" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
                 	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
             	</div>
         	</div>

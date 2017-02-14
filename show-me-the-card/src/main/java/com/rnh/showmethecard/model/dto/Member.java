@@ -31,7 +31,8 @@ public class Member implements Serializable {
 	private boolean permission;
 */
 	
-	@NotEmpty	
+	@NotEmpty
+	@Pattern(regexp = "[A-Za-z0-9]{8,15}", message = "아이디 형식 오류")
 	private String mId;	
 	@NotEmpty	
 	private String password;

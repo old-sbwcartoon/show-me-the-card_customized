@@ -10,7 +10,7 @@ import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.mapper.MemberMapper;
 
 @Repository(value = "memberDao")
-public class MYMemberDao implements MemberDao {
+public class MysqlMemberDao implements MemberDao {
 	
 	@Autowired
 	@Qualifier("memberMapper")

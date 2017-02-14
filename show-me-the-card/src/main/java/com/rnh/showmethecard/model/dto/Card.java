@@ -1,6 +1,7 @@
 package com.rnh.showmethecard.model.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.validation.constraints.Pattern;
 
@@ -8,83 +9,55 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Card implements Serializable {
 	
-	//정규식 전체적으로 수정하기
 	@NotEmpty
-	@Pattern(regexp = "[A-Za-z0-9]{8,15}", message = "아이디 형식 오류")
-	private String id;
-	//정규식
-	@NotEmpty
-	private String name;
+	private int cardNo;
+	private String siteUrl;
+	private int cPoint;
+	private Date regDate;
+	private String discover;
+	private String cName;
+	private float cRating;
 	
-	@NotEmpty
-	@Pattern(regexp = "[A-Za-z0-9]{8,15}", message = "아이디 형식 오류")
-	private String passwd;
-	@NotEmpty
-	//email 정규식 넣기
-	private String email;
-	@NotEmpty
-	private String phone;
-	@NotEmpty
-	private String userType;
-	private String profilePhoto;
-	private boolean deleted;
-	private boolean permission;
-	
-	
-	public String getId() {
-		return id;
+	public int getCardNo() {
+		return cardNo;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setCardNo(int cardNo) {
+		this.cardNo = cardNo;
 	}
-	public String getPasswd() {
-		return passwd;
+	public String getSiteUrl() {
+		return siteUrl;
 	}
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setSiteUrl(String siteUrl) {
+		this.siteUrl = siteUrl;
 	}
-	public String getEmail() {
-		return email;
+	public int getcPoint() {
+		return cPoint;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setcPoint(int cPoint) {
+		this.cPoint = cPoint;
 	}
-	public String getPhone() {
-		return phone;
+	public Date getRegDate() {
+		return regDate;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
-	public String getUserType() {
-		return userType;
+	public String getDiscover() {
+		return discover;
 	}
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setDiscover(String discover) {
+		this.discover = discover;
 	}
-	public String getProfilePhoto() {
-		return profilePhoto;
+	public String getcName() {
+		return cName;
 	}
-	public void setProfilePhoto(String profilePhoto) {
-		this.profilePhoto = profilePhoto;
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
-	public boolean isDeleted() {
-		return deleted;
+	public float getcRating() {
+		return cRating;
 	}
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-	public boolean isPermission() {
-		return permission;
-	}
-	public void setPermission(boolean permission) {
-		this.permission = permission;
-	}
-
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+	public void setcRating(float cRating) {
+		this.cRating = cRating;
 	}
 }

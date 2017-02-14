@@ -75,10 +75,6 @@
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
 
-    <!-- Google Map -->
-    <script src="../https://maps.googleapis.com/maps/api/js"></script>
-    <script src="../resources/assets/js/google-map-init.js"></script>    
-
 <script type="text/javascript">
 
 	function doDelete(nNo) {
@@ -142,13 +138,12 @@
 					</table>
 
 					
-					<div class="buttons">					
-						<c:if test="${ loginuser.userType eq '1'}">			
-				 
+					<div class="buttons">
 						<a href="update.action?nNo=${notice.nNo}">수정</a>
 						 
-						<a href='javascript:doDelete(${notice.nNo})'>삭제</a>
-						</c:if>
+						<a href='javascript:doDelete(${notice.nNo})'>삭제</a>					
+						<%-- <c:if test="${ loginuser.userType eq '1'}">		
+						</c:if> --%>
 
 					</div>
 				</div>

@@ -79,9 +79,6 @@
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
 
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="../resources/assets/js/google-map-init.js"></script>    
 </head>
 <body>
 

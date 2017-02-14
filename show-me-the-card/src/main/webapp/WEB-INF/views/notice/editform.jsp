@@ -16,34 +16,34 @@
     <meta name="author" content="">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../resources/assets/bootstrap/css/bootstrap.min.css">
     
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/font-awesome.min.css">
     
     <!-- Animate CSS -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/animate.css">
     
     <!-- Owl-Carousel -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/owl.carousel.css" >
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/owl.theme.css" >
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/owl.transitions.css" >
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/owl.carousel.css" >
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/owl.theme.css" >
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/owl.transitions.css" >
 
     <!-- Materialize CSS -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/material.css">   
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/material.css">   
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/responsive.css">
     
     <!-- Colors CSS -->
-    <link rel="stylesheet" type="text/css" href="resources/assets/css/color/blue.css" title="blue">
+    <link rel="stylesheet" type="text/css" href="../resources/assets/css/color/blue.css" title="blue">
     
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
         
     <!-- Modernizer js -->
-    <script src="resources/assets/js/modernizr.custom.js"></script>
+    <script src="../resources/assets/js/modernizr.custom.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,29 +53,26 @@
     <![endif]-->
     
     <!-- jQuery Version 2.1.3 -->
-    <script src="resources/assets/js/jquery-2.1.3.min.js"></script>
+    <script src="../resources/assets/js/jquery-2.1.3.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="resources/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../resources/assets/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="resources/assets/js/jquery.easing.1.3.js"></script>
-    <script src="resources/assets/js/classie.js"></script>
-    <script src="resources/assets/js/count-to.js"></script>
-    <script src="resources/assets/js/jquery.appear.js"></script>
-    <script src="resources/assets/js/owl.carousel.min.js"></script>
-    <script src="resources/assets/js/jquery.fitvids.js"></script>
+    <script src="../resources/assets/js/jquery.easing.1.3.js"></script>
+    <script src="../resources/assets/js/classie.js"></script>
+    <script src="../resources/assets/js/count-to.js"></script>
+    <script src="../resources/assets/js/jquery.appear.js"></script>
+    <script src="../resources/assets/js/owl.carousel.min.js"></script>
+    <script src="../resources/assets/js/jquery.fitvids.js"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="resources/assets/js/jqBootstrapValidation.js"></script>
+    <script src="../resources/assets/js/jqBootstrapValidation.js"></script>
 
     <!-- Materialize js -->
-    <script src="resources/assets/js/material.js"></script>
-    <script src="resources/assets/js/waypoints.min.js"></script>
-
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="resources/assets/js/google-map-init.js"></script>    
+    <script src="../resources/assets/js/material.js"></script>
+    <script src="../resources/assets/js/waypoints.min.js"></script>
+    
   <style type="text/css">
 #maintitle {
 	font-size: 60px;

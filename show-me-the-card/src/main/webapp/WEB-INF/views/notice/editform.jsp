@@ -4,6 +4,7 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="form"
 	uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,73 +115,77 @@ float:right;}
 </head>
 <body>
 
-<div id="pageContainer">
-	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
-	<div id="preloader">
-		<div id="status">&nbsp;</div>
+	<!-- Start Contact Us Section -->
+    <section id="contact" class="contact contact-section">
+	<div id="pageContainer">
+		<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
+		<div id="preloader">
+			<div id="status">&nbsp;</div>
+		</div>
+	
+	    <br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+	<div class="jumbotron">
+	    <h1 id="maintitle"> 공지사항 수정</h1>
+	    
 	</div>
-
-    <br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-<div class="jumbotron">
-    <h1 id="maintitle"> 공지사항 수정</h1>
-    
-</div>
-  
-  <form:form id = "form233" action="update.action" method="post" modelAttribute="notice">
-  <input type="hidden" name ="noticeNo" value = "${notice.noticeNo}">
-  <table id=hqnoticeform>
-  <tr>
-  <th></th>
-  <td>
-    <div class="form-group">
-      <label for="title">제목:</label>
-      <input type="text" class="form-control" name = "title" value = "${notice.title}"id="title">
-    </div>
-   </td>
-   </tr> 
-   
-   <tr>
-	<th></th>
-	<td>
-			<div id="title">
-			<label for="inputdefault">작성자:</label> 
-			<input class="form-control" name = "id" id="writer" type="text" value = "${notice.id}" readonly >
-			</div>
-	</td>
-	</tr>
-   <tr>
-			<th></th>
-			<td>
-				
-			</td>
+	  
+	  <form:form id = "form233" action="update.action" method="post" modelAttribute="notice">
+	  <input type="hidden" name ="nNo" value = "${notice.nNo}">
+	  <table id=hqnoticeform>
+	  <tr>
+	  <th></th>
+	  <td>
+	    <div class="form-group">
+	      <label for="title">제목:</label>
+	      <input type="text" class="form-control" name = "title" value = "${notice.title}"id="title">
+	    </div>
+	   </td>
+	   </tr> 
+	   
+	   <tr>
+		<th></th>
+		<td>
+				<div id="title">
+				<label for="inputdefault">작성자:</label> 
+				<input class="form-control" name = "mId" id="writer" type="text" value = "${notice.mId}" readonly >
+				</div>
+		</td>
 		</tr>
-   <tr>
-   <th></th>
-   <td>
-    <div class="form-group">
-     <label for="content">내용:</label>
-    
-	<textarea id="contenttext" name = "content" class="form-control" rows="5" >${notice.content}</textarea>
-    </div>
-    </td>
-    </tr>
- 
-
-    				
-</table>
-</form:form>
-<div id=buttongroup>
-		<button id = "submit-link" class="btn btn-default">작성완료</button>
-		&nbsp;&nbsp;&nbsp;
-		<a href="detail.action?noticeNo=${notice.noticeNo}" type="button" id="cancel"class="btn btn-default">취소</a>
+	   <tr>
+				<th></th>
+				<td>
+					
+				</td>
+			</tr>
+	   <tr>
+	   <th></th>
+	   <td>
+	    <div class="form-group">
+	     <label for="content">내용:</label>
+	    
+		<textarea id="contenttext" name = "content" class="form-control" rows="5" >${notice.content}</textarea>
+	    </div>
+	    </td>
+	    </tr>	
+	</table>
+	</form:form>
+		<div id=buttongroup>
+			<button id = "submit-link" class="btn btn-default">작성완료</button>
+			&nbsp;&nbsp;&nbsp;
+			<a href="detail.action?nNo=${notice.nNo}" type="button" id="cancel"class="btn btn-default">취소</a>
+		</div>
 	</div>
-	</div>
-	 <!-- Start Footer Section -->
+	</section>
+	
+	<!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->
 </body>
+
+ <!-- Custom JavaScript -->
+    <script src="../resources/assets/js/script.js"></script>
 </html>

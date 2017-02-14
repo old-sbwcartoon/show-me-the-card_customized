@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<meta charset="utf-8" />
+	<meta charset="utf-8" />
 	<title>Show Me The Cards</title>    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,21 +85,18 @@
 </head>
 <body>
 
-	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
-
-	<!-- 여기에 코드를 넣으세요 -->
+   	<c:import url="/WEB-INF/views/include/navigator.jsp" />
+ 	
+ 	<!-- Start Contact Us Section -->
+    <section id="contact" class="contact contact-section">
 	<div id="preloader">
 		<div id="status">&nbsp;</div>
 	</div>
 
-    <br/>
-	<br/>
-	<br/>
 	<br/>
 	<br/>
 	<div class="container">
 		<h2>공지사항</h2>
-		<br/>
 		<br/>
 		<br/>
 		<div class="table-responsive">
@@ -118,38 +115,31 @@
 					
 					<c:forEach var="notice" items="${ requestScope.notices }">
 					<tr>
-						<td>${notice.noticeNo}</td>
-						<td><a href='detail.action?noticeNo=${notice.noticeNo }'>${notice.title}</a></td>
-						
-						
+						<td>${notice.nNo}</td>
+						<td><a href='detail.action?nNo=${notice.nNo }'>${notice.title}</a></td>
 						<td><fmt:formatDate value="${notice.regDate}" pattern="yyyy-MM-dd"/></td>
 						
 					</tr>
 					
 					</c:forEach>
 				</tbody>
-				<c:if test="${ loginuser.userType eq 'D'}">
+				<%-- <c:if test="${ loginuser.userType eq '1'}">
 				<a href='insertNotice.action'>글쓰기</a>
-				</c:if>  
+				</c:if> --%>
+				<a href='insertNotice.action'>글쓰기</a>
+				
 				<br />
 				<br />
 			</table>
-			
-				
-						
-			
-			
-			
-			
-			
-			
-
 		</div>
 	</div>
-
- <!-- Start Footer Section -->
+  </section>
+  
+ 	<!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->
 
 </body>
+ 	<!-- Custom JavaScript -->
+    <script src="../resources/assets/js/script.js"></script>
 </html>

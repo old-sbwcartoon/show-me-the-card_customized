@@ -15,7 +15,7 @@ public interface NoticeService {
 	
 	void ChangeNotice(Notice notice);
 	
-	Notice SearchNoticeDetail(int noticeNo);
+	Notice SearchNoticeDetail(int nNo);
 	
 	
 }

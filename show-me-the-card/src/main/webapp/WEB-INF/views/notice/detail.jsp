@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -80,11 +81,11 @@
 
 <script type="text/javascript">
 
-	function doDelete(noticeNo) {
+	function doDelete(nNo) {
 		
-		var ok = confirm(noticeNo + '번 글을 삭제할까요?');
+		var ok = confirm(nNo + '번 글을 삭제할까요?');
 		if (ok) {
-			location.href = 'deletenotice.action?noticeNo=' + noticeNo;
+			location.href = 'deletenotice.action?nNo=' + nNo;
 		}
 	}
 	
@@ -97,8 +98,9 @@
 <body>
 
 	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
-
-	<!-- 여기에 코드를 넣으세요 -->
+	
+	<!-- Start Contact Us Section -->
+    <section id="contact" class="contact contact-section">
 	<div id="preloader">
 		<div id="status">&nbsp;</div>
 	</div>
@@ -118,7 +120,7 @@
 					<table>
 						<tr>
 							<th>No</th>
-							<td>${notice.noticeNo}</td>
+							<td>${notice.nNo}</td>
 						</tr>
 						<tr>
 							<th>제목</th>
@@ -141,32 +143,31 @@
 
 					
 					<div class="buttons">					
-						<c:if test="${ loginuser.userType eq 'D'}">			
+						<c:if test="${ loginuser.userType eq '1'}">			
 				 
-						<a href="update.action?noticeNo=${notice.noticeNo}">수정</a>
+						<a href="update.action?nNo=${notice.nNo}">수정</a>
 						 
-						<a href='javascript:doDelete(${notice.noticeNo})'>삭제</a>
+						<a href='javascript:doDelete(${notice.nNo})'>삭제</a>
 						</c:if>
 
-					
 					</div>
-					
-					
-					
 				</div>
 			</div>
 
-			<br /> <br />
-
-
-
-
+			<br />
+			 <br />
+			
 		</div>
 	</div>
+	</section>
 
-	 <!-- Start Footer Section -->
+
+	<!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->
 
 </body>
+
+ 	<!-- Custom JavaScript -->
+    <script src="../resources/assets/js/script.js"></script>
 </html>

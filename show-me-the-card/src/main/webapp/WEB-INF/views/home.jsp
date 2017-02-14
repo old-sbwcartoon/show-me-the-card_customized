@@ -86,7 +86,7 @@
 			//회원가입시 중복확인을 안한 경우
 			if (!confirm) {
 				alert("아이디 중복 확인을 해주세요.");
-			} else if ($("#mPassword").val() == $("#mPasswordConfirm").val()) {
+			} else if ($("#password").val() == $("#passwordConfirm").val()) {
 				alert("비밀번호가 일치하지 않습니다.");
 			} else {
 				$("#registerForm").submit();
@@ -94,6 +94,7 @@
 			}
 		});
    		
+		//id 중복 확인
    		$("#confirmId").click(function(){
    			if ( $("#mId").val() =="") {
    				alert("아이디를 입력해주세요!");
@@ -224,15 +225,15 @@
        		    	                    	<p class="help-block text-danger"></p>
        		    	                    	<button style="height: 30;" id="confirmId" type="button" class="btn btn-primary waves-effect col-md-12 wow fadeInLeft">아이디 중복 확인</button>
 	       		    	                    <br/><br/>
-  		        	                        <input style="height: 40;" type="password" class="form-control" placeholder="Password *" id="mPassword" name="mPassword" required data-validation-required-message="Please enter your password.">
+  		        	                        <input style="height: 40;" type="password" class="form-control" placeholder="Password *" id="password" name="password" required data-validation-required-message="Please enter your password.">
                                		        <p class="help-block text-danger"></p>
-                               		        <input style="height: 40;" type="password" class="form-control" placeholder="Confirm Password *" id="mPasswordConfirm" required data-validation-required-message="Please enter your password.">
+                               		        <input style="height: 40;" type="password" class="form-control" placeholder="Confirm Password *" id="passwordConfirm" required data-validation-required-message="Please enter your password.">
                                     		<p class="help-block text-danger"></p>
                                     		<input style="height: 40;" type="text" class="form-control" placeholder="Name *" id="mName" name="mName" required data-validation-required-message="Please enter your name.">
                                     		<p class="help-block text-danger"></p>
-                                  			<input style="height: 40;" type="tel" class="form-control" placeholder="Phone *" id="mPhone" name="mPhone" required data-validation-required-message="Please enter your phone number.">
+                                  			<input style="height: 40;" type="tel" class="form-control" placeholder="Phone *" id="phone" name="phone" required data-validation-required-message="Please enter your phone number.">
                                   			<p class="help-block text-danger"></p>
-                                  			<input style="height: 40;" type="email" class="form-control" placeholder="Email *" id="mEmail" name="mEmail" required data-validation-required-message="Please enter your email.">
+                                  			<input style="height: 40;" type="email" class="form-control" placeholder="Email *" id="email" name="email" required data-validation-required-message="Please enter your email.">
                                     		<p class="help-block text-danger"></p>
                                 		</div>
                             		</div>

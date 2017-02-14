@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
+import com.rnh.showmethecard.model.dto.Member;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -27,7 +29,10 @@ public class MemberController {
 	
 	//회원가입
 	@RequestMapping(value="register.action", method=RequestMethod.POST)
-	public String register() {
+	public String register(Member member) {
+		System.out.println("member");
+		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
+		dao.insertMember(member);
 		return "redirect:/home.action";
 	}
 	
@@ -35,12 +40,12 @@ public class MemberController {
 	@RequestMapping(value="confirmId.action", method = RequestMethod.POST,  produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String confirmId(String mId) {
-		//String memberId = dao.selectIdById(mId);
-		//if (memberId == null) {
-		//	return "success";
-		//} else {
+		Member member = dao.selectMemberById(mId);
+		if (member == null) {
+			return "success";
+		} else {
 			return "fail";
-		//}
+		}
 	}
 		
 }

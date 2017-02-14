@@ -8,14 +8,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Member implements Serializable {
 	
-	//정규식 전체적으로 수정하기
+/*	//정규식 전체적으로 수정하기
 	@NotEmpty
 	@Pattern(regexp = "[A-Za-z0-9]{8,15}", message = "아이디 형식 오류")
 	private String id;
 	//정규식
 	@NotEmpty
 	private String name;
-	
 	@NotEmpty
 	@Pattern(regexp = "[A-Za-z0-9]{8,15}", message = "아이디 형식 오류")
 	private String passwd;
@@ -29,19 +28,36 @@ public class Member implements Serializable {
 	private String profilePhoto;
 	private boolean deleted;
 	private boolean permission;
+*/
 	
+	private String mId;
+	private String password;
+	private String mName;
+	private String email;
+	private String phone;
+	private int mCount;
+	private int mPoint;
+	private String userType;
+	private boolean deleted;
+	private String regDate;
 	
-	public String getId() {
-		return id;
+	public String getmId() {
+		return mId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setmId(String mId) {
+		this.mId = mId;
 	}
-	public String getPasswd() {
-		return passwd;
+	public String getPassword() {
+		return password;
 	}
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getmName() {
+		return mName;
+	}
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 	public String getEmail() {
 		return email;
@@ -55,17 +71,23 @@ public class Member implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public int getmCount() {
+		return mCount;
+	}
+	public void setmCount(int mCount) {
+		this.mCount = mCount;
+	}
+	public int getmPoint() {
+		return mPoint;
+	}
+	public void setmPoint(int mPoint) {
+		this.mPoint = mPoint;
+	}
 	public String getUserType() {
 		return userType;
 	}
 	public void setUserType(String userType) {
 		this.userType = userType;
-	}
-	public String getProfilePhoto() {
-		return profilePhoto;
-	}
-	public void setProfilePhoto(String profilePhoto) {
-		this.profilePhoto = profilePhoto;
 	}
 	public boolean isDeleted() {
 		return deleted;
@@ -73,18 +95,11 @@ public class Member implements Serializable {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	public boolean isPermission() {
-		return permission;
+	public String getRegDate() {
+		return regDate;
 	}
-	public void setPermission(boolean permission) {
-		this.permission = permission;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
-
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 }

@@ -5,7 +5,26 @@
 
 <!-- namespace는 패키지.클래스이름을 의미 -->
 <mapper namespace="com.rnh.showmethecard.model.mapper.MemberMapper">
-
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO rnh2.MEMBER
+		(M_ID, PASSWORD, M_NAME, EMAIL, PHONE)
+		VALUES
+		( #{ mId }, #{ password }, #{ mName }, #{ email }, #{ phone })
+	</insert>
+	
+	<select id="selectMemberById" resultType="Member" parameterType="String">
+		SELECT *
+		FROM rnh2.MEMBER
+		WHERE M_ID = #{ mId }
+	</select>
+	
+	<select id="selectMemberByIdAndPasswd">
+		SELECT *
+		FROM rnh2.MEMBER
+		WHERE M_ID = #{ mId } AND PASSWORD = #{ password }
+	</select>
+	
+	
 </mapper>
 
 

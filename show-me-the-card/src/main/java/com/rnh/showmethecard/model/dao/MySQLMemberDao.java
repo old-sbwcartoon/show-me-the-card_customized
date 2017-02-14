@@ -8,7 +8,7 @@ import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.mapper.MemberMapper;
 
 @Repository(value = "memberDao")
-public class OracleMemberDao implements MemberDao {
+public class MySQLMemberDao implements MemberDao {
 	
 	@Autowired
 	@Qualifier("memberMapper")

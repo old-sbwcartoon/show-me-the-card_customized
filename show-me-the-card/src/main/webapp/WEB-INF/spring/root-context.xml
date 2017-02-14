@@ -18,10 +18,10 @@
 	
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
-		p:driverClassName="oracle.jdbc.OracleDriver"
-		p:url="jdbc:oracle:thin:@210.16.214.202:1521:xe" 
-		p:username="rnh" 
-		p:password="rnh"  />
+		p:driverClassName="com.mysql.jdbc.Driver"
+		p:url="jdbc:mysql://210.16.214.202:3306/rnh2"
+		p:username="rnh2" 
+		p:password="tjthsdbdlchl"  />
 		
 
 	<!-- SqlSessionFactoryBean을 사용해서 SqlSessionFactory 객체 등록 -->

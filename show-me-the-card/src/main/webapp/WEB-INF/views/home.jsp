@@ -115,7 +115,11 @@
    					}
    				});
    			}	
-   		});   		   		
+   		});
+		
+		$("#logoutbtn").click(function(){
+			location.href="/showmethecard/account/logout.action"
+		});
 	});
 	</script>
 </head>
@@ -141,7 +145,7 @@
         	<div class="container">
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
-                	<button type="button"  id="#" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
+                	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
                 	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
             	</div>
         	</div>

@@ -24,6 +24,7 @@
 				<a href="/showmethecard/webscrapping/urlsearch.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>CardTest</span></a>
 				<a href="/showmethecard/card/cardregister.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span> CardSearch&Register</span></a>
 				<a href="/showmethecard/notice/noticeList.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span> Notice </span></a>
+				<a href="/showmethecard/evaluation/evaluationmain.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>Evaluation</span></a>
 			</div>
 		</nav>
 		<button class="close-button" id="close-button">Close Menu</button>

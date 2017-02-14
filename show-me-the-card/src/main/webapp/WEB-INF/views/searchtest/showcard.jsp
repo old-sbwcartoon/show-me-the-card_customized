@@ -17,7 +17,7 @@
 		.backface {
 			width: 300px;
 			height: 500px;
-			background: url('./resources/images/bg-repeat.png') repeat;
+			background: url('/showmethecard/resources/images/bg-repeat.png') repeat;
 		}
 		.gradient {
 			filter: alpha(opacity=8);

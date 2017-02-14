@@ -31,7 +31,7 @@
  <!-- SQL, Objects's Mapping Info -->
   <mappers>
   	<mapper resource="com/rnh/showmethecard/model/mapper/MemberMapper.xml"/>
-  	<mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/>
+  	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/> -->
   </mappers> 
   
 </configuration>

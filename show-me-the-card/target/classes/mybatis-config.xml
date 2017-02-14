@@ -5,14 +5,15 @@
 <configuration>
   <!-- 등록할 프로퍼티가 많은 경우 아래처럼 프로퍼티를 따로 등록한 후에 ${ }로 사용 가능 -->
   <properties>
-  	<property name="driver" value="com.jdbc.OracleDriver" />
-  	<property name="url" value="jdbc:oracle:thin:@210.16.214.202:1521:xe" />
-  	<property name="username" value="rnh" />
-    <property name="password" value="rnh" />
+  	<property name="driver" value="com.mysql.jdbc.Driver" />
+  	<property name="url" value="jdbc:mysql://210.16.214.202:3306/rnh2" />
+  	<property name="username" value="rnh2" />
+    <property name="password" value="tjthsdbdlchl" />
   </properties>
   
   <typeAliases>
 	<typeAlias type="com.rnh.showmethecard.model.dto.Member" alias="Member" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Notice" alias="Notice" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Card" alias="Card" />
   </typeAliases>
   
@@ -31,6 +32,7 @@
  <!-- SQL, Objects's Mapping Info -->
   <mappers>
   	<mapper resource="com/rnh/showmethecard/model/mapper/MemberMapper.xml"/>
+  	<mapper resource="com/rnh/showmethecard/model/mapper/NoticeMapper.xml"/>
   	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/> -->
   </mappers> 
   

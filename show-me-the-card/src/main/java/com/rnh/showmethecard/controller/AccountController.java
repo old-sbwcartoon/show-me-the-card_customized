@@ -33,6 +33,8 @@ public class AccountController {
 	
 	@RequestMapping(value="login.action", method=RequestMethod.POST)
 	public String login(String mId, String password, HttpSession session, HttpServletResponse resp) {
+		System.out.println(mId);
+		System.out.println(password);
 		password = Util.getHashedString(password, "SHA-256");
 		Member member = dao.selectMemberByIdAndPasswd(mId, password);
 		

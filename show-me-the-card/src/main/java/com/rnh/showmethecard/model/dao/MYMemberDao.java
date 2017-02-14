@@ -1,5 +1,7 @@
 package com.rnh.showmethecard.model.dao;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -8,7 +10,7 @@ import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.mapper.MemberMapper;
 
 @Repository(value = "memberDao")
-public class MySQLMemberDao implements MemberDao {
+public class MYMemberDao implements MemberDao {
 	
 	@Autowired
 	@Qualifier("memberMapper")
@@ -28,7 +30,11 @@ public class MySQLMemberDao implements MemberDao {
 
 	@Override
 	public Member selectMemberByIdAndPasswd(String mId, String password) {
-		Member member = memberMapper.selectMemberByIdAndPasswd(mId, password);
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("mId", mId);
+		params.put("password", password);
+		
+		Member member = memberMapper.selectMemberByIdAndPasswd(params);
 		return member;
 	}
 

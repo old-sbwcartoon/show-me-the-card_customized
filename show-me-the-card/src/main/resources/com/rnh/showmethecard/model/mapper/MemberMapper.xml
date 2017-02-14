@@ -18,10 +18,10 @@
 		WHERE M_ID = #{ mId }
 	</select>
 	
-	<select id="selectMemberByIdAndPasswd">
+	<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
 		SELECT *
 		FROM rnh2.MEMBER
-		WHERE M_ID = #{ mId } AND PASSWORD = #{ password }
+		WHERE M_ID = #{ mId } AND PASSWORD = #{ password } AND DELETED = '0'
 	</select>
 	
 	

@@ -141,7 +141,7 @@
         	<div class="container">
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
-                	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
+                	<button type="button"  id="#" class="page-scroll waves-effect btn btn-primary"> <a href="/showmethecard/account/logout.action"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
                 	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
             	</div>
         	</div>
@@ -176,7 +176,7 @@
                                     		<p class="help-block text-danger"></p>
                                 		</div>
                                 		<div class="col-md-12 form-group waves-effect">
-                                    		<input type="password" class="form-control" placeholder="Your Password *" id="password" name="mPassword" required data-validation-required-message="Please enter your password.">
+                                    		<input type="password" class="form-control" placeholder="Your Password *" id="loginpassword" name="password" required data-validation-required-message="Please enter your password.">
                                     		<p class="help-block text-danger"></p>
                                 		</div>
                             		</div>

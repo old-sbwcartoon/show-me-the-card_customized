@@ -13,6 +13,7 @@
   
   <typeAliases>
 	<typeAlias type="com.rnh.showmethecard.model.dto.Member" alias="Member" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Notice" alias="Notice" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Card" alias="Card" />
   </typeAliases>
   
@@ -31,6 +32,7 @@
  <!-- SQL, Objects's Mapping Info -->
   <mappers>
   	<mapper resource="com/rnh/showmethecard/model/mapper/MemberMapper.xml"/>
+  	<mapper resource="com/rnh/showmethecard/model/mapper/NoticeMapper.xml"/>
   	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/> -->
   </mappers> 
   

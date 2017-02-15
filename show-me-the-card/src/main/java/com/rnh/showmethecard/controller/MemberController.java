@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 import com.rnh.showmethecard.model.service.MemberService;
 
 @Controller
@@ -96,8 +97,7 @@ public class MemberController {
 			out.flush();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		}
-		
+		}		
 	}
 	
 	@RequestMapping(value="list.action", method=RequestMethod.GET)
@@ -105,6 +105,15 @@ public class MemberController {
 		List<Member> members = memberService.getMemberList();
 		session.setAttribute("members", members);
 		return "member/adminPage";
+	}
+	
+	@RequestMapping(value="pointList.action", method=RequestMethod.GET)
+	public String PointList(HttpSession session) {
+		Member member = (Member) session.getAttribute("loginuser");
+		String mId = member.getmId();
+		List<MemberHistory> history = memberService.getPointHistory(mId);
+		session.setAttribute("history", history);
+		return "member/pointPage";
 	}
 	
 		

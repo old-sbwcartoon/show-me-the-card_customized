@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 import com.rnh.showmethecard.model.mapper.MemberMapper;
 
 @Repository(value = "memberDao")
@@ -53,6 +54,12 @@ public class MysqlMemberDao implements MemberDao {
 	public List<Member> selectMemberList() {
 		List<Member> members = memberMapper.selectMembers();
 		return members;
+	}
+
+	@Override
+	public List<MemberHistory> selectPointHistory(String mId) {
+		List <MemberHistory> history = memberMapper.selectPointHistory(mId);
+		return history;
 	}
 
 }

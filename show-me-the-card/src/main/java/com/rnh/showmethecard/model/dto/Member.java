@@ -1,6 +1,7 @@
 package com.rnh.showmethecard.model.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.validation.constraints.Pattern;
 
@@ -30,16 +31,22 @@ public class Member implements Serializable {
 	private boolean permission;
 */
 	
-	private String mId;
+	@NotEmpty
+	@Pattern(regexp = "[A-Za-z0-9]{8,15}", message = "아이디 형식 오류")
+	private String mId;	
+	@NotEmpty	
 	private String password;
+	@NotEmpty
 	private String mName;
+	@NotEmpty
 	private String email;
+	@NotEmpty
 	private String phone;
 	private int mCount;
 	private int mPoint;
 	private String userType;
 	private boolean deleted;
-	private String regDate;
+	private Date regDate;
 	
 	public String getmId() {
 		return mId;
@@ -95,11 +102,12 @@ public class Member implements Serializable {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	public String getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(String regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	
 	
 }

@@ -13,13 +13,13 @@
 	</insert>
 	
 	<select id="selectMemberById" resultType="Member" parameterType="String">
-		SELECT *
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate
 		FROM rnh2.MEMBER
 		WHERE M_ID = #{ mId }
 	</select>
 	
 	<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
-		SELECT *
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate
 		FROM rnh2.MEMBER
 		WHERE M_ID = #{ mId } AND PASSWORD = #{ password } AND DELETED = '0'
 	</select>

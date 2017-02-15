@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.service.MemberService;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -26,17 +27,14 @@ public class AccountController {
 		this.dao = memberDao;
 	}
 	
-	@RequestMapping(value="login.action", method=RequestMethod.GET)
-	public String loginForm() {
-		return "account/loginform";
-	}
-	
+	@Autowired
+	@Qualifier("memberService")
+	private MemberService memberService;
+		
 	@RequestMapping(value="login.action", method=RequestMethod.POST)
 	public String login(String mId, String password, HttpSession session, HttpServletResponse resp) {
-		System.out.println(mId);
-		System.out.println(password);
-		password = Util.getHashedString(password, "SHA-256");
-		Member member = dao.selectMemberByIdAndPasswd(mId, password);
+		
+		Member member = memberService.getMemberBymIdAndPassword(mId, password);
 		
 		if (member != null) {
 			session.setAttribute("loginuser", member);
@@ -53,6 +51,7 @@ public class AccountController {
 			}
 			return "home";
 		}
+		
 	}
 	
 	@RequestMapping(value="logout.action", method=RequestMethod.GET)

@@ -70,6 +70,38 @@
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
 
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#updateMember").click(function() {
+			if ($("#password").val() != $("#passwordConfirm").val()) {
+				$("#password").val("");
+				$("#passwordConfirm").val("");
+				alert("비밀번호가 일치하지 않습니다.");
+			} else {
+				//정보수정
+				$("#updateForm").submit();
+			}
+		});
+		$("#outMember").click(function(){
+			
+		});		
+	});
+	
+	/*
+	  <button type="button" class="btn btn-primary waves-effect" id="updateMember">수정</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="outMember">탈퇴</button>
+	$("#join").click(function(){	
+		//회원가입시 중복확인을 안한 경우
+		if (!confirm) {
+			alert("아이디 중복 확인을 해주세요.");
+		} else if ($("#password").val() != $("#passwordConfirm").val()) {
+			alert("비밀번호가 일치하지 않습니다.");
+		} else {
+			$("#registerForm").submit();
+			confirm = false;
+		}
+	}); */
+	</script>
 </head>
 
 <body class="index">
@@ -82,41 +114,47 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>Join Us</h2>
+                        <h2>개인 정보 수정</h2>
                         <p>Show Me The Card</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="updateForm" action="showmethecard/member/updateMember.action" method="post">
                         <div class="row">
                             <div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                                 <div class="form-group waves-effect">
-                                    <input type="text" class="form-control" placeholder="Your Id *" id="mId" required data-validation-required-message="Please enter your id.">
-                                    <p class="help-block text-danger"></p>
+	                                <h3 class="help-block text-danger">ID</h3>
+                                    <input type="text" readonly="readonly" class="form-control" placeholder="Your Id *" id="mId" value="${ loginuser.mId }">
                                 </div>
                                 <div class="form-group waves-effect">
-                                    <input type="password" class="form-control" placeholder="Your Password *" id="mPassword" required data-validation-required-message="Please enter your password.">
-                                    <p class="help-block text-danger"></p>
+	                                <h3 class="help-block text-danger">PASSWORD</h3>
+                                    <input type="password" class="form-control" placeholder="Your Password *" id="password">
                                 </div>
                                 <div class="form-group waves-effect">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="mName" required data-validation-required-message="Please enter your name.">
-                                    <p class="help-block text-danger"></p>
+	                                <h3 class="help-block text-danger">PASSWORD CONFIRM</h3>
+                                    <input type="password" class="form-control" placeholder="Your Password *" id="passwordConfirm">
                                 </div>
                                 <div class="form-group waves-effect">
-                                    <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Please enter your phone number.">
-                                    <p class="help-block text-danger"></p>
+	                                <h3 class="help-block text-danger">NAME</h3>
+                                    <input type="text" class="form-control" placeholder="Your Name *" id="mName" value="${ loginuser.mName }">
                                 </div>
                                 <div class="form-group waves-effect">
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email.">
-                                    <p class="help-block text-danger"></p>
+                                	<h3 class="help-block text-danger">PHONE</h3>
+                                	<input type="tel" class="form-control" placeholder="Your Phone *" id="phone" value="${ loginuser.phone }">
+                                </div>
+                                <div class="form-group waves-effect">
+                                	<h3 class="help-block text-danger">EMAIL</h3>
+                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" value="${ loginuser.email }">
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
-                                <button type="submit" class="btn btn-primary waves-effect">Send Message</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="updateMember">수정</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="outMember">탈퇴</button>
+                                <button type="button" class="btn btn-primary waves-effect" onclick="location.href='../home.action'">취소</button>
                             </div>
                         </div>
                     </form>

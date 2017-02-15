@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -86,7 +87,9 @@
 			//회원가입시 중복확인을 안한 경우
 			if (!confirm) {
 				alert("아이디 중복 확인을 해주세요.");
-			} else if ($("#password").val() == $("#passwordConfirm").val()) {
+			} else if ($("#password").val() != $("#passwordConfirm").val()) {
+				$("#password").val("");
+				$("#passwordConfirm").val("");
 				alert("비밀번호가 일치하지 않습니다.");
 			} else {
 				$("#registerForm").submit();
@@ -118,8 +121,14 @@
    		});
 		
 		$("#logoutbtn").click(function(){
-			location.href="/showmethecard/account/logout.action"
+			location.href="/showmethecard/account/logout.action";
 		});
+		
+		$("#mypagebtn").click(function() {
+			$("#mypage").modal();
+		});
+		
+		
 	});
 	</script>
 </head>
@@ -146,7 +155,7 @@
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
                 	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
-                	<button type="button" id="#" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
+                	<button type="button" id="mypagebtn" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
             	</div>
         	</div>
     	</section>
@@ -172,15 +181,15 @@
       			<div class="modal-body">
       				<div class="row">
             		    <div class="col-lg-12">
-                   			<form name="sentMessage" action="/showmethecard/account/login.action" method="post" id="contactForm" novalidate>
+                   			<form name="sentMessage" action="/showmethecard/account/login.action" method="post" id="contactForm">
                         		<div class="row">
                             		<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                                 		<div class="col-md-12 form-group waves-effect">
-                                    		<input type="text" class="form-control" placeholder="Your Id *" id="id" name="mId" required data-validation-required-message="Please enter your id.">
+                                    		<input type="text" class="form-control" placeholder="Your Id *" id="id" name="mId">
                                     		<p class="help-block text-danger"></p>
                                 		</div>
                                 		<div class="col-md-12 form-group waves-effect">
-                                    		<input type="password" class="form-control" placeholder="Your Password *" id="loginpassword" name="password" required data-validation-required-message="Please enter your password.">
+                                    		<input type="password" class="form-control" placeholder="Your Password *" id="loginpassword" name="password">
                                     		<p class="help-block text-danger"></p>
                                 		</div>
                             		</div>
@@ -221,23 +230,23 @@
       			<div class="modal-body">
       				<div class="row">
 		                <div class="col-lg-12">
-        		            <form name="sentMessage" action="/showmethecard/member/register.action" method="post" id="registerForm" novalidate>
+        		            <form name="sentMessage" action="/showmethecard/member/register.action" method="post" id="registerForm">
                        		    <div class="row">
                        		    	<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                        		      		<div class="form-group">
-                   		      				<input style="height: 40;" type="text" class="form-control" placeholder="Id *" id="mId" name="mId" required data-validation-required-message="Please enter your id.">
+                   		      				<input style="height: 40;" type="text" class="form-control" placeholder="Id * (영문+숫자 6~15자 이내)" id="mId" name="mId" />
        		    	                    	<p class="help-block text-danger"></p>
        		    	                    	<button style="height: 30;" id="confirmId" type="button" class="btn btn-primary waves-effect col-md-12 wow fadeInLeft">아이디 중복 확인</button>
 	       		    	                    <br/><br/>
-  		        	                        <input style="height: 40;" type="password" class="form-control" placeholder="Password *" id="password" name="password" required data-validation-required-message="Please enter your password.">
+  		        	                        <input style="height: 40;" type="password" class="form-control" placeholder="Password * (영문+숫자 6~15자 이내)" id="password" name="password" />
                                		        <p class="help-block text-danger"></p>
-                               		        <input style="height: 40;" type="password" class="form-control" placeholder="Confirm Password *" id="passwordConfirm" required data-validation-required-message="Please enter your password.">
+                               		        <input style="height: 40;" type="password" class="form-control" placeholder="Confirm Password *" id="passwordConfirm" />
                                     		<p class="help-block text-danger"></p>
-                                    		<input style="height: 40;" type="text" class="form-control" placeholder="Name *" id="mName" name="mName" required data-validation-required-message="Please enter your name.">
+                                    		<input style="height: 40;" type="text" class="form-control" placeholder="Name *" id="mName" name="mName" />
                                     		<p class="help-block text-danger"></p>
-                                  			<input style="height: 40;" type="tel" class="form-control" placeholder="Phone *" id="phone" name="phone" required data-validation-required-message="Please enter your phone number.">
+                                  			<input style="height: 40;" type="tel" class="form-control" placeholder="Phone *" id="phone" name="phone" />
                                   			<p class="help-block text-danger"></p>
-                                  			<input style="height: 40;" type="email" class="form-control" placeholder="Email *" id="email" name="email" required data-validation-required-message="Please enter your email.">
+                                  			<input style="height: 40;" type="email" class="form-control" placeholder="Email *" id="email" name="email"/>
                                     		<p class="help-block text-danger"></p>
                                 		</div>
                             		</div>
@@ -256,6 +265,51 @@
       			</div>
       		</div>
     	    </div>
+		</div>
+	</div>
+	
+	<!-- Mypage Modal -->
+	<div class="container">
+		<div class="modal fade" id="mypage" role="dialog">
+		    <div class="modal-dialog">
+    	    <!-- Modal content-->
+      		<div class="modal-content">
+      			<div class="modal-header">
+      			<button type="button" class="close" data-dismiss="modal">&times;</button>
+      				<div class="row">
+	                <div class="col-lg-12">
+    	                <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+        	                <h2>Password Confirm</h2>
+                	    </div>
+                	</div>
+      				</div>
+      			</div>
+      			<div class="modal-body">
+      				<div class="row">
+            		    <div class="col-lg-12">
+                   			<form name="sentMessage" action="/showmethecard/member/mypage.action" method="post" id="contactForm">
+                        		<div class="row">
+                            		<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
+                                		<div class="col-md-12 form-group waves-effect">
+                                    		<input type="password" class="form-control" placeholder="Your Password *" id="mypagePassword" name="password">
+                                    		<p class="help-block text-danger"></p>
+                                		</div>
+                            		</div>
+                            		<div class="clearfix"></div>
+                            		<div class="modal-footer"> 
+                            			<div class="col-lg-12 text-center">
+                                			<div id="success"></div>
+                                			<button type="submit" id="mypageConfirm" class="btn btn-primary waves-effect">&nbsp;&nbsp;Confirm&nbsp;&nbsp;</button>
+                                			<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">CANCEL</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     			       	</div>
+        			               </div>
+        			               </div>
+                    		</form>
+                		</div>
+            		</div>
+      			</div>
+      		</div>
+    		</div>
 		</div>
 	</div>
     <!-- End Header Section -->    
@@ -1026,9 +1080,9 @@
     <!-- End Footer Section -->   
     
 </body>
- <!-- Custom JavaScript -->
+	<!-- Custom JavaScript -->
     <script src="resources/assets/js/script.js"></script>
-     <!-- modal -->
+    <!-- modal -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

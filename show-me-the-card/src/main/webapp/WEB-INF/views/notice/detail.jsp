@@ -124,7 +124,7 @@
 						</tr>
 						<tr>
 							<th>작성자</th>
-							<td></td>
+							<td>${ loginuser.mId }</td>
 						</tr>
 						<tr>
 							<th>작성일</th>
@@ -139,11 +139,10 @@
 
 					
 					<div class="buttons">
-						<a href="update.action?nNo=${notice.nNo}">수정</a>
-						 
-						<a href='javascript:doDelete(${notice.nNo})'>삭제</a>					
-						<%-- <c:if test="${ loginuser.userType eq '1'}">		
-						</c:if> --%>
+						<c:if test="${ loginuser.userType eq '1'}">	
+						<a href="update.action?nNo=${notice.nNo}">수정</a>						 
+						<a href='javascript:doDelete(${notice.nNo})'>삭제</a>							
+						</c:if>	
 
 					</div>
 				</div>

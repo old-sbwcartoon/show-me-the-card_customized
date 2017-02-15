@@ -138,8 +138,7 @@ float:right;}
 		<td>
 				<div id="title">
 				<label for="inputdefault">작성자:</label> 
-				<%-- <input class="form-control" name = "id" id="writer" type="text" value = "${ sessionScope.loginuser.id }" readonly > --%>
-				<input class="form-control" name = "mId" id="writer" type="text" value = "yoo" readonly >
+				<input class="form-control" name = "mId" id="writer" type="text" value = "${ loginuser.mId }" readonly >
 				</div>
 		</td>
 		</tr>

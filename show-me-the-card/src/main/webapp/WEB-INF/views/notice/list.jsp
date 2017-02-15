@@ -120,11 +120,9 @@
 					
 					</c:forEach>
 				</tbody>
-				<%-- <c:if test="${ loginuser.userType eq '1'}">
+				<c:if test="${ loginuser.userType eq '1'}">
 				<a href='insertNotice.action'>글쓰기</a>
-				</c:if> --%>
-				<a href='insertNotice.action'>글쓰기</a>
-				
+				</c:if>
 				<br />
 				<br />
 			</table>

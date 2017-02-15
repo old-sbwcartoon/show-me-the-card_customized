@@ -72,6 +72,46 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="resources/assets/js/google-map-init.js"></script>    
 
+	<style type="text/css">
+	li {
+		float: left;
+	}
+
+	div a, .dropbtn {
+    	display: inline-block;
+    	color: white;
+    	text-align: center;
+    	padding: 14px 16px;
+    	text-decoration: none;
+	}
+	
+	div.dropdown {
+    	display: inline-block;
+	}
+
+	.dropdown-content {
+    	display: none;
+	    position: absolute;
+   		background-color: #f9f9f9;
+    	min-width: 160px;
+    	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    	z-index: 1;
+	}
+
+	.dropdown-content a {
+    	color: black;
+	    padding: 12px 16px;
+    	text-decoration: none;
+    	display: block;
+    	text-align: left;
+	}
+
+	.dropdown-content a:hover {background-color: #f1f1f1}
+
+	.dropdown:hover .dropdown-content {
+    	display: block;
+	}
+	</style>
     <script>
 	$(document).ready(function(){
 		$("#loginbtn").click(function(){
@@ -154,9 +194,16 @@
         	<div class="container">
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
-                	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button>
-                	<button type="button" id="mypagebtn" class="page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
-            	</div>
+                	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button></li>
+                	<div class="dropdown">
+                		<button type="button" id="mypage" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
+                		<div class="dropdown-content">
+            				<a id="mypagebtn" href="#">My Page</a>
+            				<a href="#">My Page</a>
+            				<a href="#">My Page</a>
+            			</div>	
+                	</div>          		
+                </div>
         	</div>
     	</section>
    	</c:otherwise>

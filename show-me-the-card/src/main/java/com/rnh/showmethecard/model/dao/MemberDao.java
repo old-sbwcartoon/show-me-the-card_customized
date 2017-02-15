@@ -1,5 +1,7 @@
 package com.rnh.showmethecard.model.dao;
 
+import java.util.List;
+
 import com.rnh.showmethecard.model.dto.Member;
 
 public interface MemberDao {
@@ -13,5 +15,7 @@ public interface MemberDao {
 	void updateMemberById(Member member);
 	
 	void deleteMemberById(String mId);
+	
+	List<Member> selectMemberList();
 
 }

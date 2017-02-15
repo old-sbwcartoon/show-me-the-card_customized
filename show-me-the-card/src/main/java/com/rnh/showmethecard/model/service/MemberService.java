@@ -1,5 +1,7 @@
 package com.rnh.showmethecard.model.service;
 
+import java.util.List;
+
 import com.rnh.showmethecard.model.dto.Member;
 
 public interface MemberService {
@@ -15,4 +17,6 @@ public interface MemberService {
 	void chageMember(Member member);
 	
 	void deleteMember(String mId);
+	
+	List<Member> getMemberList();
 }

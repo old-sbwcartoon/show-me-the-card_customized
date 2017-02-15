@@ -1,6 +1,7 @@
 package com.rnh.showmethecard.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,6 +47,12 @@ public class MysqlMemberDao implements MemberDao {
 	@Override
 	public void deleteMemberById(String mId) {
 		memberMapper.deleteMemberById(mId);		
+	}
+
+	@Override
+	public List<Member> selectMemberList() {
+		List<Member> members = memberMapper.selectMembers();
+		return members;
 	}
 
 }

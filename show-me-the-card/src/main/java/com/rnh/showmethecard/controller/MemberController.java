@@ -1,6 +1,7 @@
 package com.rnh.showmethecard.controller;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -95,6 +96,13 @@ public class MemberController {
 			ex.printStackTrace();
 		}
 		return "redirect:/home.action";
+	}
+	
+	@RequestMapping(value="list.action", method=RequestMethod.GET)
+	public String memberList(HttpSession session) {
+		List<Member> members = memberService.getMemberList();
+		session.setAttribute("members", members);
+		return "member/adminPage";
 	}
 	
 		

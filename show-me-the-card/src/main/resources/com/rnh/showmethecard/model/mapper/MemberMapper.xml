@@ -38,6 +38,12 @@
 		WHERE M_ID = #{ mId };		
 	</update>	
 	
+	<select id="selectMembers" resultType="Member">
+		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, USERTYPE, REG_DATE regDate
+		FROM rnh2.MEMBER
+		WHERE DELETED = '0'
+	</select>
+	
 </mapper>
 
 

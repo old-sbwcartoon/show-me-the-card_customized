@@ -69,29 +69,9 @@
     <!-- Materialize js -->
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
+    
+    
 
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$("#updateMember").click(function() {
-			if ($("#password").val() != $("#passwordConfirm").val()) {
-				$("#password").val("");
-				$("#passwordConfirm").val("");
-				alert("비밀번호가 일치하지 않습니다.");
-			} else {
-				//정보수정
-				$("#updateForm").submit();
-			}
-		});
-		$("#outMember").click(function(){
-			//메시지 확인하고 controller 보내기
-			var r = confirm("정말 탈퇴하시겠습니까?");
-		    if (r == true) {
-		    	location.href = "/showmethecard/member/deleteMember.action?mId=" + ${ loginuser.mId };
-		    } 
-		});		
-	});
-
-	</script>
 </head>
 
 <body class="index">
@@ -104,10 +84,39 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>개인 정보 수정</h2>
+                        <h2>관리자 페이지</h2>
                         <p>Show Me The Card</p>
                     </div>
                 </div>
+            </div>
+            <div>
+            	<table>
+            		<thead>
+            			<tr>
+            				<th>ID</th>
+            				<th>NAME</th>
+            				<th>EMAIL</th>
+            				<th>PHONE</th>
+            				<th>POINT</th>
+            				<th>REG DATE</th>
+            				<th>USERTYPE</th>
+            			</tr>
+            		</thead>
+            		
+            		<tbody>
+            		 <c:forEach var="member" items="${ requestScope.members }">
+            		 	<tr>
+            		 		<td>${ member.mId }</td>
+            		 		<td>${ member.mName }</td>
+            		 		<td>${ member.email}</td>
+            		 		<td>${ member.phone }</td>
+            		 		<td>${ member.mPoint }</td>
+            		 		<td>${ member.regDate }</td>
+            		 		<td>${ member.userType }</td>
+            		 	</tr>
+            		 </c:forEach>
+            		</tbody>
+            	</table>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -151,8 +160,13 @@
                 </div>
             </div>
         </div>
+        
     </section>
-     
+    
+   
+    
+    
+    
     <!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->   

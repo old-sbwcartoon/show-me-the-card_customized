@@ -1,10 +1,8 @@
 package com.rnh.showmethecard.model.service;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
-import com.rnh.showmethecard.model.dao.NoticeDao;
 import com.rnh.showmethecard.model.dto.Member;
-import com.rnh.showmethecard.model.dto.Notice;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -70,6 +66,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void deleteMember(String mId) {
 		dao.deleteMemberById(mId);		
+	}
+
+	@Override
+	public List<Member> getMemberList() {
+		List<Member> members = dao.selectMemberList();
+		return members;
 	}
 	
 	

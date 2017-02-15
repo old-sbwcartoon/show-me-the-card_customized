@@ -1,6 +1,7 @@
 package com.rnh.showmethecard.model.mapper;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Member;
 
@@ -16,4 +17,6 @@ public interface MemberMapper {
 	void updateMemberById(Member member);
 	
 	void deleteMemberById(String mId);
+	
+	List<Member> selectMembers();
 }

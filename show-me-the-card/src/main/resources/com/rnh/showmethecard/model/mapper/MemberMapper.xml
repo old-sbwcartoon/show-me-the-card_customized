@@ -24,6 +24,19 @@
 		WHERE M_ID = #{ mId } AND PASSWORD = #{ password } AND DELETED = '0'
 	</select>
 	
+	<update id="updateMemberById" parameterType="Member">
+		UPDATE rnh2.MEMBER
+		SET
+		PASSWORD = #{ password }, M_NAME = #{ mName }, EMAIL = #{ email }, PHONE = #{ phone }
+		WHERE M_ID = #{ mId }
+	</update>
+
+	<update id="deleteMemberById" parameterType="Member">
+		UPDATE rnh2.MEMBER
+		SET
+		DELETED ='1'
+		WHERE M_ID = #{ mId };		
+	</update>	
 	
 </mapper>
 

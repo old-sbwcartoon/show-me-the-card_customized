@@ -68,6 +68,34 @@ public class MemberController {
 		}
 	}
 	
+	@RequestMapping(value="update.action", method = RequestMethod.POST)
+	public String updateMember(Member member, HttpServletResponse resp) {
+		memberService.chageMember(member);
+		System.out.println("member update 성공");
+		try {
+			resp.setContentType("text/html; charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.println("<script>alert('수정되었습니다.');history.go(-1);</script>");
+			out.flush();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "redirect:/home.action";
+	}
+	
+	@RequestMapping(value="deleteMember.action", method = RequestMethod.GET)
+	public String deleteMember(String mId, HttpServletResponse resp) {
+		memberService.deleteMember(mId);
+		try {
+			resp.setContentType("text/html; charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.println("<script>alert('탈퇴되었습니다.');history.go(-1);</script>");
+			out.flush();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "redirect:/home.action";
+	}
 	
 		
 }

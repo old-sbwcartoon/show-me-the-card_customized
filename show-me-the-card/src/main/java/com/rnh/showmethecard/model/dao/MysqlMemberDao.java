@@ -38,6 +38,16 @@ public class MysqlMemberDao implements MemberDao {
 		return member;
 	}
 
+	@Override
+	public void updateMemberById(Member member) {
+		memberMapper.updateMemberById(member);	
+	}
+
+	@Override
+	public void deleteMemberById(String mId) {
+		memberMapper.deleteMemberById(mId);		
+	}
+
 }
 
 

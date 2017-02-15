@@ -60,6 +60,17 @@ public class MemberServiceImpl implements MemberService {
 			return "fail";
 		}
 	}
+
+	@Override
+	public void chageMember(Member member) {
+		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
+		dao.updateMemberById(member);		
+	}
+
+	@Override
+	public void deleteMember(String mId) {
+		dao.deleteMemberById(mId);		
+	}
 	
 	
 	

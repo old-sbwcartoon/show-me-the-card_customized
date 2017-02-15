@@ -11,4 +11,8 @@ public interface MemberService {
 	Member getMemberBymIdAndPassword(String mId, String password);
 	
 	String getMemberBymId(String mId, String password);
+	
+	void chageMember(Member member);
+	
+	void deleteMember(String mId);
 }

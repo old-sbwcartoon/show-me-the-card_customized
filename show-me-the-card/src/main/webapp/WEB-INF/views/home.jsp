@@ -194,11 +194,12 @@
         	<div class="container">
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
-                	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</a></button></li>
+                	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
+                	<button type="button" id="mypagebtn" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
                 	<div class="dropdown">
                 		<button type="button" id="mypage" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
                 		<div class="dropdown-content">
-            				<a id="mypagebtn" href="#">My Page</a>
+            				<a id="mypagebtn1" href="#">My Page</a>
             				<a href="#">My Page</a>
             				<a href="#">My Page</a>
             			</div>	

@@ -83,24 +83,11 @@
 			}
 		});
 		$("#outMember").click(function(){
-			
+			//메시지 확인하고 controller 보내기
+			//    /showmethecard/member/deleteMember.action?mId=${ loginuser.mId }
 		});		
 	});
-	
-	/*
-	  <button type="button" class="btn btn-primary waves-effect" id="updateMember">수정</button>
-                                <button type="button" class="btn btn-primary waves-effect" id="outMember">탈퇴</button>
-	$("#join").click(function(){	
-		//회원가입시 중복확인을 안한 경우
-		if (!confirm) {
-			alert("아이디 중복 확인을 해주세요.");
-		} else if ($("#password").val() != $("#passwordConfirm").val()) {
-			alert("비밀번호가 일치하지 않습니다.");
-		} else {
-			$("#registerForm").submit();
-			confirm = false;
-		}
-	}); */
+
 	</script>
 </head>
 
@@ -121,7 +108,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="sentMessage" id="updateForm" action="showmethecard/member/updateMember.action" method="post">
+                    <form name="sentMessage" id="updateForm" action="/showmethecard/member/updateMember.action" method="post">
                         <div class="row">
                             <div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                                 <div class="form-group waves-effect">

@@ -9,5 +9,9 @@ public interface MemberDao {
 	Member selectMemberById(String mId);
 	
 	Member selectMemberByIdAndPasswd(String mId, String password);
+	
+	void updateMemberById(Member member);
+	
+	void deleteMemberById(String mId);
 
 }

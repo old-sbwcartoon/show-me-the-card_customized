@@ -186,7 +186,7 @@
             	</div>
         	</div>
     	</section>
-   	</c:when>
+   	</c:when>  
    	<c:otherwise>
    		<c:import url="/WEB-INF/views/include/navigator.jsp" />
    		<!-- Start Header Section -->
@@ -203,7 +203,7 @@
             				<c:when test="${ loginuser.userType } == '1'">
             					<a href="/showmethecard/member/list.action">Admin Page</a>
             				</c:when>
-            				<a href="#">My Point</a>
+            				<a href="#dd">My Point</a>
             				<a href="#">My Q&A</a>
             			</div>	
                 	</div>          		

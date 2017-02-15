@@ -86,21 +86,26 @@
  	
  	<!-- Start Contact Us Section -->
     <section id="contact" class="contact contact-section">
-	<div id="preloader">
+	<!-- <div id="preloader">
 		<div id="status">&nbsp;</div>
 	</div>
 
 	<br/>
-	<br/>
+	<br/> -->
 	<div class="container">
-		<h2>공지사항</h2>
-		<br/>
-		<br/>
-		<div class="table-responsive">
+		<div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+                        <h2>공지사항</h2>
+                        <p>Show Me The Card</p>
+                    </div>
+                </div>
+         </div>
+		<div>
 			
 			<table class="table">
 				
-				<thead>
+				<thead class="text-danger">
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
@@ -123,8 +128,6 @@
 				<c:if test="${ loginuser.userType eq '1'}">
 				<a href='insertNotice.action'>글쓰기</a>
 				</c:if>
-				<br />
-				<br />
 			</table>
 		</div>
 	</div>

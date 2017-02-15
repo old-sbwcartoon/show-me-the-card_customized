@@ -17,7 +17,7 @@ public interface NoticeDao {
 	
 	void UpdateNotice(Notice notice);
 	
-	Notice SelectNoticeDetail(int noticeNo);
+	Notice SelectNoticeDetail(int nNo);
 	
 
 

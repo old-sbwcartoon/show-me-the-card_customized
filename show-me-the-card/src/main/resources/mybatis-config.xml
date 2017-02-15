@@ -15,6 +15,8 @@
 	<typeAlias type="com.rnh.showmethecard.model.dto.Member" alias="Member" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Notice" alias="Notice" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Card" alias="Card" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationComment" alias="EvaluationComment" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationInfo" alias="EvaluationInfo" />
   </typeAliases>
   
   <environments default="development">
@@ -34,6 +36,7 @@
   	<mapper resource="com/rnh/showmethecard/model/mapper/MemberMapper.xml"/>
   	<mapper resource="com/rnh/showmethecard/model/mapper/NoticeMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/EvaluationMapper.xml"/>
   </mappers> 
   
 </configuration>

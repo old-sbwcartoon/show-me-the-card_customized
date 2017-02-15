@@ -71,7 +71,7 @@ public class HtmlParser {
 			if (str.contains("%")) {			
 				String seeAddr = str.substring(str.indexOf("%"), str.indexOf("%") + 5);
 				
-				if (urlDoc != null) { // doc ?š?“ ?›„?—”
+				if (urlDoc != null) { // doc ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½
 					Elements wilds = urlDoc.select("meta");
 					for (Element e : wilds) {
 						String lowerCaseStr = e.toString().toLowerCase();
@@ -84,7 +84,7 @@ public class HtmlParser {
 								seeAddr.substring(seeAddr.length() - 2).contains("%"))) {
 					
 					
-					 // if (encoded) seeAddr.equals("%?˜?ˆ˜%");
+					 // if (encoded) seeAddr.equals("%?ï¿½ï¿½?ï¿½ï¿½%");
 //			
 //			Elements nativeData = urlDoc.select("meta");
 //			
@@ -105,12 +105,14 @@ public class HtmlParser {
 	
 	
 	/**
-	 * @param str : ?›ë³? ë¬¸ì?—´
-	 * @param length : ë³´ì—¬ì¤? ê¸?? ?ˆ˜
-	 * @return ?ë¥? ë¬¸ì?—´ + " ...."
+	 * @param str : ?ï¿½ï¿½ï¿½? ë¬¸ì?ï¿½ï¿½
+	 * @param length : ë³´ì—¬ï¿½? ï¿½??ï¿½ï¿½ ?ï¿½ï¿½
+	 * @return ?ï¿½ï¿½ï¿½? ë¬¸ì?ï¿½ï¿½ + " ...."
 	 */
 	private String subStrLength(String str, int length) {
-		if (str.length() > length) {
+		if (length == 0) {
+			//do nothing;
+		} else if (str.length() > length) {
 			str = str.substring(0, length)+ " ....";
 		}
 		return str;
@@ -148,7 +150,7 @@ public class HtmlParser {
 		
 		
 		domain.append(protocol).append("://"); //domain == "http(s)://"		
-		if (urlAddr.contains("/")) { /*ì£¼ì†Œê°? '/'ë¥? ?¬?•¨?•˜ê³? ?ˆ?Š” ê²½ìš°*/
+		if (urlAddr.contains("/")) { /*ì£¼ì†Œï¿½? '/'ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ ê²½ìš°*/
 			domain.append(urlAddr.substring(0, urlAddr.indexOf("/"))); //domain == "http(s)://domainì£¼ì†Œ"
 		} else {
 			domain.append(urlAddr);
@@ -177,7 +179,7 @@ public class HtmlParser {
 				} else {
 					parsedTitle = headTitle.text();
 				}
-				data = subStrLength(decodeStr(parsedTitle), 20);
+				data = subStrLength(decodeStr(parsedTitle), 0); // 300 ê¸€ìë¡œ ì œí•œ
 				break;
 				
 				
@@ -192,7 +194,7 @@ public class HtmlParser {
 				} else {
 					parsedDesc = headDesc.attr("content");
 				}
-				data = subStrLength(decodeStr(parsedDesc), 45);
+				data = subStrLength(decodeStr(parsedDesc), 0); // 300 ê¸€ìë¡œ ì œí•œ
 				break;
 				
 				
@@ -204,7 +206,7 @@ public class HtmlParser {
 				
 				
 				
-				//link[rel]?´ ?ˆ?„ ?•Œ link[icon]?´ ì¡´ì¬?•˜?Š”ì§? ì°¾ëŠ”?‹¤
+				//link[rel]?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ link[icon]?ï¿½ï¿½ ì¡´ì¬?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì°¾ëŠ”?ï¿½ï¿½
 				String ogImgStr = null;
 				String logoImgStr = null;
 				String iconImgStr = null;
@@ -256,7 +258,7 @@ public class HtmlParser {
 				}
 
 				
-				//?´ë¯¸ì? ì£¼ì†Œ ì°¾ê¸°
+				//?ï¿½ï¿½ë¯¸ï¿½? ì£¼ì†Œ ì°¾ê¸°
 				String parsedImg = null;
 				if (ogImgStr != null) {
 					parsedImg = ogImgStr;
@@ -269,7 +271,7 @@ public class HtmlParser {
 				}
 				
 				
-				//ì£¼ì†Œê°? domain ?—†?´ ê²½ë¡œ?‚˜ ?ƒ??ê²½ë¡œë§? ?“°?—¬ ?ˆ?Š” ê²½ìš°
+				//ì£¼ì†Œï¿½? domain ?ï¿½ï¿½?ï¿½ï¿½ ê²½ë¡œ?ï¿½ï¿½ ?ï¿½ï¿½??ê²½ë¡œï¿½? ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ê²½ìš°
 				if (parsedImg != null) {
 					StringBuilder imgUrl = new StringBuilder(100);
 					String domain = getUrlDomain(getUrl());
@@ -306,7 +308,7 @@ public class HtmlParser {
 	private String getChoosedData(String parseKeyword) {
 
 		String choosedData = null;
-		if (urlDoc == null) { //urlDocê°? ?—†?‹¤ë©?
+		if (urlDoc == null) { //urlDocï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 			try {
 				urlDoc = Jsoup.connect(getUrl()).get();
 			} catch (IOException e) {
@@ -318,7 +320,7 @@ public class HtmlParser {
 		if (parsedData != null) {
 			choosedData = parsedData;
 		} else {
-			if (domainDoc == null) { //domainDocê°? ?—†?‹¤ë©?
+			if (domainDoc == null) { //domainDocï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 				try {
 					domainDoc = Jsoup.connect(getUrlDomain(getUrl())).get();
 				} catch (IOException e) {

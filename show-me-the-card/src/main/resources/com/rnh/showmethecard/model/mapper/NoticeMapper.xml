@@ -19,8 +19,8 @@
 	<insert id="InsertNotice" parameterType="Notice">
 	
 		INSERT INTO NOTICE
-		(N_NO, TITLE, CONTENT, M_ID)
-		VALUES (NOTICE_SEQUENCE.nextVal, #{title}, #{content}, #{M_id})	
+		(TITLE, CONTENT, M_ID)
+		VALUES (#{title}, #{content}, #{mId})	
 		
 	</insert>
 	

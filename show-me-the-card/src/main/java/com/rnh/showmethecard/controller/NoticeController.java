@@ -39,7 +39,7 @@ public class NoticeController {
 	@RequestMapping(value = "noticeList.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public ModelAndView NoticeList(HttpSession session) {		
 		ModelAndView mav = new ModelAndView();
-		
+				
 		List<Notice> notices = noticeService.SearchNoticeList();
 		
 		mav.setViewName("notice/list");
@@ -49,10 +49,10 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "detail.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public ModelAndView NoticeList(int noticeNo) {		
+	public ModelAndView NoticeList(int nNo) {		
 		ModelAndView mav = new ModelAndView();
 		
-		Notice notice = noticeService.SearchNoticeDetail(noticeNo);
+		Notice notice = noticeService.SearchNoticeDetail(nNo);
 		
 		mav.setViewName("notice/detail");
 		mav.addObject("notice", notice);
@@ -77,8 +77,7 @@ public class NoticeController {
 	
 	@RequestMapping(value = "insertNotice.action", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	
-	public String AddNotice(Notice notice) {		
-		
+	public String AddNotice(Notice notice) {	
 		
 		noticeService.AddNotice(notice);
 		
@@ -90,12 +89,12 @@ public class NoticeController {
 	
 	@RequestMapping(value = "deletenotice.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	
-	public String DeleteNotice(int noticeNo) {
+	public String DeleteNotice(int nNo) {
 		Notice notice = new Notice();
 		
 		notice.setTitle("삭제");
 		notice.setContent("삭제된 공지사항");
-		notice.setnNo(noticeNo);		
+		notice.setnNo(nNo);		
 		
 		noticeService.DeleteNotice(notice);
 		
@@ -104,10 +103,10 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "update.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public ModelAndView ChangeNotice(int noticeNo) {		
+	public ModelAndView ChangeNotice(int nNo) {		
 		ModelAndView mav = new ModelAndView();
 		
-		Notice notice = noticeService.SearchNoticeDetail(noticeNo);
+		Notice notice = noticeService.SearchNoticeDetail(nNo);
 		
 		mav.setViewName("notice/editform");
 		mav.addObject("notice", notice);
@@ -121,8 +120,6 @@ public class NoticeController {
 	@RequestMapping(value = "update.action", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	
 	public String ChangeNotice(Notice notice) {
-		
-		
 		
 		noticeService.ChangeNotice(notice);
 		

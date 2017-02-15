@@ -48,8 +48,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Notice SearchNoticeDetail(int noticeNo) {
-		Notice notice = noticeDao.SelectNoticeDetail(noticeNo);
+	public Notice SearchNoticeDetail(int nNo) {
+		Notice notice = noticeDao.SelectNoticeDetail(nNo);
 		
 		return notice;
 	}

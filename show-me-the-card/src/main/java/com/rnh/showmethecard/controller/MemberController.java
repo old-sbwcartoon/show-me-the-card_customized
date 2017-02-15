@@ -53,7 +53,7 @@ public class MemberController {
 		Member member = (Member) session.getAttribute("loginuser");
 		
 		String mId = member.getmId();
-		String result = memberService.getMemberBymId(mId, password);
+		String result = memberService.getMemberBymId(mId, password, session);
 		if (result.equals("fail")) {
 			try {
 				resp.setContentType("text/html; charset=utf-8");
@@ -69,33 +69,35 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping(value="update.action", method = RequestMethod.POST)
-	public String updateMember(Member member, HttpServletResponse resp) {
+	@RequestMapping(value="updateMember.action", method = RequestMethod.POST)
+	public void updateMember(Member member, HttpServletResponse resp) {
 		memberService.chageMember(member);
 		System.out.println("member update 성공");
 		try {
 			resp.setContentType("text/html; charset=utf-8");
 			PrintWriter out = resp.getWriter();
-			out.println("<script>alert('수정되었습니다.');history.go(-1);</script>");
+			out.println("<script>alert('수정되었습니다.');history.go(-2);</script>");
 			out.flush();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return "redirect:/home.action";
 	}
 	
 	@RequestMapping(value="deleteMember.action", method = RequestMethod.GET)
-	public String deleteMember(String mId, HttpServletResponse resp) {
+	public void deleteMember(HttpSession session, HttpServletResponse resp) {
+		Member member = (Member) session.getAttribute("loginuser");
+		String mId = member.getmId();
 		memberService.deleteMember(mId);
+		System.out.println("member delete");
 		try {
 			resp.setContentType("text/html; charset=utf-8");
 			PrintWriter out = resp.getWriter();
-			out.println("<script>alert('탈퇴되었습니다.');history.go(-1);</script>");
+			out.println("<script>alert('탈퇴되었습니다.');window.location.href='/showmethecard/account/logout.action';</script>");
 			out.flush();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return "redirect:/home.action";
+		
 	}
 	
 	@RequestMapping(value="list.action", method=RequestMethod.GET)

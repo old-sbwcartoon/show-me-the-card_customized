@@ -69,7 +69,7 @@
     <!-- Materialize js -->
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
-    
+
     
 
 </head>
@@ -89,9 +89,10 @@
                     </div>
                 </div>
             </div>
+            
             <div>
-            	<table>
-            		<thead>
+            	<table class="table">
+            		<thead class="text-danger">
             			<tr>
             				<th>ID</th>
             				<th>NAME</th>
@@ -104,7 +105,7 @@
             		</thead>
             		
             		<tbody>
-            		 <c:forEach var="member" items="${ requestScope.members }">
+            		 <c:forEach var="member" items="${ members }">
             		 	<tr>
             		 		<td>${ member.mId }</td>
             		 		<td>${ member.mName }</td>
@@ -112,66 +113,28 @@
             		 		<td>${ member.phone }</td>
             		 		<td>${ member.mPoint }</td>
             		 		<td>${ member.regDate }</td>
-            		 		<td>${ member.userType }</td>
+            		 		<c:choose>
+	            		 		<c:when test="${ member.userType eq '0' }">
+    	        		 			<td>User</td>
+        	    		 		</c:when>
+        	    		 		<c:otherwise>
+        	    		 			<td>Admin</td>
+        	    		 		</c:otherwise>
+            		 		</c:choose>
+            		 		
             		 	</tr>
             		 </c:forEach>
             		</tbody>
             	</table>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <form name="sentMessage" id="updateForm" action="/showmethecard/member/updateMember.action" method="post">
-                        <div class="row">
-                            <div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
-                                <div class="form-group waves-effect">
-	                                <h3 class="help-block text-danger">ID</h3>
-                                    <input type="text" readonly="readonly" class="form-control" placeholder="Your Id *" id="mId" value="${ loginuser.mId }">
-                                </div>
-                                <div class="form-group waves-effect">
-	                                <h3 class="help-block text-danger">PASSWORD</h3>
-                                    <input type="password" class="form-control" placeholder="Your Password *" id="password">
-                                </div>
-                                <div class="form-group waves-effect">
-	                                <h3 class="help-block text-danger">PASSWORD CONFIRM</h3>
-                                    <input type="password" class="form-control" placeholder="Your Password *" id="passwordConfirm">
-                                </div>
-                                <div class="form-group waves-effect">
-	                                <h3 class="help-block text-danger">NAME</h3>
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="mName" value="${ loginuser.mName }">
-                                </div>
-                                <div class="form-group waves-effect">
-                                	<h3 class="help-block text-danger">PHONE</h3>
-                                	<input type="tel" class="form-control" placeholder="Your Phone *" id="phone" value="${ loginuser.phone }">
-                                </div>
-                                <div class="form-group waves-effect">
-                                	<h3 class="help-block text-danger">EMAIL</h3>
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" value="${ loginuser.email }">
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-lg-12 text-center">
-                                <div id="success"></div>
-                                <button type="button" class="btn btn-primary waves-effect" id="updateMember">수정</button>
-                                <button type="button" class="btn btn-primary waves-effect" id="outMember">탈퇴</button>
-                                <button type="button" class="btn btn-primary waves-effect" onclick="location.href='../home.action'">취소</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
+            </div>              
+        </div>        
     </section>
-    
-   
-    
-    
     
     <!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->   
     
 </body>
- <!-- Custom JavaScript -->
+	<!-- Custom JavaScript -->
     <script src="../resources/assets/js/script.js"></script>
 </html>

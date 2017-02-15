@@ -195,14 +195,11 @@
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
                 	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
-                	<button type="button" id="mypagebtn" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY PAGE &nbsp;&nbsp;</button>
                 	<div class="dropdown">
                 		<button type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
                 		<div class="dropdown-content">
             				<a id="mypagebtn" href="#">My Page</a>
-            				<c:when test="${ loginuser.userType } == '1'">
-            					<a href="/showmethecard/member/list.action">Admin Page</a>
-            				</c:when>
+            				<a href="/showmethecard/member/list.action">Admin Page</a>
             				<a href="#dd">My Point</a>
             				<a href="#">My Q&A</a>
             			</div>	

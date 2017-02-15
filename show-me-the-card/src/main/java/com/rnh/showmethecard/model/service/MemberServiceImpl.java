@@ -43,11 +43,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String getMemberBymId(String mId, String password) {
+	public String getMemberBymId(String mId, String password, HttpSession session) {
 		Member member = dao.selectMemberById(mId);
-		System.out.println(mId);
-		String passwd = member.getPassword();
+		session.setAttribute("loginuser", member);
 		
+		String passwd = member.getPassword();
 		String confirmPasswd = Util.getHashedString(password, "SHA-256");
 		
 		if (passwd.equals(confirmPasswd)) {
@@ -60,7 +60,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void chageMember(Member member) {
 		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
-		dao.updateMemberById(member);		
+		dao.updateMemberById(member);
 	}
 
 	@Override

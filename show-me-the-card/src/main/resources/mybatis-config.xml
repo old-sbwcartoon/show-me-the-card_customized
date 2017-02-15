@@ -37,6 +37,7 @@
   	<mapper resource="com/rnh/showmethecard/model/mapper/NoticeMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/EvaluationMapper.xml"/>
+ 	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/SearchMapper.xml"/> -->
   </mappers> 
   
 </configuration>

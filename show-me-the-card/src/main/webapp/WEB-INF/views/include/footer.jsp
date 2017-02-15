@@ -1,6 +1,10 @@
 
 <footer class="footer navbar-fixed-bottom">
 	<style type="text/css">
+	
+	
+	
+	
 		* {
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;

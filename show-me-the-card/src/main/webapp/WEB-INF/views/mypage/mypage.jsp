@@ -97,6 +97,8 @@
 
 
 
+
+
 </head>
 <body class="index">
 	<c:choose>
@@ -151,21 +153,30 @@
 
 
 
-	<button type="button" id="addFolder"
-		class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;+&nbsp;&nbsp;폴더추가
-		&nbsp;&nbsp;</button>
-	<button type="button" id="folder"
-		class="page-scroll waves-effect btn btn-primary" value="임시폴더1">
+	<button  type="button" id="addFolder"
+		 style="border:0px; margin:0px; padding:0px; width:75px; height:100px "><img style="height:100px" class="btn-img" src="/showmethecard/resources/images/cardpack.jpg">
+		&nbsp;#다이어트&nbsp;		
 		</button>
 
+<%-- 	<c:forEach var="notice" items="${ requestScope.notices }">
+	
+		
+		<button  type="button" id="addFolder"
+		 style="border:0px; margin:0px; padding:0px; width:75px; height:100px "><img style="height:100px" class="btn-img" src="/showmethecard/resources/images/cardpack.jpg">
+		&nbsp;&nbsp;</button>		
 
-<!-- Start Modal Section -->
+	</c:forEach> --%>
+	
+
+
+
+	<!-- Start Modal Section -->
 
 	<div class="container">
 		<div class="modal fade" id="loginModal" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
-				<div class="modal-content" >
+				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<div class="row">
@@ -192,26 +203,29 @@
 													data-validation-required-message="Please enter your id.">
 												<p class="help-block text-danger"></p>
 											</div>
-											<div>
-												<div class="col-md-12 form-group waves-effect" style="float : left; width:33%" >
+											<!-- <div>
+												<div class="col-md-12 form-group waves-effect"
+													style="float: left; width: 33%">
 													<input type="text" class="form-control" placeholder="#TAG1"
 														id="password" name="ft_name1" required
 														data-validation-required-message="Please enter your password.">
 													<p class="help-block text-danger"></p>
 												</div>
-												<div class="col-md-12 form-group waves-effect" style="float : left; width:33%" >
+												<div class="col-md-12 form-group waves-effect"
+													style="float: left; width: 33%">
 													<input type="text" class="form-control" placeholder="#TAG2"
 														id="password" name="ft_name2" required
 														data-validation-required-message="Please enter your password.">
 													<p class="help-block text-danger"></p>
 												</div>
-												<div class="col-md-12 form-group waves-effect" style="float : left; width:33%" >
+												<div class="col-md-12 form-group waves-effect"
+													style="float: left; width: 33%">
 													<input type="text" class="form-control" placeholder="#TAG3"
 														id="password" name="ft_name3" required
 														data-validation-required-message="Please enter your password.">
 													<p class="help-block text-danger"></p>
 												</div>
-											</div>
+											</div> -->
 										</div>
 										<div class="clearfix"></div>
 										<div class="modal-footer">
@@ -221,7 +235,7 @@
 													class="btn btn-primary waves-effect">&nbsp;&nbsp;등록&nbsp;&nbsp;</button>
 												<button type="button" class="btn btn-primary waves-effect"
 													data-dismiss="modal">&nbsp;&nbsp;취소&nbsp;&nbsp;</button>
-												
+
 											</div>
 										</div>
 									</div>
@@ -233,7 +247,7 @@
 			</div>
 		</div>
 	</div>
-<!-- End Modal Section -->
+	<!-- End Modal Section -->
 
 
 

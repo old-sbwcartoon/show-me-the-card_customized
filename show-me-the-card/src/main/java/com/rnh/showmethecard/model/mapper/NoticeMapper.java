@@ -17,7 +17,7 @@ public interface NoticeMapper {
 	
 	void UpdateNotice(Notice notice);	
 	
-	Notice SelectNoticeDetail(int noticeNo);
+	Notice SelectNoticeDetail(int nNo);
 	
 	
 }

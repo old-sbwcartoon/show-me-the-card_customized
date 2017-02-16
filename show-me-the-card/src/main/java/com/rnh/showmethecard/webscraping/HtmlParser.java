@@ -9,6 +9,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.rnh.showmethecard.card.classes.CheckUrlStatus;
+
 public class HtmlParser {
 	
 
@@ -16,7 +18,8 @@ public class HtmlParser {
 	private String title;
 	private String desc;
 	private String img;
-	
+	private boolean urlOk;
+
 	private Document urlDoc;
 	private Document domainDoc;
 
@@ -44,7 +47,12 @@ public class HtmlParser {
 	public void setImg(String img) {
 		this.img = img;
 	}
-	
+	public boolean isUrlOk() {
+		return urlOk;
+	}
+	public void setUrlOk(boolean urlOk) {
+		this.urlOk = urlOk;
+	}
 	
 	
 	
@@ -55,9 +63,16 @@ public class HtmlParser {
 //			e.printStackTrace();
 //		}
 		setUrl(url);
-		setTitle(getChoosedData(ParseKeyword.TITLE));
-		setDesc(getChoosedData(ParseKeyword.DESCRIPTION));
-		setImg(getChoosedData(ParseKeyword.IMAGE));
+		CheckUrlStatus checkUrlStatus = new CheckUrlStatus(getUrl());
+		this.setUrlOk(checkUrlStatus.isUrlOk());
+		
+		if (isUrlOk()) {
+			setTitle(getChoosedData(ParseKeyword.TITLE));
+			setDesc(getChoosedData(ParseKeyword.DESCRIPTION));
+			setImg(getChoosedData(ParseKeyword.IMAGE));
+		} else {
+			setUrl(null);
+		}
 	}
 	
 	

@@ -5,7 +5,24 @@ import java.net.URL;
 
 public class CheckUrlStatus {
 	private String url;
-	private int status;
+	private boolean urlOk;
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public boolean isUrlOk() {
+		return urlOk;
+	}
+
+	public void setUrlOk(boolean urlOk) {
+		this.urlOk = urlOk;
+	}
+
 	public CheckUrlStatus(String url){
 		try
         {
@@ -17,7 +34,11 @@ public class CheckUrlStatus {
 
             int code = connection.getResponseCode();  
             System.out.println("code: "+code);
-            status = code;
+            if(code == 200){
+            	urlOk = true;
+            }else{
+            	urlOk = false;
+            }
         }
         catch(Exception e)
         {

@@ -6,10 +6,26 @@
 <!-- namespace는 패키지.클래스이름을 의미 -->
 <mapper namespace="com.rnh.showmethecard.model.mapper.CardMapper">
 
-	<select id="SelectCardList" resultType="Card" parameterType="int">
-		SELECT c_no cNo FROM card where c_no = cNo;
+	<select id="selectCardDbBySiteUrl" resultType="boolean" parameterType="String">
+		SELECT * FROM card_db WHERE site_url = #{siteUrl} AND deleted = 0;
 	</select>
-
+	
+	<insert id="insertCardDb" parameterType="String">
+	
+		INSERT INTO card_db
+		(site_url, c_point, discover, c_name, c_rating)
+		VALUES (#{siteUrl}, 0, #{userId}, #{cName}, 0)	
+		
+	</insert>
+	
+	<insert id="insertMyCard" parameterType="String">
+	
+		INSERT INTO my_card
+		(card_no, f_no, myc_comment, scrap_count)
+		VALUES (#{cardNo}, 1, #{mycComment}, 0)	
+		
+	</insert>
+	
  	<!-- <select id="SelectNoticeList" resultType="Notice" parameterType="int">
 	
 		SELECT n_no nNo, title title, content content, m_id mId, reg_date regDate

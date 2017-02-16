@@ -74,82 +74,124 @@
 <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var siteUrl = "";
 		$('#siteUrl').blur(function() {
-			alert($('#siteUrl').val());
+			siteUrl = $('#siteUrl').val();
+			alert(siteUrl);
+			/* $("#resulttarget").load("card.action"); */
 			$.ajax ({
-		       	url : "searchchild.action",
+		       	url : "checkurl.action",
 		       	method : 'get',
-		       	data : "url=" + $('#siteUrl').val(),
-		       	dataType : 'text',
-		       	contentType:"application/text; charset=UTF-8",
+		       	data : "url=" + siteUrl,
+		       	dataType : 'html',
+		       	//contentType:"application/text; charset=UTF-8",
 		       	success : function (data) {
 		       		alert(data);
+		       		$("#resulttarget").html(data);
 		       	},
 		       	error : function(xhr, status, err) {
 		       		alert("실패");
+		       		$("#resulttarget").html("주소가 올바르지 않습니다.")
 				}
 		      });
 		});
 	});
 </script>
+
+<style>
+#div1{
+	float:left;
+	width:80%;
+}
+</style>
 <body class="index">
     
     <c:import url="/WEB-INF/views/include/navigator.jsp" />
 
     <!-- Start Contact Us Section -->
-    <section id="contact" class="contact contact-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>My Card 등록</h2>
-                        <p>Show Me The Card</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
-                        <div class="row">
-                            <div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
-                                <div class="form-group waves-effect">
-                                    <input type="text" class="form-control" placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요" id="siteUrl" required data-validation-required-message="Please enter your id.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group waves-effect">
-                                    <input type="password" class="form-control" placeholder="Your Password *" id="mPassword" required data-validation-required-message="Please enter your password.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group waves-effect">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="mName" required data-validation-required-message="Please enter your name.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group waves-effect">
-                                    <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Please enter your phone number.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group waves-effect">
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-lg-12 text-center">
-                                <div id="success"></div>
-                                <button type="submit" class="btn btn-primary waves-effect">Send Message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-    </section>
-    
-   
-    
-    
-    
+	<section id="contact" class="contact contact-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-title text-center wow fadeInDown"
+						data-wow-duration="2s" data-wow-delay="50ms">
+						<h2>My Card 등록</h2>
+						<p>Show Me The Card</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="row">
+		<div class="col-lg-12">
+			<button id="modalbutton" type="button" class="btn btn-info btn-lg"
+				data-toggle="modal" data-target="#registercard">+</button>
+		</div>
+	</div>
+	
+
+
+
+
+	<!-- 모달 시작 -->
+	<div class="container">
+		<div class="modal fade" id="registercard" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="section-title text-center wow fadeInDown"
+									data-wow-duration="2s" data-wow-delay="50ms">
+									<h2>ADD MY CARD</h2>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<form name="sentMessage"
+									action="/showmethecard/account/login.action" method="post"
+									id="contactForm">
+									<div class="row">
+										<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s"
+											data-wow-delay="600ms">
+											<div class="col-md-12 form-group waves-effect">
+												<input type="text" class="form-control" placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요" id="siteUrl" />
+												<p class="help-block text-danger"></p>
+											</div>
+											<div id="resulttarget"></div>
+											<div class="col-md-12 form-group waves-effect">
+												<input type="text" class="form-control" placeholder="이름" id="cName" />
+												<p class="help-block text-danger"></p>
+											</div>
+											<div class="col-md-12 form-group waves-effect">
+												<input type="text" class="form-control" placeholder="내용" id="content" />
+												<p class="help-block text-danger"></p>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<div class="modal-footer">
+											<div class="col-lg-12 text-center">
+												<button type="submit" id="login" class="btn btn-primary waves-effect">&nbsp;&nbsp;취소&nbsp;&nbsp;</button>
+												<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">완료</button>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 모달 끝 -->
+	
     <!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->   

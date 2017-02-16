@@ -8,7 +8,7 @@ import com.rnh.showmethecard.model.dto.Card;
 
 public interface CardService {
 	
-	String checkAndShowList(String userId, String userType);
+	boolean checkCardDb(String siteUrl);
 //	
 //	void inputAdviceNote(AdviceNote adviceNote, String userType);
 //	

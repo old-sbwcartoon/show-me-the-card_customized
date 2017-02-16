@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.QnaMapper">
+
+ 	<select id="SelectQnaList" resultType="Qna" parameterType="int">
+	
+		SELECT q_no qNo, title title, content content, m_id mId, reg_date regDate
+
+		FROM QNA
+		
+		WHERE deleted = '0'
+		
+	</select>
+	
+	<insert id="InsertQna" parameterType="Qna">
+	
+		INSERT INTO QNA
+		(TITLE, CONTENT, M_ID)
+		VALUES (#{title}, #{content}, #{mId})	
+		
+	</insert>
+	
+	
+	
+	<update id="DeleteQna" parameterType="Qna">
+	
+		UPDATE QNA
+		SET deleted = '1', TITLE = #{title}
+		WHERE N_NO = #{nNo}			
+		
+	</update>
+	 
+	
+	<update id="UpdateQna" parameterType="Qna">
+	
+		UPDATE QNA
+		SET TITLE = #{title}, CONTENT = #{content}
+		WHERE Q_NO = #{qNo}	
+		
+	</update>	
+	
+	
+	
+	<select id="SelectQnaDetail" parameterType="int" resultType="Qna">
+	
+		SELECT q_no qNo, title title, content content, m_id mId, reg_date regDate
+
+		FROM QNA
+		
+		WHERE q_no = #{qNo}
+		
+	</select>
+
+</mapper>
+
+
+

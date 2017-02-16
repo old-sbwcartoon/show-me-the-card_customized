@@ -1,13 +1,12 @@
 
-
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<title>NoticeEdit</title>
+<title>공지사항 작성</title>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +90,7 @@
 	font-weight: bold;
 }
 
-#hqnoticeform {
+#hqqnaform {
 	margin-left: 250px;
 	width: 1000px;
 }
@@ -131,27 +130,21 @@
 		<div id="pageContainer">
 			<c:import url="/WEB-INF/views/include/navigator.jsp" />
 			<!-- 삭제하기 -->
-			<div id="preloader">
-				<div id="status">&nbsp;</div>
-			</div>
-
-			<br /> <br /> <br /> <br /> <br />
 			<div class="jumbotron">
-				<h1 id="maintitle">공지사항 수정</h1>
+				<h1 id="maintitle">Q&A 작성</h1>
 
 			</div>
 
-			<form:form id="form233" action="update.action" method="post"
-				modelAttribute="notice">
-				<input type="hidden" name="nNo" value="${notice.nNo}">
-				<table id=hqnoticeform>
+			<form:form id="form233" action="insertQna.action" method="post"
+				modelAttribute="qna">
+
+				<table id=hqqnaform>
 					<tr>
 						<th></th>
 						<td>
 							<div class="form-group">
 								<label for="title">제목:</label> <input type="text"
-									class="form-control" name="title" value="${notice.title}"
-									id="title">
+									class="form-control" name="title" id="title">
 							</div>
 						</td>
 					</tr>
@@ -162,13 +155,12 @@
 							<div id="title">
 								<label for="inputdefault">작성자:</label> <input
 									class="form-control" name="mId" id="writer" type="text"
-									value="${notice.mId}" readonly>
+									value="${ loginuser.mId }" readonly>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th></th>
-						<td></td>
 					</tr>
 					<tr>
 						<th></th>
@@ -177,16 +169,19 @@
 								<label for="content">내용:</label>
 
 								<textarea id="contenttext" name="content" class="form-control"
-									rows="5">${notice.content}</textarea>
+									rows="5"></textarea>
 							</div>
 						</td>
 					</tr>
+
+
+
 				</table>
 			</form:form>
 			<div id=buttongroup>
 				<button id="submit-link" class="btn btn-default">작성완료</button>
-				&nbsp;&nbsp;&nbsp; <a href="detail.action?nNo=${notice.nNo}"
-					type="button" id="cancel" class="btn btn-default">취소</a>
+				&nbsp;&nbsp;&nbsp; <a href="qnaList.action" type="button"
+					id="cancel" class="btn btn-default">취소</a>
 			</div>
 		</div>
 	</section>

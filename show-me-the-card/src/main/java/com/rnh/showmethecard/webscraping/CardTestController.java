@@ -22,7 +22,7 @@ public class CardTestController {
 	@RequestMapping(value = "/showcard.action", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public String urlSearch(Model model, String url) {
 		HtmlParser h = new HtmlParser(url);
-
+			
 		model.addAttribute("url", h.getUrl());
 		model.addAttribute("title", h.getTitle());
 		model.addAttribute("desc", h.getDesc());

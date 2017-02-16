@@ -120,9 +120,9 @@ public class MemberController {
 	@ResponseBody
 	public String memberLevel(int mPoint) {
 		String level = "";
-		for (int i = 1; i < 100; i++) {
+		for (int i = 0; i < 100; i++) {
 			if ( 50*i*(i+1) < mPoint && mPoint < 50*(i+1)*(i+2)) {
-				level = "level" + i;
+				level = "LEVEL " + (i+1);
 			}
 		}
 		return level;

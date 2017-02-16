@@ -71,10 +71,12 @@
     <script src="../resources/assets/js/waypoints.min.js"></script>
 
 	<script type="text/javascript">
+	//point -> level
 		$(document).ready(function() {
+			//alert(${loginuser.mPoint});
 			$.ajax({
 				url : "/showmethecard/member/memberLevel.action",
-				data : { mPoint : ${ loginuser.mPoint } } ,
+				data : { mPoint : ${loginuser.mPoint} } ,
 				method : "post",
 				dataType : "text",
 				success : function(data, status, xhr) {
@@ -104,7 +106,7 @@
             </div>
             
             <div>
-            	<h3>&nbsp;&nbsp;총 ${ loginuser.mPoint } 점 &nbsp;</h3>
+            	<h3 id="mPoint">&nbsp;&nbsp;총 ${ loginuser.mPoint } 점 &nbsp;</h3>
             	<table class="table">
             		<thead class="text-danger">
             			<tr>

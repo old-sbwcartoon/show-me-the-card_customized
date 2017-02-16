@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -153,21 +154,37 @@
 		<div style="height:368px; width:260px; margin:5px 0px; padding:16px 20px; background-color:rgb(245,245,245);">
 			<div class="textbox title">${title}</div>
 			<div class="textbox desc">${desc}</div>
-		</div>
+		</div>		
 	</div>
-
-	<div id="evaluation" class="box" style="height:400px; width:800px;">평점<p>
-		<form name="evaluationform" method="GET" action="/showmethecard/evaluation/evaluationsend.action">
-			<input name="rating" type="text" style="weight:700px;" value="rating"/>
-			<input name="comment" type="text" style="weight:700px;" value="comment"/>
-			<input id="evalcommentsubmit" type="submit" value="평가"/>
+	
+	<div id="evaluation-rating" class="box" style="height:400px; width:800px;">평점<p>
+		<form name="evaluation-rating-form" method="GET" action="addevalrating.action">
+			<input type="text" style="weight:700px;"/>
+			<input type="text" style="weight:700px;"/>
+			<input id="evaluation-rating-submit" type="submit" value="평가"/>
 		</form>
-		<form name="evaluationlikedform" method="GET" action="/showmethecard/evaluation/evaluationaddliked.action">
-			<input id="evallikedsubmit" name="" type="submit" value="좋아요"/>
-		</form>
-	</div>
-	<div class="box" style="height:400px; width:800px;">
+		<h2>${liked}</h2>
+		<form name="evaluation-rating-liked" method="GET" action="addevalratingliked.action">
+			<button type="submit">좋아요 !!</button>
+		</form>		
 		
+		<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
+			<tr>
+				<td>cardNo: ${ ratinglist.cardNo }</td>
+				<td>mId: ${ ratinglist.mId }</td>
+				<td>content: ${ ratinglist.content }</td>
+				<td>regDate: ${ ratinglist.regDate }</td>
+				<td>eRating: ${ ratinglist.eRating }</td>
+				<td>eLikedSum: ${ ratinglist.eLikedSum }</td>
+			</tr>
+		</c:forEach>
+		
+	</div>
+	<div id="evaluation-comment" class="box" style="height:400px; width:800px;">댓글<p>
+		<form name="evaluation-comment-form" method="GET" action="addevalcomment.action">
+			<input type="text" style="weight:700px;"/>
+			<input id="evaluation-comment-submit" type="submit" value="커멘트"/>
+		</form>
 	</div>
 	<div class="box" style="height:400px; width:800px;">
 		

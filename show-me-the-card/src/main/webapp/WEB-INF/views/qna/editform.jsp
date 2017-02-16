@@ -1,5 +1,3 @@
-
-
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -7,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>NoticeEdit</title>
+<title>Q & A</title>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +89,7 @@
 	font-weight: bold;
 }
 
-#hqnoticeform {
+#hqqnaform {
 	margin-left: 250px;
 	width: 1000px;
 }
@@ -137,20 +135,20 @@
 
 			<br /> <br /> <br /> <br /> <br />
 			<div class="jumbotron">
-				<h1 id="maintitle">공지사항 수정</h1>
+				<h1 id="maintitle">Q&A 수정</h1>
 
 			</div>
 
 			<form:form id="form233" action="update.action" method="post"
-				modelAttribute="notice">
-				<input type="hidden" name="nNo" value="${notice.nNo}">
-				<table id=hqnoticeform>
+				modelAttribute="qna">
+				<input type="hidden" name="qNo" value="${qna.qNo}">
+				<table id=hqqnaform>
 					<tr>
 						<th></th>
 						<td>
 							<div class="form-group">
 								<label for="title">제목:</label> <input type="text"
-									class="form-control" name="title" value="${notice.title}"
+									class="form-control" name="title" value="${qna.title}"
 									id="title">
 							</div>
 						</td>
@@ -162,7 +160,7 @@
 							<div id="title">
 								<label for="inputdefault">작성자:</label> <input
 									class="form-control" name="mId" id="writer" type="text"
-									value="${notice.mId}" readonly>
+									value="${qna.mId}" readonly>
 							</div>
 						</td>
 					</tr>
@@ -177,15 +175,15 @@
 								<label for="content">내용:</label>
 
 								<textarea id="contenttext" name="content" class="form-control"
-									rows="5">${notice.content}</textarea>
+									rows="5">${qna.content}</textarea>
 							</div>
 						</td>
 					</tr>
 				</table>
 			</form:form>
 			<div id=buttongroup>
-				<button id="submit-link" class="btn btn-default">작성완료</button>
-				&nbsp;&nbsp;&nbsp; <a href="detail.action?nNo=${notice.nNo}"
+				<button id="submit-link" class="btn btn-default">작성 완료</button>
+				&nbsp;&nbsp;&nbsp; <a href="detail.action?qNo=${qna.qNo}"
 					type="button" id="cancel" class="btn btn-default">취소</a>
 			</div>
 		</div>

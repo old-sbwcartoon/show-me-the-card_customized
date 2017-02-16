@@ -18,8 +18,9 @@ public class CardServiceImpl implements CardService {
 	private CardDao cardDao;
 	
 	@Override
-	public String checkAndShowList(String userId, String userType){
-		return "";
+	public boolean checkCardDb(String siteUrl){
+		
+		return false;
 	}
 //	private AdviceNote adviceNote;
 //	private AdviceNoteForList adviceNoteForList;

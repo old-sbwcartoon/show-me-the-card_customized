@@ -54,7 +54,7 @@ public class EvaluationController {
 		
 		// 별점 평균
 		// Evaluation e = new Evaluation();
-		model.addAttribute("evallist", service.showEvaluationRatingList(2));
+		model.addAttribute("evalRatingList", service.showEvaluationRatingList(2));
 		
 		return "evaluation/evaluationmain";
 	}

@@ -65,17 +65,18 @@
 	select sum(ER_LIKED)
 	from EVALUATION_RATING_LIKED
 	where M_ID = #{mId} AND CARD_NO = #{cardNo}
+		AND deleted = 0
 </select>
 
 
 
 <resultMap id="evaluationRatingListMap" type="EvaluationRating">
-		<id property="cardNo" column="e.CARD_NO" />
-		<id property="mId" column="e.M_ID" />
-        <result property="content" column="e.CONTENT" />
-	    <result property="regDate" column="e.REG_DATE" />
-	    <result property="eRating" column="e.RATING" />
-	    <result property="deleted" column="e.deleted" />
+		<id property="cardNo" column="CARD_NO" />
+		<id property="mId" column="M_ID" />
+        <result property="content" column="CONTENT" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="eRating" column="E_RATING" />
+	    <result property="deleted" column="deleted" />
 	    <result property="eLikedSum" column="E_LIKED_SUM" />
 </resultMap>
 
@@ -91,6 +92,7 @@
 		left outer join EVALUATION_RATING_LIKED el
 		on e.CARD_NO = el.CARD_NO AND e.M_ID = el.M_ID
 	where e.CARD_NO = #{cardNo}
+		AND e.deleted = 0
 	group by e.M_ID, e.CARD_NO
 </select>
 

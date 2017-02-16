@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -155,18 +154,7 @@
 		<div style="height:368px; width:260px; margin:5px 0px; padding:16px 20px; background-color:rgb(245,245,245);">
 			<div class="textbox title">${title}</div>
 			<div class="textbox desc">${desc}</div>
-		</div>
-		
-		<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
-			<tr>
-				<td>${ratinglist.cardNo}</td>
-				<td>${ratinglist.mId}</td>
-				<td>${ratinglist.content}</td>
-				<td><fmt:formatDate value="${ratinglist.regDate}" pattern="yyyy-MM-dd"/></td>
-				<td>${ratinglist.eRating}</td>
-				<td>${ratinglist.eLikedSum}</td>
-			</tr>
-		</c:forEach>
+		</div>		
 	</div>
 	
 	<div id="evaluation-rating" class="box" style="height:400px; width:800px;">평점<p>
@@ -177,8 +165,19 @@
 		</form>
 		<h2>${liked}</h2>
 		<form name="evaluation-rating-liked" method="GET" action="addevalratingliked.action">
-			<button type="submit">좋아요 !!</button> 
-		</form>
+			<button type="submit">좋아요 !!</button>
+		</form>		
+		
+		<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
+			<tr>
+				<td>cardNo: ${ ratinglist.cardNo }</td>
+				<td>mId: ${ ratinglist.mId }</td>
+				<td>content: ${ ratinglist.content }</td>
+				<td>regDate: ${ ratinglist.regDate }</td>
+				<td>eRating: ${ ratinglist.eRating }</td>
+				<td>eLikedSum: ${ ratinglist.eLikedSum }</td>
+			</tr>
+		</c:forEach>
 		
 	</div>
 	<div id="evaluation-comment" class="box" style="height:400px; width:800px;">댓글<p>

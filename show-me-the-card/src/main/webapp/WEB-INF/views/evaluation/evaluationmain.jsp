@@ -155,12 +155,15 @@
 			<div class="textbox desc">${desc}</div>
 		</div>
 	</div>
-	
+
 	<div id="evaluation" class="box" style="height:400px; width:800px;">평점<p>
-		<form name="evaluationform" method="GET" action="evaluationsend.action">
-			<input type="text" style="weight:700px;"/>
-			<input type="text" style="weight:700px;"/>
-			<input id="evaluationsubmit" type="submit" value="평가"/>
+		<form name="evaluationform" method="GET" action="/showmethecard/evaluation/evaluationsend.action">
+			<input name="rating" type="text" style="weight:700px;" value="rating"/>
+			<input name="comment" type="text" style="weight:700px;" value="comment"/>
+			<input id="evalcommentsubmit" type="submit" value="평가"/>
+		</form>
+		<form name="evaluationlikedform" method="GET" action="/showmethecard/evaluation/evaluationaddliked.action">
+			<input id="evallikedsubmit" name="" type="submit" value="좋아요"/>
 		</form>
 	</div>
 	<div class="box" style="height:400px; width:800px;">

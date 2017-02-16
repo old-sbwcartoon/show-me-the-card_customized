@@ -2,7 +2,10 @@ package com.rnh.showmethecard.model.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 
 public interface MemberService {
 		
@@ -12,11 +15,13 @@ public interface MemberService {
 	
 	Member getMemberBymIdAndPassword(String mId, String password);
 	
-	String getMemberBymId(String mId, String password);
+	String getMemberBymId(String mId, String password, HttpSession session);
 	
 	void chageMember(Member member);
 	
 	void deleteMember(String mId);
 	
 	List<Member> getMemberList();
+	
+	List<MemberHistory> getPointHistory(String mId);
 }

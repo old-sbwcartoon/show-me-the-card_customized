@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -43,11 +44,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String getMemberBymId(String mId, String password) {
+	public String getMemberBymId(String mId, String password, HttpSession session) {
 		Member member = dao.selectMemberById(mId);
-		System.out.println(mId);
-		String passwd = member.getPassword();
+		session.setAttribute("loginuser", member);
 		
+		String passwd = member.getPassword();
 		String confirmPasswd = Util.getHashedString(password, "SHA-256");
 		
 		if (passwd.equals(confirmPasswd)) {
@@ -60,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void chageMember(Member member) {
 		member.setPassword(Util.getHashedString(member.getPassword(), "SHA-256"));
-		dao.updateMemberById(member);		
+		dao.updateMemberById(member);
 	}
 
 	@Override
@@ -72,6 +73,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> getMemberList() {
 		List<Member> members = dao.selectMemberList();
 		return members;
+	}
+
+	@Override
+	public List<MemberHistory> getPointHistory(String mId) {
+		List<MemberHistory> history =  dao.selectPointHistory(mId);
+		return history;
 	}
 	
 	

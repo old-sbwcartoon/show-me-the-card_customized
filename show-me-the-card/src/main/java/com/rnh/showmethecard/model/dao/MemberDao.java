@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.dao;
 import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 
 public interface MemberDao {
 	
@@ -17,5 +18,7 @@ public interface MemberDao {
 	void deleteMemberById(String mId);
 	
 	List<Member> selectMemberList();
+	
+	List<MemberHistory> selectPointHistory(String mId);
 
 }

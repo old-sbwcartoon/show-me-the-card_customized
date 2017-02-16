@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -154,17 +156,36 @@
 			<div class="textbox title">${title}</div>
 			<div class="textbox desc">${desc}</div>
 		</div>
+		
+		<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
+			<tr>
+				<td>${ratinglist.cardNo}</td>
+				<td>${ratinglist.mId}</td>
+				<td>${ratinglist.content}</td>
+				<td><fmt:formatDate value="${ratinglist.regDate}" pattern="yyyy-MM-dd"/></td>
+				<td>${ratinglist.eRating}</td>
+				<td>${ratinglist.eLikedSum}</td>
+			</tr>
+		</c:forEach>
 	</div>
 	
-	<div id="evaluation" class="box" style="height:400px; width:800px;">평점<p>
-		<form name="evaluationform" method="GET" action="evaluationsend.action">
+	<div id="evaluation-rating" class="box" style="height:400px; width:800px;">평점<p>
+		<form name="evaluation-rating-form" method="GET" action="addevalrating.action">
 			<input type="text" style="weight:700px;"/>
 			<input type="text" style="weight:700px;"/>
-			<input id="evaluationsubmit" type="submit" value="평가"/>
+			<input id="evaluation-rating-submit" type="submit" value="평가"/>
 		</form>
-	</div>
-	<div class="box" style="height:400px; width:800px;">
+		<h2>${liked}</h2>
+		<form name="evaluation-rating-liked" method="GET" action="addevalratingliked.action">
+			<button type="submit">좋아요 !!</button> 
+		</form>
 		
+	</div>
+	<div id="evaluation-comment" class="box" style="height:400px; width:800px;">댓글<p>
+		<form name="evaluation-comment-form" method="GET" action="addevalcomment.action">
+			<input type="text" style="weight:700px;"/>
+			<input id="evaluation-comment-submit" type="submit" value="커멘트"/>
+		</form>
 	</div>
 	<div class="box" style="height:400px; width:800px;">
 		

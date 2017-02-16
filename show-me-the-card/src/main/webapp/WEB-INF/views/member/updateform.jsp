@@ -77,16 +77,20 @@
 				$("#password").val("");
 				$("#passwordConfirm").val("");
 				alert("비밀번호가 일치하지 않습니다.");
+			} else if ($("#password").val() == "") {
+				alert("비밀번호를 입력해주세요!");
 			} else {
 				//정보수정
 				$("#updateForm").submit();
 			}
 		});
+		
+		
 		$("#outMember").click(function(){
 			//메시지 확인하고 controller 보내기
 			var r = confirm("정말 탈퇴하시겠습니까?");
 		    if (r == true) {
-		    	location.href = "/showmethecard/member/deleteMember.action?mId=" + ${ loginuser.mId };
+		    	location.href="/showmethecard/member/deleteMember.action";
 		    } 
 		});		
 	});
@@ -116,11 +120,11 @@
                             <div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">ID</h3>
-                                    <input type="text" readonly="readonly" class="form-control" placeholder="Your Id *" id="mId" value="${ loginuser.mId }">
+                                    <input type="text" readonly="readonly" class="form-control" placeholder="Your Id *" name="mId" value="${ loginuser.mId }">
                                 </div>
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">PASSWORD</h3>
-                                    <input type="password" class="form-control" placeholder="Your Password *" id="password">
+                                    <input type="password" class="form-control" placeholder="Your Password *" name="password" id="password">
                                 </div>
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">PASSWORD CONFIRM</h3>
@@ -128,15 +132,15 @@
                                 </div>
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">NAME</h3>
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="mName" value="${ loginuser.mName }">
+                                    <input type="text" class="form-control" placeholder="Your Name *" name="mName" value="${ loginuser.mName }">
                                 </div>
                                 <div class="form-group waves-effect">
                                 	<h3 class="help-block text-danger">PHONE</h3>
-                                	<input type="tel" class="form-control" placeholder="Your Phone *" id="phone" value="${ loginuser.phone }">
+                                	<input type="tel" class="form-control" placeholder="Your Phone *" name="phone" value="${ loginuser.phone }">
                                 </div>
                                 <div class="form-group waves-effect">
                                 	<h3 class="help-block text-danger">EMAIL</h3>
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" value="${ loginuser.email }">
+                                    <input type="email" class="form-control" placeholder="Your Email *" name="email" value="${ loginuser.email }">
                                 </div>
                             </div>
                             <div class="clearfix"></div>

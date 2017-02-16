@@ -1,32 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
 
-
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<title>NoticeEdit</title>
 <meta charset="utf-8" />
+<title>Show Me The Cards</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<!-- Bootstrap Core CSS -->
+	<!-- Bootstrap Core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/bootstrap/css/bootstrap.min.css">
 
-<!-- Font Awesome CSS -->
+	<!-- Font Awesome CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/font-awesome.min.css">
 
-<!-- Animate CSS -->
+	<!-- Animate CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/animate.css">
 
-<!-- Owl-Carousel -->
+	<!-- Owl-Carousel -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/owl.carousel.css">
 <link rel="stylesheet" type="text/css"
@@ -34,25 +37,25 @@
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/owl.transitions.css">
 
-<!-- Materialize CSS -->
+	<!-- Materialize CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/material.css">
 
-<!-- Custom CSS -->
+	<!-- Custom CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/style.css">
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/responsive.css">
 
-<!-- Colors CSS -->
+	<!-- Colors CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/css/color/blue.css" title="blue">
 
-<!-- Custom Fonts -->
+	<!-- Custom Fonts -->
 <link href='http://fonts.googleapis.com/css?family=Kaushan+Script'
 	rel='stylesheet' type='text/css'>
 
-<!-- Modernizer js -->
+	<!-- Modernizer js -->
 <script src="../resources/assets/js/modernizr.custom.js"></script>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -83,117 +86,90 @@
 <script src="../resources/assets/js/material.js"></script>
 <script src="../resources/assets/js/waypoints.min.js"></script>
 
-<style type="text/css">
-#maintitle {
-	font-size: 60px;
-	color: #333333;
-	text-align: center;
-	font-weight: bold;
-}
-
-#hqnoticeform {
-	margin-left: 250px;
-	width: 1000px;
-}
-
-#fontstyle {
-	float: right;
-}
-
-#contenttext {
-	width: 1000px;
-	height: 300px;
-	resize: none;
-}
-
-#buttongroup {
-	margin-top: 50px;
-	text-align: center;
-	margin-bottom: 100px;
-}
-</style>
-<script type="text/javascript" src="/example-web/script/jquery-3.1.1.js"></script>
-
 <script type="text/javascript">
-	window.addEventListener('load', function(event) {
-		var link = document.querySelector('#submit-link');
-		link.addEventListener('click', function(event) {
-			var form = document.querySelector('#form233');
-			form.submit();//<form 을 서버로 전송하는 명령
-		});
-	});
+	function doDelete(qNo) {
+
+		var ok = confirm(qNo + '번 글을 삭제할까요?');
+		if (ok) {
+			location.href = 'deleteqna.action?qNo=' + qNo;
+		}
+	}
 </script>
+<style>
+</style>
+
+<title>Q & A</title>
 </head>
 <body>
 
+	<c:import url="/WEB-INF/views/include/navigator.jsp" />
+	<!-- 삭제하기 -->
+
 	<!-- Start Contact Us Section -->
 	<section id="contact" class="contact contact-section">
-		<div id="pageContainer">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- 삭제하기 -->
-			<div id="preloader">
-				<div id="status">&nbsp;</div>
-			</div>
+		<div id="preloader">
+			<div id="status">&nbsp;</div>
+		</div>
 
-			<br /> <br /> <br /> <br /> <br />
-			<div class="jumbotron">
-				<h1 id="maintitle">공지사항 수정</h1>
+		<br /> <br /> <br /> <br /> <br />
+		<div class="container">
+			<div style="padding-top: 25px; text-align: center">
+				<div id="inputcontent">
+					<div id="inputmain">
+						<div class="inputsubtitle">Q&A 글 내용</div>
 
-			</div>
 
-			<form:form id="form233" action="update.action" method="post"
-				modelAttribute="notice">
-				<input type="hidden" name="nNo" value="${notice.nNo}">
-				<table id=hqnoticeform>
-					<tr>
-						<th></th>
-						<td>
-							<div class="form-group">
-								<label for="title">제목:</label> <input type="text"
-									class="form-control" name="title" value="${notice.title}"
-									id="title">
-							</div>
-						</td>
-					</tr>
+						<table>
+							<tr>
+								<th>No</th>
+								<td>${qna.qNo}</td>
+							</tr>
+							<tr>
+								<th>제목</th>
+								<td>${qna.title}</td>
+							</tr>
+							<tr>
+								<th>작성자</th>
+								<td>${ qna.mId }</td>
+							</tr>
+							<tr>
+								<th>작성일</th>
+								<td><fmt:formatDate value="${qna.regDate}"
+										pattern="yyyy-MM-dd" /></td>
+							</tr>
 
-					<tr>
-						<th></th>
-						<td>
-							<div id="title">
-								<label for="inputdefault">작성자:</label> <input
-									class="form-control" name="mId" id="writer" type="text"
-									value="${notice.mId}" readonly>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td></td>
-					</tr>
-					<tr>
-						<th></th>
-						<td>
-							<div class="form-group">
-								<label for="content">내용:</label>
+							<tr>
+								<th>내용</th>
+								<td style="height: 200px; vertical-align: top">${qna.content}</td>
+							</tr>
+						</table>
 
-								<textarea id="contenttext" name="content" class="form-control"
-									rows="5">${notice.content}</textarea>
-							</div>
-						</td>
-					</tr>
-				</table>
-			</form:form>
-			<div id=buttongroup>
-				<button id="submit-link" class="btn btn-default">작성완료</button>
-				&nbsp;&nbsp;&nbsp; <a href="detail.action?nNo=${notice.nNo}"
-					type="button" id="cancel" class="btn btn-default">취소</a>
+
+						<div class="buttons">
+							<c:if
+								test="${ loginuser.userType eq '1' || qna.mId eq loginuser.mId }">
+								<a href="update.action?qNo=${qna.qNo}">수정</a>
+								<a href='javascript:doDelete(${qna.qNo})'>삭제</a>
+							</c:if>
+							<c:if
+								test="${ loginuser.userType eq '1' }">
+								<a href="relay.action?qNo=${qna.qNo}">답변달기</a>
+							</c:if>
+						</div>
+					</div>
+				</div>
+
+				<br /> <br />
+
 			</div>
 		</div>
 	</section>
 
+
 	<!-- Start Footer Section -->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer Section -->
+
 </body>
 
 <!-- Custom JavaScript -->

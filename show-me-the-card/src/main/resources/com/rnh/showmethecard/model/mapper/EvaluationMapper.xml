@@ -5,4 +5,94 @@
 	
 <mapper namespace="com.rnh.showmethecard.model.mapper.EvaluationMapper">
 
+
+
+
+<insert id="insertEvaluationRating" parameterType="HashMap">
+	insert into EVALUATION_RATING (
+		M_ID
+		, CARD_NO
+		, CONTENT
+		, E_RATING
+		)
+	select #{mId}, #{cardNo}, #{content}, #{eRating} from dual
+	where not exists (
+		select M_ID, CARD_NO
+		from EVALUATION_RATING
+		where CARD_NO = #{cardNo} AND M_ID = #{mId}
+		)
+</insert>
+
+
+<insert id="insertEvaluationComment" parameterType="HashMap">
+	insert into EVALUATION_COMMENT (
+		M_ID
+		, CARD_NO
+		, CONTENT
+		)
+	values (
+		#{mId}
+		, #{cardNo}
+		, #{content}
+		)
+</insert>
+
+
+<insert id="insertEvaluationRatingLiked" parameterType="HashMap">
+	insert EVALUATION_RATING_LIKED (
+		M_ID
+		, CARD_NO
+		, LIKED_M_ID
+		)
+	select #{mId}, #{cardNo}, #{likedmId} from dual
+	where #{mId} != #{likedmId}
+		AND exists (
+		select M_ID, CARD_NO
+        from EVALUATION_RATING
+        where M_ID = #{mId} AND CARD_NO = #{cardNo}
+        )
+        AND not exists (
+		select ER_LIKED
+		from EVALUATION_RATING_LIKED
+		where M_ID = #{mId} AND CARD_NO = #{cardNo} AND LIKED_M_ID = #{likedmId}
+		);
+</insert>
+
+
+
+
+<select id="selectEvaluationRatingLikedList" resultType="Integer" parameterType="HashMap">
+	select sum(ER_LIKED)
+	from EVALUATION_RATING_LIKED
+	where M_ID = #{mId} AND CARD_NO = #{cardNo}
+</select>
+
+
+
+<resultMap id="evaluationRatingListMap" type="EvaluationRating">
+		<id property="cardNo" column="e.CARD_NO" />
+		<id property="mId" column="e.M_ID" />
+        <result property="content" column="e.CONTENT" />
+	    <result property="regDate" column="e.REG_DATE" />
+	    <result property="eRating" column="e.RATING" />
+	    <result property="deleted" column="e.deleted" />
+	    <result property="eLikedSum" column="E_LIKED_SUM" />
+</resultMap>
+
+<select id="selectEvaluationRatingList" resultMap="evaluationRatingListMap" parameterType="Integer">
+	select e.CARD_NO
+			, e.M_ID
+			, e.CONTENT
+			, e.REG_DATE
+			, e.E_RATING
+			, e.deleted
+			, sum(el.ER_LIKED) E_LIKED_SUM
+	from EVALUATION_RATING e
+		left outer join EVALUATION_RATING_LIKED el
+		on e.CARD_NO = el.CARD_NO AND e.M_ID = el.M_ID
+	where e.CARD_NO = #{cardNo}
+	group by e.M_ID, e.CARD_NO
+</select>
+
+
 </mapper>

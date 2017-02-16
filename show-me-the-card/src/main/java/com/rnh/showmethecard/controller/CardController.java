@@ -54,16 +54,17 @@ public class CardController {
 		Member member = (Member) session.getAttribute("loginuser");
 		String mId = member.getmId();
 		
-		CheckUrlStatus checkUrlStatus = new CheckUrlStatus(url);
-		
 		HtmlParser h = new HtmlParser(url);
 		
 		CardBasicInfo cInfo = new CardBasicInfo();
 		
-		cInfo.setImgUrl(h.getImg());
-		cInfo.setUrl(h.getUrl());
-		cInfo.setTitle(h.getTitle());
-		cInfo.setContent(h.getDesc());
+		if (h.isUrlOk()) {
+			cInfo.setImgUrl(h.getImg());
+			cInfo.setUrl(h.getUrl());
+			cInfo.setTitle(h.getTitle());
+			cInfo.setContent(h.getDesc());
+		}
+		
 		
 		String strJson = gson.toJson(cInfo);
 		System.out.println(strJson);

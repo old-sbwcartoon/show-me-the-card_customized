@@ -1,6 +1,9 @@
 package com.rnh.showmethecard.controller;
 
+import java.net.URL;
+
 import javax.servlet.http.HttpSession;
+import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,8 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.CardDao;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
@@ -24,26 +30,49 @@ public class CardController {
 	public void setDao(CardDao dao) {
 		this.dao = dao;
 	}
+	
+	Gson gson = new Gson();
+	
+	
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
 	public String cardRegisterForm() {
 		return "card/cardregisterform";
 	}
+	
+	@RequestMapping(value="card.action", method=RequestMethod.GET)
+	public String card() {
+		return "card/card";
+	}
 	@RequestMapping(value="checkurl.action", method = RequestMethod.GET,  produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String checkandshowcard(Model model, HttpSession session, String url) {
-		
+	public String checkandshowcard(HttpSession session, String url) {
+		//URL javaUrl = url;
+//		ModelAndView mav = new ModelAndView("/WEB-INF/view/card/card.jsp");
+//		//mav.
+		System.out.println(url);
 		Member member = (Member) session.getAttribute("loginuser");
-		
 		String mId = member.getmId();
-		
 		HtmlParser h = new HtmlParser(url);
-		System.out.println("url:"+url+"/mId:"+mId);
+		
+		CardBasicInfo cInfo = new CardBasicInfo();
+		
+		cInfo.setImgUrl(h.getImg());
+		cInfo.setUrl(h.getUrl());
+		cInfo.setTitle(h.getTitle());
+		cInfo.setContent(h.getDesc());
+		
+		String strJson = gson.toJson(cInfo);
+		System.out.println(strJson);
+		
+////		mav.setView("card");
+//		mav.addObject("CardBasicInfo", cInfo);
+//		System.out.println(mId);
 //		model.addAttribute("url", h.getUrl());
 //		model.addAttribute("title", h.getTitle());
 //		model.addAttribute("desc", h.getDesc());
 //		model.addAttribute("img", h.getImg());
-		return "fail";
+		return "{}";
 		
 	}
 //	

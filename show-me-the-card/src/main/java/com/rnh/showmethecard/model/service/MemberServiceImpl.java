@@ -80,6 +80,23 @@ public class MemberServiceImpl implements MemberService {
 		List<MemberHistory> history =  dao.selectPointHistory(mId);
 		return history;
 	}
+
+	@Override
+	public void registerPoint(MemberHistory history) {
+		boolean result = dao.selectPointExits(history.getmId(), history.getContent());
+		if ( !result ) {
+			//없으면 insert
+			dao.insertPointHistory(history);
+		} else {
+			//있으면 update
+			dao.updatePointHistory(history.getmId(), history.getContent());
+		}
+	}
+
+	@Override
+	public void updateMemberPoint(String mId) {
+		dao.updateMemberPoint(mId);		
+	}
 	
 	
 	

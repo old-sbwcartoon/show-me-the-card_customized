@@ -20,5 +20,13 @@ public interface MemberDao {
 	List<Member> selectMemberList();
 	
 	List<MemberHistory> selectPointHistory(String mId);
+	
+	boolean selectPointExits(String mId, String content );
+	
+	void updatePointHistory(String mId, String content);
+	
+	void insertPointHistory(MemberHistory history);
+	
+	void updateMemberPoint(String mId);
 
 }

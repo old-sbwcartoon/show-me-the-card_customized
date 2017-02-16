@@ -24,4 +24,9 @@ public interface MemberService {
 	List<Member> getMemberList();
 	
 	List<MemberHistory> getPointHistory(String mId);
+	
+	void registerPoint(MemberHistory history);
+	
+	void updateMemberPoint(String mId);
+	
 }

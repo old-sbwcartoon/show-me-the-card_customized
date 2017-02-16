@@ -16,14 +16,10 @@
 	<typeAlias type="com.rnh.showmethecard.model.dto.Notice" alias="Notice" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Card" alias="Card" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationComment" alias="EvaluationComment" />
-<<<<<<< HEAD
-	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationInfo" alias="EvaluationInfo" />
-	<typeAlias type="com.rnh.showmethecard.model.dto.Folder" alias="Folder" />
-=======
 	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationRating" alias="EvaluationRating" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Folder" alias="Folder" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.MemberHistory" alias="MemberHistory" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Qna" alias="Qna" />
->>>>>>> branch 'master' of https://github.com/cjh103201/rnh.git
   </typeAliases>
   
   <environments default="development">
@@ -44,12 +40,9 @@
   	<mapper resource="com/rnh/showmethecard/model/mapper/NoticeMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/EvaluationMapper.xml"/>
-<<<<<<< HEAD
  	<mapper resource="com/rnh/showmethecard/model/mapper/FolderMapper.xml"/>
-=======
  	<mapper resource="com/rnh/showmethecard/model/mapper/QnaMapper.xml"/>
  	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/SearchMapper.xml"/> -->
->>>>>>> branch 'master' of https://github.com/cjh103201/rnh.git
   </mappers> 
   
 </configuration>

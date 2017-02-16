@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.rnh.showmethecard.card.classes.CheckUrlStatus;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.Member;
@@ -52,6 +53,9 @@ public class CardController {
 		System.out.println(url);
 		Member member = (Member) session.getAttribute("loginuser");
 		String mId = member.getmId();
+		
+		CheckUrlStatus checkUrlStatus = new CheckUrlStatus(url);
+		
 		HtmlParser h = new HtmlParser(url);
 		
 		CardBasicInfo cInfo = new CardBasicInfo();

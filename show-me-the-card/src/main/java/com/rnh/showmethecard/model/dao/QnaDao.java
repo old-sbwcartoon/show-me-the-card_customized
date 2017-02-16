@@ -19,7 +19,8 @@ public interface QnaDao {
 	
 	Qna SelectQnaDetail(int qNo);
 	
+	Qna SelectQnaByQnaNo(int qNo);
 
-
-
+	void InsertReply(Qna qna);
+	
 }

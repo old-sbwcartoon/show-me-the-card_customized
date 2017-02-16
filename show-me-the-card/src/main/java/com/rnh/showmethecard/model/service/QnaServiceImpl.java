@@ -53,5 +53,17 @@ public class QnaServiceImpl implements QnaService {
 		
 		return qna;
 	}
-
+	
+	@Override
+	public Qna SelectQnaByQnaNo(int qNo) {
+		Qna qna = qnaDao.SelectQnaByQnaNo(qNo);
+		
+		return qna;
+	}
+	
+	@Override
+	public void InsertReply(Qna qna) {
+		
+		qnaDao.InsertReply(qna);
+	}
 }

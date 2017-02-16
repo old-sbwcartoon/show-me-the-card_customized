@@ -13,7 +13,7 @@
 	</insert>
 	
 	<select id="selectMemberById" resultType="Member" parameterType="String">
-		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, left(REG_DATE, 10) regDate
 		FROM rnh2.MEMBER
 		WHERE M_ID = #{ mId }
 	</select>
@@ -37,6 +37,18 @@
 		DELETED ='1'
 		WHERE M_ID = #{ mId };		
 	</update>	
+	
+	<select id="selectMembers" resultType="Member">
+		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, USERTYPE, left(REG_DATE, 10) regDate
+		FROM rnh2.MEMBER
+		WHERE DELETED = '0'
+	</select>
+	
+	<select id="selectPointHistory" resultType="MemberHistory" parameterType="String">
+		SELECT M_ID mId, POINT, left(REG_DATE, 10) regDate, CONTENT
+		FROM rnh2.MEMBER_HISTORY 
+		WHERE M_ID = #{ mId }
+	</select>
 	
 </mapper>
 

@@ -151,7 +151,10 @@
 								<a href="update.action?qNo=${qna.qNo}">수정</a>
 								<a href='javascript:doDelete(${qna.qNo})'>삭제</a>
 							</c:if>
-
+							<c:if
+								test="${ loginuser.userType eq '1' }">
+								<a href="relay.action?qNo=${qna.qNo}">답변달기</a>
+							</c:if>
 						</div>
 					</div>
 				</div>

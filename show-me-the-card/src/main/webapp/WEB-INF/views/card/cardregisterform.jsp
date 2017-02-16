@@ -71,7 +71,27 @@
     <script src="../resources/assets/js/waypoints.min.js"></script>
 
 </head>
-
+<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#siteUrl').blur(function() {
+			alert($('#siteUrl').val());
+			$.ajax ({
+		       	url : "searchchild.action",
+		       	method : 'get',
+		       	data : "url=" + $('#siteUrl').val(),
+		       	dataType : 'text',
+		       	contentType:"application/text; charset=UTF-8",
+		       	success : function (data) {
+		       		alert(data);
+		       	},
+		       	error : function(xhr, status, err) {
+		       		alert("실패");
+				}
+		      });
+		});
+	});
+</script>
 <body class="index">
     
     <c:import url="/WEB-INF/views/include/navigator.jsp" />
@@ -93,7 +113,7 @@
                         <div class="row">
                             <div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                                 <div class="form-group waves-effect">
-                                    <input type="text" class="form-control" placeholder="Your Id *" id="mId" required data-validation-required-message="Please enter your id.">
+                                    <input type="text" class="form-control" placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요" id="siteUrl" required data-validation-required-message="Please enter your id.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group waves-effect">

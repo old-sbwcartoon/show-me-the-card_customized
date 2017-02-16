@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -72,6 +73,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> getMemberList() {
 		List<Member> members = dao.selectMemberList();
 		return members;
+	}
+
+	@Override
+	public List<MemberHistory> getPointHistory(String mId) {
+		List<MemberHistory> history =  dao.selectPointHistory(mId);
+		return history;
 	}
 	
 	

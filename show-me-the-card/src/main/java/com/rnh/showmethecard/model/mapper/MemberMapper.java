@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 
 //com.mvcdemoweb.model.mapper.MemberMapper 파일에 대응하는 인터페이스
 public interface MemberMapper {
@@ -19,4 +20,6 @@ public interface MemberMapper {
 	void deleteMemberById(String mId);
 	
 	List<Member> selectMembers();
+	
+	List<MemberHistory> selectPointHistory(String mId);
 }

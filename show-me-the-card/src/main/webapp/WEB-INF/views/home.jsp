@@ -200,7 +200,7 @@
                 		<div class="dropdown-content">
             				<a id="mypagebtn" href="#">My Page</a>
             				<a href="/showmethecard/member/list.action">Admin Page</a>
-            				<a href="#dd">My Point</a>
+            				<a href="/showmethecard/member/pointList.action">My Point</a>
             				<a href="#">My Q&A</a>
             			</div>	
                 	</div>          		

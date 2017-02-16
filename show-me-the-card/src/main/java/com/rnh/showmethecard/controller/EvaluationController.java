@@ -30,7 +30,9 @@ public class EvaluationController {
 	
 	@RequestMapping(value="/evaluationmain.action", method=RequestMethod.GET)
 	public String showEvaluation(Model model) {
-		String url = "http://j07051.tistory.com/333";
+//		String url = "http://j07051.tistory.com/333";
+		String url = "http://crosstheline.tistory.com/41";
+//		String url = "https://www.odpia.org/main.odpia";
 		HtmlParser h = new HtmlParser(url);
 
 		model.addAttribute("url", h.getUrl());
@@ -55,6 +57,7 @@ public class EvaluationController {
 		// 별점 평균
 		// Evaluation e = new Evaluation();
 		model.addAttribute("evalRatingList", service.showEvaluationRatingList(2));
+		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(2));
 		
 		return "evaluation/evaluationmain";
 	}
@@ -79,8 +82,11 @@ public class EvaluationController {
 	@RequestMapping(value="addevalratingliked.action", method=RequestMethod.GET)
 	public void addEvaluationRatingLiked(int cardNo, String mId, HttpServletRequest req) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-		//mId != member.getmId()일 때 씀
-		service.addEvaluationRatingLiked(2, mId, member.getmId());
+		System.out.println("들어옴");
+		System.out.println(cardNo);
+		System.out.println(mId);
+		System.out.println(member.getmId());
+		service.addEvaluationRatingLiked(cardNo, mId, member.getmId());
 	}
 	
 	
@@ -100,4 +106,15 @@ public class EvaluationController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value="showevalcommentlist.action", method=RequestMethod.GET)
+	public ModelAndView showEvaluationCommentList(int cardNo) {
+		List<EvaluationComment> evalCommentList = service.showEvaluationCommentList(2);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("evaluation/evaluationmain");
+		mav.addObject("evalCommentList", evalCommentList);
+		
+		return mav;
+	}
 }

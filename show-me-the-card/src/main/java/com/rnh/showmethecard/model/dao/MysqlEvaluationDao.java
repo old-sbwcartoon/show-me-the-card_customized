@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.mapper.EvaluationMapper;
 
@@ -65,6 +66,18 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	@Override
 	public ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo) {
 		return mapper.selectEvaluationRatingList(cardNo);
+	}
+
+
+	@Override
+	public float selectEvaluationRatingAvg(int cardNo) {
+		return mapper.selectEvaluationRatingAvg(cardNo);
+	}
+
+
+	@Override
+	public ArrayList<EvaluationComment> selectEvaluationCommentList(int cardNo) {
+		return mapper.selectEvaluationCommentList(cardNo);
 	}
 
 

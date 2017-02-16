@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationMapper {
@@ -16,6 +17,10 @@ public interface EvaluationMapper {
 	int selectEvaluationRatingLiked(HashMap<String, String> data);
 
 	ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo);
+
+	float selectEvaluationRatingAvg(int cardNo);
+
+	ArrayList<EvaluationComment> selectEvaluationCommentList(int cardNo);
 
 	
 }

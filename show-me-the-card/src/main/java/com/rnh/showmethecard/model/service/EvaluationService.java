@@ -1,7 +1,8 @@
 package com.rnh.showmethecard.model.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationService {
@@ -12,7 +13,11 @@ public interface EvaluationService {
 
 	void addEvaluationRatingLiked(int cardNo, String mId, String likedmId);
 
-	ArrayList<EvaluationRating> showEvaluationRatingList(int cardNo);
+	List<EvaluationRating> showEvaluationRatingList(int cardNo);
+
+	float showEvaluationRatingAvg(int cardNo);
+
+	List<EvaluationComment> showEvaluationCommentList(int cardNo);
 
 
 

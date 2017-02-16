@@ -6,9 +6,8 @@ public class EvaluationComment {
 	private int eCommentNo;
 	private String mId;
 	private int cardNo;
-	private String comment;
+	private String content;
 	private String regDate;
-	private boolean eType; //0 = evaluation_comment / 1 = normal_comment
 	private boolean deleted;
 	
 	
@@ -30,11 +29,11 @@ public class EvaluationComment {
 	public void setCardNo(int cardNo) {
 		this.cardNo = cardNo;
 	}
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public String getRegDate() {
 		return regDate;
@@ -42,17 +41,12 @@ public class EvaluationComment {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public boolean iseType() {
-		return eType;
-	}
-	public void seteType(boolean eType) {
-		this.eType = eType;
-	}
 	public boolean isDeleted() {
 		return deleted;
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	
 	
 }

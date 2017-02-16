@@ -78,8 +78,8 @@
 		$('#siteUrl').blur(function() {
 			siteUrl = $('#siteUrl').val();
 			alert(siteUrl);
-			$("#resulttarget").load("card.action");
-			/* $.ajax ({
+			/* $("#resulttarget").load("card.action"); */
+			$.ajax ({
 		       	url : "checkurl.action",
 		       	method : 'get',
 		       	data : "url=" + siteUrl,
@@ -87,13 +87,13 @@
 		       	//contentType:"application/text; charset=UTF-8",
 		       	success : function (data) {
 		       		alert(data);
-		       		//$("#resulttarget").load();
+		       		$("#resulttarget").html(data);
 		       	},
 		       	error : function(xhr, status, err) {
 		       		alert("실패");
 		       		$("#resulttarget").html("주소가 올바르지 않습니다.")
 				}
-		      }); */
+		      });
 		});
 	});
 </script>
@@ -166,6 +166,10 @@
 											<div id="resulttarget"></div>
 											<div class="col-md-12 form-group waves-effect">
 												<input type="text" class="form-control" placeholder="이름" id="cName" />
+												<p class="help-block text-danger"></p>
+											</div>
+											<div class="col-md-12 form-group waves-effect">
+												<input type="text" class="form-control" placeholder="내용" id="content" />
 												<p class="help-block text-danger"></p>
 											</div>
 										</div>

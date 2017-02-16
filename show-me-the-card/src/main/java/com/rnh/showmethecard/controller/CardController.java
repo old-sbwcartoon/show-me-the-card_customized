@@ -45,8 +45,7 @@ public class CardController {
 		return "card/card";
 	}
 	@RequestMapping(value="checkurl.action", method = RequestMethod.GET,  produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public String checkandshowcard(HttpSession session, String url) {
+	public String checkandshowcard(Model model, HttpSession session, String url) {
 		//URL javaUrl = url;
 //		ModelAndView mav = new ModelAndView("/WEB-INF/view/card/card.jsp");
 //		//mav.
@@ -65,14 +64,14 @@ public class CardController {
 		String strJson = gson.toJson(cInfo);
 		System.out.println(strJson);
 		
-////		mav.setView("card");
+////	mav.setView("card");
 //		mav.addObject("CardBasicInfo", cInfo);
 //		System.out.println(mId);
-//		model.addAttribute("url", h.getUrl());
-//		model.addAttribute("title", h.getTitle());
-//		model.addAttribute("desc", h.getDesc());
-//		model.addAttribute("img", h.getImg());
-		return "{}";
+		model.addAttribute("url", h.getUrl());
+		model.addAttribute("title", h.getTitle());
+		model.addAttribute("desc", h.getDesc());
+		model.addAttribute("img", h.getImg());
+		return "card/card";
 		
 	}
 //	

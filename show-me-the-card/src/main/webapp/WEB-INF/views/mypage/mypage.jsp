@@ -89,10 +89,39 @@
 
 		$("#addFolder").click(function() {
 
-			$("#loginModal").modal();
+			$("#loginModal").modal('show');
 
 		});
+		
+		
+		
+	 	$('#register').click(function(){
+	        $.ajax({
+	            url:'register.action',
+	            type : 'post',
+	            /* data : '('form').serialize()',		             */
+	            data: { mId : $('#mId').val(),
+	            		fName : $('#fName').val()
+	            	  },	            
+	            success:function(data){		                
+	            	$('#folder').clone().appendTo($('#fName').val()).before($('#addFolder'))
+	            	
+	            }
+	        });
+	    }); 
+		
+		
+		
+		 
+		
+		
+		
 	});
+	
+	
+	
+	
+	
 </script>
 
 
@@ -150,23 +179,29 @@
 
 
 
+	<c:forEach var="folder" items="${ folders }">
+
+		<button type="button" id="folder"
+			style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px">
+			<img style="height: 100px" class="btn-img"
+				src="/showmethecard/resources/images/cardpack.jpg">
+			&nbsp;${ folder.fName }&nbsp;</button>
+
+	</c:forEach>
 
 
 
-	<button  type="button" id="addFolder"
-		 style="border:0px; margin:0px; padding:0px; width:75px; height:100px "><img style="height:100px" class="btn-img" src="/showmethecard/resources/images/cardpack.jpg">
-		&nbsp;#다이어트&nbsp;		
-		</button>
 
-<%-- 	<c:forEach var="notice" items="${ requestScope.notices }">
-	
-		
-		<button  type="button" id="addFolder"
-		 style="border:0px; margin:0px; padding:0px; width:75px; height:100px "><img style="height:100px" class="btn-img" src="/showmethecard/resources/images/cardpack.jpg">
-		&nbsp;&nbsp;</button>		
+	<button type="button" id="addFolder"
+		style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px">
+		<img style="height: 100px" class="btn-img"
+			src="/showmethecard/resources/images/cardpackplus.jpg">
 
-	</c:forEach> --%>
-	
+	</button>
+
+
+
+
 
 
 
@@ -191,15 +226,16 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form name="sentMessage"
-									action="/showmethecard/account/login.action" method="post"
+								<form name="sentFolder"									
 									id="contactForm" novalidate>
 									<div class="row">
 										<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s"
 											data-wow-delay="600ms">
 											<div class="col-md-12 form-group waves-effect">
+												<input type="hidden" id = "mId" name = "mId" value="${ loginuser.mId }">
+											
 												<input type="text" class="form-control" placeholder="폴더이름"
-													id="id" name="mId" required
+													id="fName" name="fName" required
 													data-validation-required-message="Please enter your id.">
 												<p class="help-block text-danger"></p>
 											</div>
@@ -231,7 +267,7 @@
 										<div class="modal-footer">
 											<div class="col-lg-12 text-center">
 												<div id="success"></div>
-												<button type="submit" id="login"
+												<button type="submit" id="register"
 													class="btn btn-primary waves-effect">&nbsp;&nbsp;등록&nbsp;&nbsp;</button>
 												<button type="button" class="btn btn-primary waves-effect"
 													data-dismiss="modal">&nbsp;&nbsp;취소&nbsp;&nbsp;</button>

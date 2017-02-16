@@ -17,5 +17,7 @@ public interface QnaService {
 	
 	Qna SearchQnaDetail(int qNo);
 	
+	Qna SelectQnaByQnaNo(int qNo);
 	
+	void InsertReply(Qna qna);
 }

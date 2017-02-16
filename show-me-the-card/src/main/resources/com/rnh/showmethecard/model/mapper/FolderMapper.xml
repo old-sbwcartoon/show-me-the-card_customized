@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.FolderMapper">	
+	
+	<select id="selectFolderById" resultType="Folder" parameterType="String">
+		SELECT F_NO fNo, F_NAME fName, F_POINT fPoint, secret, deleted, M_ID mId
+		FROM rnh2.FOLDER
+		WHERE M_ID = #{ mId }
+	</select>
+	
+	<insert id="insertFolder" parameterType="Folder">
+		INSERT INTO rnh2.FOLDER
+		(M_ID, F_NAME, secret )
+		VALUES
+		( #{ mId }, #{ fName }, #{ secret })
+	</insert> 
+	
+	<!--<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate
+		FROM rnh2.MEMBER
+		WHERE M_ID = #{ mId } AND PASSWORD = #{ password } AND DELETED = '0'
+	</select>
+	
+	<update id="updateMemberById" parameterType="Member">
+		UPDATE rnh2.MEMBER
+		SET
+		PASSWORD = #{ password }, M_NAME = #{ mName }, EMAIL = #{ email }, PHONE = #{ phone }
+		WHERE M_ID = #{ mId }
+	</update>
+
+	<update id="deleteMemberById" parameterType="Member">
+		UPDATE rnh2.MEMBER
+		SET
+		DELETED ='1'
+		WHERE M_ID = #{ mId };		
+	</update>	
+	
+	<select id="selectMembers" resultType="Member">
+		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, USERTYPE, REG_DATE regDate
+		FROM rnh2.MEMBER
+		WHERE DELETED = '0'
+	</select>
+ -->	
+</mapper>
+
+
+

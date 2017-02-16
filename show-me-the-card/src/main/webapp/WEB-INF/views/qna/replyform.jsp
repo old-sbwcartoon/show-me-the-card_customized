@@ -122,9 +122,10 @@
 	});
 </script>
 </head>
+
 <body>
 
-	<!-- Start Contact Us Section -->
+<!-- Start Contact Us Section -->
 	<section id="contact" class="contact contact-section">
 		<div id="pageContainer">
 			<c:import url="/WEB-INF/views/include/navigator.jsp" />
@@ -135,33 +136,32 @@
 
 			<br /> <br /> <br /> <br /> <br />
 			<div class="jumbotron">
-				<h1 id="maintitle">Q&A 수정</h1>
+				<h1 id="maintitle"> Q&A 답변 </h1>
 
 			</div>
-
-			<form:form id="form233" action="update.action" method="post"
+		        <form:form id="form233" action="relay.action" method="post"
 				modelAttribute="qna">
-				<input type="hidden" name="qNo" value="${qna.qNo}">
+		       	<%-- <input type='hidden' name="pageno" value="${ pageno }" /> --%>
+		        <input type="hidden" name="qNo" value="${qna.qNo}">
 				<table id=hqqnaform>
 					<tr>
 						<th></th>
 						<td>
 							<div class="form-group">
 								<label for="title">제목:</label> <input type="text"
-									class="form-control" name="title" value="${qna.title}"
+									class="form-control" name="title" value="RE : ${qna.title}"
 									id="title">
 							</div>
 						</td>
 					</tr>
-
-					<tr>
+		            <tr>
 						<th></th>
 						<td>
 							<div id="title">
 								<label for="inputdefault">작성자:</label> <input
 									class="form-control" name="mId" id="writer" type="text"
 									value="${qna.mId}" readonly>
-							</div>
+		                </div>
 						</td>
 					</tr>
 					<tr>
@@ -172,21 +172,24 @@
 						<th></th>
 						<td>
 							<div class="form-group">
-								<label for="content">내용:</label>
+								<label for="content">내용:</label>	                    
+		                    <textarea id="contenttext" name="content" class="form-control"
+									rows="5">
 
-								<textarea id="contenttext" name="content" class="form-control"
-									rows="5">${qna.content}</textarea>
-							</div>
-						</td>
-					</tr>
-				</table>
-			</form:form>
-			<div id=buttongroup>
-				<button id="submit-link" class="btn btn-default">작성 완료</button>
+
+==== 대상 글의 내용 ======
+
+${qna.content}</textarea>
+		                </td>
+		            </tr>
+		        </table>
+		        </form:form>
+		        <div id=buttongroup>
+				<button id="submit-link" class="btn btn-default">답변 완료</button>
 				&nbsp;&nbsp;&nbsp; <a href="detail.action?qNo=${qna.qNo}"
 					type="button" id="cancel" class="btn btn-default">취소</a>
 			</div>
-		</div>
+			</div>
 	</section>
 
 	<!-- Start Footer Section -->

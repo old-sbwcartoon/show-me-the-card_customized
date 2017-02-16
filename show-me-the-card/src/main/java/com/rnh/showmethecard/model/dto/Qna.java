@@ -9,10 +9,11 @@ public class Qna {
 	private String content;
 	private Date regDate;
 	private String mId;
+	private boolean deleted;
+	
 	private int groupNo;
 	private int step;
 	private int depth;
-	private boolean deleted;
 	
 	public int getqNo() {
 		return qNo;

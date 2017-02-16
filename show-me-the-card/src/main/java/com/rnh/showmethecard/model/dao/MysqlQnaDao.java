@@ -32,6 +32,12 @@ public class MysqlQnaDao implements QnaDao{
 
 		qnaMapper.InsertQna(qna);
 	}
+	
+	@Override
+	public void InsertReply(Qna qna) {
+
+		qnaMapper.InsertReply(qna);
+	}
 
 	@Override
 	public void DeleteQna(Qna qna) {
@@ -50,6 +56,14 @@ public class MysqlQnaDao implements QnaDao{
 	public Qna SelectQnaDetail(int qNo) {
 		
 		Qna qna = qnaMapper.SelectQnaDetail(qNo);
+		
+		return qna;
+	}
+	
+	@Override
+	public Qna SelectQnaByQnaNo(int qNo) {
+		
+		Qna qna = qnaMapper.SelectQnaByQnaNo(qNo);
 		
 		return qna;
 	}

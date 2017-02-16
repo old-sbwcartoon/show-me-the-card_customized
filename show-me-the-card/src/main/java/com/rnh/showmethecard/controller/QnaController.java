@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import com.rnh.showmethecard.model.service.QnaService;
 public class QnaController {
 	@Autowired
 	@Qualifier("memberDao")
-	private MemberDao dao;
+	private MemberDao memberDao;
 
 	@Autowired
 	@Qualifier(value = "qnaService")
@@ -125,6 +126,20 @@ public class QnaController {
 		
 		return "redirect:/qna/qnaList.action";
 		
+	}
+	
+	@RequestMapping(value = "reply.action", method = RequestMethod.GET)
+	public String InsertReply() {
+		
+		return "qna/replyform";
+	}
+	
+	@RequestMapping(value = "reply.action", method = RequestMethod.POST)
+	public String InsertReply(Qna qna) {
+		
+		qnaService.AddQna(qna);
+		
+		return "redirect:/qna/qnaList.action";
 	}
 	
 

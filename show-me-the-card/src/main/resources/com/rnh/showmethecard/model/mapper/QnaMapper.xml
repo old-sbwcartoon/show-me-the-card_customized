@@ -23,9 +23,7 @@
 		VALUES (#{title}, #{content}, #{mId})	
 		
 	</insert>
-	
-	
-	
+		
 	<update id="DeleteQna" parameterType="Qna">
 	
 		UPDATE QNA
@@ -42,9 +40,7 @@
 		WHERE Q_NO = #{qNo}	
 		
 	</update>	
-	
-	
-	
+		
 	<select id="SelectQnaDetail" parameterType="int" resultType="Qna">
 	
 		SELECT q_no qNo, title title, content content, m_id mId, reg_date regDate
@@ -54,6 +50,21 @@
 		WHERE q_no = #{qNo}
 		
 	</select>
+
+	<select id="SelectQnaByQnaNo" parameterType="int" resultType="Qna">
+		SELECT Q_No qNo, title title, content content, m_id mId, reg_date regDate
+		FROM QNA	
+		WHERE Q_NO = #{qNo}
+	</select>
+	
+	<insert id="InsertReply" parameterType="Qna">
+	
+		INSERT INTO QNA
+		(TITLE, CONTENT, M_ID)
+		VALUES (#{title}, #{content}, #{mId})	
+					
+	</insert>
+	
 
 </mapper>
 

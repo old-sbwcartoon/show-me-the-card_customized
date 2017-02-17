@@ -2,6 +2,7 @@ package com.rnh.showmethecard.model.dao;
 
 import java.util.ArrayList;
 
+import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationDao {
@@ -15,6 +16,10 @@ public interface EvaluationDao {
 	int selectEvaluationRatingLiked(int cardNo, String mId);
 
 	ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo);
+
+	float selectEvaluationRatingAvg(int cardNo);
+
+	ArrayList<EvaluationComment> selectEvaluationCommentList(int cardNo);
 
 	
 }

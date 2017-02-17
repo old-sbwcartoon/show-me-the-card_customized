@@ -128,17 +128,27 @@ public class QnaController {
 		
 	}
 	
-	@RequestMapping(value = "reply.action", method = RequestMethod.GET)
+	@RequestMapping(value = "reply.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String InsertReply() {
 		
 		return "qna/replyform";
 	}
 	
-	@RequestMapping(value = "reply.action", method = RequestMethod.POST)
-	public String InsertReply(Qna qna) {
+	@RequestMapping(value = "reply.action", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	public String InsertReply(HttpServletRequest req) {
+
+		Member member = 
+				(Member)req.getSession().getAttribute("loginuser");
+
+		Qna qna = new Qna();
 		
-		qnaService.AddQna(qna);
-		
+		qna.setqNo(Integer.parseInt(req.getParameter("qNo")));
+		qna.setTitle(req.getParameter("title"));
+		qna.setmId(member.getmId());
+		qna.setContent(req.getParameter("content"));
+				
+		qnaService.InsertReply(qna);
+				
 		return "redirect:/qna/qnaList.action";
 	}
 	

@@ -348,5 +348,4 @@ public class HtmlParser {
 		return choosedData;
 	}
 	
-	
 }

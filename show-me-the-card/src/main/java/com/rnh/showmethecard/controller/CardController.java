@@ -59,23 +59,22 @@ public class CardController {
 		
 		CardBasicInfo cInfo = new CardBasicInfo();
 		
-		if (h.isUrlOk()) {
+		if (true) {
 			model.addAttribute("url", h.getUrl());
 			model.addAttribute("title", h.getTitle());
 			model.addAttribute("desc", h.getDesc());
 			model.addAttribute("img", h.getImg());
 			return "card/card";
-		}
-		
-		
-		String strJson = gson.toJson(cInfo);
-		System.out.println(strJson);
+		} else{
+//		String strJson = gson.toJson(cInfo);
+//		System.out.println(strJson);
 		
 ////	mav.setView("card");
 //		mav.addObject("CardBasicInfo", cInfo);
 //		System.out.println(mId);
 		
 		return "틀렸어!";
+		}
 		
 	}
 //	

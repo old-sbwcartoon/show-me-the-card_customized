@@ -81,6 +81,7 @@
 				dataType : "text",
 				success : function(data, status, xhr) {
 					alert(data);
+					$('<h2></h2>').appendTo($('#content')).text(data);
 				}
 			});
 		});
@@ -98,7 +99,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+                    <div id="content" class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
                         <h2>포인트 내역 조회</h2>
                         <p>Show Me The Card</p>
                     </div>

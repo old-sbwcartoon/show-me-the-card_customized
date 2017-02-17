@@ -94,7 +94,24 @@
 	where e.CARD_NO = #{cardNo}
 		AND e.deleted = 0
 	group by e.M_ID, e.CARD_NO
+	order by E_LIKED_SUM DESC
 </select>
 
+<select id="selectEvaluationRatingAvg" resultType="Float" parameterType="Integer">
+	select round(avg(E_RATING), 3)
+	from EVALUATION_RATING
+	where CARD_NO = #{cardNo}
+</select>
+
+<select id="selectEvaluationCommentList" resultType="EvaluationComment" parameterType="Integer">
+	select E_COMMENT_NO
+		, M_ID
+		, CARD_NO
+		, CONTENT
+		, REG_DATE
+		, deleted
+	from EVALUATION_COMMENT
+	where CARD_NO = #{cardNo}
+</select>
 
 </mapper>

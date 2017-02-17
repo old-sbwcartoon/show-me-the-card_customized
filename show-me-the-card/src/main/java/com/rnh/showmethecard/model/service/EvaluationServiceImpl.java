@@ -1,12 +1,14 @@
 package com.rnh.showmethecard.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.rnh.showmethecard.model.dao.EvaluationDao;
+import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 @Service("evaluationService")
@@ -35,6 +37,16 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Override
 	public ArrayList<EvaluationRating> showEvaluationRatingList(int cardNo) {
 		return dao.selectEvaluationRatingList(cardNo);
+	}
+
+	@Override
+	public float showEvaluationRatingAvg(int cardNo) {
+		return dao.selectEvaluationRatingAvg(cardNo);
+	}
+
+	@Override
+	public List<EvaluationComment> showEvaluationCommentList(int cardNo) {
+		return dao.selectEvaluationCommentList(cardNo);
 	}
 
 

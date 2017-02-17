@@ -43,6 +43,7 @@
  	<mapper resource="com/rnh/showmethecard/model/mapper/FolderMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/QnaMapper.xml"/>
  	<mapper resource="com/rnh/showmethecard/model/mapper/ChartMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/ChartMapper.xml"/>
  	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/SearchMapper.xml"/> -->
 
   </mappers> 

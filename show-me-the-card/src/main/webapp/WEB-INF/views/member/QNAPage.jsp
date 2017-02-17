@@ -70,13 +70,6 @@
     <!-- Materialize js -->
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
-
-	<script type="text/javascript">
-	
-	
-	</script>
-    
-
 </head>
 
 <body class="index">

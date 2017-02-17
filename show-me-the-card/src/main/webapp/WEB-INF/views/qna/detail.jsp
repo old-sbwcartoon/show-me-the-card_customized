@@ -148,6 +148,7 @@
 						<div class="buttons">
 							<c:if
 								test="${ loginuser.userType eq '1' || qna.mId eq loginuser.mId }">
+								<a href="/showmethecard/qna/qnaList.action">목록</a>
 								<a href="update.action?qNo=${qna.qNo}">수정</a>
 								<a href='javascript:doDelete(${qna.qNo})'>삭제</a>
 							</c:if>

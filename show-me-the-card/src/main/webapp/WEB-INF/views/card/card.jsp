@@ -86,6 +86,7 @@
 							<li><a href="#"><i class="fa fa-dribbble"></i></a></li> -->
 						</ul>
 						<input id="resultUrlCheck" type="hidden" value="${resultCheck}"/>
+						<input id="cardNoCheck" type="hidden" value="${cardNo}"/>
 					</div>
 				</div>
 			</div>

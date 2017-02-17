@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.service.CardService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
 @Controller
@@ -26,6 +27,14 @@ public class CardController {
 	public void setDao(CardDao dao) {
 		this.dao = dao;
 	}
+	@Autowired
+	@Qualifier("cardService")
+	private CardService cardService;
+	
+	private int cardNo;
+	
+	Member member;
+	String mId;
 	
 	Gson gson = new Gson();
 	
@@ -45,13 +54,17 @@ public class CardController {
 		//URL javaUrl = url;
 //		ModelAndView mav = new ModelAndView("/WEB-INF/view/card/card.jsp");
 //		//mav.
-		System.out.println(url);
-		Member member = (Member) session.getAttribute("loginuser");
-		String mId = member.getmId();
+		
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
 		
 		HtmlParser h = new HtmlParser(url);
 		
 		CardBasicInfo cInfo = new CardBasicInfo();
+		
+		int cardNo = cardService.checkCardDb(h.getUrl());
+		System.out.println(cardNo);
+		
 		
 		if (h.isUrlOk()) {
 			model.addAttribute("url", h.getUrl());
@@ -59,6 +72,7 @@ public class CardController {
 			model.addAttribute("desc", h.getDesc());
 			model.addAttribute("img", h.getImg());
 			model.addAttribute("resultCheck", "fine");
+			model.addAttribute("cardNo", cardNo);
 			return "card/card";
 		} else{
 //		String strJson = gson.toJson(cInfo);
@@ -76,7 +90,7 @@ public class CardController {
 	@RequestMapping(value="cardregisterfin.action", method=RequestMethod.POST)
 	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
 		System.out.println("들어는 왔구만");
-		
+		System.out.println(stringJson);
 		return "redirect:/card/cardregisterform";
 	}
 //	

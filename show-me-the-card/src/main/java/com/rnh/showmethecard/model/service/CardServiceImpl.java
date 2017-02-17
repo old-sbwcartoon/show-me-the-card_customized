@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.CardDao;
 
 
-@Service("adviceNoteService")
+@Service("cardService")
 public class CardServiceImpl implements CardService {
 	
 	@Autowired
@@ -18,8 +18,9 @@ public class CardServiceImpl implements CardService {
 	private CardDao cardDao;
 	
 	@Override
-	public void checkCardDb(String siteUrl){
+	public int checkCardDb(String siteUrl){
 		int resultCardNo = cardDao.selectCardDbBySiteUrl(siteUrl);
+		return resultCardNo;
 	}
 	
 //	private AdviceNote adviceNote;

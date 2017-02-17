@@ -93,9 +93,10 @@
 		var division = "";
 		$('#sendcard').click(function(){
 			var division = $('#resultUrlCheck').val();
-			
+			var cardNum = $('cardNoCheck').val();
 			var frontJson = {
-					siteUrl :  division
+					siteUrl :  division,
+					cardNo : cardNum
 			};
 			var stringJson = JSON.stringify(frontJson);
 			$.ajax({
@@ -127,6 +128,7 @@
 		       	success : function (data) {
 		       		alert(data);
 		       		$("#resulttarget").html(data);
+		       		$("#cName").val("아주 잘했어");
 		       	},
 		       	error : function(xhr, status, err) {
 		       		alert("실패");

@@ -19,8 +19,15 @@ public class MysqlCardDao implements CardDao {
 	
 	
 	@Override
-	public boolean selectCardDbBySiteUrl(String url) {
-		return false;
+	public int selectCardDbBySiteUrl(String siteUrl) {
+		System.out.println("mysql");
+		String a = cardMapper.selectCardDbBySiteUrl(siteUrl);
+		int b = 0;
+		if(a == null){
+			return b;
+		}
+//		System.out.printf("a: %d//b: %d \n", a , b );
+		return b = Integer.parseInt(a);
 	}
 	
 	@Override
@@ -28,7 +35,7 @@ public class MysqlCardDao implements CardDao {
 	}
 	
 	@Override
-	public void insertCardDb(int cardNo, String mycComment) {
+	public void insertMyCard(int cardNo, String mycComment) {
 	}
 
 //	@Override

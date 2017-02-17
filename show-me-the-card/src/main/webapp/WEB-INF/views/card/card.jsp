@@ -6,39 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-
-	<style type="text/css">
-		.box {
-			background-color: rgb(220,220,220);
-			border-radius: 4px;
-			border: solid 2.5pt darkgray;
-			margin: 30px 20px;
-			padding: 5px 5px;
-		}
-		.textbox {
-			height: 80px; 
-			width: 260px;
-		}
-		.title {
-			font-size: 24px;
-			font-weight: bold;
-			font-style: italic;
-			word-break: keep-all;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			border-bottom: dotted 2.5pt darkgray;
-			padding-bottom: 5px;
-		}
-		.desc {
-			font-size: 15px;
-			letter-spacing: -0.023em;
-			height: 64px;
-			margin-top: 16px;
-		}
-	</style>
-
+</head>
 <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
-<script type="text/javascript">		
+	<script type="text/javascript">		
 		$(document).ready(function() {
 			var imgDiv = $('#imgdiv');
 			var img = $('#thumbnail');
@@ -84,52 +54,46 @@
 		    
 		});
 	</script>
-</head>
 <body>
 	<section id="team" class="team-member-section">
+	
 	<div class="container">
+	
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
-				<div class="section-title text-center">
+				<div class="section-title">
 					<h5>선택하신 주소는</h5>
 					<p>최초 등록 입니다.</p>
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="row">
 			<div class="col-md-3 col-sm-6">
 				<div class="team-member">
-					<img src="${img}" class="img-responsive" alt="">
+					<div id="imgdiv" style="height:290px; width:294px; text-align:center; overflow:hidden;">
+						<img src="${img}" class="img-responsive thumbnail" alt="">
+					</div>
 					<div class="team-details">
-						<h4>${title}</h4>
+						<h4 id="title">${title}</h4>
 						<div class="designation">Founder & Director</div>
 						<p class="description">${desc}</p>
 						<ul>
-							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-							<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-							<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+							<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i>이동</a></li>
+							<li><a href="#"><i class="fa fa-linkedin"></i>품평</a></li>
+							<!-- <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+							<li><a href="#"><i class="fa fa-dribbble"></i></a></li> -->
 						</ul>
+						<input id="resultUrlCheck" type="hidden" value="${resultCheck}"/>
+						<input id="cardNoCheck" type="hidden" value="${cardNo}"/>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
+	
 	</section>
-
-
-	<div class="box" style="width:300px; height:500px;">
-		<div id="imgdiv" style="height:290px; width:294px; text-align:center; overflow:hidden; border:ridge rgb(245,245,245);">
-			<a id="thumbnaillink" href="${url}">
-				<img id="thumbnail" src="${img}"/>
-			</a>
-		</div>
-		<div style="height:168px; width:260px; margin:5px 0px; padding:16px 20px; background-color:rgb(245,245,245);">
-			<div class="textbox title">${title}</div>
-			<div class="textbox desc">${desc}</div>
-		</div>
-	</div>
 </body>
 </html>

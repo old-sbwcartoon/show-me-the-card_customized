@@ -19,11 +19,17 @@ public class QnaServiceImpl implements QnaService {
 	private QnaDao qnaDao;
 
 	@Override
-	public List<Qna> SearchQnaList() {
-		List<Qna> qna = qnaDao.SelectQnaList();
+	public List<Qna> SearchQnaList(int startRow, int lastRow) {
+		List<Qna> qna = qnaDao.SelectQnaList(startRow, lastRow);
 		
 		
 		return qna;
+	}
+	
+	@Override
+	public int SelectQnaCount() {
+		
+		return qnaDao.SelectQnaCount();
 	}
 
 	@Override
@@ -65,5 +71,12 @@ public class QnaServiceImpl implements QnaService {
 	public void InsertReply(Qna qna) {
 		
 		qnaDao.InsertReply(qna);
+	}
+	
+	@Override
+	public void UpdateQnaGroupNo(int qNo) {
+		
+		qnaDao.UpdateQnaGroupNo(qNo);
+		
 	}
 }

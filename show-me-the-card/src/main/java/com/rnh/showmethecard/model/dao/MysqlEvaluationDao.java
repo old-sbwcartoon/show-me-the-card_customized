@@ -33,9 +33,14 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	
 	@Override
 	public void insertEvaluationComment(int cardNo, String mId, String content) {
-		HashMap<String, String> data = new HashMap<>();
+//		HashMap<String, String> data = new HashMap<>();
+//		data.put("mId", mId);
+//		data.put("cardNo", String.valueOf(new Integer(cardNo)));
+//		data.put("content", content);
+		
+		HashMap<String, Object> data = new HashMap<>();
 		data.put("mId", mId);
-		data.put("cardNo", String.valueOf(cardNo));
+		data.put("cardNo", new Integer(cardNo));
 		data.put("content", content);
 		
 		mapper.insertEvaluationComment(data);
@@ -45,7 +50,7 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	@Override
 	public void insertEvaluationRatingLiked(int cardNo, String mId, String likedmId) {
 		HashMap<String, String> data = new HashMap<>();
-		data.put("cardNo", String.valueOf(cardNo));
+		data.put("cardNo", String.valueOf(new Integer(cardNo)));
 		data.put("mId", mId);
 		data.put("likedmId", likedmId);
 		

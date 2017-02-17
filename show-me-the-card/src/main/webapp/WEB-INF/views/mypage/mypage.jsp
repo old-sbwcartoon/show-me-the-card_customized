@@ -84,31 +84,59 @@
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="/showmethecard/resources/assets/js/google-map-init.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" >
 	$(document).ready(function() {
-
+		// 클릭이벤트
 		$("#addFolder").click(function() {
 
 			$("#loginModal").modal('show');
 
-		});
+		});	
+		   		   
 		
 		
-		
+		// 폴더 register ajax
 	 	$('#register').click(function(){
+	 		if($('#fName').val() != "" ) {
 	        $.ajax({
 	            url:'register.action',
 	            type : 'post',
 	            /* data : '('form').serialize()',		             */
 	            data: { mId : $('#mId').val(),
 	            		fName : $('#fName').val()
-	            	  },	            
-	            success:function(data){		                
-	            	$('#folder').clone().appendTo($('#fName').val()).before($('#addFolder'))
+	            	  },	
+	           	dataType : 'text',
+	            success:function(data){		   
+	            	$('#folder').clone().appendTo($('#fName').val()).before($('#addFolder'));      	
+	            	
 	            	
 	            }
+	            	
 	        });
+	 		}
+	 		else {
+	 			alert("폴더 명을 입력하세요.");
+	 			return false;
+	 		}
 	    }); 
+	 	
+		
+		
+		
+		
+	 	$("#folderpack").on("click", "button[id^=folder_]", function(event) {    
+	 		
+	 		var fNo = id.split("_")[1];
+	 		
+	 		
+	 		$("#loginModal").modal('show');
+                      
+            
+            
+	 		
+         });
+
+		
 		
 		
 		
@@ -116,11 +144,7 @@
 		
 		
 		
-	});
-	
-	
-	
-	
+	});	
 	
 </script>
 
@@ -180,20 +204,22 @@
 
 
 	<c:forEach var="folder" items="${ folders }">
-
-		<button type="button" id="folder"
-			style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px">
+		
+		<div id = "folderpack" style = "float : left">
+		<button type="button" id="folder_${ folder.fNo }"
+			style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px;  margin-bottom:20px ">
 			<img style="height: 100px" class="btn-img"
 				src="/showmethecard/resources/images/cardpack.jpg">
+				<input type="hidden" id = fNo name = fNo value =${ folder.fNo }>
 			&nbsp;${ folder.fName }&nbsp;</button>
-
+ 		</div>
 	</c:forEach>
 
 
 
 
 	<button type="button" id="addFolder"
-		style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px">
+		style="border: 0px; margin: 0px; margin-bottom:20px; padding: 0px; width: 75px; height: 100px">
 		<img style="height: 100px" class="btn-img"
 			src="/showmethecard/resources/images/cardpackplus.jpg">
 

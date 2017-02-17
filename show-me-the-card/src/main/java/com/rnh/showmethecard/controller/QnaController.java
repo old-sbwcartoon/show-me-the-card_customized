@@ -15,36 +15,54 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.rnh.showmethecard.ui.ThePager;
 import com.google.gson.reflect.TypeToken;
-import com.rnh.showmethecard.model.dao.MemberDao;
-import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dao.QnaDao;
 import com.rnh.showmethecard.model.dto.Qna;
 import com.rnh.showmethecard.model.service.QnaService;
 
 @Controller
 @RequestMapping(value = "/qna/")
 public class QnaController {
+	
 	@Autowired
-	@Qualifier("memberDao")
-	private MemberDao memberDao;
+	@Qualifier("qnaDao")
+	private QnaDao qnaDao;
 
 	@Autowired
 	@Qualifier(value = "qnaService")
 	private QnaService qnaService;
 
-	// Gson 광역선언
-	private Gson gson = new Gson();
-
 	@RequestMapping(value = "qnaList.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public ModelAndView QnaList(HttpSession session) {		
-		ModelAndView mav = new ModelAndView();
+	public ModelAndView QnaList(HttpSession session, HttpServletRequest req) {		
+			
+		int currentPage = 1;
+		int pageSize = 10;
+		int dataCount = 0;
+		int pagerSize = 10;
+
+		String page = req.getParameter("pageno");
+
+		String url = "qnaList.action";
+
+		if (page != null && page.length() > 0) {
+			currentPage = Integer.parseInt(page);
+		}
+		
+		int startRow = (currentPage - 1) * pageSize + 1;
+		
+		List<Qna> qnas = qnaService.SearchQnaList(startRow, startRow + pageSize);
+		
+		dataCount = qnaDao.SelectQnaCount();
+		ThePager pager = new ThePager(dataCount, currentPage, pageSize, pagerSize, url);
 				
-		List<Qna> qnas = qnaService.SearchQnaList();
+		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("qna/list");
 		mav.addObject("qnas", qnas);
+		mav.addObject("pageno", currentPage);
+		mav.addObject("pager", pager);
+		
 		return mav;	
 		
 	}
@@ -81,6 +99,7 @@ public class QnaController {
 	public String AddQna(Qna qna) {	
 		
 		qnaService.AddQna(qna);
+		qnaService.UpdateQnaGroupNo(qna.getqNo());
 		
 		return "redirect:/qna/qnaList.action";
 		
@@ -119,7 +138,6 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value = "update.action", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	
 	public String ChangeQna(Qna qna) {
 		
 		qnaService.ChangeQna(qna);
@@ -128,29 +146,32 @@ public class QnaController {
 		
 	}
 	
+	
 	@RequestMapping(value = "reply.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public String InsertReply() {
+	public ModelAndView InsertReply(int qNo, HttpSession session) {		
+		ModelAndView mav = new ModelAndView();
 		
-		return "qna/replyform";
+		Qna qna = qnaService.SelectQnaByQnaNo(qNo);
+		
+		mav.setViewName("qna/replyform");
+		//mav.addObject("qna", qna);
+		session.setAttribute("qna", qna);
+				
+		return mav;	
+		
 	}
 	
 	@RequestMapping(value = "reply.action", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	public String InsertReply(HttpServletRequest req) {
-
-		Member member = 
-				(Member)req.getSession().getAttribute("loginuser");
-
-		Qna qna = new Qna();
-		
-		qna.setqNo(Integer.parseInt(req.getParameter("qNo")));
-		qna.setTitle(req.getParameter("title"));
-		qna.setmId(member.getmId());
-		qna.setContent(req.getParameter("content"));
-				
+	public String InsertReply(Qna qna, HttpSession session) {
+		Qna qna1 = (Qna)session.getAttribute("qna");
+		qna.setGroupNo(qna1.getGroupNo());
+		qna.setDepth(qna1.getDepth());
+		qna.setStep(qna1.getStep());
 		qnaService.InsertReply(qna);
-				
+		
 		return "redirect:/qna/qnaList.action";
 	}
+	
 	
 
 }

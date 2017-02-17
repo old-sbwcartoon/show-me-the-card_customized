@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -20,11 +21,18 @@ public class MysqlQnaDao implements QnaDao{
 
 
 	@Override
-	public List<Qna> SelectQnaList() {
+	public List<Qna> SelectQnaList(int startRow, int lastRow) {
 		
-		List<Qna>Qnas = (List<Qna>)qnaMapper.SelectQnaList();
+		RowBounds bounds = new RowBounds(startRow - 1, lastRow - startRow);
+		
+		List<Qna>Qnas = (List<Qna>)qnaMapper.SelectQnaList(bounds);
 
 		return Qnas;
+	}
+	
+	@Override
+	public int SelectQnaCount() {
+		return qnaMapper.SelectQnaCount();
 	}
 
 	@Override
@@ -66,6 +74,12 @@ public class MysqlQnaDao implements QnaDao{
 		Qna qna = qnaMapper.SelectQnaByQnaNo(qNo);
 		
 		return qna;
+	}
+	
+	@Override
+	public void UpdateQnaGroupNo(int qNo) {
+		
+		qnaMapper.UpdateQnaGroupNo(qNo);
 	}
 	
 

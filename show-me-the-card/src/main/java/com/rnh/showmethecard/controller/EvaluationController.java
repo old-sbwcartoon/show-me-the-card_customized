@@ -40,8 +40,6 @@ public class EvaluationController {
 		model.addAttribute("desc", h.getDesc());
 		model.addAttribute("img", h.getImg());
 		
-		EvaluationComment ec = new EvaluationComment();
-		model.addAttribute("evaluationComment", ec.geteCommentNo());
 				
 		// 전체 Point, 최초 등록일
 		Card c = new Card();
@@ -53,9 +51,8 @@ public class EvaluationController {
 		// model.addAttribute("", );
 		
 		//MyCard myc = new MyCard();
-		
-		// 별점 평균
-		// Evaluation e = new Evaluation();
+		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
+
 		model.addAttribute("evalRatingList", service.showEvaluationRatingList(2));
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(2));
 		
@@ -72,10 +69,12 @@ public class EvaluationController {
 
 	
 	@RequestMapping(value="addevalcomment.action", method=RequestMethod.GET)
-	public void addEvaluationComment(int cardNo, HttpServletRequest req, String content) {
+	public String addEvaluationComment(HttpServletRequest req, String content) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
 		
 		service.addEvaluationComment(2, member.getmId(), content);
+		
+		return "redirect:evaluationmain.action";
 	}
 	
 	

@@ -68,10 +68,6 @@
     <script src="resources/assets/js/material.js"></script>
     <script src="resources/assets/js/waypoints.min.js"></script>
 
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="resources/assets/js/google-map-init.js"></script>    
-
 	<style type="text/css">
 	li {
 		float: left;
@@ -114,22 +110,6 @@
 	</style>
     <script>
 	$(document).ready(function(){
-		
-		 /*$.ajax({
-			url : '/showmethecard/chart/dayChart.action',
-			method : "get"
-		});
-		
-		$.ajax({
-			url : '/showmethecard/chart/weekChart.action',
-			method : "get"
-		});
-		
-		$.ajax({
-			url : '/showmethecard/chart/monthChart.action',
-			method : "get"
-		}); */
-		
 		$("#loginbtn").click(function(){
    	    	$("#loginModal").modal();
     	});
@@ -486,7 +466,7 @@
     		<div class="row">
     			<div class="col-md-6">
     				<h2>Card Chart</h2>
-    				    <ul class="nav nav-tabs">
+    				    <ul class="nav nav-tabs" style="font-size: 23">
     					<li class="active"><a data-toggle="tab" href="#cardTotal">Total</a></li>
 			    		<li><a data-toggle="tab" id="dailyCard" href="#cardDaily">Daily</a></li>
     					<li><a data-toggle="tab" id="weeklyCard" href="#cardWeekly">Weekly</a></li>
@@ -496,9 +476,9 @@
     					<div id="cardTotal" class="tab-pane fade in active">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
-    									<th style="width: 250">사이트 이름</th>
+    									<th style="width: 300">사이트 이름</th>
     									<th style="width: 300">URL</th>
     									<th style="width: 200">등록자</th>
     									<th style="width: 200">총점</th>
@@ -520,7 +500,7 @@
     					<div id="cardDaily" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">사이트 이름</th>
     									<th style="width: 300">URL</th>
@@ -535,7 +515,7 @@
     					<div id="cardWeekly" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">사이트 이름</th>
     									<th style="width: 300">URL</th>
@@ -550,7 +530,7 @@
     					<div id="cardMonthly" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">사이트 이름</th>
     									<th style="width: 300">URL</th>
@@ -566,7 +546,7 @@
     			</div>
     			<div class="col-md-6">
     				<h2>User Chart</h2>
-    				<ul class="nav nav-tabs">
+    				<ul class="nav nav-tabs"  style="font-size: 23">
     					<li class="active"><a data-toggle="tab" href="#userTotal">Total</a></li>
 			    		<li><a data-toggle="tab" id="daily" href="#userDaily">Daily</a></li>
     					<li><a data-toggle="tab" id="weekly" href="#userWeekly">Weekly</a></li>
@@ -576,7 +556,7 @@
     					<div id="userTotal" class="tab-pane fade in active">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
@@ -596,7 +576,7 @@
     					<div id="userDaily" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
@@ -609,7 +589,7 @@
     					<div id="userWeekly" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
@@ -622,7 +602,7 @@
     					<div id="userMonthly" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr>
+    								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
@@ -1391,23 +1371,7 @@
             </div>
         </div>        
     </section>
-    
-    <!-- Start Map Section -->
-    <div class="google-map">
-        <div id="map"></div>
-        <div class="contact-info waves-effect">
-            <h4>Contact info</h4>
-            <ul>
-                <li><strong>E-mail :</strong> your-email@mail.com</li>
-                <li><strong>Phone :</strong> +8801-6778776</li>
-                <li><strong>Mobile :</strong> +8801-45565378</li>
-                <li><strong>Web :</strong> yourdomain.com</li>
-            </ul>
-        </div>
-    </div>
-    <!-- End Map Section -->   
-    
-    
+
     <!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->   

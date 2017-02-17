@@ -54,14 +54,6 @@ $('.navbar-collapse ul li a').click(function () {
             
         });
             
-        
-
-
-
-
-
-	
-
 ////------- Testimonial Section
 
 $(document).ready(function() {

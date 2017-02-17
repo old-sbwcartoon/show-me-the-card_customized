@@ -122,11 +122,11 @@
 						<table>
 							<tr>
 								<th>No</th>
-								<td>${qna.qNo}</td>
+								<td>${ qna.qNo }</td>
 							</tr>
 							<tr>
 								<th>제목</th>
-								<td>${qna.title}</td>
+								<td>${ qna.title }</td>
 							</tr>
 							<tr>
 								<th>작성자</th>
@@ -153,7 +153,7 @@
 							</c:if>
 							<c:if
 								test="${ loginuser.userType eq '1' }">
-								<a href="relay.action?qNo=${qna.qNo}">답변달기</a>
+								<a href="reply.action?qNo=${qna.qNo}">답변달기</a>
 							</c:if>
 						</div>
 					</div>

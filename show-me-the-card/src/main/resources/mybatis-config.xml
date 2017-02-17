@@ -45,10 +45,6 @@
  	<mapper resource="com/rnh/showmethecard/model/mapper/ChartMapper.xml"/>
 
  	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/SearchMapper.xml"/> -->
-
-
- 	<!-- <mapper resource="com/rnh/showmethecard/model/mapper/SearchMapper.xml"/> -->
-
   </mappers> 
   
 </configuration>

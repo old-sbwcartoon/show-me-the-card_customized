@@ -62,6 +62,35 @@ public class MysqlMemberDao implements MemberDao {
 		return history;
 	}
 
+	@Override
+	public boolean selectPointExits(String mId, String content) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("mId", mId);
+		params.put("content", content);
+		
+		boolean result = memberMapper.selectPointExist(params);
+		return result;
+	}
+
+	@Override
+	public void updatePointHistory(String mId, String content) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("mId", mId);
+		params.put("content", content);
+		
+		memberMapper.updatePointHistory(params);
+	}
+
+	@Override
+	public void insertPointHistory(MemberHistory history) {
+		memberMapper.insertPointHistory(history);		
+	}
+
+	@Override
+	public void updateMemberPoint(String mId) {
+		memberMapper.updateMemberPoint(mId);
+	}
+
 }
 
 

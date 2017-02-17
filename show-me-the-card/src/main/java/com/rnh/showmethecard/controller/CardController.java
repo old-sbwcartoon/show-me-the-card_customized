@@ -38,6 +38,7 @@ public class CardController {
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
 	public String cardRegisterForm() {
+		System.out.println("들어는 왔구만");
 		return "card/cardregisterform";
 	}
 	
@@ -59,10 +60,11 @@ public class CardController {
 		CardBasicInfo cInfo = new CardBasicInfo();
 		
 		if (h.isUrlOk()) {
-			cInfo.setImgUrl(h.getImg());
-			cInfo.setUrl(h.getUrl());
-			cInfo.setTitle(h.getTitle());
-			cInfo.setContent(h.getDesc());
+			model.addAttribute("url", h.getUrl());
+			model.addAttribute("title", h.getTitle());
+			model.addAttribute("desc", h.getDesc());
+			model.addAttribute("img", h.getImg());
+			return "card/card";
 		}
 		
 		
@@ -72,11 +74,8 @@ public class CardController {
 ////	mav.setView("card");
 //		mav.addObject("CardBasicInfo", cInfo);
 //		System.out.println(mId);
-		model.addAttribute("url", h.getUrl());
-		model.addAttribute("title", h.getTitle());
-		model.addAttribute("desc", h.getDesc());
-		model.addAttribute("img", h.getImg());
-		return "card/card";
+		
+		return "틀렸어!";
 		
 	}
 //	

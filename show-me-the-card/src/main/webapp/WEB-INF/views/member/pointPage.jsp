@@ -70,6 +70,22 @@
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
 
+	<script type="text/javascript">
+	//point -> level
+		$(document).ready(function() {
+			//alert(${loginuser.mPoint});
+			$.ajax({
+				url : "/showmethecard/member/memberLevel.action",
+				data : { mPoint : ${loginuser.mPoint} } ,
+				method : "post",
+				dataType : "text",
+				success : function(data, status, xhr) {
+					alert(data);
+					$('<h2></h2>').appendTo($('#content')).text(data);
+				}
+			});
+		});
+	</script>
     
 
 </head>
@@ -83,7 +99,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+                    <div id="content" class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
                         <h2>포인트 내역 조회</h2>
                         <p>Show Me The Card</p>
                     </div>
@@ -91,6 +107,7 @@
             </div>
             
             <div>
+            	<h3 id="mPoint">&nbsp;&nbsp;총 ${ loginuser.mPoint } 점 &nbsp;</h3>
             	<table class="table">
             		<thead class="text-danger">
             			<tr>

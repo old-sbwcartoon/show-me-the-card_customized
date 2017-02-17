@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MemberHistory;
 import com.rnh.showmethecard.model.service.MemberService;
 
 @Controller
@@ -38,6 +39,16 @@ public class AccountController {
 		
 		if (member != null) {
 			session.setAttribute("loginuser", member);
+			
+			//로그인 포인트
+			MemberHistory history = new MemberHistory();
+			history.setmId(mId);
+			history.setPoint(10);
+			history.setContent("로그인");
+			memberService.registerPoint(history);
+			
+			//전체 포인트 업데이트
+			memberService.updateMemberPoint(mId);
 			return "redirect:/home.action";
 		} else {
 			//로그인 실패 alert

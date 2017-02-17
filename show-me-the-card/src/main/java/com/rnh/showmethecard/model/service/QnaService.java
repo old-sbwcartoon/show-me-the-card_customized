@@ -7,7 +7,9 @@ import com.rnh.showmethecard.model.dto.Qna;
 
 public interface QnaService {
 	
-	List<Qna> SearchQnaList();
+	List<Qna> SearchQnaList(int startRow, int lastRow);
+	
+	int SelectQnaCount();
 	
 	void AddQna(Qna qna);
 	
@@ -20,4 +22,6 @@ public interface QnaService {
 	Qna SelectQnaByQnaNo(int qNo);
 	
 	void InsertReply(Qna qna);
+	
+	void UpdateQnaGroupNo(int qNo);
 }

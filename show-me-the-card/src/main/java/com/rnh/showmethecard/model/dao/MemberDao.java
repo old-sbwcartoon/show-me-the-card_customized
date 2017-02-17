@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 
 public interface MemberDao {
 	
@@ -28,5 +29,7 @@ public interface MemberDao {
 	void insertPointHistory(MemberHistory history);
 	
 	void updateMemberPoint(String mId);
+	
+	List<Qna> selectQnaList(String mId);
 
 }

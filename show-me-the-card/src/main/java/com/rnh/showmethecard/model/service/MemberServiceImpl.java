@@ -12,6 +12,7 @@ import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -96,6 +97,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updateMemberPoint(String mId) {
 		dao.updateMemberPoint(mId);		
+	}
+
+	@Override
+	public List<Qna> getQnaList(String mId) {
+		List<Qna> qna = dao.selectQnaList(mId);
+		return qna;
 	}
 	
 	

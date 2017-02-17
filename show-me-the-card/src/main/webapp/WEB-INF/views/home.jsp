@@ -68,10 +68,6 @@
     <script src="resources/assets/js/material.js"></script>
     <script src="resources/assets/js/waypoints.min.js"></script>
 
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="resources/assets/js/google-map-init.js"></script>    
-
 	<style type="text/css">
 	li {
 		float: left;
@@ -168,6 +164,107 @@
 			$("#mypage").modal();
 		});
 		
+		$('#daily').click(function() {
+			$.ajax({
+				url : "/showmethecard/chart/dayChart.action",
+				method : "get",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					$('.d').remove();
+					for (var i = 0; i < data.length; i++) {
+						$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+					}
+				},
+				error : function(data) {
+					alert("실패");
+				}
+			});
+		});
+		
+		$('#weekly').click(function() {
+			$.ajax({
+				url : "/showmethecard/chart/weekChart.action",
+				method : "get",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					$('.d').remove();
+					for (var i = 0; i < data.length; i++) {
+						$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
+					}
+				},
+				error : function(data) {
+					alert("실패");
+				}
+			});
+		});
+		
+		$('#monthly').click(function() {
+			$.ajax({
+				url : "/showmethecard/chart/monthChart.action",
+				method : "get",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					$('.d').remove();
+					for (var i = 0; i < data.length; i++) {
+						$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+					}
+				},
+				error : function(data) {
+					alert("실패");
+				}
+			});
+		});
+		
+		$('#dailyCard').click(function(){
+			$.ajax({
+				url : "/showmethecard/chart/dayCard.action",
+				method : "get",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					$('.d').remove();
+					for (var i = 0; i < data.length; i++) {
+						$('<tr><th>'+data[i].cName+'</th><th>'+data[i].siteUrl+'</th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+					}
+				},
+				error : function(data) {
+					alert("실패");
+				}
+			});
+		});
+		
+		$('#weeklyCard').click(function(){
+			$.ajax({
+				url : "/showmethecard/chart/weekCard.action",
+				method : "get",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					$('.d').remove();
+					for (var i = 0; i < data.length; i++) {
+						$('<tr><th>'+data[i].cName+'</th><th>'+data[i].siteUrl+'</th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+					}
+				},
+				error : function(data) {
+					alert("실패");
+				}
+			});			
+		});
+		
+		$('#monthlyCard').click(function(){
+			$.ajax({
+				url : "/showmethecard/chart/monthCard.action",
+				method : "get",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					$('.d').remove();
+					for (var i = 0; i < data.length; i++) {
+						$('<tr><th>'+data[i].cName+'</th><th>'+data[i].siteUrl+'</th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+					}
+				},
+				error : function(data) {
+					alert("실패");
+				}
+			});	
+		});
 		
 	});
 	</script>
@@ -201,7 +298,7 @@
             				<a id="mypagebtn" href="#">My Page</a>
             				<a href="/showmethecard/member/list.action">Admin Page</a>
             				<a href="/showmethecard/member/pointList.action">My Point</a>
-            				<a href="#">My Q&A</a>
+            				<a href="/showmethecard/member/qnaList.action">My Q&A</a>
             			</div>	
                 	</div>          		
                 </div>
@@ -360,7 +457,175 @@
     		</div>
 		</div>
 	</div>
+    
     <!-- End Header Section -->    
+    
+    <!-- Strat Chart Section -->
+    <div class="about-us-section-2">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-6">
+    				<h2>Card Chart</h2>
+    				    <ul class="nav nav-tabs" style="font-size: 23">
+    					<li class="active"><a data-toggle="tab" href="#cardTotal">Total</a></li>
+			    		<li><a data-toggle="tab" id="dailyCard" href="#cardDaily">Daily</a></li>
+    					<li><a data-toggle="tab" id="weeklyCard" href="#cardWeekly">Weekly</a></li>
+ 				   		<li><a data-toggle="tab" id="monthlyCard" href="#cardMonthly">Monthly</a></li>
+    				</ul>
+    				<div class="tab-content">
+    					<div id="cardTotal" class="tab-pane fade in active">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 300">사이트 이름</th>
+    									<th style="width: 300">URL</th>
+    									<th style="width: 200">등록자</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody>
+    								<c:forEach var="totalCard" items="${ totalCard }">
+    									<tr>
+    										<!-- <th>레벨</th> -->
+    										<th>${ totalCard.cName }</th>
+    										<th>${ totalCard.siteUrl }</th>
+    										<th>${ totalCard.discover }</th>
+    										<th>${ totalCard.cPoint } 점</th>
+    									</tr>
+		    						</c:forEach>
+    							</tbody>					
+    						</table>
+    					</div>
+    					<div id="cardDaily" class="tab-pane fade">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">사이트 이름</th>
+    									<th style="width: 300">URL</th>
+    									<th style="width: 200">등록자</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody id="dailyCard">
+		    					</tbody>					
+    						</table>
+    					</div>
+    					<div id="cardWeekly" class="tab-pane fade">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">사이트 이름</th>
+    									<th style="width: 300">URL</th>
+    									<th style="width: 200">등록자</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody id="weeklyCard">
+    							</tbody>					
+    						</table>
+    					</div>
+    					<div id="cardMonthly" class="tab-pane fade">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">사이트 이름</th>
+    									<th style="width: 300">URL</th>
+    									<th style="width: 200">등록자</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody id="monthlyCard">
+    							</tbody>					
+    						</table>
+    					</div>    					
+    				</div>
+    			</div>
+    			<div class="col-md-6">
+    				<h2>User Chart</h2>
+    				<ul class="nav nav-tabs"  style="font-size: 23">
+    					<li class="active"><a data-toggle="tab" href="#userTotal">Total</a></li>
+			    		<li><a data-toggle="tab" id="daily" href="#userDaily">Daily</a></li>
+    					<li><a data-toggle="tab" id="weekly" href="#userWeekly">Weekly</a></li>
+ 				   		<li><a data-toggle="tab" id="monthly" href="#userMonthly">Monthly</a></li>
+    				</ul>
+    				<div class="tab-content">
+    					<div id="userTotal" class="tab-pane fade in active">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">아이디</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody>
+    								<c:forEach var="total" items="${ total }">
+    									<tr>
+    										<!-- <th>레벨</th> -->
+    										<th>${ total.mId }</th>
+    										<th>${ total.mPoint } 점</th>
+    									</tr>
+		    						</c:forEach>
+    							</tbody>					
+    						</table>
+    					</div>
+    					<div id="userDaily" class="tab-pane fade">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">아이디</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody id="dailyTable">
+		    					</tbody>					
+    						</table>
+    					</div>
+    					<div id="userWeekly" class="tab-pane fade">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">아이디</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody id="weeklyTable">
+    							</tbody>					
+    						</table>
+    					</div>
+    					<div id="userMonthly" class="tab-pane fade">
+    						<table class="table">
+    							<thead>
+    								<tr style="font-size: 18; color: white;">
+    									<!-- <th>레벨</th> -->
+    									<th style="width: 250">아이디</th>
+    									<th style="width: 200">총점</th>
+    								</tr>
+    							</thead>
+    							<tbody id="monthlyTable">
+    							</tbody>					
+    						</table>
+    					</div>    					
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <!-- End Chart Section --> 
+    
+    
+    
+    
+    
+    
+    
+    
     
     <!-- Start About Us Section -->
     <section id="about-us" class="about-us-section-1">
@@ -1106,23 +1371,7 @@
             </div>
         </div>        
     </section>
-    
-    <!-- Start Map Section -->
-    <div class="google-map">
-        <div id="map"></div>
-        <div class="contact-info waves-effect">
-            <h4>Contact info</h4>
-            <ul>
-                <li><strong>E-mail :</strong> your-email@mail.com</li>
-                <li><strong>Phone :</strong> +8801-6778776</li>
-                <li><strong>Mobile :</strong> +8801-45565378</li>
-                <li><strong>Web :</strong> yourdomain.com</li>
-            </ul>
-        </div>
-    </div>
-    <!-- End Map Section -->   
-    
-    
+
     <!-- Start Footer Section -->
     <c:import url="/WEB-INF/views/include/footer.jsp" />
     <!-- End Footer Section -->   

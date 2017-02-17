@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -69,25 +70,6 @@
     <!-- Materialize js -->
     <script src="../resources/assets/js/material.js"></script>
     <script src="../resources/assets/js/waypoints.min.js"></script>
-
-	<script type="text/javascript">
-	//point -> level
-		$(document).ready(function() {
-			//alert(${loginuser.mPoint});
-			$.ajax({
-				url : "/showmethecard/member/memberLevel.action",
-				data : { mPoint : ${loginuser.mPoint} } ,
-				method : "post",
-				dataType : "text",
-				success : function(data, status, xhr) {
-					alert(data);
-					$('#mPoint').html(data);
-				}
-			});
-		});
-	</script>
-    
-
 </head>
 
 <body class="index">
@@ -100,30 +82,26 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div id="content" class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>포인트 내역 조회</h2>
+                        <h2>문의 내역 조회</h2>
                         <p>Show Me The Card</p>
                     </div>
                 </div>
             </div>
             
             <div>
-            	<h3 id="mPoint"></h3> 
-            	<h3> 총 ${ loginuser.mPoint } 점 </h3>
             	<table class="table">
             		<thead class="text-danger">
             			<tr>
+            				<th style="width: 250">TITLE</th>
             				<th style="width: 200">REG DATE</th>
-            				<th style="width: 250">POINT</th>
-            				<th>CONTENT</th>
             			</tr>
             		</thead>
             		
             		<tbody>
-            		 <c:forEach var="history" items="${ history }">
+            		 <c:forEach var="qna" items="${ Qna }">
             		 	<tr>
-            		 		<td>${ history.regDate }</td>
-            		 		<td>${ history.point }</td>
-            		 		<td>${ history.content }</td>
+            		 		<td><a href="/showmethecard/qna/detail.action?qNo=${ qna.qNo }">${ qna.title }</a></td>
+            		 		<td><fmt:formatDate value="${ qna.regDate }" pattern="yyyy-MM-dd"/> </td>
             		 	</tr>
             		 </c:forEach>
             		</tbody>

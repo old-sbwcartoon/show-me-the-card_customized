@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 
 public interface MemberService {
 		
@@ -29,4 +30,5 @@ public interface MemberService {
 	
 	void updateMemberPoint(String mId);
 	
+	List<Qna> getQnaList(String mId);
 }

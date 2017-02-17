@@ -141,7 +141,7 @@
 			</div>
 		        <form:form id="form233" action="reply.action" method="post"
 				modelAttribute="qna">
-		       	<%-- <input type='hidden' name="pageno" value="${ pageno }" /> --%>
+		       	
 		        <input type="hidden" name="qNo" value="${ qna.qNo }">
 				<table id=hqqnaform>
 					<tr>
@@ -160,7 +160,7 @@
 							<div id="title">
 								<label for="inputdefault">작성자:</label> <input
 									class="form-control" name="mId" id="writer" type="text"
-									value="${ qna.mId }" readonly>
+									value="${ loginuser.mId }" readonly>
 		                </div>
 						</td>
 					</tr>

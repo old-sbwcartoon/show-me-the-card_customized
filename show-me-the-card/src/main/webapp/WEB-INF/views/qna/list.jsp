@@ -2,6 +2,7 @@
 
 <%@page import="org.springframework.web.bind.annotation.RequestBody"%>
 <%@page import="com.rnh.showmethecard.model.dto.Qna"%>
+<%@page import="com.rnh.showmethecard.ui.ThePager"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -96,12 +97,7 @@
 	<c:import url="/WEB-INF/views/include/navigator.jsp" />
 
 	<!-- Start Contact Us Section -->
-	<section id="contact" class="contact contact-section"> <!-- <div id="preloader">
-		<div id="status">&nbsp;</div>
-	</div>
-
-	<br/>
-	<br/> -->
+	<section id="contact" class="contact contact-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
@@ -113,36 +109,37 @@
 			</div>
 		</div>
 		<div>
-
+			<a href="insertQna.action">글쓰기</a>
 			<table class="table">
-
 				<thead class="text-danger">
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
+						<th>작성자</th>
 						<th>등록일</th>
 					</tr>
 				</thead>
-
 				<tbody>
-
 					<c:forEach var="qna" items="${ requestScope.qnas }">
 						<tr>
-							<td>${qna.qNo}</td>
-							<td><a href='detail.action?qNo=${qna.qNo }'>${qna.title}</a></td>
-							<td><fmt:formatDate value="${qna.regDate}"
+							<td>${ qna.qNo }</td>
+							<td><a href='detail.action?qNo=${ qna.qNo }'>${ qna.title }</a></td>
+							<td>${ qna.mId }</td>
+							<td><fmt:formatDate value="${ qna.regDate }"
 									pattern="yyyy-MM-dd" /></td>
-
 						</tr>
-
 					</c:forEach>
 				</tbody>
-				<a href='insertQna.action'>글쓰기</a>
 			</table>
+			<!-- 아래는 페이지 번호 출력 구문 -->
+			<div style="margin: 0 auto; text-align: center;">
+				<ul class="pagination">${ pager }</ul>
+			</div>
+			
 		</div>
+		
 	</div>
 	</section>
-
 	<!-- Start Footer Section -->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer Section -->

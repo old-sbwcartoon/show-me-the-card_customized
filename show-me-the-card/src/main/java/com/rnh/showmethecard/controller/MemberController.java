@@ -1,5 +1,7 @@
 package com.rnh.showmethecard.controller;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -17,7 +19,9 @@ import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 import com.rnh.showmethecard.model.service.MemberService;
+import com.rnh.showmethecard.ui.SpriteImage;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -118,15 +122,29 @@ public class MemberController {
 	
 	@RequestMapping(value="memberLevel.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String memberLevel(int mPoint) {
+	public BufferedImage[] memberLevel(int mPoint) {
 		String level = "";
 		for (int i = 0; i < 100; i++) {
 			if ( 50*i*(i+1) < mPoint && mPoint < 50*(i+1)*(i+2)) {
 				level = "LEVEL " + (i+1);
 			}
 		}
-		return level;
+		
+		SpriteImage spriteImage = new SpriteImage(10, 11, 31, 31);
+		BufferedImage[] levelImage = spriteImage.getSpliteImage();
+		return levelImage;
 	}
+	
+	@RequestMapping(value="qnaList.action", method=RequestMethod.GET)
+	public String qnaList(HttpSession session) {
+		Member member = (Member) session.getAttribute("loginuser");
+		List<Qna> qna = memberService.getQnaList(member.getmId());
+		
+		session.setAttribute("Qna", qna);
+		return "member/QNAPage";
+	}
+	
+	
 	
 		
 }

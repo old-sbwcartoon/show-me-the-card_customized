@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 import com.rnh.showmethecard.model.mapper.MemberMapper;
 
 @Repository(value = "memberDao")
@@ -89,6 +90,12 @@ public class MysqlMemberDao implements MemberDao {
 	@Override
 	public void updateMemberPoint(String mId) {
 		memberMapper.updateMemberPoint(mId);
+	}
+
+	@Override
+	public List<Qna> selectQnaList(String mId) {
+		List <Qna> qnaList = memberMapper.selectQnalist(mId);
+		return qnaList;
 	}
 
 }

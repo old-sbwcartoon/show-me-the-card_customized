@@ -80,72 +80,141 @@
 <script src="/showmethecard/resources/assets/js/material.js"></script>
 <script src="/showmethecard/resources/assets/js/waypoints.min.js"></script>
 
-<!-- Google Map -->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="/showmethecard/resources/assets/js/google-map-init.js"></script>
 
-<script type="text/javascript" >
-	$(document).ready(function() {
-		// 클릭이벤트
-		$("#addFolder").click(function() {
 
-			$("#loginModal").modal('show');
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				// 클릭이벤트
+				$("#addFolder").click(function() {
+					var f_modal = $("#loginModal")
+					$('#fName').attr('value', '');
+					f_modal.find('h2').text("폴더 추가");
+					f_modal.modal('show');
 
-		});	
-		   		   
-		
-		
-		// 폴더 register ajax
-	 	$('#register').click(function(){
-	 		if($('#fName').val() != "" ) {
-	        $.ajax({
-	            url:'register.action',
-	            type : 'post',
-	            /* data : '('form').serialize()',		             */
-	            data: { mId : $('#mId').val(),
-	            		fName : $('#fName').val()
-	            	  },	
-	           	dataType : 'text',
-	            success:function(data){		   
-	            	$('#folder').clone().appendTo($('#fName').val()).before($('#addFolder'));      	
-	            	
-	            	
-	            }
-	            	
-	        });
-	 		}
-	 		else {
-	 			alert("폴더 명을 입력하세요.");
-	 			return false;
-	 		}
-	    }); 
-	 	
-		
-		
-		
-		
-	 	$("#folderpack").on("click", "button[id^=folder_]", function(event) {    
-	 		
-	 		var fNo = id.split("_")[1];
-	 		
-	 		
-	 		$("#loginModal").modal('show');
-                      
-            
-            
-	 		
-         });
+				});
 
-		
-		
-		
-		
-		 
-		
-		
-		
-	});	
+				// 폴더 register ajax
+				$('#register').click(
+						function() {
+							if ($('#fName').val() != "") {
+								$.ajax({
+									url : 'register.action',
+									type : 'post',								
+									data : {
+										mId : $('#mId').val(),
+										fName : $('#fName').val()
+									},
+									dataType : 'json',
+									success : function(data) {
+										/* var li = $('#folderbasic').clone(true);
+										li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.jpg")
+										li.css('display' , 'inline')
+										li.attr("id", "folder_"+ data.fNo)
+										li.find('#fNo').attr("value", data.fNo)
+										li.text(data.fName)  */
+										
+										$('#folderpage').append(
+												/* li) */
+												
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
+										) 
+
+									}
+
+								});
+							} else {
+								alert("폴더 명을 입력하세요.");
+								return false;
+							}
+						});
 	
+	
+	
+	
+	
+	
+				
+				$('#delete').click(
+						function() {
+							if ($('#fName').val() != "") {
+								$.ajax({
+									url : 'register.action',
+									type : 'post',								
+									data : {
+										mId : $('#mId').val(),
+										fName : $('#fName').val()
+									},
+									dataType : 'json',
+									success : function(data) {
+										/* var li = $('#folderbasic').clone(true);
+										li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.jpg")
+										li.css('display' , 'inline')
+										li.attr("id", "folder_"+ data.fNo)
+										li.find('#fNo').attr("value", data.fNo)
+										li.text(data.fName)  */
+										
+										$('#folderpage').append(
+												/* li) */
+												
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
+										) 
+
+									}
+
+								});
+							} else {
+								alert("폴더 명을 입력하세요.");
+								return false;
+							}
+						});
+
+				
+						
+				   
+				
+				$('#folderpage').on("click", "button[id^=folder_]",
+						function(event) {
+
+							var f_id = event.currentTarget.id;
+							var fNo = f_id.split("_")[1];
+
+							$('#fName').attr('value',
+									event.currentTarget.childNodes[2].data);
+														
+							
+							$('#delete').remove();	
+							
+							
+							
+							var f_modal = $("#loginModal");
+							
+							//if ($('#register').length = ""){
+							 if (!(!!$("#register").length)) {
+								var b_reg = $("#update")	
+							} else {
+								var b_reg = $("#register")	
+							}
+							
+							
+							var b_delete = b_reg.clone(true);
+							
+							b_reg.attr('id','update');
+							b_delete.attr('id','delete');
+							
+							b_reg.text("수정")
+							b_delete.text("삭제")
+							
+							
+							$('#buttondiv').append(b_delete);
+							f_modal.find('h2').text("폴더 수정");
+							
+							f_modal.modal('show');
+							
+							
+						});
+
+			});
 </script>
 
 
@@ -154,6 +223,7 @@
 
 </head>
 <body class="index">
+
 	<c:choose>
 		<c:when test="${ empty sessionScope.loginuser }">
 			<c:import url="/WEB-INF/views/include/navigator.jsp" />
@@ -199,27 +269,26 @@
 
 
 
+			<%-- <button type="button" id="folderbasic" class="folderbasic"
+				style="display : none; border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
+					src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>
 
 
-
-
+<span id = 'folderpage' > 
 	<c:forEach var="folder" items="${ folders }">
+
 		
-		<div id = "folderpack" style = "float : left">
-		<button type="button" id="folder_${ folder.fNo }"
-			style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px;  margin-bottom:20px ">
-			<img style="height: 100px" class="btn-img"
-				src="/showmethecard/resources/images/cardpack.jpg">
-				<input type="hidden" id = fNo name = fNo value =${ folder.fNo }>
-			&nbsp;${ folder.fName }&nbsp;</button>
- 		</div>
+			<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
+				style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
+					src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button>
+		
 	</c:forEach>
 
 
-
+</span>
 
 	<button type="button" id="addFolder"
-		style="border: 0px; margin: 0px; margin-bottom:20px; padding: 0px; width: 75px; height: 100px">
+		style="border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 75px; height: 100px">
 		<img style="height: 100px" class="btn-img"
 			src="/showmethecard/resources/images/cardpackplus.jpg">
 
@@ -252,16 +321,15 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form name="sentFolder"									
-									id="contactForm" novalidate>
+								<form name="sentFolder" id="contactForm" novalidate>
 									<div class="row">
 										<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s"
 											data-wow-delay="600ms">
 											<div class="col-md-12 form-group waves-effect">
-												<input type="hidden" id = "mId" name = "mId" value="${ loginuser.mId }">
-											
-												<input type="text" class="form-control" placeholder="폴더이름"
-													id="fName" name="fName" required
+												<input type="hidden" id="mId" name="mId"
+													value="${ loginuser.mId }"> <input type="text"
+													class="form-control" placeholder="폴더이름" id="fName"
+													name="fName" required
 													data-validation-required-message="Please enter your id.">
 												<p class="help-block text-danger"></p>
 											</div>
@@ -291,11 +359,11 @@
 										</div>
 										<div class="clearfix"></div>
 										<div class="modal-footer">
-											<div class="col-lg-12 text-center">
+											<div id="buttondiv" class="col-lg-12 text-center">
 												<div id="success"></div>
-												<button type="submit" id="register"
-													class="btn btn-primary waves-effect">&nbsp;&nbsp;등록&nbsp;&nbsp;</button>
-												<button type="button" class="btn btn-primary waves-effect"
+												<button type="button" id="register"
+													class="btn btn-primary waves-effect" data-dismiss="modal">&nbsp;&nbsp;등록&nbsp;&nbsp;</button>
+												<button type="button" id="cancel" class="btn btn-primary waves-effect"
 													data-dismiss="modal">&nbsp;&nbsp;취소&nbsp;&nbsp;</button>
 
 											</div>

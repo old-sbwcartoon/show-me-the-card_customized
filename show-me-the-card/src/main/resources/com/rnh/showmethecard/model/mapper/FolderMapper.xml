@@ -12,7 +12,8 @@
 		WHERE M_ID = #{ mId }
 	</select>
 	
-	<insert id="insertFolder" parameterType="Folder">
+	<insert id="insertFolder" parameterType="Folder" useGeneratedKeys="true" 
+	 		keyColumn="F_NO" keyProperty="fNo">
 		INSERT INTO rnh2.FOLDER
 		(M_ID, F_NAME, secret )
 		VALUES

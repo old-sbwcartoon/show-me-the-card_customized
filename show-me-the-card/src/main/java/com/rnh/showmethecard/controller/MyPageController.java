@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.FolderDao;
 import com.rnh.showmethecard.model.dto.Folder;
 import com.rnh.showmethecard.model.dto.Member;
@@ -40,7 +41,7 @@ public class MyPageController {
 	}
 	
 //	//폴더 등록
-	@RequestMapping(value="register.action", method=RequestMethod.POST)
+	@RequestMapping(value="register.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
 	@ResponseBody
 	public String register(Folder folder, String fName, String mId) {
 		folder.setfName(fName);
@@ -48,7 +49,9 @@ public class MyPageController {
 		folder.setSecret(false);
 		folderService.registerFolder(folder);
 		
-		return "data";
+		Gson gson = new Gson();	
+		
+		return gson.toJson(folder);
 	}
 //	
 //	//아이디 중복 확인

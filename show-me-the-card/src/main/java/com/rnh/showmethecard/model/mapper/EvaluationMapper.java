@@ -10,8 +10,6 @@ public interface EvaluationMapper {
 
 	void insertEvaluationRating(HashMap<String, String> data);
 
-	void insertEvaluationComment(HashMap<String, String> data);
-
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
 
 	int selectEvaluationRatingLiked(HashMap<String, String> data);
@@ -21,6 +19,10 @@ public interface EvaluationMapper {
 	float selectEvaluationRatingAvg(int cardNo);
 
 	ArrayList<EvaluationComment> selectEvaluationCommentList(int cardNo);
+
+//	void insertEvaluationComment(HashMap<String, String> data);
+
+	void insertEvaluationComment(HashMap<String, Object> data);
 
 	
 }

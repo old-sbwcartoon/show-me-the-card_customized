@@ -71,38 +71,45 @@
 
     
 	<style type="text/css">
+	#columns{ column-width:300px; }
     
-		.box {
-			background-color: rgb(220,220,220);
-			border-radius: 4px;
-			border: solid 2.5pt darkgray;
-			margin: 30px 20px;
-			padding: 5px 5px;
-			float: left;
-		}
-		.textbox {
-			height: 180px; 
-			width: 260px;
-		}
-		.title {
-			font-size: 24px;
-			font-weight: bold;
-			font-style: italic;
-			word-break: keep-all;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			border-bottom: dotted 2.5pt darkgray;
-			padding-bottom: 5px;
-		}
-		.desc {
-			font-size: 15px;
-			letter-spacing: -0.023em;
-			height: 64px;
-			margin-top: 16px;
-		}
-		h2 {
-			font-style: italic;
-		}
+	    #columns figure{
+	      display: inline-block;
+	      column-width:360.66px;
+	      padding:10px;
+	    }
+	.box {
+		background-color: rgb(220,220,220);
+		border-radius: 4px;
+		border: solid 2.5pt darkgray;
+		margin: 30px 20px;
+		padding: 5px 5px;
+		float: left;
+	}
+	.textbox {
+		height: 180px; 
+		width: 260px;
+	}
+	.title {
+		font-size: 24px;
+		font-weight: bold;
+		font-style: italic;
+		word-break: keep-all;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		border-bottom: dotted 2.5pt darkgray;
+		padding-bottom: 5px;
+	}
+	.desc {
+		font-size: 15px;
+		letter-spacing: -0.023em;
+		height: 64px;
+		margin-top: 16px;
+	}
+	h2 { font-style: italic; }
+	
+	textarea.autosize { height: 20px; }
+		
 	</style>
 	
 	<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
@@ -148,7 +155,7 @@
 		    	}));
 	    			    		
 		    }
-		    $('#register').click(function(){
+		    $('#register').click(function() {
 		        $.ajax({
 		            url:'register.action',
 		            type : 'post',
@@ -183,9 +190,19 @@
 		    		
 		    });
 		    
+		    /* textarea auto resize */
+		    $("textarea.autosize").on('keydown keyup', function () {
+	    		$(this).height(1).height( $(this).prop('scrollHeight')+12 );
+	    	});
+		    
+		    $("#div-comment-submit").click(function() {
+		    	$('#eval-comment-form').submit();
+		    });
+		    
+		    
 		});
 	</script>
-</head>
+	</head>
 <body>
 <c:choose>
  	<c:when test="${ empty sessionScope.loginuser }">
@@ -329,75 +346,43 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="section-title text-center">
-                            <h2>Say Comments</h2>
-                            <p>hello, little ones !!!</p>
-                        </div>
+                        <h2>Say Comments</h2>
+                        <p>hello, little ones !!!</p>
+                    </div>
+                    <div id="columns" class="row">
+	                	<figure class="dummy-figure"><div style="margin:10px 0px;"></div></figure>	                
+	                    <figure class="dummy-figure"><div style="margin:10px 0px;"></div></figure>		                
+		                <figure>
+		                    <div class="welcome-section text-center" style="height: 170px; margin:10px 0px;">
+		                    	<form id="eval-comment-form" action="/showmethecard/evaluation/addevalcomment.action" method="GET">
+			               			<p>
+			               				<textarea id="comment-textarea" name="content" class="autosize" rows="3" maxlength="1100" style="size:20pt; width:100%; overflow: hidden; border:none; resize: none;" placeholder="새 댓글..?" >
+			               				</textarea>
+			               			</p>
+			               		</form>
+			               	</div>
+							<div id="div-comment-submit" class="counter-item waves-effect">
+								<i class="fa fa-check">
+								</i>
+		                	</div>
+	                    </figure>
+	                </div>
                 </div>
             </div>
-            <div class="row">
-                
-                <c:forEach var="commentlist" items="${ requestScope.evalCommentList }">
-                
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="welcome-section text-center">
-	                        <img src="resources/assets/images/photo-2.jpg" class="img-responsive" alt="..">
-	                        <div class="border"></div>
+            
+            <div id="columns" class="row">
+				<c:forEach var="commentlist" items="${ requestScope.evalCommentList }">
+	                <figure>
+	                    <div class="welcome-section text-center" style="margin:10px 0px;">
 	                        <h4>${ commentlist.mId }</h4>
 	                        <p>${ commentlist.content }</p>
-	                    </div>
-	                </div>
-	                
+		                </div>
+	                </figure>
 	            </c:forEach>
-                
-                <div class="col-md-4 col-sm-4">
-                    <div class="welcome-section text-center waves-effect">
-                        <img src="resources/assets/images/photo-1.jpg" class="img-responsive" alt="..">
-                        <div class="border"></div>
-                        <p>Duis aute irure dolor in reprehen derit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Lorem reprehenderit</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-4 col-sm-4">
-                    <div class="welcome-section text-center waves-effect">
-                        <img src="resources/assets/images/photo-2.jpg" class="img-responsive" alt="..">
-                        <div class="border"></div>
-                        <p>Duis aute irure dolor in reprehen derit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Lorem reprehenderit</p>
-                    </div>
-                </div>
-                
-                
-                
-                <div class="col-md-4 col-sm-4">
-                    <div class="welcome-section text-center waves-effect">
-                        <img src="resources/assets/images/photo-2.jpg" class="img-responsive" alt="..">
-                        <div class="border"></div>
-                        <p>Duis aute irure dolor in reprehen derit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Lorem reprehenderit</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-4 col-sm-4">
-                    <div class="welcome-section text-center waves-effect">
-                        <img src="resources/assets/images/photo-2.jpg" class="img-responsive" alt="..">
-                        <div class="border"></div>
-                        <p>Duis aute irure dolor in reprehen derit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Lorem reprehenderit</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="welcome-section text-center waves-effect">
-                        <img src="resources/assets/images/photo-2.jpg" class="img-responsive" alt="..">
-                        <div class="border"></div>
-                        <p>Duis aute irure dolor in reprehen derit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Lorem reprehenderit</p>
-                    </div>
-                </div>
-            </div><!-- /.row -->            
+            </div><!-- /.row -->
             
         </div><!-- /.container -->
     </section>
-	<div class="welcome-section text-center">댓글<p>
-		<form name="evaluation-comment-form" method="GET" action="addevalcomment.action">
-			<input type="text" style="weight:700px;"/>
-			<input id="evaluation-comment-submit" type="submit" value="커멘트"/>
-		</form>
-	</div>
+    
 </body>
 </html>

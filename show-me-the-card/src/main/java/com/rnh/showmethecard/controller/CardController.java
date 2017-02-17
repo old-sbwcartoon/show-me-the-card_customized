@@ -1,24 +1,20 @@
 package com.rnh.showmethecard.controller;
 
-import java.net.URL;
-
 import javax.servlet.http.HttpSession;
-import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.rnh.showmethecard.card.classes.CheckUrlStatus;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.service.CardService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
 @Controller
@@ -31,6 +27,14 @@ public class CardController {
 	public void setDao(CardDao dao) {
 		this.dao = dao;
 	}
+	@Autowired
+	@Qualifier("cardService")
+	private CardService cardService;
+	
+	private int cardNo;
+	
+	Member member;
+	String mId;
 	
 	Gson gson = new Gson();
 	
@@ -38,7 +42,6 @@ public class CardController {
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
 	public String cardRegisterForm() {
-		System.out.println("들어는 왔구만");
 		return "card/cardregisterform";
 	}
 	
@@ -51,32 +54,44 @@ public class CardController {
 		//URL javaUrl = url;
 //		ModelAndView mav = new ModelAndView("/WEB-INF/view/card/card.jsp");
 //		//mav.
-		System.out.println(url);
-		Member member = (Member) session.getAttribute("loginuser");
-		String mId = member.getmId();
+		
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
 		
 		HtmlParser h = new HtmlParser(url);
 		
 		CardBasicInfo cInfo = new CardBasicInfo();
+		
+		int cardNo = cardService.checkCardDb(h.getUrl());
+		System.out.println(cardNo);
+		
 		
 		if (h.isUrlOk()) {
 			model.addAttribute("url", h.getUrl());
 			model.addAttribute("title", h.getTitle());
 			model.addAttribute("desc", h.getDesc());
 			model.addAttribute("img", h.getImg());
+			model.addAttribute("resultCheck", "fine");
+			model.addAttribute("cardNo", cardNo);
 			return "card/card";
-		}
-		
-		
-		String strJson = gson.toJson(cInfo);
-		System.out.println(strJson);
+		} else{
+//		String strJson = gson.toJson(cInfo);
+//		System.out.println(strJson);
 		
 ////	mav.setView("card");
 //		mav.addObject("CardBasicInfo", cInfo);
 //		System.out.println(mId);
-		
+			model.addAttribute("resultCheck", "bad");
 		return "틀렸어!";
+		}
 		
+	}
+	
+	@RequestMapping(value="cardregisterfin.action", method=RequestMethod.POST)
+	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
+		System.out.println("들어는 왔구만");
+		System.out.println(stringJson);
+		return "redirect:/card/cardregisterform";
 	}
 //	
 //	//회원가입

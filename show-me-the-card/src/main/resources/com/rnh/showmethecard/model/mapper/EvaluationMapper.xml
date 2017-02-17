@@ -70,7 +70,7 @@
 
 
 
-<resultMap id="evaluationRatingListMap" type="EvaluationRating">
+<resultMap id="evaluationRatingMap" type="EvaluationRating">
 		<id property="cardNo" column="CARD_NO" />
 		<id property="mId" column="M_ID" />
         <result property="content" column="CONTENT" />
@@ -80,7 +80,7 @@
 	    <result property="eLikedSum" column="E_LIKED_SUM" />
 </resultMap>
 
-<select id="selectEvaluationRatingList" resultMap="evaluationRatingListMap" parameterType="Integer">
+<select id="selectEvaluationRatingList" resultMap="evaluationRatingMap" parameterType="Integer">
 	select e.CARD_NO
 			, e.M_ID
 			, e.CONTENT
@@ -103,7 +103,17 @@
 	where CARD_NO = #{cardNo}
 </select>
 
-<select id="selectEvaluationCommentList" resultType="EvaluationComment" parameterType="Integer">
+
+<resultMap id="evaluationCommentMap" type="EvaluationComment">
+		<id property="eCommentNo" column="E_COMMENT_NO" />
+		<result property="mId" column="M_ID" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="content" column="CONTENT" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="deleted" column="deleted" />
+</resultMap>
+
+<select id="selectEvaluationCommentList" resultMap="evaluationCommentMap" parameterType="Integer">
 	select E_COMMENT_NO
 		, M_ID
 		, CARD_NO
@@ -112,6 +122,8 @@
 		, deleted
 	from EVALUATION_COMMENT
 	where CARD_NO = #{cardNo}
+		AND deleted = 0
+	order by REG_DATE DESC
 </select>
 
 </mapper>

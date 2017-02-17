@@ -42,7 +42,7 @@ public class CheckUrlStatus {
         }
         catch(Exception e)
         {
-        	System.out.println(e);
+        	System.out.println("CheckUrlStatus 클래스 에러코드:"+e);
         }
 		this.url = url;
 	}

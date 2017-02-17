@@ -86,6 +86,39 @@
 	</script>
 </head>
 <body>
+	<section id="team" class="team-member-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="section-title text-center">
+					<h5>선택하신 주소는</h5>
+					<p>최초 등록 입니다.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3 col-sm-6">
+				<div class="team-member">
+					<img src="${img}" class="img-responsive" alt="">
+					<div class="team-details">
+						<h4>${title}</h4>
+						<div class="designation">Founder & Director</div>
+						<p class="description">${desc}</p>
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+							<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+
 
 	<div class="box" style="width:300px; height:500px;">
 		<div id="imgdiv" style="height:290px; width:294px; text-align:center; overflow:hidden; border:ridge rgb(245,245,245);">

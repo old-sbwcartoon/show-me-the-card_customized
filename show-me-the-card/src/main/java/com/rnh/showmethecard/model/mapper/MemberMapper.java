@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 
 //com.mvcdemoweb.model.mapper.MemberMapper 파일에 대응하는 인터페이스
 public interface MemberMapper {
@@ -30,4 +31,6 @@ public interface MemberMapper {
 	void insertPointHistory(MemberHistory history);
 	
 	void updateMemberPoint(String mId);
+	
+	List<Qna> selectQnalist(String mId);
 }

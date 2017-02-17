@@ -17,6 +17,7 @@ import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
+import com.rnh.showmethecard.model.dto.Qna;
 import com.rnh.showmethecard.model.service.MemberService;
 
 @Controller
@@ -127,6 +128,17 @@ public class MemberController {
 		}
 		return level;
 	}
+	
+	@RequestMapping(value="qnaList.action", method=RequestMethod.GET)
+	public String qnaList(HttpSession session) {
+		Member member = (Member) session.getAttribute("loginuser");
+		List<Qna> qna = memberService.getQnaList(member.getmId());
+		
+		session.setAttribute("Qna", qna);
+		return "member/QNAPage";
+	}
+	
+	
 	
 		
 }

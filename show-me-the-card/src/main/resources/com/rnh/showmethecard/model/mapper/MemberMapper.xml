@@ -79,6 +79,15 @@
 				   where M_ID = #{ mId })
 		WHERE M_ID = #{ mId }
 	</update>
+	
+	<select id="selectQnalist" parameterType="String" resultType="Qna">
+		SELECT 
+		    QNA.Q_NO qNo,
+		    QNA.TITLE title,
+    		left(QNA.REG_DATE, 10) regDate
+		FROM rnh2.QNA
+		WHERE M_ID=#{ mId } and deleted = '0'
+	</select>
 </mapper>
 
 

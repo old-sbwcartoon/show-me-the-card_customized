@@ -18,10 +18,10 @@ public class CardServiceImpl implements CardService {
 	private CardDao cardDao;
 	
 	@Override
-	public boolean checkCardDb(String siteUrl){
-		
-		return false;
+	public void checkCardDb(String siteUrl){
+		int resultCardNo = cardDao.selectCardDbBySiteUrl(siteUrl);
 	}
+	
 //	private AdviceNote adviceNote;
 //	private AdviceNoteForList adviceNoteForList;
 //	private List<AdviceNoteForList> adviceNoteForListList;

@@ -1,21 +1,16 @@
 package com.rnh.showmethecard.controller;
 
-import java.net.URL;
-
 import javax.servlet.http.HttpSession;
-import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.rnh.showmethecard.card.classes.CheckUrlStatus;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.Member;
@@ -38,7 +33,6 @@ public class CardController {
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
 	public String cardRegisterForm() {
-		System.out.println("들어는 왔구만");
 		return "card/cardregisterform";
 	}
 	
@@ -59,11 +53,12 @@ public class CardController {
 		
 		CardBasicInfo cInfo = new CardBasicInfo();
 		
-		if (true) {
+		if (h.isUrlOk()) {
 			model.addAttribute("url", h.getUrl());
 			model.addAttribute("title", h.getTitle());
 			model.addAttribute("desc", h.getDesc());
 			model.addAttribute("img", h.getImg());
+			model.addAttribute("resultCheck", "fine");
 			return "card/card";
 		} else{
 //		String strJson = gson.toJson(cInfo);
@@ -72,10 +67,17 @@ public class CardController {
 ////	mav.setView("card");
 //		mav.addObject("CardBasicInfo", cInfo);
 //		System.out.println(mId);
-		
+			model.addAttribute("resultCheck", "bad");
 		return "틀렸어!";
 		}
 		
+	}
+	
+	@RequestMapping(value="cardregisterfin.action", method=RequestMethod.POST)
+	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
+		System.out.println("들어는 왔구만");
+		
+		return "redirect:/card/cardregisterform";
 	}
 //	
 //	//회원가입

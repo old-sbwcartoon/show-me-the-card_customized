@@ -6,8 +6,8 @@
 <!-- namespace는 패키지.클래스이름을 의미 -->
 <mapper namespace="com.rnh.showmethecard.model.mapper.CardMapper">
 
-	<select id="selectCardDbBySiteUrl" resultType="boolean" parameterType="String">
-		SELECT * FROM card_db WHERE site_url = #{siteUrl} AND deleted = 0;
+	<select id="selectCardDbBySiteUrl" resultType="int" parameterType="String">
+		SELECT card_no cardNo FROM card_db WHERE site_url = #{siteUrl} AND deleted = 0;
 	</select>
 	
 	<insert id="insertCardDb" parameterType="String">

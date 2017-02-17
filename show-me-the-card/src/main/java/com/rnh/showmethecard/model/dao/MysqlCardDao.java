@@ -19,8 +19,8 @@ public class MysqlCardDao implements CardDao {
 	
 	
 	@Override
-	public boolean selectCardDbBySiteUrl(String url) {
-		return false;
+	public int selectCardDbBySiteUrl(String url) {
+		return 0;
 	}
 	
 	@Override
@@ -28,7 +28,7 @@ public class MysqlCardDao implements CardDao {
 	}
 	
 	@Override
-	public void insertCardDb(int cardNo, String mycComment) {
+	public void insertMyCard(int cardNo, String mycComment) {
 	}
 
 //	@Override

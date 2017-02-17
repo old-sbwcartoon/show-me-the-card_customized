@@ -139,17 +139,17 @@
 				<h1 id="maintitle"> Q&A 답변 </h1>
 
 			</div>
-		        <form:form id="form233" action="relay.action" method="post"
+		        <form:form id="form233" action="reply.action" method="post"
 				modelAttribute="qna">
 		       	<%-- <input type='hidden' name="pageno" value="${ pageno }" /> --%>
-		        <input type="hidden" name="qNo" value="${qna.qNo}">
+		        <input type="hidden" name="qNo" value="${ qna.qNo }">
 				<table id=hqqnaform>
 					<tr>
 						<th></th>
 						<td>
 							<div class="form-group">
 								<label for="title">제목:</label> <input type="text"
-									class="form-control" name="title" value="RE : ${qna.title}"
+									class="form-control" name="title" value="RE : ${ qna.title }"
 									id="title">
 							</div>
 						</td>
@@ -160,7 +160,7 @@
 							<div id="title">
 								<label for="inputdefault">작성자:</label> <input
 									class="form-control" name="mId" id="writer" type="text"
-									value="${qna.mId}" readonly>
+									value="${ qna.mId }" readonly>
 		                </div>
 						</td>
 					</tr>
@@ -179,14 +179,14 @@
 
 ==== 대상 글의 내용 ======
 
-${qna.content}</textarea>
+${ qna.content }</textarea>
 		                </td>
 		            </tr>
 		        </table>
 		        </form:form>
 		        <div id=buttongroup>
 				<button id="submit-link" class="btn btn-default">답변 완료</button>
-				&nbsp;&nbsp;&nbsp; <a href="detail.action?qNo=${qna.qNo}"
+				&nbsp;&nbsp;&nbsp; <a href="detail.action?qNo=${ qna.qNo }"
 					type="button" id="cancel" class="btn btn-default">취소</a>
 			</div>
 			</div>

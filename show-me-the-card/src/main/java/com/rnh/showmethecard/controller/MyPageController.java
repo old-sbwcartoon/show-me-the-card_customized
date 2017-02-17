@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rnh.showmethecard.model.dao.FolderDao;
 import com.rnh.showmethecard.model.dto.Folder;
+import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.Notice;
 import com.rnh.showmethecard.model.service.FolderService;
 
@@ -31,9 +32,9 @@ public class MyPageController {
 
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
 	public String searchFolderById(HttpSession session, Model model) {
-//		String mid = session.getId();
-		String mid = "1";
-		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mid);
+		Member member = (Member) session.getAttribute("loginuser");
+		String mId = member.getmId();
+		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
 		model.addAttribute("folders", folders);		
 		return "mypage/mypage";
 	}
@@ -47,7 +48,7 @@ public class MyPageController {
 		folder.setSecret(false);
 		folderService.registerFolder(folder);
 		
-		return "success";
+		return "data";
 	}
 //	
 //	//아이디 중복 확인

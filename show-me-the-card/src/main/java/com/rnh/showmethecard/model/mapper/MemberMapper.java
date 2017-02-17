@@ -22,4 +22,12 @@ public interface MemberMapper {
 	List<Member> selectMembers();
 	
 	List<MemberHistory> selectPointHistory(String mId);
+	
+	boolean selectPointExist(HashMap<String, Object> params);
+	
+	void updatePointHistory(HashMap<String, Object> params);
+	
+	void insertPointHistory(MemberHistory history);
+	
+	void updateMemberPoint(String mId);
 }

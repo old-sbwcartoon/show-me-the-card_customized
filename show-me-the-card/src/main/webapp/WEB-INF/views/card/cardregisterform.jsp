@@ -75,6 +75,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var siteUrl = "";
+		$('#sendcard').click(function(){
+			$('#test').html("<p>갑시다.</p>");
+		});
 		$('#siteUrl').blur(function() {
 			siteUrl = $('#siteUrl').val();
 			alert(siteUrl);
@@ -128,6 +131,7 @@
 				data-toggle="modal" data-target="#registercard">+</button>
 		</div>
 	</div>
+	<div id="test"></div>
 	
 
 
@@ -176,8 +180,8 @@
 										<div class="clearfix"></div>
 										<div class="modal-footer">
 											<div class="col-lg-12 text-center">
-												<button type="submit" id="login" class="btn btn-primary waves-effect">&nbsp;&nbsp;취소&nbsp;&nbsp;</button>
-												<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">완료</button>
+												<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">&nbsp;&nbsp;취소&nbsp;&nbsp;</button>
+												<button type="submit" id="sendcard" class="btn btn-primary waves-effect">완료</button>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											</div>
 										</div>

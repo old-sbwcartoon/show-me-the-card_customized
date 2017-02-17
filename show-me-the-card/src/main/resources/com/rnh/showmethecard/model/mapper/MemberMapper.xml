@@ -50,6 +50,35 @@
 		WHERE M_ID = #{ mId }
 	</select>
 	
+	<select id="selectPointExist" resultType="boolean" parameterType="HashMap">
+		SELECT EXISTS(
+		select M_ID, POINT, CONTENT, left(REG_DATE, 10)
+		FROM rnh2.MEMBER_HISTORY 
+		where M_ID = #{ mId } AND left(REG_DATE, 10) = curdate() AND CONTENT = #{ content } ) 
+	</select>
+	
+	<update id="updatePointHistory" parameterType="HashMap">
+		UPDATE rnh2.MEMBER_HISTORY
+		SET
+		REG_DATE = curdate()
+		WHERE M_ID = #{ mId } AND left(REG_DATE, 10) = curdate() AND CONTENT = #{ content }
+	</update>
+	
+	<insert id="insertPointHistory" parameterType="MemberHistory">
+		INSERT INTO rnh2.MEMBER_HISTORY
+		( M_ID, POINT, CONTENT)
+		VALUES 
+		( #{ mId }, #{ point }, #{ content })
+	</insert>
+	
+	<update id="updateMemberPoint" parameterType="String">
+		UPDATE rnh2.MEMBER
+		SET
+		M_POINT = (select sum(POINT)
+				   FROM rnh2.MEMBER_HISTORY
+				   where M_ID = #{ mId })
+		WHERE M_ID = #{ mId }
+	</update>
 </mapper>
 
 

@@ -116,6 +116,18 @@ public class MemberController {
 		return "member/pointPage";
 	}
 	
+	@RequestMapping(value="memberLevel.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String memberLevel(int mPoint) {
+		String level = "";
+		for (int i = 0; i < 100; i++) {
+			if ( 50*i*(i+1) < mPoint && mPoint < 50*(i+1)*(i+2)) {
+				level = "LEVEL " + (i+1);
+			}
+		}
+		return level;
+	}
+	
 		
 }
 

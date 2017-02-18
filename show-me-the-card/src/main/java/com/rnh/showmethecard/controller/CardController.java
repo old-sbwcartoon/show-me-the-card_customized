@@ -21,12 +21,12 @@ import com.rnh.showmethecard.webscraping.HtmlParser;
 @RequestMapping(value = "/card")
 public class CardController {
 	
-	@Autowired
-	@Qualifier("cardDao")
-	private CardDao dao;
-	public void setDao(CardDao dao) {
-		this.dao = dao;
-	}
+//	@Autowired
+//	@Qualifier("cardDao")
+//	private CardDao dao;
+//	public void setDao(CardDao dao) {
+//		this.dao = dao;
+//	}
 	@Autowired
 	@Qualifier("cardService")
 	private CardService cardService;
@@ -60,7 +60,7 @@ public class CardController {
 		
 		HtmlParser h = new HtmlParser(url);
 		
-		CardBasicInfo cInfo = new CardBasicInfo();
+		//CardBasicInfo cInfo = new CardBasicInfo();
 		
 		int cardNo = cardService.checkCardDb(h.getUrl());
 		System.out.println(cardNo);
@@ -73,6 +73,9 @@ public class CardController {
 			model.addAttribute("img", h.getImg());
 			model.addAttribute("resultCheck", "fine");
 			model.addAttribute("cardNo", cardNo);
+			if(cardNo==0 && h.isUrlOk() == true){
+				model.addAttribute("oldAndNew", "new");
+			}else{model.addAttribute("oldAndNew", "old");}
 			return "card/card";
 		} else{
 //		String strJson = gson.toJson(cInfo);
@@ -91,26 +94,9 @@ public class CardController {
 	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
 		System.out.println("들어는 왔구만");
 		System.out.println(stringJson);
+		//adviceNote = gson.fromJson(stringJson, AdviceNote.class);
 		return "redirect:/card/cardregisterform";
 	}
-//	
-//	//회원가입
-//	@RequestMapping(value="register.action", method=RequestMethod.POST)
-//	public String register() {
-//		return "redirect:/home.action";
-//	}
-//	
-//	//아이디 중복 확인
-//	@RequestMapping(value="confirmId.action", method = RequestMethod.POST,  produces = "application/json;charset=utf-8")
-//	@ResponseBody
-//	public String confirmId(String mId) {
-//		//String memberId = dao.selectIdById(mId);
-//		//if (memberId == null) {
-//		//	return "success";
-//		//} else {
-//			return "fail";
-//		//}
-//	}
 		
 }
 

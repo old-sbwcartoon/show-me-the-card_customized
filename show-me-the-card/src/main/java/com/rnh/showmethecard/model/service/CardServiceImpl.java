@@ -23,6 +23,11 @@ public class CardServiceImpl implements CardService {
 		return resultCardNo;
 	}
 	
+	@Override
+	public int insertMyCardOrCardDb(String siteUrl, String cardNo, String mId){
+		int resultCardNo = cardDao.selectCardDbBySiteUrl(siteUrl);
+		return resultCardNo;
+	}
 //	private AdviceNote adviceNote;
 //	private AdviceNoteForList adviceNoteForList;
 //	private List<AdviceNoteForList> adviceNoteForListList;

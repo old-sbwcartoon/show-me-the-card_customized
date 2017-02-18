@@ -126,23 +126,30 @@
 		       	dataType : 'html',
 		       	//contentType:"application/text; charset=UTF-8",
 		       	success : function (data) {
-		       		alert(data);
+		       		/* alert(data); */
 		       		$("#resulttarget").html(data);
 		       		$("#cName").val("아주 잘했어");
 		       	},
 		       	error : function(xhr, status, err) {
 		       		alert("실패");
-		       		$("#resulttarget").html("주소가 올바르지 않습니다.")
+		       		$("#resulttarget").html("<p  align='center' style='color: red;'>주소가 올바르지 않습니다.</P><br>")
 				}
 		      });
 		});
 	});
 </script>
 
-<style>
+<style type="text/css">
 #div1 {
 	float: left;
 	width: 80%;
+}
+.section-title p {
+    padding-bottom: 0px;
+}
+.team-member-section {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 </style>
 <body class="index">
@@ -198,19 +205,19 @@
 								<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s"
 									data-wow-delay="600ms">
 									<div class="col-md-12 form-group waves-effect">
-										<input type="text" class="form-control"
-											placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요" id="siteUrl" />
+										<p>URL</p><br>
+										<input type="text" class="form-control" placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요 *" id="siteUrl" />
 										<p class="help-block text-danger"></p>
 									</div>
 									<div id="resulttarget"></div>
 									<div class="col-md-12 form-group waves-effect">
-										<input type="text" class="form-control" placeholder="이름"
-											id="cName" />
+										<p>이름</p><br>
+										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 이름을 입력하세요 *" id="cName" />
 										<p class="help-block text-danger"></p>
 									</div>
 									<div class="col-md-12 form-group waves-effect">
-										<input type="text" class="form-control" placeholder="내용"
-											id="content" />
+										<p>내용</p><br>
+										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="content" />
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>

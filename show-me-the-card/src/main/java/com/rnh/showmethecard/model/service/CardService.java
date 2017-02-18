@@ -9,6 +9,7 @@ import com.rnh.showmethecard.model.dto.Card;
 public interface CardService {
 	
 	int checkCardDb(String siteUrl);
+	int insertMyCardOrCardDb(String siteUrl, String cardNo, String mId);
 	//void insertCardDb(String userId, String url);
 	//void insertMyCard(int cardNo, String mycComment);
 //	

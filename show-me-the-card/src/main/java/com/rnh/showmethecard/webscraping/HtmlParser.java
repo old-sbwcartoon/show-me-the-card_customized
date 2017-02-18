@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.rnh.showmethecard.card.classes.CheckUrlStatus;
+import com.rnh.showmethecard.common.Literal;
 
 public class HtmlParser {
 	
@@ -67,9 +68,9 @@ public class HtmlParser {
 		this.setUrlOk(checkUrlStatus.isUrlOk());
 		
 		if (isUrlOk()) {
-			setTitle(getChoosedData(ParseKeyword.TITLE));
-			setDesc(getChoosedData(ParseKeyword.DESCRIPTION));
-			setImg(getChoosedData(ParseKeyword.IMAGE));
+			setTitle(getChoosedData(Literal.ParseKeyword.TITLE));
+			setDesc(getChoosedData(Literal.ParseKeyword.DESCRIPTION));
+			setImg(getChoosedData(Literal.ParseKeyword.IMAGE));
 		} else {
 			setUrl(null);
 		}
@@ -183,7 +184,7 @@ public class HtmlParser {
 		String data = null;
 		switch (parseKeyword) {
 		
-			case ParseKeyword.TITLE :
+			case Literal.ParseKeyword.TITLE :
 				
 				Elements ogTitle = doc.select("head meta[property=og:title]");
 				Elements headTitle = doc.select("title");
@@ -198,7 +199,7 @@ public class HtmlParser {
 				break;
 				
 				
-			case ParseKeyword.DESCRIPTION :
+			case Literal.ParseKeyword.DESCRIPTION :
 				
 				Elements ogDesc = doc.select("head meta[property=og:description]");
 				Elements headDesc = doc.select("head meta[name=description]");
@@ -213,7 +214,7 @@ public class HtmlParser {
 				break;
 				
 				
-			case ParseKeyword.IMAGE :
+			case Literal.ParseKeyword.IMAGE :
 				
 				Elements ogImg = doc.select("head meta[property=og:image]"); //1. og:tag
 				Elements imgSrc = doc.select("img[src]"); //2. logo > 4. 1st image

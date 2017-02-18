@@ -270,7 +270,7 @@
 	</script>
 </head>
 <body class="index">
-<c:import url="/WEB-INF/views/include/header.jsp" />
+<%-- <c:import url="/WEB-INF/views/include/header.jsp" /> --%>
 <c:choose>
  	<c:when test="${ empty sessionScope.loginuser }">
     	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->

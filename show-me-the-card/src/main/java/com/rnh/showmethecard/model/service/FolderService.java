@@ -19,4 +19,8 @@ public interface FolderService {
 //	void deleteMember(String mId);
 //	
 //	List<Member> getMemberList();
+
+	void changeFolder(Folder folder);
+
+	void deleteFolder(Folder folder);
 }

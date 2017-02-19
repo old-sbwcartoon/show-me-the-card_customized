@@ -9,7 +9,7 @@
 	<select id="selectFolderById" resultType="Folder" parameterType="String">
 		SELECT F_NO fNo, F_NAME fName, F_POINT fPoint, secret, deleted, M_ID mId
 		FROM rnh2.FOLDER
-		WHERE M_ID = #{ mId }
+		WHERE M_ID = #{ mId } AND deleted = 0; 
 	</select>
 	
 	<insert id="insertFolder" parameterType="Folder" useGeneratedKeys="true" 
@@ -19,6 +19,22 @@
 		VALUES
 		( #{ mId }, #{ fName }, #{ secret })
 	</insert> 
+	
+	<update id="updateFolder" parameterType="Folder">
+		UPDATE rnh2.FOLDER
+		SET
+		F_NAME = #{ fName }, SECRET = #{ secret }
+		WHERE f_NO = #{ fNo }
+	</update>
+	
+	
+	<update id="deleteFolder" parameterType="Folder">
+		UPDATE rnh2.FOLDER
+		SET
+		deleted = 1
+		WHERE f_NO = #{ fNo }
+	</update>
+	
 	
 	<!--<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
 		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate

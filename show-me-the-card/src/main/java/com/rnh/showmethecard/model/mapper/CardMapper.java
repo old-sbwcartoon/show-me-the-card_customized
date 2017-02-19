@@ -1,10 +1,11 @@
 package com.rnh.showmethecard.model.mapper;
 
-import com.rnh.showmethecard.model.dto.Member;
+import java.util.HashMap;
 
-//com.mvcdemoweb.model.mapper.MemberMapper 파일에 대응하는 인터페이스
+import org.apache.ibatis.annotations.Param;
+
 public interface CardMapper {
 	String selectCardDbBySiteUrl(String siteUrl);
-	void insertCardDb(String userId, String url);
-	void insertMyCard(int cardNo, String mycComment);
+	void insertCardDb(@Param("siteUrl")String siteUrl, @Param("discoverer")String discoverer,@Param("cName")String cName);
+	void insertMyCard(HashMap<String, Object> map);
 }

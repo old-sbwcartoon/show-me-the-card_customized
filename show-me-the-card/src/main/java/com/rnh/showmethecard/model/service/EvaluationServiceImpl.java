@@ -1,6 +1,6 @@
 package com.rnh.showmethecard.model.service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +25,19 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public void addEvaluationComment(int cardNo, String mId, String content) {
-		dao.insertEvaluationComment(cardNo, mId, content);
+	public EvaluationComment addEvaluationComment(EvaluationComment newComment) {
+		return dao.insertEvaluationComment(newComment);
+		
 	}
 
 	@Override
-	public void addEvaluationRatingLiked(int cardNo, String mId, String likedmId) {
-		dao.insertEvaluationRatingLiked(cardNo, mId, likedmId);
+	public void addEvaluationRatingLiked(int eRatingNo, String mId, String likedmId) {
+		dao.insertEvaluationRatingLiked(eRatingNo, mId, likedmId);
 	}
 
 	@Override
-	public ArrayList<EvaluationRating> showEvaluationRatingList(int cardNo) {
-		return dao.selectEvaluationRatingList(cardNo);
+	public List<EvaluationRating> showEvaluationRatingListWithmId(int cardNo, String mId) {
+		return dao.selectEvaluationRatingListWithmId(cardNo, mId);
 	}
 
 	@Override
@@ -48,6 +49,22 @@ public class EvaluationServiceImpl implements EvaluationService {
 	public List<EvaluationComment> showEvaluationCommentList(int cardNo) {
 		return dao.selectEvaluationCommentList(cardNo);
 	}
+
+	@Override
+	public void deleteEvaluationCommentByeCommentNo(int eCommentNo) {
+		dao.deleteEvaluationCommentByeCommentNo(eCommentNo);
+	}
+
+	@Override
+	public void deleteEvaluationRatingByeRatingNo(int eRatingNo) {
+		dao.deleteEvaluationRatingByeRatingNo(eRatingNo);
+	}
+
+	@Override
+	public boolean confirmEvaluationRatingOfmId(int cardNo, String mId) {
+		return dao.selectExistsEvaluationRatingOfmId(cardNo, mId);
+	}
+
 
 
 	

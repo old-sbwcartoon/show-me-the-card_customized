@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.rnh.showmethecard.model.mapper.EvaluationMapper">
 
@@ -15,16 +14,22 @@
 		, CONTENT
 		, E_RATING
 		)
-	select #{mId}, #{cardNo}, #{content}, #{eRating} from dual
+	select
+		#{mId}, #{cardNo}, #{content}, #{eRating}
+	from dual
 	where not exists (
-		select M_ID, CARD_NO
+		select
+			M_ID, CARD_NO
 		from EVALUATION_RATING
-		where CARD_NO = #{cardNo} AND M_ID = #{mId}
+		where
+			CARD_NO = #{cardNo}
+			AND M_ID = #{mId}
+			AND deleted = 0
 		)
 </insert>
 
 
-<insert id="insertEvaluationComment" parameterType="HashMap">
+<insert id="insertEvaluationComment" parameterType="EvaluationComment">
 	insert into EVALUATION_COMMENT (
 		M_ID
 		, CARD_NO
@@ -35,66 +40,78 @@
 		, #{cardNo}
 		, #{content}
 		)
+	<selectKey resultType="Integer" keyProperty="eCommentNo" order="AFTER">
+        select last_insert_id()
+    </selectKey>
 </insert>
 
 
 <insert id="insertEvaluationRatingLiked" parameterType="HashMap">
 	insert EVALUATION_RATING_LIKED (
-		M_ID
-		, CARD_NO
+		E_RATING_NO
 		, LIKED_M_ID
 		)
-	select #{mId}, #{cardNo}, #{likedmId} from dual
+	select
+		#{eRatingNo}, #{likedmId}
+	from dual
 	where #{mId} != #{likedmId}
 		AND exists (
-		select M_ID, CARD_NO
-        from EVALUATION_RATING
-        where M_ID = #{mId} AND CARD_NO = #{cardNo}
-        )
+			select
+				E_RATING_NO
+	        from EVALUATION_RATING
+	        where E_RATING_NO = #{eRatingNo}
+	        	AND deleted = 0
+        	)
         AND not exists (
-		select ER_LIKED
-		from EVALUATION_RATING_LIKED
-		where M_ID = #{mId} AND CARD_NO = #{cardNo} AND LIKED_M_ID = #{likedmId}
-		);
+			select
+				ER_LIKED
+			from EVALUATION_RATING_LIKED
+			where E_RATING_NO = #{eRatingNo}
+				AND LIKED_M_ID = #{likedmId}
+			)
 </insert>
 
 
 
 
-<select id="selectEvaluationRatingLikedList" resultType="Integer" parameterType="HashMap">
+<select id="selectEvaluationRatingLikedList" resultType="Integer" parameterType="Integer">
 	select sum(ER_LIKED)
 	from EVALUATION_RATING_LIKED
-	where M_ID = #{mId} AND CARD_NO = #{cardNo}
+	where E_RATING_LIKED_NO = #{ eRatingLikedNo }
 		AND deleted = 0
 </select>
 
 
 
 <resultMap id="evaluationRatingMap" type="EvaluationRating">
-		<id property="cardNo" column="CARD_NO" />
-		<id property="mId" column="M_ID" />
+		<id property="eRatingNo" column="E_RATING_NO" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="mId" column="M_ID" />
         <result property="content" column="CONTENT" />
 	    <result property="regDate" column="REG_DATE" />
 	    <result property="eRating" column="E_RATING" />
 	    <result property="deleted" column="deleted" />
 	    <result property="eLikedSum" column="E_LIKED_SUM" />
+	    <result property="mLiked" column="M_LIKED" />
 </resultMap>
 
-<select id="selectEvaluationRatingList" resultMap="evaluationRatingMap" parameterType="Integer">
-	select e.CARD_NO
+<select id="selectEvaluationRatingListWithmId" resultMap="evaluationRatingMap" parameterType="HashMap">
+	select e.E_RATING_NO
+			, e.CARD_NO
 			, e.M_ID
 			, e.CONTENT
 			, e.REG_DATE
 			, e.E_RATING
 			, e.deleted
-			, sum(el.ER_LIKED) E_LIKED_SUM
+			, sum(ifnull(el.ER_LIKED, 0)) E_LIKED_SUM
+            , sum(ifnull((select el.LIKED_M_ID = #{mId}), 0)) M_LIKED
 	from EVALUATION_RATING e
 		left outer join EVALUATION_RATING_LIKED el
-		on e.CARD_NO = el.CARD_NO AND e.M_ID = el.M_ID
+		on e.E_RATING_NO = el.E_RATING_NO
 	where e.CARD_NO = #{cardNo}
 		AND e.deleted = 0
-	group by e.M_ID, e.CARD_NO
-	order by E_LIKED_SUM DESC
+	group by e.E_RATING_NO
+	order by E_LIKED_SUM DESC, e.REG_DATE DESC
 </select>
 
 <select id="selectEvaluationRatingAvg" resultType="Float" parameterType="Integer">
@@ -125,5 +142,37 @@
 		AND deleted = 0
 	order by REG_DATE DESC
 </select>
+
+
+<select id="selectExistsEvaluationRatingOfmId" resultType="boolean" parameterType="HashMap">
+	select exists (
+		select E_RATING_NO
+		from EVALUATION_RATING
+		where CARD_NO = #{cardNo}
+			AND deleted = 0
+			AND M_ID = #{mId}
+		limit 1
+		)
+</select>
+
+
+<update id="deleteEvaluationRatingByeRatingNo" parameterType="Integer">
+	update EVALUATION_RATING
+	set deleted = 1
+	where E_RATING_NO = #{eRatingNo}
+</update>
+
+<delete id="deleteEvaluationRatingLikedByeRatingNo" parameterType="Integer">
+	delete from EVALUATION_RATING_LIKED
+	where E_RATING_NO = #{eRatingNo}
+</delete>
+
+<update id="deleteEvaluationCommentByeCommentNo" parameterType="Integer">
+	update EVALUATION_COMMENT
+	set deleted = 1
+	where E_COMMENT_NO = #{eCommentNo}
+</update>
+
+
 
 </mapper>

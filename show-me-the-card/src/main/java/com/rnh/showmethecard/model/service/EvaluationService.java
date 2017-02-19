@@ -8,16 +8,29 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 public interface EvaluationService {
 
 	void addEvaluationRating(int cardNo, String mId, String content, int eRating);
+	
+	void addEvaluationRatingLiked(int eRatingNo, String mId, String likedmId);
 
-	void addEvaluationComment(int cardNo, String mId, String content);
+	EvaluationComment  addEvaluationComment(EvaluationComment newComment);
 
-	void addEvaluationRatingLiked(int cardNo, String mId, String likedmId);
-
-	List<EvaluationRating> showEvaluationRatingList(int cardNo);
+	List<EvaluationRating> showEvaluationRatingListWithmId(int cardNo, String mId);
 
 	float showEvaluationRatingAvg(int cardNo);
 
 	List<EvaluationComment> showEvaluationCommentList(int cardNo);
+
+
+
+
+	void deleteEvaluationCommentByeCommentNo(int eCommentNo);
+
+	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
+
+	boolean confirmEvaluationRatingOfmId(int cardNo, String mId);
+	
+
+
+	
 
 
 

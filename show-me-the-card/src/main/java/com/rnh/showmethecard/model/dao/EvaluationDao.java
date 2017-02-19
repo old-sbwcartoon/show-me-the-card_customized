@@ -1,6 +1,7 @@
 package com.rnh.showmethecard.model.dao;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
@@ -9,17 +10,28 @@ public interface EvaluationDao {
 
 	void insertEvaluationRating(int cardNo, String mId, String content, int eRating);	
 
-	void insertEvaluationComment(int cardNo, String mId, String content);
+	EvaluationComment insertEvaluationComment(EvaluationComment newComment);
 
-	void insertEvaluationRatingLiked(int cardNo, String mId, String likedmId);
+	void insertEvaluationRatingLiked(int eRatingNo, String mId, String likedmId);
 
 	int selectEvaluationRatingLiked(int cardNo, String mId);
 
-	ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo);
+	List<EvaluationRating> selectEvaluationRatingListWithmId(int cardNo, String mId);
 
 	float selectEvaluationRatingAvg(int cardNo);
 
-	ArrayList<EvaluationComment> selectEvaluationCommentList(int cardNo);
+	List<EvaluationComment> selectEvaluationCommentList(int cardNo);
+
+
+	
+	
+	
+	void deleteEvaluationCommentByeCommentNo(int eCommentNo);
+
+	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
+
+	boolean selectExistsEvaluationRatingOfmId(int cardNo, String mId);
+
 
 	
 }

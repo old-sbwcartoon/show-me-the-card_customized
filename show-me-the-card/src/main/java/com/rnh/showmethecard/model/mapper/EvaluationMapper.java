@@ -2,6 +2,7 @@ package com.rnh.showmethecard.model.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
@@ -12,17 +13,31 @@ public interface EvaluationMapper {
 
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
 
-	int selectEvaluationRatingLiked(HashMap<String, String> data);
+	List<EvaluationRating> selectEvaluationRatingListWithmId(HashMap<String, String> data);
 
 	ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo);
 
 	float selectEvaluationRatingAvg(int cardNo);
 
-	ArrayList<EvaluationComment> selectEvaluationCommentList(int cardNo);
+	List<EvaluationComment> selectEvaluationCommentList(int cardNo);
 
-//	void insertEvaluationComment(HashMap<String, String> data);
+	EvaluationComment insertEvaluationComment(EvaluationComment newComment);
 
-	void insertEvaluationComment(HashMap<String, Object> data);
+	
+	
+	
+	void deleteEvaluationCommentByeCommentNo(int eCommentNo);
 
+	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
+	
+	void deleteEvaluationRatingLikedByeRatingNo(int eRatingNo);
+
+	
+	
+	
+	int selectEvaluationRatingLiked(HashMap<String, String> data);
+
+
+	boolean selectExistsEvaluationRatingOfmId(HashMap<String, String> data);
 	
 }

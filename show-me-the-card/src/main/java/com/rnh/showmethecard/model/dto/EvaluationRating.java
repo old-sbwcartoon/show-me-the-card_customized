@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.dto;
 public class EvaluationRating {
 
 	
+	private int eRatingNo;
 	private int cardNo;
 	private String mId;
 	private String content;
@@ -11,8 +12,15 @@ public class EvaluationRating {
 	private boolean deleted;
 	
 	private int eLikedSum; //EvaluationRatingLiked의 eLIked
+	private boolean mLiked;
 	
-	
+
+	public int geteRatingNo() {
+		return eRatingNo;
+	}
+	public void seteRatingNo(int eRatingNo) {
+		this.eRatingNo = eRatingNo;
+	}
 	public int getCardNo() {
 		return cardNo;
 	}
@@ -54,6 +62,12 @@ public class EvaluationRating {
 	}
 	public void seteLikedSum(int eLikedSum) {
 		this.eLikedSum = eLikedSum;
+	}
+	public boolean ismLiked() {
+		return mLiked;
+	}
+	public void setmLiked(boolean mLiked) {
+		this.mLiked = mLiked;
 	}
 	
 	

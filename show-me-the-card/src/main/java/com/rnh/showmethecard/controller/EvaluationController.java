@@ -10,11 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
-import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.service.EvaluationService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
@@ -28,8 +29,10 @@ public class EvaluationController {
 	@Qualifier("evaluationService")
 	private EvaluationService service;
 	
-	@RequestMapping(value="/evaluationmain.action", method=RequestMethod.GET)
-	public String showEvaluation(Model model) {
+	@RequestMapping(value={"/evaluationmain.action", "/", ""}, method=RequestMethod.GET)
+	public String showEvaluation(Model model, HttpServletRequest req) { //////////////////////////////////cardNo
+		Member member = (Member)req.getSession().getAttribute("loginuser");		
+		
 //		String url = "http://j07051.tistory.com/333";
 		String url = "http://crosstheline.tistory.com/41";
 //		String url = "https://www.odpia.org/main.odpia";
@@ -40,7 +43,7 @@ public class EvaluationController {
 		model.addAttribute("desc", h.getDesc());
 		model.addAttribute("img", h.getImg());
 		
-				
+		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(2, member.getmId()));//////////////////////////////////cardNo
 		// 전체 Point, 최초 등록일
 		Card c = new Card();
 		model.addAttribute("cPoint", c.getcPoint());
@@ -50,60 +53,65 @@ public class EvaluationController {
 		// model.addAttribute("scrapCount", e.getScrapCount());
 		// model.addAttribute("", );
 		
-		//MyCard myc = new MyCard();
+		////////////////////////////////////////////////////////////////////cardNo));
 		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
 
-		model.addAttribute("evalRatingList", service.showEvaluationRatingList(2));
+		model.addAttribute("evalRatingList", service.showEvaluationRatingListWithmId(2, member.getmId()));
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(2));
+		
+		model.addAttribute("");
 		
 		return "evaluation/evaluationmain";
 	}
 	
 	//합치기
-	@RequestMapping(value="addevalrating.action", method=RequestMethod.GET)
-	public void addEvaluationRating(int cardNo, HttpServletRequest req, String content, int eRating) {
+	@RequestMapping(value="addevalrating.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String addEvaluationRating(HttpServletRequest req, String content) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
+		service.addEvaluationRating(2, member.getmId(), content, 5);
 		
-		service.addEvaluationRating(2, member.getmId(), content, eRating);
+		return null;
 	}
 
 	
-	@RequestMapping(value="addevalcomment.action", method=RequestMethod.GET)
+	@RequestMapping(value="addevalcomment.action", method=RequestMethod.POST)
+	@ResponseBody
 	public String addEvaluationComment(HttpServletRequest req, String content) {
+		/////////////////////////////////// int cardNo
 		Member member = (Member)req.getSession().getAttribute("loginuser");
+//		System.out.println(member.getmId());
+//		System.out.println(content);
+//		HashMap<String, Object> newCommentNo = service.addEvaluationComment(2, member.getmId(), content);
+
+		EvaluationComment newComment = new EvaluationComment();
+		newComment.setCardNo(2);
+		newComment.setContent(content);
+		newComment.setmId(member.getmId());
 		
-		service.addEvaluationComment(2, member.getmId(), content);
+		int newCommentNo = service.addEvaluationComment(newComment).geteCommentNo();
+		System.out.println("newCommentNo = " + newCommentNo);
 		
-		return "redirect:evaluationmain.action";
+		return new Gson().toJson(newComment);
 	}
 	
 	
-	@RequestMapping(value="addevalratingliked.action", method=RequestMethod.GET)
-	public void addEvaluationRatingLiked(int cardNo, String mId, HttpServletRequest req) {
+	@RequestMapping(value="addevalratingliked.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String addEvaluationRatingLiked(int eRatingNo, String mId, HttpServletRequest req) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-		System.out.println("들어옴");
-		System.out.println(cardNo);
-		System.out.println(mId);
-		System.out.println(member.getmId());
-		service.addEvaluationRatingLiked(cardNo, mId, member.getmId());
+		System.out.println("addevalrating");
+		System.out.println("no " + eRatingNo );
+		System.out.println("id " + mId);
+		System.out.println("lid" + member.getmId());
+		service.addEvaluationRatingLiked(eRatingNo, mId, member.getmId());
+		return null;
 	}
 	
 	
 	
 	
 	
-	
-	
-	@RequestMapping(value="showevalratinglist.action", method=RequestMethod.GET)
-	public ModelAndView showEvaluationRatingList(int cardNo) {
-		List<EvaluationRating> evalRatingList = service.showEvaluationRatingList(2);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("evaluation/evaluationmain");
-		mav.addObject("evalRatingList", evalRatingList);
-		
-		return mav;
-	}
 	
 	
 	@RequestMapping(value="showevalcommentlist.action", method=RequestMethod.GET)
@@ -116,4 +124,24 @@ public class EvaluationController {
 		
 		return mav;
 	}
+	
+	
+	
+	
+	@RequestMapping(value="delevalrating.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteEvaluationRating(int eRatingNo) {
+		System.out.println("eRatingNo : " + eRatingNo);
+		service.deleteEvaluationRatingByeRatingNo(eRatingNo);
+		return null;
+	}
+	
+	@RequestMapping(value="delevalcomment.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteEvaluationComment(int eCommentNo) {
+		service.deleteEvaluationCommentByeCommentNo(eCommentNo);
+		return null;
+	}
+	
+	
 }

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.CardDao;
@@ -51,51 +52,35 @@ public class CardController {
 	}
 	@RequestMapping(value="checkurl.action", method = RequestMethod.GET,  produces = "application/json;charset=utf-8")
 	public String checkandshowcard(Model model, HttpSession session, String url) {
-		//URL javaUrl = url;
-//		ModelAndView mav = new ModelAndView("/WEB-INF/view/card/card.jsp");
-//		//mav.
-		
-		member = (Member) session.getAttribute("loginuser");
-		mId = member.getmId();
-		
 		HtmlParser h = new HtmlParser(url);
 		
-		//CardBasicInfo cInfo = new CardBasicInfo();
-		
-		int cardNo = cardService.checkCardDb(h.getUrl());
-		System.out.println(cardNo);
-		
-		
 		if (h.isUrlOk()) {
+			cardNo = cardService.checkCardDb(h.getUrl());
 			model.addAttribute("url", h.getUrl());
 			model.addAttribute("title", h.getTitle());
 			model.addAttribute("desc", h.getDesc());
 			model.addAttribute("img", h.getImg());
-			model.addAttribute("resultCheck", "fine");
 			model.addAttribute("cardNo", cardNo);
-			if(cardNo==0 && h.isUrlOk() == true){
-				model.addAttribute("oldAndNew", "new");
-			}else{model.addAttribute("oldAndNew", "old");}
+			model.addAttribute("check", "fine");
 			return "card/card";
 		} else{
-//		String strJson = gson.toJson(cInfo);
-//		System.out.println(strJson);
-		
-////	mav.setView("card");
-//		mav.addObject("CardBasicInfo", cInfo);
-//		System.out.println(mId);
-			model.addAttribute("resultCheck", "bad");
+			model.addAttribute("check", "bad");
+			System.out.println("잘못된주소");
 		return "틀렸어!";
 		}
 		
 	}
 	
 	@RequestMapping(value="cardregisterfin.action", method=RequestMethod.POST)
+	@ResponseBody
 	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
 		System.out.println("들어는 왔구만");
 		System.out.println(stringJson);
+		return "";
 		//adviceNote = gson.fromJson(stringJson, AdviceNote.class);
-		return "redirect:/card/cardregisterform";
+		//return "card/cardregisterform";
 	}
 		
 }

@@ -33,7 +33,14 @@ public class MyPageController {
 
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
 	public String searchFolderById(HttpSession session, Model model) {
-		Member member = (Member) session.getAttribute("loginuser");
+		Member member = null;
+		if (session.getAttribute("loginuser") != null) { 
+			member = (Member) session.getAttribute("loginuser");	 
+			} else { 
+				
+			 return "home";
+			} 
+		
 		String mId = member.getmId();
 		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
 		model.addAttribute("folders", folders);		
@@ -43,17 +50,72 @@ public class MyPageController {
 //	//폴더 등록
 	@RequestMapping(value="register.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
 	@ResponseBody
-	public String register(Folder folder, String fName, String mId) {
+	public String RegisterFolder(Folder folder, String fName, String mId, boolean secret) {
 		folder.setfName(fName);
 		folder.setmId(mId);
-		folder.setSecret(false);
+		folder.setSecret(secret);
 		folderService.registerFolder(folder);
 		
 		Gson gson = new Gson();	
 		
 		return gson.toJson(folder);
 	}
-//	
+
+	
+	//폴더 수정
+	@RequestMapping(value="update.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
+	@ResponseBody
+	public String ChangeFolder(Folder folder, String fName, String mId, String fNo, boolean secret) {
+		
+		folder.setfName(fName);
+		int fNo1 = Integer.parseInt(fNo);
+		folder.setfNo(fNo1);
+		folder.setmId(mId);		
+		folder.setSecret(secret);
+		
+		folderService.changeFolder(folder);
+		
+		Gson gson = new Gson();	
+		
+		return gson.toJson(folder);
+	}
+	
+	
+	//폴더 수정
+	@RequestMapping(value="delete.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
+	@ResponseBody
+	public String DeleteFolder(Folder folder, String fName, String mId, String fNo) {
+		
+		folder.setfName(fName);
+		int fNo1 = Integer.parseInt(fNo);
+		folder.setfNo(fNo1);
+		folder.setmId(mId);	
+		
+		
+		folderService.deleteFolder(folder);
+		
+		Gson gson = new Gson();	
+		
+		return gson.toJson(folder);
+	}
+	
+	
+	
+	@RequestMapping(value="myfollow.action", method=RequestMethod.GET)
+	public String searchFollowById(HttpSession session, Model model) {
+		Member member = null;
+		if (session.getAttribute("loginuser") != null) { 
+			member = (Member) session.getAttribute("loginuser");	 
+			} else { 
+				
+			 return "home";
+			}		
+		
+		
+		
+		return "mypage/follow";
+	}
+	
 //	//아이디 중복 확인
 //	@RequestMapping(value="confirmId.action", method = RequestMethod.POST,  produces = "application/json;charset=utf-8")
 //	@ResponseBody

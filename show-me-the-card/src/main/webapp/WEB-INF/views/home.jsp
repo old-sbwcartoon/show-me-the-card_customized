@@ -270,6 +270,7 @@
 	</script>
 </head>
 <body class="index">
+<%-- <c:import url="/WEB-INF/views/include/header.jsp" /> --%>
 <c:choose>
  	<c:when test="${ empty sessionScope.loginuser }">
     	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
@@ -298,8 +299,8 @@
             				<a id="mypagebtn" href="#">My Page</a>
             				<a href="/showmethecard/member/list.action">Admin Page</a>
             				<a href="/showmethecard/member/pointList.action">My Point</a>
-            				<a href="/showmethecard/member/qnaList.action">My Q&A</a>
-            			</div>	
+        		   			<a href="/showmethecard/member/qnaList.action">My Q&A</a>
+						</div>	
                 	</div>          		
                 </div>
         	</div>

@@ -136,8 +136,9 @@
 										
 										$('#folderpage').append(
 												/* li) */
-												
-										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
+
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '">'+ data.fName + '</button>')
+
 										) 
 
 									}

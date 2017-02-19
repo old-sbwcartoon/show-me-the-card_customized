@@ -35,5 +35,18 @@ public class FolderServiceImpl implements FolderService {
 		
 	}
 
+	@Override
+	public void changeFolder(Folder folder) {
+		folderDao.changeFolder(folder);
+		
+	}
+
+	@Override
+	public void deleteFolder(Folder folder) {
+		folderDao.deleteFolder(folder);
+		
+		
+	}
+
 	
 }

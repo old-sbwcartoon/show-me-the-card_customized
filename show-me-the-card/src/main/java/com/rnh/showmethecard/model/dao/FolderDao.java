@@ -20,4 +20,8 @@ public interface FolderDao {
 
 	void registerFolder(Folder folder);
 
+	void changeFolder(Folder folder);
+
+	void deleteFolder(Folder folder);
+
 }

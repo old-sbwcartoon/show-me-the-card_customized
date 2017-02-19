@@ -9,7 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-
+<!-- jQuery Version 2.1.3 -->
+<script src="../resources/assets/js/jquery-2.1.3.min.js"></script>
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="../resources/assets/bootstrap/css/bootstrap.min.css">
@@ -60,8 +61,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<!-- jQuery Version 2.1.3 -->
-<script src="../resources/assets/js/jquery-2.1.3.min.js"></script>
+
 
 <!-- Bootstrap Core JavaScript -->
 <script src="../resources/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -79,26 +79,60 @@
 
 <!-- Materialize js -->
 <script src="../resources/assets/js/material.js"></script>
-<script src="../resources/assets/js/waypoints.min.js"></script>
+<script src="../resources/assets/js/waypoints.min.js"></script><!-- 
 
 <link rel="stylesheet" type="text/css"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
-</head>
-<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+<!-- </head>
+<script src="http://code.jquery.com/jquery-3.1.1.js"></script> -->
 <script type="text/javascript">
-	$(document).ready(function() {
-		var siteUrl = "";
-		var division = "";
-		$('#sendcard').click(function(){
-			var division = $('#resultUrlCheck').val();
-			var cardNum = $('cardNoCheck').val();
+$(document).ready(function() {
+	alert("새로운페이지");
+	var cardNum, check;
+	var a = 0;
+	var title = "";
+	var mycContent = "";
+	$('#siteUrl').blur(function() {
+		siteUrl = $('#siteUrl').val();
+		$.ajax ({
+	       	url : "checkurl.action",
+	       	method : 'get',
+	       	data : "url=" + siteUrl,
+	       	dataType : 'html',
+	       	//contentType:"application/text; charset=UTF-8",
+	       	success : function (data) {
+	       		$("#resulttarget").html(data);
+	       		title=$('#title').text();
+	       		$("#cName").attr("disabled",true).val(title);
+	       		a = 1;
+	       	},
+	       	error : function(xhr, status, err) {
+	       		alert("실패");
+	       		$("#cName").attr("disabled",false).val("").attr('placeholder',"사이트 혹은 페이지의 이름입니다.");
+	       		a = 0;
+	       		$("#resulttarget").html("<p align='center' style='color: red;'>주소가 올바르지 않습니다.</P><br>")
+			}
+	      });
+	});
+
+	$("#sendcard").click(function(){
+		if(a==1){
+			a=0;
+			cardNum = $('#cardNoCheck').val();
+			check = $('#check').val();
+			mycContent = $('#mycContent').val();
+			
 			var frontJson = {
-					siteUrl :  division,
-					cardNo : cardNum
+					siteUrl : siteUrl,
+					cName : title,
+					cardNo : cardNum,
+					mycComment : mycContent
+					
 			};
+			
 			var stringJson = JSON.stringify(frontJson);
+			
 			$.ajax({
 				url : 'cardregisterfin.action',
 				method : 'post',
@@ -106,75 +140,64 @@
 				dataType : 'text',
 				contentType:"application/text; charset=UTF-8",
 				success : function(data, status, xhr) {
-					alert(division);
+					location.reload();
 				},
 				error : function(xhr, status, err) {
-					
+					alert("실패");
 				}
 			});
-			alert(division);
-		});
-		
-		$('#siteUrl').blur(function() {
-			siteUrl = $('#siteUrl').val();
-			alert(siteUrl);
-			/* $("#resulttarget").load("card.action"); */
-			$.ajax ({
-		       	url : "checkurl.action",
-		       	method : 'get',
-		       	data : "url=" + siteUrl,
-		       	dataType : 'html',
-		       	//contentType:"application/text; charset=UTF-8",
-		       	success : function (data) {
-		       		alert(data);
-		       		$("#resulttarget").html(data);
-		       		$("#cName").val("아주 잘했어");
-		       	},
-		       	error : function(xhr, status, err) {
-		       		alert("실패");
-		       		$("#resulttarget").html("주소가 올바르지 않습니다.")
-				}
-		      });
-		});
+			
+		}else{
+		alert("주소를 확인하세요");
+		}
 	});
+	
+	/* var tagArray = new Array;
+	var tagCount = 0;
+	$('#content').bind('keypress', function(e) {
+        if (e.which == 32 || e.which == 13){//space bar or tab bar
+        	
+        	var userInput = $('#content').val();
+        	if(userInput != null || userInput != " "){
+        		tagArray = $('#content').val().split(' ');
+        		$("#resultTag").append("<span class='label label-success'>"+ tagArray[tagCount] +"</span> ");
+        		tagCount++;
+        		for(var i = 0; i <= tagCount; i++){
+        			if(tagArray[i] == tagArray[tagCount] && tagCount != 0){
+        				$("#resultTag > span").last().remove();
+        			}
+        		}
+        		
+        		
+        	}
+        	
+        	
+        }
+        
+	}); */
+});
 </script>
-
-<style>
+</head>
+<style type="text/css">
 #div1 {
 	float: left;
 	width: 80%;
 }
+.section-title p {
+    padding-bottom: 0px;
+}
+.team-member-section {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.label label-success{
+	margin-top: 10px;
+}
 </style>
 <body class="index">
-
+	
 	<c:import url="/WEB-INF/views/include/navigator.jsp" />
-
-	<!-- Start Contact Us Section -->
-	<section id="contact" class="contact contact-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="section-title text-center wow fadeInDown"
-						data-wow-duration="2s" data-wow-delay="50ms">
-						<h2>My Card 등록</h2>
-						<p>Show Me The Card</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<div class="row">
-		<div class="col-lg-12">
-			<button id="modalbutton" type="button" class="btn btn-info btn-lg"
-				data-toggle="modal" data-target="#registercard">+</button>
-		</div>
-	</div>
-	<div id="test"></div>
-
-
-
-
-
+	
 	<!-- 모달 시작 -->
 	<div class="modal fade" id="registercard" role="dialog">
 		<div class="modal-dialog">
@@ -198,29 +221,31 @@
 								<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s"
 									data-wow-delay="600ms">
 									<div class="col-md-12 form-group waves-effect">
-										<input type="text" class="form-control"
-											placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요" id="siteUrl" />
+										<p>URL</p><br>
+										<input type="text" class="form-control" placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요 *" id="siteUrl" />
 										<p class="help-block text-danger"></p>
 									</div>
-									<div id="resulttarget"></div>
+									
+									<div id="resulttarget">
+									</div>
+									
 									<div class="col-md-12 form-group waves-effect">
-										<input type="text" class="form-control" placeholder="이름"
-											id="cName" />
+										<p>Title</p><br>
+										<input type="text" class="form-control" placeholder="사이트 혹은 페이지의 이름입니다." id="cName" />
 										<p class="help-block text-danger"></p>
 									</div>
 									<div class="col-md-12 form-group waves-effect">
-										<input type="text" class="form-control" placeholder="내용"
-											id="content" />
+										<p>Tag & 내용</p>
+										<div><h2 id="resultTag"></h2></div><br>
+										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent" />
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>
 								<div class="clearfix"></div>
 								<div class="modal-footer">
 									<div class="col-lg-12 text-center">
-										<button type="button" class="btn btn-primary waves-effect"
-											data-dismiss="modal">취소</button>
-										<button type="button" id="sendcard"
-											class="btn btn-primary waves-effect" data-dismiss="modal">완료</button>
+										<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">취소</button>
+										<button type="button" id="sendcard" class="btn btn-primary waves-effect">완료</button>
 									</div>
 								</div>
 							</div>
@@ -231,12 +256,42 @@
 		</div>
 	</div>
 	<!-- 모달 끝 -->
+	
+	<!-- Start Contact Us Section -->
+	<section id="contact" class="contact contact-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-title text-center wow fadeInDown"
+						data-wow-duration="2s" data-wow-delay="50ms">
+						<h2>My Card 등록</h2>
+						<p>Show Me The Card</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="row">
+		<div class="col-lg-12">
+			<button id="modalbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registercard">+</button>
+		</div>
+	</div>
+	<div id="test"></div>
 
+
+
+
+
+	
 	<!-- Start Footer Section -->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer Section -->
 
 </body>
 <!-- Custom JavaScript -->
-<script src="../resources/assets/js/script.js"></script>
+<script src="../resources/assets/js/script.js">
+$(function(){
+	
+});
+</script>
 </html>

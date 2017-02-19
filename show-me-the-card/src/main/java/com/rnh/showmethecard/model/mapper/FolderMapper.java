@@ -21,4 +21,8 @@ public interface FolderMapper {
 //	List<Member> selectMembers();
 
 	void insertFolder(Folder folder);
+
+	void updateFolder(Folder folder);
+
+	void deleteFolder(Folder folder);
 }

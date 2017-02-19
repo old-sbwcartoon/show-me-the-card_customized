@@ -10,7 +10,7 @@ import com.rnh.showmethecard.model.dto.Folder;
 import com.rnh.showmethecard.model.mapper.FolderMapper;
 
 @Repository(value = "folderDao")
-public class MysqlFolderDao implements FolderDao {
+public class MysqlFolderDao implements FolderDao {	
 	
 	@Autowired
 	@Qualifier("folderMapper")
@@ -27,38 +27,20 @@ public class MysqlFolderDao implements FolderDao {
 	public void registerFolder(Folder folder) {
 		folderMapper.insertFolder(folder);
 	}
-//
-//	@Override
-//	public Member selectMemberById(String mId) {
-//		Member member = memberMapper.selectMemberById(mId);
-//		return member;
-//	}
-//
-//	@Override
-//	public Member selectMemberByIdAndPasswd(String mId, String password) {
-//		HashMap<String, Object> params = new HashMap<>();
-//		params.put("mId", mId);
-//		params.put("password", password);
-//		
-//		Member member = memberMapper.selectMemberByIdAndPasswd(params);
-//		return member;
-//	}
-//
-//	@Override
-//	public void updateMemberById(Member member) {
-//		memberMapper.updateMemberById(member);	
-//	}
-//
-//	@Override
-//	public void deleteMemberById(String mId) {
-//		memberMapper.deleteMemberById(mId);		
-//	}
-//
-//	@Override
-//	public List<Member> selectMemberList() {
-//		List<Member> members = memberMapper.selectMembers();
-//		return members;
-//	}
+
+
+	@Override
+	public void changeFolder(Folder folder) {
+		folderMapper.updateFolder(folder);
+		
+	}
+
+
+	@Override
+	public void deleteFolder(Folder folder) {
+		folderMapper.deleteFolder(folder);
+		
+	}
 
 
 }

@@ -41,7 +41,7 @@
 	<select id="selectMembers" resultType="Member">
 		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, USERTYPE, left(REG_DATE, 10) regDate
 		FROM rnh2.MEMBER
-		WHERE DELETED = '0'
+		WHERE DELETED = '0' order by regDate
 	</select>
 	
 	<select id="selectPointHistory" resultType="MemberHistory" parameterType="String">

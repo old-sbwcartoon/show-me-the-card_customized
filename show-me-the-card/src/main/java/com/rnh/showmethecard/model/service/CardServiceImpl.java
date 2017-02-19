@@ -1,13 +1,12 @@
 package com.rnh.showmethecard.model.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.CardDao;
+import com.rnh.showmethecard.model.dto.CardForInsert;
 
 
 @Service("cardService")
@@ -16,13 +15,28 @@ public class CardServiceImpl implements CardService {
 	@Autowired
 	@Qualifier("cardDao")
 	private CardDao cardDao;
-	
 	@Override
 	public int checkCardDb(String siteUrl){
 		int resultCardNo = cardDao.selectCardDbBySiteUrl(siteUrl);
 		return resultCardNo;
 	}
 	
+	@Override
+	public void insertMyCardOrCardDb(CardForInsert cardForInsert){
+		int cardNo = cardForInsert.getCardNo();
+		if(cardNo == 0){
+			String discoverer = cardForInsert.getDiscoverer();
+			String siteUrl = cardForInsert.getSiteUrl();
+			String cName = cardForInsert.getcName();
+			cardDao.insertCardDb(siteUrl, discoverer, cName);
+			System.out.println("CARDDB INSERT 성공");
+		}
+		cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
+		System.out.println(cardNo);
+		String mycComment = cardForInsert.getMycComment();
+		cardDao.insertMyCard(cardNo, mycComment);
+		System.out.println("MYCARD INSERT 성공");
+	}
 //	private AdviceNote adviceNote;
 //	private AdviceNoteForList adviceNoteForList;
 //	private List<AdviceNoteForList> adviceNoteForListList;

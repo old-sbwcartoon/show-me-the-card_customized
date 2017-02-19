@@ -1,14 +1,13 @@
 package com.rnh.showmethecard.model.service;
 
-import java.util.List;
-
-import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardForInsert;
 
 
 
 public interface CardService {
 	
 	int checkCardDb(String siteUrl);
+	void insertMyCardOrCardDb(CardForInsert cardForInsert);
 	//void insertCardDb(String userId, String url);
 	//void insertMyCard(int cardNo, String mycComment);
 //	

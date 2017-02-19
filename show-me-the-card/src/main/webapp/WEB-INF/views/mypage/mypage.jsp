@@ -108,7 +108,7 @@
 									dataType : 'json',
 									success : function(data) {
 										/* var li = $('#folderbasic').clone(true);
-										li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.jpg")
+										li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.png")
 										li.css('display' , 'inline')
 										li.attr("id", "folder_"+ data.fNo)
 										li.find('#fNo').attr("value", data.fNo)
@@ -117,7 +117,7 @@
 										$('#folderpage').append(
 												/* li) */
 												
-										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
 										) 
 
 									}
@@ -148,7 +148,7 @@
 									dataType : 'json',
 									success : function(data) {
 										/* var li = $('#folderbasic').clone(true);
-										li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.jpg")
+										li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.png")
 										li.css('display' , 'inline')
 										li.attr("id", "folder_"+ data.fNo)
 										li.find('#fNo').attr("value", data.fNo)
@@ -157,7 +157,7 @@
 										$('#folderpage').append(
 												/* li) */
 												
-										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '">'+ data.fName + '</button>')
 										) 
 
 									}
@@ -271,7 +271,7 @@
 
 			<%-- <button type="button" id="folderbasic" class="folderbasic"
 				style="display : none; border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
-					src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>
+					src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>
 
 
 <span id = 'folderpage' > 
@@ -280,7 +280,7 @@
 		
 			<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
 				style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
-					src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button>
+					src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button>
 		
 	</c:forEach>
 
@@ -290,7 +290,7 @@
 	<button type="button" id="addFolder"
 		style="border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 75px; height: 100px">
 		<img style="height: 100px" class="btn-img"
-			src="/showmethecard/resources/images/cardpackplus.jpg">
+			src="/showmethecard/resources/images/cardpackplus.png">
 
 	</button>
 

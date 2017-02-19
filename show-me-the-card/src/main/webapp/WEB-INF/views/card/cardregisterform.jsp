@@ -91,9 +91,8 @@ $(document).ready(function() {
 	alert("새로운페이지");
 	var cardNum, check;
 	var a = 0;
-	var title="";
-	
-	
+	var title = "";
+	var mycContent = "";
 	$('#siteUrl').blur(function() {
 		siteUrl = $('#siteUrl').val();
 		$.ajax ({
@@ -105,7 +104,6 @@ $(document).ready(function() {
 	       	success : function (data) {
 	       		$("#resulttarget").html(data);
 	       		title=$('#title').text();
-	       		alert(title);
 	       		$("#cName").attr("disabled",true).val(title);
 	       		a = 1;
 	       	},
@@ -117,19 +115,19 @@ $(document).ready(function() {
 			}
 	      });
 	});
-	
+
 	$("#sendcard").click(function(){
-		alert(a);
 		if(a==1){
 			a=0;
 			cardNum = $('#cardNoCheck').val();
 			check = $('#check').val();
+			mycContent = $('#mycContent').val();
 			
 			var frontJson = {
-					siteUrl : "hi",
+					siteUrl : siteUrl,
 					cName : title,
 					cardNo : cardNum,
-					mycComment : content
+					mycComment : mycContent
 					
 			};
 			
@@ -239,7 +237,7 @@ $(document).ready(function() {
 									<div class="col-md-12 form-group waves-effect">
 										<p>Tag & 내용</p>
 										<div><h2 id="resultTag"></h2></div><br>
-										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="content" />
+										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent" />
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>

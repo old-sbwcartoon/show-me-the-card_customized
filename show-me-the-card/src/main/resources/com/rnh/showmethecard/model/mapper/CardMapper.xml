@@ -10,19 +10,19 @@
 		SELECT card_no cardNo FROM CARD_DB WHERE site_url = #{siteUrl} AND deleted = 0;
 	</select>
 	
-	<insert id="insertCardDb" parameterType="String">
+	<insert id="insertCardDb">
 	
-		INSERT INTO card_db
-		(site_url, c_point, discover, c_name, c_rating)
-		VALUES (#{siteUrl}, 0, #{userId}, #{cName}, 0)	
+		INSERT INTO rnh2.CARD_DB
+		(site_url, c_point, discoverer, c_name, c_rating)
+		VALUES (#{siteUrl}, 0, #{discoverer}, #{cName}, 0)	
 		
 	</insert>
 	
-	<insert id="insertMyCard" parameterType="String">
+	<insert id="insertMyCard" parameterType="HashMap">
 	
-		INSERT INTO my_card
+		INSERT INTO  rnh2.MY_CARD
 		(card_no, f_no, myc_comment, scrap_count)
-		VALUES (#{cardNo}, 1, #{mycComment}, 0)	
+		VALUES (#{cardNo}, 190, #{mycComment}, 0)	
 		
 	</insert>
 	

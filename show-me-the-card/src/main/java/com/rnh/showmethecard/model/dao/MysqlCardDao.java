@@ -31,11 +31,16 @@ public class MysqlCardDao implements CardDao {
 	}
 	
 	@Override
-	public void insertCardDb(String userId, String url) {
+	public void insertCardDb(String siteUrl, String discoverer, String cName) {
+		cardMapper.insertCardDb(siteUrl, discoverer, cName);
 	}
 	
 	@Override
 	public void insertMyCard(int cardNo, String mycComment) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cardNo", cardNo);
+		map.put("mycComment", mycComment);
+		cardMapper.insertMyCard(map);
 	}
 
 //	@Override

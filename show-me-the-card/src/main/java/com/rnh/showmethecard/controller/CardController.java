@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
+import com.rnh.showmethecard.model.dto.CardForInsert;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.service.CardService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
@@ -78,9 +79,13 @@ public class CardController {
 		mId = member.getmId();
 		System.out.println("들어는 왔구만");
 		System.out.println(stringJson);
-		return "";
-		//adviceNote = gson.fromJson(stringJson, AdviceNote.class);
-		//return "card/cardregisterform";
+		CardForInsert cardForInsert;
+		cardForInsert = gson.fromJson(stringJson, CardForInsert.class);
+		HtmlParser h = new HtmlParser(cardForInsert.getSiteUrl());
+		cardForInsert.setSiteUrl(h.getUrl());
+		cardForInsert.setDiscoverer(mId);
+		cardService.insertMyCardOrCardDb(cardForInsert);
+		return "입력 성공";
 	}
 		
 }

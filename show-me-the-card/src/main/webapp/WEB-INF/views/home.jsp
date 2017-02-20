@@ -172,7 +172,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -189,7 +189,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -206,7 +206,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -565,7 +565,7 @@
     							<tbody>
     								<c:forEach var="total" items="${ total }">
     									<tr>
-    										<th><img src="resources/level/${ total.mLevel }.PNG"></th>
+    										<th><img style="height: 35; width: 35;" src="resources/level/${ total.mLevel }.PNG"></th>
     										<th>${ total.mId }</th>
     										<th>${ total.mPoint } 점</th>
     									</tr>

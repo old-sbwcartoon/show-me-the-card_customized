@@ -75,7 +75,6 @@
 </head>
 
 <body class="index">
-    <c:import url="/WEB-INF/views/include/header.jsp" />
     <c:import url="/WEB-INF/views/include/navigator.jsp" />
 
     <!-- Start Contact Us Section -->

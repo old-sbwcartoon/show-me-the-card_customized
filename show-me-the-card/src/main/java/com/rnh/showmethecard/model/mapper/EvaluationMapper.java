@@ -13,8 +13,6 @@ public interface EvaluationMapper {
 
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
 
-	List<EvaluationRating> selectEvaluationRatingListWithmId(HashMap<String, String> data);
-
 	ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo);
 
 	float selectEvaluationRatingAvg(int cardNo);
@@ -39,5 +37,7 @@ public interface EvaluationMapper {
 
 
 	boolean selectExistsEvaluationRatingOfmId(HashMap<String, String> data);
+
+	List<EvaluationRating> selectEvaluationRatingListWithPageNo(HashMap<String, Object> data);
 	
 }

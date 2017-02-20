@@ -36,8 +36,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public List<EvaluationRating> showEvaluationRatingListWithmId(int cardNo, String mId) {
-		return dao.selectEvaluationRatingListWithmId(cardNo, mId);
+	public List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
+		return dao.selectEvaluationRatingListWithPageNo(cardNo, mId, pageNo);
 	}
 
 	@Override

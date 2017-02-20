@@ -51,4 +51,11 @@ public class Literal {
 			
 		}
 	}
+	
+	public static class Ui {
+		
+		public static final int LIMIT = 3;
+		
+	}
+	
 }

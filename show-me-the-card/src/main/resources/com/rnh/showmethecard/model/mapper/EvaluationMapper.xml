@@ -95,7 +95,7 @@
 	    <result property="mLiked" column="M_LIKED" />
 </resultMap>
 
-<select id="selectEvaluationRatingListWithmId" resultMap="evaluationRatingMap" parameterType="HashMap">
+<select id="selectEvaluationRatingListWithPageNo" resultMap="evaluationRatingMap" parameterType="HashMap">
 	select e.E_RATING_NO
 			, e.CARD_NO
 			, e.M_ID
@@ -112,6 +112,7 @@
 		AND e.deleted = 0
 	group by e.E_RATING_NO
 	order by E_LIKED_SUM DESC, e.REG_DATE DESC
+	limit #{articleStartNo}, #{limit}
 </select>
 
 <select id="selectEvaluationRatingAvg" resultType="Float" parameterType="Integer">

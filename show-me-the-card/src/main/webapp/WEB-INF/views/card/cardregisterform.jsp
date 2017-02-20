@@ -89,6 +89,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	alert("새로운페이지");
+	$('#mycardlist').load("showmycardlist.action");
 	var cardNum, check;
 	var a = 0;
 	var title = "";
@@ -276,10 +277,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</section>
-	<div class="row">
-	    <div class="col-md-3 col-sm-6">.col-sm-4</div>
-	    <div class="col-md-3 col-sm-6"></div>
-    </div>
+	<div id="mycardlist"></div>
 	<div class="row">
 		<div class="col-lg-12">
 			<button id="modalbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registercard">+</button>

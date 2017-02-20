@@ -74,8 +74,8 @@
 
 <body class="index">
     
-    <c:import url="/WEB-INF/views/include/navigator.jsp" />
-
+    <c:import url="/WEB-INF/views/include/header.jsp" />
+    
     <!-- Start Contact Us Section -->
     <section id="contact" class="contact contact-section">
         <div class="container">

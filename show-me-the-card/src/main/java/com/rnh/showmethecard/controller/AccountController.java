@@ -45,9 +45,15 @@ public class AccountController {
 			history.setContent("로그인");
 			memberService.registerPoint(history);
 			
-			//전체 포인트 업데이트
+			//전체 포인트&레벨 업데이트
 			memberService.updateMemberPoint(mId);
-			
+			int mLevel = 0;
+			for (int i = 0; i < 100; i++) {
+				if ( 50*i*(i+1) < member.getmPoint() && member.getmPoint() < 50*(i+1)*(i+2)) {
+					mLevel = (i+1);
+				}
+			}
+			memberService.updateMemberLevel(mId, mLevel);
 			session.setAttribute("loginuser", member);
 			
 			return "redirect:/home.action";

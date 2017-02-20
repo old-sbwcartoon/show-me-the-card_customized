@@ -162,7 +162,7 @@
 		
 		$("#mypagebtn").click(function() {
 			$("#mypage").modal();
-		});
+		});		
 		
 		$('#daily').click(function() {
 			$.ajax({
@@ -172,7 +172,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -189,7 +189,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
+						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -206,7 +206,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -270,7 +270,6 @@
 	</script>
 </head>
 <body class="index">
-<%-- <c:import url="/WEB-INF/views/include/header.jsp" /> --%>
 <c:choose>
  	<c:when test="${ empty sessionScope.loginuser }">
     	<c:import url="/WEB-INF/views/include/navigator.jsp" />  <!-- 삭제하기 -->
@@ -558,7 +557,7 @@
     						<table class="table">
     							<thead>
     								<tr style="font-size: 18; color: white;">
-    									<!-- <th>레벨</th> -->
+    									<th>레벨</th>
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
     								</tr>
@@ -566,7 +565,7 @@
     							<tbody>
     								<c:forEach var="total" items="${ total }">
     									<tr>
-    										<!-- <th>레벨</th> -->
+    										<th><img src="resources/level/${ total.mLevel }.PNG"></th>
     										<th>${ total.mId }</th>
     										<th>${ total.mPoint } 점</th>
     									</tr>
@@ -578,7 +577,7 @@
     						<table class="table">
     							<thead>
     								<tr style="font-size: 18; color: white;">
-    									<!-- <th>레벨</th> -->
+    									<th>레벨</th>
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
     								</tr>
@@ -591,7 +590,7 @@
     						<table class="table">
     							<thead>
     								<tr style="font-size: 18; color: white;">
-    									<!-- <th>레벨</th> -->
+    									<th>레벨</th>
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
     								</tr>
@@ -604,7 +603,7 @@
     						<table class="table">
     							<thead>
     								<tr style="font-size: 18; color: white;">
-    									<!-- <th>레벨</th> -->
+    									<th>레벨</th>
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
     								</tr>

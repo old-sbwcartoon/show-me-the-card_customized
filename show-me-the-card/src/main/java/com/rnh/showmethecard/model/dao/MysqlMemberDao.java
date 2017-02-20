@@ -91,6 +91,15 @@ public class MysqlMemberDao implements MemberDao {
 	public void updateMemberPoint(String mId) {
 		memberMapper.updateMemberPoint(mId);
 	}
+	
+	@Override
+	public void updateMemberLevel(String mId, int mLevel) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("mId", mId);
+		params.put("mLevel", mLevel);
+		
+		memberMapper.updateMemberLevel(params);
+	}
 
 	@Override
 	public List<Qna> selectQnaList(String mId) {

@@ -26,6 +26,17 @@
 		
 	</insert>
 	
+	<select id="selectMyCardByFNo" resultType="MyCardList" parameterType="int">
+	SELECT myc_no mycNo, card_no cardNo, myc_comment mycComment, scrap_count scrapCount
+	FROM rnh2.MY_CARD
+	WHERE f_no = #{fNo}
+	</select>
+	
+	<select id="selectUrlFromCardDbByCardNo" resultType="String" parameterType="int">
+	SELECT site_url siteUrl
+	FROM rnh2.CARD_DB
+	WHERE card_no = #{cardNo}
+	</select>
  	<!-- <select id="SelectNoticeList" resultType="Notice" parameterType="int">
 	
 		SELECT n_no nNo, title title, content content, m_id mId, reg_date regDate

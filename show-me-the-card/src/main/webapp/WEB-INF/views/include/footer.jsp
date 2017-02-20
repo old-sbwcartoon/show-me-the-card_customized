@@ -1,6 +1,4 @@
-
-<footer class="footer navbar-fixed-bottom">
-	<style type="text/css">
+<style type="text/css">
 	
 	
 	
@@ -40,7 +38,7 @@
 		background-color: #333333;
 		}
 	</style>	
-	
+<footer class="footer navbar-fixed-bottom">
 	<div class="container">
     <div class="row">
     	<div class="col-md-4 col-xs-12">

@@ -24,6 +24,7 @@ public class HtmlParser {
 	private Document urlDoc;
 	private Document domainDoc;
 
+	
 	public String getUrl() {
 		return url;
 	}
@@ -64,8 +65,6 @@ public class HtmlParser {
 //			e.printStackTrace();
 //		}
 		setUrl(url);
-		CheckUrlStatus checkUrlStatus = new CheckUrlStatus(getUrl());
-		this.setUrlOk(checkUrlStatus.isUrlOk());
 		
 		if (isUrlOk()) {
 			setTitle(getChoosedData(Literal.ParseKeyword.TITLE));
@@ -74,8 +73,7 @@ public class HtmlParser {
 		} else {
 			setUrl(null);
 		}
-	}
-	
+	}	
 	
 	
 	private String decodeStr(String str) {
@@ -84,7 +82,7 @@ public class HtmlParser {
 			
 			
 			
-			if (str.contains("%")) {			
+			if (str.contains("%")) {
 				String seeAddr = str.substring(str.indexOf("%"), str.indexOf("%") + 5);
 				
 				if (urlDoc != null) { // doc ?��?�� ?��?��
@@ -147,13 +145,36 @@ public class HtmlParser {
 	
 	private String getProtocolAddedUrl(String url) {
 		StringBuilder protocolAddedUrl = new StringBuilder(100);
-		if (!url.contains("//")) {
-			protocolAddedUrl.append("http://");
+		
+		if (checkUrlOk(url)) {
+			setUrlOk(true);
+			return url;
+		} else {
+			String newUrl = null;
+			if (!url.contains("://")) { //http 없으면 붙이고
+				newUrl = protocolAddedUrl.append("http://").toString() + url;
+				if (checkUrlOk(newUrl)) {
+					setUrlOk(true);
+					return newUrl;
+				}
+			}
+			if (!url.contains("www.")) { //접속 오류나면 www. 붙이고
+				newUrl = protocolAddedUrl.append("www.").toString() + url;				
+				if (checkUrlOk(newUrl)) {
+					setUrlOk(true);
+					return newUrl;
+				}
+			}
 		}		
-		return protocolAddedUrl.append(url).toString();
+		setUrlOk(false);
+		return null; // 모두 오류나면 url=null
 	}
 	
 	
+	private boolean checkUrlOk(String url) {
+		CheckUrlStatus checkUrlStatus = new CheckUrlStatus(url);
+		return checkUrlStatus.isUrlOk();
+	}
 	
 	private String getUrlDomain(String protocolAddedUrl) {
 		StringBuilder domain = new StringBuilder(100);

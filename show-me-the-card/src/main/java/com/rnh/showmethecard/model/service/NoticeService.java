@@ -7,7 +7,9 @@ import com.rnh.showmethecard.model.dto.Notice;
 
 public interface NoticeService {
 	
-	List<Notice> SearchNoticeList();
+	List<Notice> SearchNoticeList(int startRow, int lastRow);
+	
+	int SelectNoticeCount();
 	
 	void AddNotice(Notice notice);
 	

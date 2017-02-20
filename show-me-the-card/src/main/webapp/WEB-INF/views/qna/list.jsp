@@ -113,17 +113,19 @@
 			<table class="table">
 				<thead class="text-danger">
 					<tr>
-						<th>번호</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>등록일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="qna" items="${ requestScope.qnas }">
+					<c:forEach var="qna" items="${ requestScope.qnas }" >
 						<tr>
-							<td>${ qna.qNo }</td>
-							<td><a href='detail.action?qNo=${ qna.qNo }'>${ qna.title }</a></td>
+							<td>
+							<c:forEach var="i" begin="1" end="${ qna.depth }" step="1">
+							&nbsp;&nbsp;
+							</c:forEach>
+							<a href='detail.action?qNo=${ qna.qNo }'>${ qna.title }</a></td>							
 							<td>${ qna.mId }</td>
 							<td><fmt:formatDate value="${ qna.regDate }"
 									pattern="yyyy-MM-dd" /></td>

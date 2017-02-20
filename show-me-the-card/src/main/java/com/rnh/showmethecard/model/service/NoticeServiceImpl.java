@@ -19,11 +19,17 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeDao noticeDao;
 
 	@Override
-	public List<Notice> SearchNoticeList() {
-		List<Notice> notice = noticeDao.SelectNoticeList();
+	public List<Notice> SearchNoticeList(int startRow, int lastRow) {
+		List<Notice> notice = noticeDao.SelectNoticeList(startRow, lastRow);
 		
 		
 		return notice;
+	}
+	
+	@Override
+	public int SelectNoticeCount() {
+		
+		return noticeDao.SelectNoticeCount();
 	}
 
 	@Override

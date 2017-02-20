@@ -152,19 +152,21 @@ $(document).ready(function() {
 		}
 	});
 	
-	/* var tagArray = new Array;
+	var tagArray = new Array;
 	var tagCount = 0;
-	$('#content').bind('keypress', function(e) {
+	$('#mycContent').bind('keypress', function(e) {
         if (e.which == 32 || e.which == 13){//space bar or tab bar
         	
-        	var userInput = $('#content').val();
-        	if(userInput != null || userInput != " "){
-        		tagArray = $('#content').val().split(' ');
+        	var userInput = $('#mycContent').val();
+        	
+        if(userInput != null || userInput != " "){
+        		tagArray = $('#mycContent').val().split(' ');
+        		var tmpString = "";
         		$("#resultTag").append("<span class='label label-success'>"+ tagArray[tagCount] +"</span> ");
         		tagCount++;
         		for(var i = 0; i <= tagCount; i++){
         			if(tagArray[i] == tagArray[tagCount] && tagCount != 0){
-        				$("#resultTag > span").last().remove();
+        				//$("#resultTag > span").last().remove();
         			}
         		}
         		
@@ -174,7 +176,7 @@ $(document).ready(function() {
         	
         }
         
-	}); */
+	});
 });
 </script>
 </head>
@@ -193,6 +195,9 @@ $(document).ready(function() {
 .label label-success{
 	margin-top: 10px;
 }
+/* .img-responsive{
+    max-width: 300px;
+} */
 </style>
 <body class="index">
 	
@@ -206,7 +211,7 @@ $(document).ready(function() {
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-sm-12">
 							<div class="section-title text-center wow fadeInDown"
 								data-wow-duration="2s" data-wow-delay="50ms">
 								<h2>ADD MY CARD</h2>
@@ -271,6 +276,10 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</section>
+	<div class="row">
+	    <div class="col-md-3 col-sm-6">.col-sm-4</div>
+	    <div class="col-md-3 col-sm-6"></div>
+    </div>
 	<div class="row">
 		<div class="col-lg-12">
 			<button id="modalbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registercard">+</button>

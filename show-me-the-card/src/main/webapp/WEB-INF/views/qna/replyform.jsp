@@ -149,7 +149,7 @@
 						<td>
 							<div class="form-group">
 								<label for="title">제목:</label> <input type="text"
-									class="form-control" name="title" value="RE : ${ qna.title }"
+									class="form-control" name="title" value=" RE : ${ qna.title }"
 									id="title">
 							</div>
 						</td>

@@ -80,8 +80,8 @@
 				method : "post",
 				dataType : "text",
 				success : function(data, status, xhr) {
-					alert(data);
-					$('#mPoint').html(data);
+					$('#mPoint').attr('src', '../resources/level/'+data+'.PNG')
+					$('#levelText').html("LEVEL"+ data);
 				}
 			});
 		});
@@ -92,7 +92,7 @@
 
 <body class="index">
     
-    <c:import url="/WEB-INF/views/include/navigator.jsp" />
+    <c:import url="/WEB-INF/views/include/header.jsp" />
 
     <!-- Start Contact Us Section -->
     <section id="contact" class="contact contact-section">
@@ -107,7 +107,8 @@
             </div>
             
             <div>
-            	<h3 id="mPoint"></h3> 
+            	<img style="width: 40px; height: 40px;" id="mPoint"></img>
+            	<span id="levelText" style="font-size: 30"></span>
             	<h3> 총 ${ loginuser.mPoint } 점 </h3>
             	<table class="table">
             		<thead class="text-danger">

@@ -122,17 +122,14 @@ public class MemberController {
 	
 	@RequestMapping(value="memberLevel.action", method=RequestMethod.POST)
 	@ResponseBody
-	public BufferedImage[] memberLevel(int mPoint) {
-		String level = "";
+	public int memberLevel(int mPoint) {
+		int level = 0;
 		for (int i = 0; i < 100; i++) {
 			if ( 50*i*(i+1) < mPoint && mPoint < 50*(i+1)*(i+2)) {
-				level = "LEVEL " + (i+1);
+				level = (i+1);
 			}
 		}
-		
-		SpriteImage spriteImage = new SpriteImage(10, 11, 31, 31);
-		BufferedImage[] levelImage = spriteImage.getSpliteImage();
-		return levelImage;
+		return level;
 	}
 	
 	@RequestMapping(value="qnaList.action", method=RequestMethod.GET)

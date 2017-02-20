@@ -136,11 +136,17 @@
 								<th>작성일</th>
 								<td><fmt:formatDate value="${notice.regDate}"
 										pattern="yyyy-MM-dd" /></td>
-							</tr>
+							</tr>							
+							<c:set var="br" value="
+" />
+	
 
 							<tr>
 								<th>내용</th>
-								<td style="height: 200px; vertical-align: top">${notice.content}</td>
+								<td style="height: 200px; vertical-align: top">
+
+								${ fn:replace(fn:replace(notice.content, br, "<br>"), " ", "&nbsp;")}
+								</td>
 							</tr>
 						</table>
 

@@ -42,12 +42,12 @@ public class Literal {
 		 */
 		public static class CardRatingRatio {
 			
-			public static final double STAR0 = 1.0;
-			public static final double STAR1 = 1.2;
-			public static final double STAR2 = 1.4;
-			public static final double STAR3 = 1.6;
-			public static final double STAR4 = 1.8;
-			public static final double STAR5 = 2.0;
+			public static final double STAR0 = 1;
+			public static final double STAR1 = 2;
+			public static final double STAR2 = 3;
+			public static final double STAR3 = 4;
+			public static final double STAR4 = 5;
+			public static final double STAR5 = 6;
 			
 		}
 	}

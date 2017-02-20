@@ -34,7 +34,7 @@ public class CheckUrlStatus {
 
             int code = connection.getResponseCode();  
             System.out.println("code: "+code);
-            if(code == 200){
+            if(code >= 200 && code < 400){ // 2xx: succeeded, 3xx: redirection done 
             	urlOk = true;
             }else{
             	urlOk = false;

@@ -479,10 +479,10 @@
     							<thead>
     								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
-    									<th style="width: 300">사이트 이름</th>
-    									<th style="width: 300">URL</th>
+    									<th style="width: 400">사이트 이름</th>
+    									<th style="width: 200">URL</th>
     									<th style="width: 200">등록자</th>
-    									<th style="width: 200">총점</th>
+    									<th style="width: 150">총점</th>
     								</tr>
     							</thead>
     							<tbody>
@@ -503,10 +503,10 @@
     							<thead>
     								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
-    									<th style="width: 250">사이트 이름</th>
-    									<th style="width: 300">URL</th>
+    									<th style="width: 400">사이트 이름</th>
+    									<th style="width: 200">URL</th>
     									<th style="width: 200">등록자</th>
-    									<th style="width: 200">총점</th>
+    									<th style="width: 150">총점</th>
     								</tr>
     							</thead>
     							<tbody id="dailyCard">
@@ -518,10 +518,10 @@
     							<thead>
     								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
-    									<th style="width: 250">사이트 이름</th>
-    									<th style="width: 300">URL</th>
+    									<th style="width: 400">사이트 이름</th>
+    									<th style="width: 200">URL</th>
     									<th style="width: 200">등록자</th>
-    									<th style="width: 200">총점</th>
+    									<th style="width: 150">총점</th>
     								</tr>
     							</thead>
     							<tbody id="weeklyCard">
@@ -533,10 +533,10 @@
     							<thead>
     								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->
-    									<th style="width: 250">사이트 이름</th>
-    									<th style="width: 300">URL</th>
+    									<th style="width: 400">사이트 이름</th>
+    									<th style="width: 200">URL</th>
     									<th style="width: 200">등록자</th>
-    									<th style="width: 200">총점</th>
+    									<th style="width: 150">총점</th>
     								</tr>
     							</thead>
     							<tbody id="monthlyCard">

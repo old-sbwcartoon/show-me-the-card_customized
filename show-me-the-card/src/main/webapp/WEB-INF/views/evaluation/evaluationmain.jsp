@@ -372,8 +372,6 @@ h2 {
 	    	
 	    	
 	    	
-	    	
-	    	
 	    	/* delete evaluation */
 			$('.img-evaluation-del').each(function() {
 				var evaluationDiv = $(this).parent().parent();

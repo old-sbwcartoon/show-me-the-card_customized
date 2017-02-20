@@ -95,6 +95,9 @@ public class EvaluationController {
 		return new Gson().toJson(newComment);
 	}
 	
+
+    public static final int COMMENT_FIRST_TIME   = 1;
+	public static final int EVALUATION           = 20;
 	
 	@RequestMapping(value="addevalratingliked.action", method=RequestMethod.POST)
 	@ResponseBody

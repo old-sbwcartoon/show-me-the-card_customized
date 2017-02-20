@@ -16,6 +16,14 @@
 		
 	</select>
 	
+	<select id="SelectNoticeCount" resultType="int">
+	
+		SELECT COUNT(*) AS COUNT
+		FROM NOTICE
+		WHERE deleted = '0'
+	
+	</select>
+	
 	<insert id="InsertNotice" parameterType="Notice">
 	
 		INSERT INTO NOTICE

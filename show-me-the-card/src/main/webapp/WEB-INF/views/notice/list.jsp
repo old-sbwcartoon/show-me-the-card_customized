@@ -141,6 +141,9 @@
 					<a href='insertNotice.action'>글쓰기</a>
 				</c:if>
 			</table>
+			<div style="margin: 0 auto; text-align: center;">
+				<ul class="pagination">${ pager }</ul>
+			</div>
 		</div>
 	</div>
 	</section>

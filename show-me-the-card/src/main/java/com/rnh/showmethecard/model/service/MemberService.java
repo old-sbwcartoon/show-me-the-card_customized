@@ -29,4 +29,6 @@ public interface MemberService {
 	List<Qna> getQnaList(String mId);
 	
 	void updateMemberPointAndLevel(String content, int point, Member member);
+
+//	void updateMemberPointAndLevel(String content, Member member); 흠!
 }

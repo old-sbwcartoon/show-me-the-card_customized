@@ -42,7 +42,8 @@ public class AccountController {
 			
 //			String content = "로그인";
 //			int point = 30;
-			memberService.updateMemberPointAndLevel("로그인", Literal.Point.Member.ATTENDANCE, member);
+			memberService.updateMemberPointAndLevel("로그인", Literal.Content.Member.getPoint("로그인"), member);
+//			updateMemberPointAndLevel(Literal.Content.Member.ATTENDANCE, member); 흠!
 			
 			member = memberService.getMemberBymIdAndPassword(mId, password);
 			session.setAttribute("loginuser", member);
@@ -69,6 +70,10 @@ public class AccountController {
 		return "redirect:/home.action";
 	}
 	
+	
+//	public void updateMemberPointAndLevel(String content, Member member) { 흠!
+//		memberService.updateMemberPointAndLevel(content, member);
+//	}
 }
 
 

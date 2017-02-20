@@ -233,6 +233,11 @@ $(document).ready(function(){
     							<thead>
     								<tr style="font-size: 18; color: white;">
     									<th style="width: 250">검색</th>
+    									<th><input type="text"
+													class="form-control" placeholder="폴더이름" id="u_fName"
+													name="fName" required
+													data-validation-required-message="Please enter your id.">
+													</th>
     								</tr>
     								<tr style="font-size: 18; color: white;">
     									<!-- <th>레벨</th> -->    									

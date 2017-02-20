@@ -67,7 +67,8 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	public List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
 		int limit = Literal.Ui.LIMIT;
 		int articleStartNo = (pageNo - 1) * limit;
-		
+		System.out.println(limit);
+		System.out.println(articleStartNo);
 		HashMap<String, Object> data = new HashMap<>();
 		data.put("cardNo", cardNo);
 		data.put("mId", mId);

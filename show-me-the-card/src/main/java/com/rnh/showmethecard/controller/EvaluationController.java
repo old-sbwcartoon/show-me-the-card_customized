@@ -70,9 +70,9 @@ public class EvaluationController {
 	@RequestMapping(value="showevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
 	public String showEvaluationRatingWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
-		cardNo = 2;
+		int cardNob = 2;
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-		service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), 1);
+		service.showEvaluationRatingListWithPageNo(cardNob, member.getmId(), 1);
 		
 		return null;
 	}

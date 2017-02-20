@@ -82,7 +82,7 @@ public class HtmlParser {
 			
 			
 			
-			if (str.contains("%")) {			
+			if (str.contains("%")) {
 				String seeAddr = str.substring(str.indexOf("%"), str.indexOf("%") + 5);
 				
 				if (urlDoc != null) { // doc ?��?�� ?��?��
@@ -147,6 +147,7 @@ public class HtmlParser {
 		StringBuilder protocolAddedUrl = new StringBuilder(100);
 		
 		if (checkUrlOk(url)) {
+			setUrlOk(true);
 			return url;
 		} else {
 			String newUrl = null;

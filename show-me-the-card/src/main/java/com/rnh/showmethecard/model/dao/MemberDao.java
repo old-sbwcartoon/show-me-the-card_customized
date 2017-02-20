@@ -30,6 +30,8 @@ public interface MemberDao {
 	
 	void updateMemberPoint(String mId);
 	
+	void updateMemberLevel(String mId, int mLevel);
+	
 	List<Qna> selectQnaList(String mId);
 
 }

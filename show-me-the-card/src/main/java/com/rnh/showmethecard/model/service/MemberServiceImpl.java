@@ -98,6 +98,11 @@ public class MemberServiceImpl implements MemberService {
 	public void updateMemberPoint(String mId) {
 		dao.updateMemberPoint(mId);		
 	}
+	
+	@Override
+	public void updateMemberLevel(String mId, int mLevel) {
+		dao.updateMemberLevel(mId, mLevel);
+	}
 
 	@Override
 	public List<Qna> getQnaList(String mId) {

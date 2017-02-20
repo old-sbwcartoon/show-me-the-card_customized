@@ -511,55 +511,6 @@ li {
 
 
 
-
-/*---------------------------------------------------------*/
-/* Start About Us Section                                  */
-/*---------------------------------------------------------*/
-
-.about-us-section-1 {
-    padding-top: 100px;
-    padding-bottom: 120px;
-    background-color: #f1f1f1;
-}
-
-.about-us-section-2 {
-    padding-top: 120px;
-    padding-bottom: 120px;
-    background-color: #28ABE3;    
-}
-
-.welcome-section {
-	background-color: #fff;
-    padding-bottom: 40px;
-    box-shadow: 0 0 3px #ccc;
-    padding: 30px;
-}
-
-.welcome-section img {
-    width: 100%;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -o-border-radius: 2px;
-    border-radius: 2px;
-}
-
-
-.welcome-section h4 {
-    padding-top: 20px;
-    color: #777;
-}
-
-.welcome-section p {
-    padding-top: 20px;
-    color: #999;
-}
-
-.welcome-section:hover .border {
-    margin: 0 40%;
-}
-
-
-
 /*-----------------------------------------*/
 /* Start Progress Bar Section
 /*-----------------------------------------*/

@@ -19,7 +19,7 @@ public class SpriteImage {
 	public BufferedImage[] getSpliteImage() {
 		try {
 			//imageIO 클래스를 이용하여 이미를 불러온다.
-			bigImag = ImageIO.read(new File("/showmethecard/resources/assets/images/level.PNG"));
+			bigImag = ImageIO.read(new File("level.png"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

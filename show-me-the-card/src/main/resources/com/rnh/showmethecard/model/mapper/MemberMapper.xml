@@ -13,13 +13,13 @@
 	</insert>
 	
 	<select id="selectMemberById" resultType="Member" parameterType="String">
-		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, left(REG_DATE, 10) regDate
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, M_Level mLevel, USERTYPE, DELETED, left(REG_DATE, 10) regDate
 		FROM rnh2.MEMBER
 		WHERE M_ID = #{ mId }
 	</select>
 	
 	<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
-		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, M_Level mLevel, USERTYPE, DELETED, REG_DATE regDate
 		FROM rnh2.MEMBER
 		WHERE M_ID = #{ mId } AND PASSWORD = #{ password } AND DELETED = '0'
 	</select>
@@ -39,7 +39,7 @@
 	</update>	
 	
 	<select id="selectMembers" resultType="Member">
-		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, USERTYPE, left(REG_DATE, 10) regDate
+		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, M_Level mLevel, USERTYPE, left(REG_DATE, 10) regDate
 		FROM rnh2.MEMBER
 		WHERE DELETED = '0' order by regDate
 	</select>
@@ -77,6 +77,13 @@
 		M_POINT = (select sum(POINT)
 				   FROM rnh2.MEMBER_HISTORY
 				   where M_ID = #{ mId })
+		WHERE M_ID = #{ mId }
+	</update>
+	
+	<update id="updateMemberLevel" parameterType="HashMap">
+		UPDATE rnh2.MEMBER
+		SET
+		M_LEVEL = #{ mLevel }
 		WHERE M_ID = #{ mId }
 	</update>
 	

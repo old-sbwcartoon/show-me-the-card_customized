@@ -137,10 +137,16 @@
 								<td><fmt:formatDate value="${qna.regDate}"
 										pattern="yyyy-MM-dd" /></td>
 							</tr>
+							<c:set var="br" value="
+" />
+	
 
 							<tr>
 								<th>내용</th>
-								<td style="height: 200px; vertical-align: top">${qna.content}</td>
+								<td style="height: 200px; vertical-align: top">
+								
+								${ fn:replace(fn:replace(qna.content, br, "<br>"), " ", "&nbsp;")}
+								</td>
 							</tr>
 						</table>
 

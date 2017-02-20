@@ -9,7 +9,9 @@ import com.rnh.showmethecard.model.dto.Notice;
 public interface NoticeDao {
 
 	
-	List<Notice> SelectNoticeList();
+	List<Notice> SelectNoticeList(int startRow, int lastRow);
+	
+	int SelectNoticeCount();
 	
 	void InsertNotice(Notice notice);
 	

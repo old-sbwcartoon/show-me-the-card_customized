@@ -32,5 +32,7 @@ public interface MemberMapper {
 	
 	void updateMemberPoint(String mId);
 	
+	void updateMemberLevel(HashMap<String, Object> params);
+	
 	List<Qna> selectQnalist(String mId);
 }

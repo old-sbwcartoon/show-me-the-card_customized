@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.rnh.showmethecard.model.dto.MyCardList;
 import com.rnh.showmethecard.model.mapper.CardMapper;
 
 
@@ -41,6 +42,16 @@ public class MysqlCardDao implements CardDao {
 		map.put("cardNo", cardNo);
 		map.put("mycComment", mycComment);
 		cardMapper.insertMyCard(map);
+	}
+	
+	@Override
+	public List<MyCardList> selectMyCardByFNo(int fNo){
+		return (List<MyCardList>) cardMapper.selectMyCardByFNo(fNo);
+	}
+	
+	@Override
+	public String selectUrlFromCardDbByCardNo(int cardNo){
+		return cardMapper.selectUrlFromCardDbByCardNo(cardNo);
 	}
 
 //	@Override

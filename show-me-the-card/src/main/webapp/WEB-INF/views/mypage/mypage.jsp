@@ -58,7 +58,11 @@
     <![endif]-->
 
 <!-- jQuery Version 2.1.3 -->
-<script src="/showmethecard/resources/assets/js/jquery-2.1.3.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/showmethecard/resources/js/jquery.longpress.js"></script>
+<!-- <script src="/showmethecard/resources/assets/js/jquery-2.1.3.min.js"></script> -->
 
 <!-- Bootstrap Core JavaScript -->
 <script
@@ -79,35 +83,43 @@
 <!-- Materialize js -->
 <script src="/showmethecard/resources/assets/js/material.js"></script>
 <script src="/showmethecard/resources/assets/js/waypoints.min.js"></script>
+<!-- longclick js  -->
 
 
 
 <script type="text/javascript">
 	$(document).ready(
 			function() {
+				//모달 종료시 event
+				$('#loginModal').on('hidden.bs.modal', function (e) {
+					//var fnamse = $('#fName'); 
+
+					//$('#fName').empty();
+					//$('#fName').attr('value', "");
+					$('#fName').val('')
+					
+
+				});
+				
+				$('#u_loginModal').on('hidden.bs.modal', function (e) {
+					//var fnamse = $('#fName'); 
+
+					//$('#fName').empty();
+					//$('#fName').attr('value', "");
+					$('#u_fName').val('')
+					
+					
+
+				});				
+				
+				
+				
+				
 				// 폴더추가 클릭이벤트
 				var plag = 1;
-				$("#addFolder").click(function() {
+				$("#addFolder").click(function() {			
 					
 					
-					var f_modal = $("#loginModal")
-					if (plag = 1){
-						plag = 2;
-					} else {
-						var wae = f_modal[0].childNodes[1].childNodes[3].childNodes[3].childNodes[1].childNodes[1].childNodes[1][2].value;	
-					}
-					
-					
-					var fNames = f_modal.find('#fName');
-					fNames.attr('value', "");
-					
-					
-					var fNamesw = $('#fName');
-					fNamesw.val();
-					fNamesw.attr('value', "");
-					
-					
-					$('.form-control').attr('value', "");
 					
 					$("#loginModal").modal('show');
 					
@@ -220,11 +232,13 @@
 						
 				   
 				//folder 들의 click 이벤트
-				$('#folderpage').on("click", "button[id^=folder_]",
-						function(event) {
+				$('#folderpage').on('mouseup', "button[id^=folder_]",
+						function(event) {						
 
 							var f_id = event.currentTarget.id;
 							var fNo = f_id.split("_")[1];
+							
+							
 							
 							//var fNo1= event.currentTarget.childNodes[1].defaultValue
 											
@@ -232,7 +246,7 @@
 							
 							$('#u_fName').attr('value',
 									event.currentTarget.childNodes[3].data);														
-							
+							$('#u_fName').val(event.currentTarget.childNodes[3].data);							
 							
 							var u_f_modal = $("#u_loginModal");
 							
@@ -242,14 +256,14 @@
 								
 							var booleans = event.currentTarget.childNodes[2].value
 							var switchchecked = $('#u_myonoffswitch').is(":checked");
+																					
 							
-							
-							var color = $('.onoffswitch-inner').css('background-color');
-							var color1 = $('#u_myonoffswitch').css('background-color');
-							var color1 = $('#u_myonoffswitch').css('background-color');
-							
-							
-							$('#u_myonoffswitch').prop("checked", booleans)
+							//$('#u_myonoffswitch').prop("checked", booleans)
+							if (booleans == "true") {
+								$('#u_myonoffswitch').prop("checked", true);
+							} else {
+								$('#u_myonoffswitch').prop("checked", false);
+							}						
 							
 							var switchchecked1 = $('#u_myonoffswitch').is(":checked");
 							
@@ -258,7 +272,34 @@
 							u_f_modal.modal('show');
 							
 							
+							
+							
+						
 						});
+				
+				
+				//$('#folder_48').longclick(500,
+				//		function(event) {				
+				//    alert("dddd");
+				//});
+					//$('#folderpage').on('longpress', "button[id^=folder_]",
+					$('button[id^=folder_]').longpress(
+						function(event) { //long click
+							alert('성공');
+							event.stopPropagation();
+							event.preventDefault();
+							return false;
+						},
+						function(event) {//short click
+							
+						},
+						500, //duration
+						true, //stop-propagation
+						true); //prevend-default					
+				
+						
+						
+						
 
 			});
 </script>
@@ -361,25 +402,18 @@
 	</c:choose>
 
 
-
-
 			<%-- <button type="button" id="folderbasic" class="folderbasic"
 				style="display : none; border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
 					src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>
 
-
-<span id = 'folderpage' > 
-	<c:forEach var="folder" items="${ folders }">
-
-		
-			<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
-				style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
-					src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }>${ folder.fName }</button>
-		
-	</c:forEach>
-
-
-</span>
+<!--  start folder page section -->
+	<span id = 'folderpage' > 
+		<c:forEach var="folder" items="${ folders }">		
+				<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
+					style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
+						src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }>${ folder.fName }</button>		
+		</c:forEach>
+	</span>
 
 	<button type="button" id="addFolder"
 		style="border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 75px; height: 100px">
@@ -388,7 +422,7 @@
 
 	</button>
 
-
+<!--  End folder page section -->
 
 
 
@@ -554,8 +588,7 @@
 <!-- modal -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 

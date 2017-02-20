@@ -25,12 +25,8 @@ public interface MemberService {
 	List<Member> getMemberList();
 	
 	List<MemberHistory> getPointHistory(String mId);
-	
-	void registerPoint(MemberHistory history);
-	
-	void updateMemberPoint(String mId);
-	
-	void updateMemberLevel(String mId, int mLevel);
-	
+		
 	List<Qna> getQnaList(String mId);
+	
+	void updateMemberPointAndLevel(String content, int point, Member member);
 }

@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -20,11 +21,18 @@ public class MysqlNoticeDao implements NoticeDao{
 
 
 	@Override
-	public List<Notice> SelectNoticeList() {
+	public List<Notice> SelectNoticeList(int startRow, int lastRow) {
 		
-		List<Notice>notices = (List<Notice>)noticeMapper.SelectNoticeList();
+		RowBounds bounds = new RowBounds(startRow - 1, lastRow - startRow);
+		
+		List<Notice>notices = (List<Notice>)noticeMapper.SelectNoticeList(bounds);
 
 		return notices;
+	}
+	
+	@Override
+	public int SelectNoticeCount() {
+		return noticeMapper.SelectNoticeCount();
 	}
 
 	@Override

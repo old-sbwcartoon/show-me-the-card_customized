@@ -12,7 +12,7 @@
 				GROUP_NO groupNo, STEP step, DEPTH depth
 		FROM QNA		
 		WHERE deleted = '0'
-		ORDER BY GROUP_NO, STEP ASC
+		ORDER BY GROUP_NO DESC, STEP ASC
 		
 	</select>
 	

@@ -89,7 +89,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	alert("새로운페이지");
-	//$('#mycardlist').load("showmycardlist.action");
+	$('#mycardlist').load("showmycardlist.action");
 	var cardNum, check;
 	var a = 0;
 	var title = "";

@@ -19,7 +19,7 @@
 </script>
 
 
-<section id="team" class="team-member-section" style="background-color : white;">
+<section id="team" class="team-member-section" style="background-color : hsr(50,50,50);">
 <c:forEach var="MyCardList" items="${ mycardListList }">
 
 		<!-- width:294px;  -->

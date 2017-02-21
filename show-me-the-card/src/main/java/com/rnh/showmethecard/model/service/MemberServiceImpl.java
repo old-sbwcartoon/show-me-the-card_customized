@@ -110,12 +110,14 @@ public class MemberServiceImpl implements MemberService {
 		//전제 포인트 update
 		dao.updateMemberPoint(member.getmId());
 		
+		member = dao.selectMemberById(member.getmId());
+		System.out.println(member.getmPoint());
 		//level 계산
 		int mLevel = 0;
 		for (int i = 0; i < 100; i++) {
 			if ( 50*i*(i+1) <= member.getmPoint() && member.getmPoint() < 50*(i+1)*(i+2)) {
 				mLevel = (i+1);
-			} else {
+			} else if (member.getmPoint() >= 50*100*101) {
 				mLevel = 100;
 			}
 		}

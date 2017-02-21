@@ -1,5 +1,8 @@
 package com.rnh.showmethecard.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.CardForInsert;
 import com.rnh.showmethecard.model.dto.Member;
+import com.rnh.showmethecard.model.dto.MyCardList;
 import com.rnh.showmethecard.model.service.CardService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
@@ -39,6 +43,8 @@ public class CardController {
 	String mId;
 	
 	Gson gson = new Gson();
+	
+	
 	
 	
 
@@ -68,16 +74,36 @@ public class CardController {
 			model.addAttribute("check", "bad");
 			System.out.println("잘못된주소");
 		return "틀렸어!";
-		}
+		}	
+	}
+	
+	@RequestMapping(value="showmycardlist.action", method=RequestMethod.GET)
+	public String ShowMYCardList(HttpSession session, HttpServletRequest req){
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
+		System.out.println("s1");
+		List<MyCardList> myCardListList= cardService.readMyCard(190);
+		System.out.println("s2");
+		int listLength = myCardListList.size();
 		
+		System.out.println(myCardListList.get(0).getMycNo());
+		for(int i=0;i<listLength;i++){
+			String tmp = myCardListList.get(i).getUrl();
+			HtmlParser h = new HtmlParser(tmp);
+			myCardListList.get(i).setDesc(h.getDesc());
+			myCardListList.get(i).setImg(h.getImg());
+			System.out.println(h.getImg());
+			myCardListList.get(i).setTitle(h.getTitle());
+		}
+		req.setAttribute("mycardListList", myCardListList);
+		return "card/mycardlist";
 	}
 	
 	@RequestMapping(value="cardregisterfin.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
+	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson, String yg) {
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		System.out.println("들어는 왔구만");
 		System.out.println(stringJson);
 		CardForInsert cardForInsert;
 		cardForInsert = gson.fromJson(stringJson, CardForInsert.class);

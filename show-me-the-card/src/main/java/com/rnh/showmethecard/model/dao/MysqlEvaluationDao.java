@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.dto.Qna;
@@ -58,17 +59,23 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.put("cardNo", String.valueOf(cardNo));
 		data.put("mId", mId);
 		
-		return mapper.selectEvaluationRatingLiked(data);	
+		return mapper.selectEvaluationRatingLiked(data);
 	}
 
 
 	@Override
-	public List<EvaluationRating> selectEvaluationRatingListWithmId(int cardNo, String mId) {
-		HashMap<String, String> data = new HashMap<>();
-		data.put("cardNo", String.valueOf(cardNo));
+	public List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
+		int limit = Literal.Ui.LIMIT;
+		int articleStartNo = (pageNo - 1) * limit;
+		System.out.println(limit);
+		System.out.println(articleStartNo);
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("cardNo", cardNo);
 		data.put("mId", mId);
+		data.put("articleStartNo", articleStartNo);
+		data.put("limit", limit);
 		
-		return mapper.selectEvaluationRatingListWithmId(data);
+		return mapper.selectEvaluationRatingListWithPageNo(data);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
@@ -38,22 +39,13 @@ public class AccountController {
 		Member member = memberService.getMemberBymIdAndPassword(mId, password);
 		
 		if (member != null) {
-			//로그인 포인트
-			MemberHistory history = new MemberHistory();
-			history.setmId(mId);
-			history.setPoint(30);
-			history.setContent("로그인");
-			memberService.registerPoint(history);
 			
-			//전체 포인트&레벨 업데이트
-			memberService.updateMemberPoint(mId);
-			int mLevel = 0;
-			for (int i = 0; i < 100; i++) {
-				if ( 50*i*(i+1) < member.getmPoint() && member.getmPoint() < 50*(i+1)*(i+2)) {
-					mLevel = (i+1);
-				}
-			}
-			memberService.updateMemberLevel(mId, mLevel);
+//			String content = "로그인";
+//			int point = 30;
+			memberService.updateMemberPointAndLevel("로그인", Literal.Content.Member.getPoint("로그인"), member);
+//			updateMemberPointAndLevel(Literal.Content.Member.ATTENDANCE, member); 흠!
+			
+			member = memberService.getMemberBymIdAndPassword(mId, password);
 			session.setAttribute("loginuser", member);
 			
 			return "redirect:/home.action";
@@ -78,6 +70,10 @@ public class AccountController {
 		return "redirect:/home.action";
 	}
 	
+	
+//	public void updateMemberPointAndLevel(String content, Member member) { 흠!
+//		memberService.updateMemberPointAndLevel(content, member);
+//	}
 }
 
 

@@ -174,8 +174,7 @@ h2 {
 }
 </style>
 
-<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
-<script type="text/javascript">		
+<script type="text/javascript">
 		$(document).ready(function() {
 			var loginId = $('#loginusermId').val();
 			
@@ -356,8 +355,6 @@ h2 {
 		    		});
 		    	}
 		    });
-	    	
-	    	
 	    	
 	    	
 	    	

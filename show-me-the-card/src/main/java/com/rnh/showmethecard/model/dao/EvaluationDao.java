@@ -16,8 +16,6 @@ public interface EvaluationDao {
 
 	int selectEvaluationRatingLiked(int cardNo, String mId);
 
-	List<EvaluationRating> selectEvaluationRatingListWithmId(int cardNo, String mId);
-
 	float selectEvaluationRatingAvg(int cardNo);
 
 	List<EvaluationComment> selectEvaluationCommentList(int cardNo);
@@ -31,6 +29,8 @@ public interface EvaluationDao {
 	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
 
 	boolean selectExistsEvaluationRatingOfmId(int cardNo, String mId);
+
+	List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo);
 
 
 	

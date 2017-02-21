@@ -13,8 +13,6 @@ public interface EvaluationService {
 
 	EvaluationComment  addEvaluationComment(EvaluationComment newComment);
 
-	List<EvaluationRating> showEvaluationRatingListWithmId(int cardNo, String mId);
-
 	float showEvaluationRatingAvg(int cardNo);
 
 	List<EvaluationComment> showEvaluationCommentList(int cardNo);
@@ -27,6 +25,8 @@ public interface EvaluationService {
 	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
 
 	boolean confirmEvaluationRatingOfmId(int cardNo, String mId);
+
+	List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, String getmId, int pageNo);
 	
 
 

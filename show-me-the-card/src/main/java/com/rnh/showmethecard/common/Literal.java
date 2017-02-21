@@ -2,18 +2,32 @@ package com.rnh.showmethecard.common;
 
 public class Literal {
 
-	/**
-	 * Html 파싱시 키워드로 사용
-	 * 사용 예 : case Literal.ParseKeyword.DESCRIPTION: .. break;
-	 * @author ghoul
-	 */
-	public static class ParseKeyword {
+	
+	public static class ParseHtml {
 		
-		public static final String TITLE         = "t";
-		public static final String DESCRIPTION   = "d";
-		public static final String IMAGE         = "i";
+		/**
+		 * Html 파싱시 키워드로 사용
+		 * 사용 예 : case Literal.ParseKeyword.DESCRIPTION: .. break;
+		 * @author ghoul
+		 */
+		public static class Keyword {
+			
+			public static final String TITLE         = "t";
+			public static final String DESCRIPTION   = "d";
+			public static final String IMAGE         = "i";
+			
+		}
+		
+		
+		public static class From {
+			
+			public static final String WEB  = "w";
+			public static final String DB   = "d";
+			
+		}
 		
 	}
+	
 
 	
 	public static class Content {

@@ -28,8 +28,17 @@ public class HtmlParser {
 	public String getUrl() {
 		return url;
 	}
-	public void setUrl(String url) {
-		this.url = getProtocolAddedUrl(decodeStr(url));
+	public void setUrl(String url, String from) {
+		String decodedUrl = decodeStr(url);
+		switch (from) {
+			case Literal.ParseHtml.From.WEB : 
+				this.url = getProtocolAddedUrl(decodedUrl);
+				break;
+				
+			case Literal.ParseHtml.From.DB  :
+				this.url = decodedUrl;
+				break;
+		}		
 	}
 	public String getTitle() {
 		return title;
@@ -58,23 +67,22 @@ public class HtmlParser {
 	
 	
 	
-	public HtmlParser(String url) {
+	public HtmlParser(String url, String from) {
 //		try {
 //			urlDoc = Jsoup.connect(getUrl()).get();
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		setUrl(url);
+		setUrl(url, from);
 		
 		if (isUrlOk()) {
-			setTitle(getChoosedData(Literal.ParseKeyword.TITLE));
-			setDesc(getChoosedData(Literal.ParseKeyword.DESCRIPTION));
-			setImg(getChoosedData(Literal.ParseKeyword.IMAGE));
+			setTitle(getChoosedData(Literal.ParseHtml.Keyword.TITLE));
+			setDesc(getChoosedData(Literal.ParseHtml.Keyword.DESCRIPTION));
+			setImg(getChoosedData(Literal.ParseHtml.Keyword.IMAGE));
 		} else {
-			setUrl(null);
+			setUrl(null, from);
 		}
-	}	
-	
+	}
 	
 	private String decodeStr(String str) {
 		try {
@@ -205,7 +213,7 @@ public class HtmlParser {
 		String data = null;
 		switch (parseKeyword) {
 		
-			case Literal.ParseKeyword.TITLE :
+			case Literal.ParseHtml.Keyword.TITLE :
 				
 				Elements ogTitle = doc.select("head meta[property=og:title]");
 				Elements headTitle = doc.select("title");
@@ -220,7 +228,7 @@ public class HtmlParser {
 				break;
 				
 				
-			case Literal.ParseKeyword.DESCRIPTION :
+			case Literal.ParseHtml.Keyword.DESCRIPTION :
 				
 				Elements ogDesc = doc.select("head meta[property=og:description]");
 				Elements headDesc = doc.select("head meta[name=description]");
@@ -235,7 +243,7 @@ public class HtmlParser {
 				break;
 				
 				
-			case Literal.ParseKeyword.IMAGE :
+			case Literal.ParseHtml.Keyword.IMAGE :
 				
 				Elements ogImg = doc.select("head meta[property=og:image]"); //1. og:tag
 				Elements imgSrc = doc.select("img[src]"); //2. logo > 4. 1st image
@@ -345,7 +353,7 @@ public class HtmlParser {
 	private String getChoosedData(String parseKeyword) {
 
 		String choosedData = null;
-		if (urlDoc == null) { //urlDoc�? ?��?���?
+		if (urlDoc == null) { //urlDoc가 만들어지지 않았다면
 			try {
 				urlDoc = Jsoup.connect(getUrl()).get();
 			} catch (IOException e) {
@@ -354,17 +362,17 @@ public class HtmlParser {
 		}
 		
 		String parsedData = seekData(urlDoc, parseKeyword);
-		if (parsedData != null) {
+		if (parsedData != null) { //해당 url에서 data를 찾았다면
 			choosedData = parsedData;
 		} else {
-			if (domainDoc == null) { //domainDoc�? ?��?���?
+			if (domainDoc == null) { //domainDoc가 만들어지지 않았다면
 				try {
 					domainDoc = Jsoup.connect(getUrlDomain(getUrl())).get();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			choosedData = seekData(domainDoc, parseKeyword);
+			choosedData = seekData(domainDoc, parseKeyword); //domainDoc에서 찾기
 		}
 		
 		return choosedData;

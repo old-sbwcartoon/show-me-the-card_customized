@@ -25,9 +25,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public EvaluationComment addEvaluationComment(EvaluationComment newComment) {
-		return dao.insertEvaluationComment(newComment);
-		
+	public void addEvaluationComment(EvaluationComment newComment) {
+		dao.insertEvaluationComment(newComment);
 	}
 
 	@Override

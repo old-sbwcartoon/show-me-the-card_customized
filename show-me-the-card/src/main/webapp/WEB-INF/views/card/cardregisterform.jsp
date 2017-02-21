@@ -153,31 +153,59 @@ $(document).ready(function() {
 		}
 	});
 	
-	var tagArray = new Array;
-	var tagCount = 0;
+	var tagArray  = new Array;
+	var tagCount  = 0;
+	var userInput = "";
+	var tf = true;
 	$('#mycContent').bind('keypress', function(e) {
-        if (e.which == 32 || e.which == 13){//space bar or tab bar
+        if (e.which == 32){//space bar or tab bar
+        	if(tagCount < 10){
+	        	tf = true;
+	       		tagArray = $('#mycContent').val().split(' ');
+	       		
+	       		for(var i = 0 ; i < tagCount; i++){
+	       			if( tagArray[i] == tagArray[tagCount]){
+		       			$('#mycContent').empty();
+		       			$('#mycContent').val(userInput);
+		       			//alert(userInput);
+		       			tf =false;
+		       			alert("중복입니다.");
+	       			}
+	       			
+	       		}
+	       		if(tf){
+		       		userInput = $('#mycContent').val();
+		       		$("#resultTag").append("<span class='label label-success allTags' id='tag"+tagCount+"'>"+ tagArray[tagCount] +"</span> ");
+		       		tagCount++;
+		       		
+	       		}
+        	}else if(tagCount >= 10){
+            	
+            	alert("TAG는 총 10개까지만 입력이 가능합니다.");
+            	
+            	$('#mycContent').empty();
+       			$('#mycContent').val(userInput);
+            } 
+//        	else if(e.which == 13){
+//        		alert("너는 지금 엔터를 눌렀어");
+//        	} 
         	
-        	var userInput = $('#mycContent').val();
-        	
-        if(userInput != null || userInput != " "){
-        		tagArray = $('#mycContent').val().split(' ');
-        		var tmpString = "";
-        		$("#resultTag").append("<span class='label label-success'>"+ tagArray[tagCount] +"</span> ");
-        		tagCount++;
-        		for(var i = 0; i <= tagCount; i++){
-        			if(tagArray[i] == tagArray[tagCount] && tagCount != 0){
-        				//$("#resultTag > span").last().remove();
-        			}
-        		}
-        		
-        		
+//        	else { alert("다른건 누르지 말란 말이다!");
+//	        	$('#mycContent').empty();
+//	   			$('#mycContent').val(userInput);
+//        	}
+        }else if(e.which == 13){
+        		alert("너는 지금 엔터를 눌렀어");
         	}
-        	
-        	
-        }
+       
         
 	});
+	
+	$('#resultTag > span').click(function(){
+			alert($(this).text());
+	});
+	
+	
 });
 </script>
 </head>
@@ -240,9 +268,10 @@ $(document).ready(function() {
 										<input type="text" class="form-control" placeholder="사이트 혹은 페이지의 이름입니다." id="cName" />
 										<p class="help-block text-danger"></p>
 									</div>
+									<div><h2 id="resultTag"></h2></div><br>
 									<div class="col-md-12 form-group waves-effect">
 										<p>Tag & 내용</p>
-										<div><h2 id="resultTag"></h2></div><br>
+										
 										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent" />
 										<p class="help-block text-danger"></p>
 									</div>

@@ -11,7 +11,7 @@ public interface EvaluationService {
 	
 	void addEvaluationRatingLiked(int eRatingNo, String mId, String likedmId);
 
-	EvaluationComment  addEvaluationComment(EvaluationComment newComment);
+	void addEvaluationComment(EvaluationComment newComment);
 
 	float showEvaluationRatingAvg(int cardNo);
 

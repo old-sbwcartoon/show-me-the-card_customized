@@ -10,7 +10,7 @@ public interface EvaluationDao {
 
 	void insertEvaluationRating(int cardNo, String mId, String content, int eRating);	
 
-	EvaluationComment insertEvaluationComment(EvaluationComment newComment);
+	void insertEvaluationComment(EvaluationComment newComment);
 
 	void insertEvaluationRatingLiked(int eRatingNo, String mId, String likedmId);
 

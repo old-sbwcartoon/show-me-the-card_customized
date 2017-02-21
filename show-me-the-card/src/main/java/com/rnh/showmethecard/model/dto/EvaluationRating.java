@@ -8,7 +8,7 @@ public class EvaluationRating {
 	private String mId;
 	private String content;
 	private String regDate;
-	private String eRating;
+	private int eRating;
 	private boolean deleted;
 	
 	private int eLikedSum; //EvaluationRatingLiked의 eLIked
@@ -45,10 +45,10 @@ public class EvaluationRating {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public String geteRating() {
+	public int geteRating() {
 		return eRating;
 	}
-	public void seteRating(String eRating) {
+	public void seteRating(int eRating) {
 		this.eRating = eRating;
 	}
 	public boolean isDeleted() {

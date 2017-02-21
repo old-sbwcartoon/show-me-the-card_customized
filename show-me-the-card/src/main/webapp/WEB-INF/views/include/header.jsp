@@ -60,11 +60,11 @@ $(document).ready(function(){
 </script>
 
 	<style type="text/css">
-	li {
+	.header1 li {
 		float: left;
 	}
 
-	div a, .dropbtn {
+	.header1 div a, .dropbtn {
     	display: inline-block;
     	color: white;
     	text-align: center;
@@ -72,11 +72,11 @@ $(document).ready(function(){
     	text-decoration: none;
 	}
 	
-	div.dropdown {
+	.header1 div.dropdown {
     	display: inline-block;
 	}
 
-	.dropdown-content {
+	.header1 .dropdown-content {
     	display: none;
 	    position: absolute;
    		background-color: #f9f9f9;
@@ -85,7 +85,7 @@ $(document).ready(function(){
     	z-index: 1;
 	}
 
-	.dropdown-content a {
+	.header1 .dropdown-content a {
     	color: black;
 	    padding: 12px 16px;
     	text-decoration: none;
@@ -93,7 +93,7 @@ $(document).ready(function(){
     	text-align: left;
 	}
 
-	.dropdown-content a:hover {background-color: #f1f1f1}
+	.header1 .dropdown-content a:hover {background-color: #f1f1f1}
 
 	.dropdown:hover .dropdown-content {
     	display: block;
@@ -101,7 +101,7 @@ $(document).ready(function(){
 	</style>
 <header style="background-color: #333333">
 <c:import url="/WEB-INF/views/include/navigator.jsp" />
-	<div class="container">
+	<div class="container header1">
 		<div class="row">
 			<ul class=" navbar-nav">
 				<li><a href="/showmethecard/home.action"><img alt="logo" src="/showmethecard/resources/images/logo.PNG"></a></li>

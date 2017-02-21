@@ -18,13 +18,22 @@ public class SearchServiceImpl implements SearchService {
 	@Qualifier("searchDao")
 	private SearchDao searchDao;
 	
-	@Override
-	public List<Member> memberSearch(int startRow, int lastRow) {
+	/*@Override
+	public List<Member> memberSearch(int startRow, int lastRow, String fName) {
 		
-		List<Member> members = searchDao.memberSearch(startRow, lastRow);
+		List<Member> members = searchDao.memberSearch(startRow, lastRow, fName);
+		//System.out.println(members);
+		
+		return members;
+	}*/
+
+	@Override
+	public List<Member> memberSearch(String fName) {
+		
+		List<Member> members = searchDao.memberSearch(fName);
+		//System.out.println(members);
 		
 		return members;
 	}
-
 
 }

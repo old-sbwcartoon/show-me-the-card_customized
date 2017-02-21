@@ -120,6 +120,7 @@
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
+						<th>작성자</th>
 						<th>등록일</th>
 					</tr>
 				</thead>
@@ -130,6 +131,7 @@
 						<tr>
 							<td>${notice.nNo}</td>
 							<td><a href='detail.action?nNo=${notice.nNo }'>${notice.title}</a></td>
+							<td>${notice.mId}</td>
 							<td><fmt:formatDate value="${notice.regDate}"
 									pattern="yyyy-MM-dd" /></td>
 

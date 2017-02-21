@@ -115,6 +115,8 @@ public class MemberServiceImpl implements MemberService {
 		for (int i = 0; i < 100; i++) {
 			if ( 50*i*(i+1) <= member.getmPoint() && member.getmPoint() < 50*(i+1)*(i+2)) {
 				mLevel = (i+1);
+			} else {
+				mLevel = 100;
 			}
 		}
 		

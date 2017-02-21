@@ -29,14 +29,14 @@ public class HtmlParser {
 		return url;
 	}
 	public void setUrl(String url, String from) {
-		String decodedUrl = decodeStr(url);
 		switch (from) {
 			case Literal.ParseHtml.From.WEB : 
-				this.url = getProtocolAddedUrl(decodedUrl);
+				this.url = getProtocolAddedUrl(decodeStr(url));
 				break;
 				
 			case Literal.ParseHtml.From.DB  :
-				this.url = decodedUrl;
+				this.url = url;
+				setUrlOk(true);
 				break;
 		}		
 	}

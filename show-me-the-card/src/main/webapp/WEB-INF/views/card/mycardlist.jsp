@@ -19,11 +19,12 @@
 </script>
 
 
-
-<c:forEach var="MyCardList" items="${ mycardListList }">
 <section id="team" class="team-member-section" style="background-color : white;">
+<c:forEach var="MyCardList" items="${ mycardListList }">
+
 		<!-- width:294px;  -->
-		<div class="row">
+		<!-- <div class="row" > -->
+		<!-- <div class="col-lg-6 col-md-3"style="float:left;" > -->
 			<div class="col-md-3 col-sm-6">
 			
 				<div class="team-member">
@@ -31,27 +32,26 @@
 						<img id="imgSrc" src="${MyCardList.img}" class="img-responsive thumbnail" alt="">
 					</div>
 					<div class="team-details">
-						<h4 id="title">${MyCardList.title}</h4>
+						<h4 id="titleM">${MyCardList.title}</h4>
 						
-						<p id="content" class="description">${MyCardList.desc}</p>
+						<p id="contentM" class="description">${MyCardList.desc}</p>
 						
 						<ul>
 							<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
-							<li id="moveToSite"><a href="#"><i class="fa fa-twitter"></i>이동</a></li>
+							<li id="moveToSiteM"><a href="#"><i class="fa fa-twitter"></i>이동</a></li>
 							<li><a href="#"><i class="fa fa-linkedin"></i>품평</a></li>
 						</ul>
 						<br>
 						
 						<div><p>test</p></div>
 						
-						<input id="cardNoCheck" type="hidden" value="${MyCardList.cardNo}"/>
-						<input id="toUrl" type="hidden" value="${MyCardList.url}"/>
+						<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}"/>
+						<input id="toUrlM" type="hidden" value="${MyCardList.url}"/>
 					</div>
 				</div>
 				
 			</div><!-- <div class="col-md-3 col-sm-6">  -->
-		</div>
-		
-	</div>
-</section>
+		<!-- </div> -->
+
 </c:forEach>
+</section>

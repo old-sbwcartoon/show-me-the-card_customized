@@ -130,7 +130,7 @@
 							</tr>
 							<tr>
 								<th>작성자</th>
-								<td>${ loginuser.mId }</td>
+								<td>${ notice.mId }</td>
 							</tr>
 							<tr>
 								<th>작성일</th>

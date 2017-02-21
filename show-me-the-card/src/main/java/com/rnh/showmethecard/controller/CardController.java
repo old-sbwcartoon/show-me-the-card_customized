@@ -1,5 +1,6 @@
 package com.rnh.showmethecard.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,6 +97,7 @@ public class CardController {
 			System.out.println(h.getImg());
 			myCardListList.get(i).setTitle(h.getTitle());
 		}
+		Collections.reverse(myCardListList);
 		req.setAttribute("mycardListList", myCardListList);
 		return "card/mycardlist";
 	}
@@ -112,6 +114,7 @@ public class CardController {
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardService.insertMyCardOrCardDb(cardForInsert);
+		
 		return "입력 성공";
 	}
 		

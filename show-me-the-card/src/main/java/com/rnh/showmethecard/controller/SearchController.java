@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.rnh.showmethecard.ui.ThePager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.rnh.showmethecard.model.dao.SearchDao;
 import com.rnh.showmethecard.model.dto.Member;
@@ -36,40 +38,57 @@ public class SearchController {
 	@Qualifier("searchService")
 	private SearchService searchService;
 	
-	@RequestMapping(value = "search.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public ModelAndView memberSearch(HttpSession session, HttpServletRequest req) {
+	@RequestMapping(value = "search.action", method = RequestMethod.GET)
+	public String searchPage() {
 		
-		ModelAndView mav = new ModelAndView();
-				
-		// 페이저 기능
-		int currentPage = 1;
-		int pageSize = 10;
-		int dataCount = 0;
-		int pagerSize = 10;
-		
-		String page = req.getParameter("pageno");
-		
-		String url = "search.action";
-		
-		if (page != null && page.length() > 0) {
-			currentPage = Integer.parseInt(page);
-		}
-		int startRow = (currentPage - 1) * pageSize + 1;
-		
-		List<Member> members = searchService.memberSearch(startRow, startRow + pageSize);
-		
-		dataCount = searchDao.memberSearchCount();
-		
-		ThePager pager = new ThePager(dataCount, currentPage, pageSize, pagerSize, url);
-		
-		mav.setViewName("search/search");
-		mav.addObject("members", members);
-		mav.addObject("pageno", currentPage);
-		mav.addObject("pager", pager);
-		
-		return mav;
+		return "search/search";
 	}
 	
-
+//	@RequestMapping(value = "searchMember.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	public ModelAndView memberSearch(HttpSession session, HttpServletRequest req, String fName) {
+//		
+//		ModelAndView mav = new ModelAndView();
+//				
+//		// 페이저 기능
+//		int currentPage = 1;
+//		int pageSize = 20;
+//		int dataCount = 0;
+//		int pagerSize = 20;
+//		
+//		String page = req.getParameter("pageno");
+//		
+//		String url = "search.action";
+//		
+//		if (page != null && page.length() > 0) {
+//			currentPage = Integer.parseInt(page);
+//		}
+//		int startRow = (currentPage - 1) * pageSize + 1;
+//		
+//		List<Member> members = searchService.memberSearch(startRow, startRow + pageSize, fName);
+//		
+//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//		String member = gson.toJson(members);
+//		
+//		dataCount = searchDao.memberSearchCount();
+//		
+//		ThePager pager = new ThePager(dataCount, currentPage, pageSize, pagerSize, url);
+//		
+//		mav.addObject("pageno", currentPage);
+//		mav.addObject("pager", pager);	
+//		
+//		return mav;
+//	}
 	
+	@RequestMapping(value = "searchMember.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String memberSearch(HttpSession session, HttpServletRequest req, String fName) {
+		
+		List<Member> members = searchService.memberSearch(fName);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		String member = gson.toJson(members);
+		
+		return member;
+	}
+		
 }

@@ -6,5 +6,6 @@ import com.rnh.showmethecard.model.dto.Member;
 
 public interface SearchService {
 	
-	List<Member> memberSearch(int startRow, int lastRow);
+	//List<Member> memberSearch(int startRow, int lastRow, String fName);
+	List<Member> memberSearch(String fName);
 }

@@ -22,25 +22,20 @@ public class MysqlSearchDao implements SearchDao{
 	@Autowired
 	@Qualifier("searchMapper")
 	private SearchMapper searchMapper;	
-
-	@Autowired
-	@Qualifier("memberMapper")
-	private MemberMapper memberMapper;	
-
-	@Autowired
-	@Qualifier("cardMapper")
-	private CardMapper cardMapper;
 	
-	@Autowired
-	@Qualifier("folderMapper")
-	private FolderMapper folderMapper;	
-	
+//	@Override
+//	public List<Member> memberSearch(int startRow, int lastRow, String fName) {
+//		
+//		RowBounds bounds = new RowBounds(startRow - 1, lastRow - startRow);	
+//		
+//		List<Member> members = searchMapper.memberSearch(bounds, fName);
+//		System.out.println(members);
+//		return members;
+//	}
 	@Override
-	public List<Member> memberSearch(int startRow, int lastRow) {
+	public List<Member> memberSearch(String fName) {
 		
-		RowBounds bounds = new RowBounds(startRow - 1, lastRow - startRow);	
-		
-		List<Member> members = searchMapper.memberSearch(bounds);
+		List<Member> members = searchMapper.memberSearch(fName);
 		
 		return members;
 	}

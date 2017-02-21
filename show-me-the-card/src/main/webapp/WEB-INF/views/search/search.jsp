@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <%@page import="org.springframework.web.bind.annotation.RequestBody"%>
-<%@page import="com.rnh.showmethecard.model.dto.Qna"%>
+<%@page import="com.rnh.showmethecard.model.dto.Member"%>
+<%@page import="com.rnh.showmethecard.model.dto.Card"%>
+<%@page import="com.rnh.showmethecard.model.dto.Folder"%>
 <%@page import="com.rnh.showmethecard.ui.ThePager"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -127,10 +129,66 @@
 }
 </style>
 
+<script type="text/javascript">
+$(document).ready(function () {
+	Layout.init();    
+	   
+   	$('#search').on("click",function(event){
+   		$.ajax({
+			url : "/showmethecard/search/search.action",
+			method : "get",
+			dataType : "json",
+			success : function(data, status, xhr) {
+				$('.d').remove();
+				for (var i = 0; i < data.length; i++) {
+					$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+				}
+			},
+			error : function(data) {
+				alert("실패");
+			}
+		});
+		/* $.ajax({
+			url : "/showmethecard/search/search.action",
+			method : "get",
+			dataType : "json",
+			success : function(data, status, xhr) {
+				$('.d').remove();
+				for (var i = 0; i < data.length; i++) {
+					$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+				}
+			},
+			error : function(data) {
+				alert("실패");
+			}
+		}); */
+		
+	  
+   }); 	
+});
+</script>
 </head>
+
 <body>
-	<span class='green_window'> <input type='text' class='input_text' />
-	</span>
+	<form:form class="form-horizontal" action="search.action" method="post" id="form">
+		<span class='green_window'> <input type='text' class='input_text' />
+		</span>		
 	<button type='submit' class='sch_smit'>검색</button>
+	</form:form>
+	
+	<div class="table-responsive">
+	      <table class="table">
+	          <thead>
+	              <tr>
+	                  <th>Card</th>
+	              </tr>
+	          </thead>
+	          <tbody class="tbody">
+	     
+	          </tbody>
+	      </table>
+       </div>
 </body>
 </html>
+
+

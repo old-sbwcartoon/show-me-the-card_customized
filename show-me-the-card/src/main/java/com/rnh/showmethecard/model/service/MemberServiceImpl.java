@@ -89,7 +89,7 @@ public class MemberServiceImpl implements MemberService {
 		return qna;
 	}
 
-	@Override
+/*	@Override
 	public void updateMemberPointAndLevel(String content, int point, Member member) {
 		MemberHistory history = new MemberHistory();
 		history.setmId(member.getmId());
@@ -125,40 +125,47 @@ public class MemberServiceImpl implements MemberService {
 		//level update
 		dao.updateMemberLevel(member.getmId(), mLevel);
 				
+	}*/
+	
+	@Override
+	public Member getMemberBymId(String mId) {
+		Member member = dao.selectMemberById(mId);
+		return member;
 	}
-
-//	@Override 흠!
-//	public void updateMemberPointAndLevel(String content, Member member) {
-//		MemberHistory history = new MemberHistory();
-//		history.setmId(member.getmId());
-//		history.setContent(content);
-//		history.setPoint(Literal.Content.Member.getPoint(content));
-//		
-//		
-//		//point insert
-//		boolean result = dao.selectPointExits(history.getmId(), history.getContent());
-//		if ( !result ) {
-//			//없으면 insert
-//			dao.insertPointHistory(history);
-//		} else {
-//			//있으면 update
-//			dao.updatePointHistory(history.getmId(), history.getContent());
-//		}
-//		
-//		//전제 포인트 update
-//		dao.updateMemberPoint(member.getmId());
-//		
-//		//level 계산
-//		int mLevel = 0;
-//		for (int i = 0; i < 100; i++) {
-//			if ( 50*i*(i+1) <= member.getmPoint() && member.getmPoint() < 50*(i+1)*(i+2)) {
-//				mLevel = (i+1);
-//			}
-//		}
-//		
-//		//level update
-//		dao.updateMemberLevel(member.getmId(), mLevel);
-//	}
+	
+	@Override 
+	public void updateMemberPointAndLevel(String content, Member member) {
+		MemberHistory history = new MemberHistory();
+		history.setmId(member.getmId());
+		history.setContent(content);
+		history.setPoint(Literal.Content.Member.getPoint(content));
+		
+		
+		//point insert
+		boolean result = dao.selectPointExits(history.getmId(), history.getContent());
+		if ( !result ) {
+			//없으면 insert
+			dao.insertPointHistory(history);
+		} else {
+			//있으면 update
+			dao.updatePointHistory(history.getmId(), history.getContent());
+		}
+		
+		//전제 포인트 update
+		dao.updateMemberPoint(member.getmId());
+		
+		int mLevel = 0;
+	for (int i = 0; i < 100; i++) {
+		if ( 50*i*(i+1) <= member.getmPoint() && member.getmPoint() < 50*(i+1)*(i+2)) {
+			mLevel = (i+1);
+		} else if (member.getmPoint() >= 50*100*101) {
+			mLevel = 100;
+		}
+	}
+		
+		//level update
+		dao.updateMemberLevel(member.getmId(), mLevel);
+	}
 	
 	
 	

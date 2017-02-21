@@ -83,9 +83,9 @@ public class CardController {
 	public String ShowMYCardList(HttpSession session, HttpServletRequest req){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		System.out.println("s1");
+		
 		List<MyCardList> myCardListList= cardService.readMyCard(190);
-		System.out.println("s2");
+		
 		int listLength = myCardListList.size();
 		
 		System.out.println(myCardListList.get(0).getMycNo());

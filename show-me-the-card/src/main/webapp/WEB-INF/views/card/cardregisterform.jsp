@@ -198,9 +198,7 @@ $(document).ready(function() {
         }else if(e.which == 13){
         	alert("너는 지금 엔터를 눌렀어");
         }else if(e.which == 8){
-        	
         	alert("너는 지금 백스페이스를 눌렀어");
-        	tagArray.pop();
         }
        
         
@@ -235,7 +233,7 @@ $(document).ready(function() {
 </style>
 <body class="index">
 	
-	<c:import url="/WEB-INF/views/include/navigator.jsp" />
+	<c:import url="/WEB-INF/views/include/header.jsp" />
 	
 	<!-- 모달 시작 -->
 	<div class="modal fade" id="registercard" role="dialog">

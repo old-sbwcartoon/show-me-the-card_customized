@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.rnh.showmethecard.common.Literal;
+import com.rnh.showmethecard.common.Point;
 import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
@@ -33,22 +34,21 @@ public class AccountController {
 	@Qualifier("memberService")
 	private MemberService memberService;
 		
+	@Autowired
+	@Qualifier("point")
+	private Point point;
+	
 	@RequestMapping(value="login.action", method=RequestMethod.POST)
 	public String login(String mId, String password, HttpSession session, HttpServletResponse resp) {
 		
 		Member member = memberService.getMemberBymIdAndPassword(mId, password);
 		
 		if (member != null) {
-			
-//			String content = "로그인";
-//			int point = 30;
-			memberService.updateMemberPointAndLevel("로그인", Literal.Content.Member.getPoint("로그인"), member);
-//			updateMemberPointAndLevel(Literal.Content.Member.ATTENDANCE, member); 흠!
-			
-			member = memberService.getMemberBymIdAndPassword(mId, password);
+
+			member = point.updateMemberPointAndLevel(Literal.Content.Member.ATTENDANCE, member);
 			session.setAttribute("loginuser", member);
 			
-			return "redirect:/home.action";
+			return "redirect:/mypage/mypage.action";
 		} else {
 			//로그인 실패 alert
 			try {
@@ -69,11 +69,7 @@ public class AccountController {
 		session.removeAttribute("loginuser");
 		return "redirect:/home.action";
 	}
-	
-	
-//	public void updateMemberPointAndLevel(String content, Member member) { 흠!
-//		memberService.updateMemberPointAndLevel(content, member);
-//	}
+
 }
 
 

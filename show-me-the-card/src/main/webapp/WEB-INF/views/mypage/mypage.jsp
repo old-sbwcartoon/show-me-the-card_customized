@@ -234,7 +234,24 @@
 				//folder 들의 click 이벤트
 				$('#folderpage').on('mouseup', "button[id^=folder_]",
 						function(event) {						
-
+					
+					
+					location.href= "/showmethecard/card/cardregister.action";
+							
+							
+							
+						
+						});
+				
+				
+				//$('#folder_48').longclick(500,
+				//		function(event) {				
+				//    alert("dddd");
+				//});
+					//$('#folderpage').on('longpress', "button[id^=folder_]",
+					$('button[id^=folder_]').longpress(
+						function(event) { //long click
+							//longpress event
 							var f_id = event.currentTarget.id;
 							var fNo = f_id.split("_")[1];
 							
@@ -270,22 +287,8 @@
 							$('#u_m_fNo').attr('value','fNo')
 							
 							u_f_modal.modal('show');
+							//longpress event end
 							
-							
-							
-							
-						
-						});
-				
-				
-				//$('#folder_48').longclick(500,
-				//		function(event) {				
-				//    alert("dddd");
-				//});
-					//$('#folderpage').on('longpress', "button[id^=folder_]",
-					$('button[id^=folder_]').longpress(
-						function(event) { //long click
-							alert('성공');
 							event.stopPropagation();
 							event.preventDefault();
 							return false;
@@ -424,9 +427,12 @@
 
 <!--  End folder page section -->
 
+<!--  start div page section -->
 
+<div id = "cardpagesection">
 
-
+</div>
+<!--  End div page section -->
 
 	<!-- Start Register Modal Section -->
 

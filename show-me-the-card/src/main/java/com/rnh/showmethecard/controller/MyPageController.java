@@ -1,7 +1,10 @@
 package com.rnh.showmethecard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +35,20 @@ public class MyPageController {
 	private FolderService folderService;
 
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
-	public String searchFolderById(HttpSession session, Model model) {
+	public String searchFolderById(HttpSession session, Model model, HttpServletResponse response) {
 		Member member = null;
 		if (session.getAttribute("loginuser") != null) { 
 			member = (Member) session.getAttribute("loginuser");	 
 			} else { 
-				
-			 return "home";
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			 
 			} 
 		
 		String mId = member.getmId();

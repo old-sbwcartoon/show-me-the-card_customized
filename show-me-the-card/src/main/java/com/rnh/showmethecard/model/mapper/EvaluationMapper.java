@@ -1,6 +1,5 @@
 package com.rnh.showmethecard.model.mapper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,13 +12,13 @@ public interface EvaluationMapper {
 
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
 
-	ArrayList<EvaluationRating> selectEvaluationRatingList(int cardNo);
+	List<EvaluationRating> selectEvaluationRatingList(int cardNo);
 
 	float selectEvaluationRatingAvg(int cardNo);
 
 	List<EvaluationComment> selectEvaluationCommentList(int cardNo);
 
-	EvaluationComment insertEvaluationComment(EvaluationComment newComment);
+	void insertEvaluationComment(EvaluationComment newComment);
 
 	
 	

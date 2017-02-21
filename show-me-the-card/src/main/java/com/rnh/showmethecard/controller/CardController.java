@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.CardForInsert;
@@ -59,7 +60,7 @@ public class CardController {
 	}
 	@RequestMapping(value="checkurl.action", method = RequestMethod.GET,  produces = "application/json;charset=utf-8")
 	public String checkandshowcard(Model model, HttpSession session, String url) {
-		HtmlParser h = new HtmlParser(url);
+		HtmlParser h = new HtmlParser(url, Literal.ParseHtml.From.WEB);
 		
 		if (h.isUrlOk()) {
 			cardNo = cardService.checkCardDb(h.getUrl());
@@ -89,7 +90,7 @@ public class CardController {
 		System.out.println(myCardListList.get(0).getMycNo());
 		for(int i=0;i<listLength;i++){
 			String tmp = myCardListList.get(i).getUrl();
-			HtmlParser h = new HtmlParser(tmp);
+			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
 			myCardListList.get(i).setDesc(h.getDesc());
 			myCardListList.get(i).setImg(h.getImg());
 			System.out.println(h.getImg());
@@ -107,7 +108,7 @@ public class CardController {
 		System.out.println(stringJson);
 		CardForInsert cardForInsert;
 		cardForInsert = gson.fromJson(stringJson, CardForInsert.class);
-		HtmlParser h = new HtmlParser(cardForInsert.getSiteUrl());
+		HtmlParser h = new HtmlParser(cardForInsert.getSiteUrl(), Literal.ParseHtml.From.WEB);
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardService.insertMyCardOrCardDb(cardForInsert);

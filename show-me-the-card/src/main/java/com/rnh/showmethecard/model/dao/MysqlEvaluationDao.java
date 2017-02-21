@@ -22,23 +22,15 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	private EvaluationMapper mapper;
 	
 	
-	@Override
-	public void insertEvaluationRating(int cardNo, String mId, String content, int eRating) {
-		HashMap<String, String> data = new HashMap<>();
-		data.put("mId", mId);
-		data.put("cardNo", String.valueOf(cardNo));
-		data.put("content", content);
-		data.put("eRating", String.valueOf(eRating));
-		
-		mapper.insertEvaluationRating(data);		
-	}
+//	@Override
+//	public void insertEvaluationRating(EvaluationRating newRating) {
+//		mapper.insertEvaluationRating(newRating);		
+//	}
 
 
 	@Override
-	public EvaluationComment insertEvaluationComment(EvaluationComment newComment) {
-		EvaluationComment ec = mapper.insertEvaluationComment(newComment);
-		System.out.println(ec.geteCommentNo());
-		return mapper.insertEvaluationComment(newComment);
+	public void insertEvaluationComment(EvaluationComment newComment) {
+		mapper.insertEvaluationComment(newComment);
 	}
 
 

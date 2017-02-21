@@ -26,6 +26,9 @@
 			AND M_ID = #{mId}
 			AND deleted = 0
 		)
+	<selectKey resultType="Integer" keyProperty="eRatingNo" order="AFTER">
+		select last_insert_id()
+	</selectKey>
 </insert>
 
 

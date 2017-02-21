@@ -1,7 +1,5 @@
 package com.rnh.showmethecard.controller;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -15,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.MemberHistory;
 import com.rnh.showmethecard.model.dto.Qna;
 import com.rnh.showmethecard.model.service.MemberService;
-import com.rnh.showmethecard.ui.SpriteImage;
 
 @Controller
 @RequestMapping(value = "/member")

@@ -455,56 +455,9 @@ h2 {
 	</script>
 </head>
 <body>
+	<c:import url="/WEB-INF/views/include/header.jsp" />
 	<input id="loginusermId" type="hidden" value="${loginuser.mId}" />
-	<c:choose>
-		<c:when test="${ empty sessionScope.loginuser }">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- 삭제하기 -->
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-			<div class="container">
-				<div class="intro-text">
-					<h1>
-						Show Me the <span>Cards</span>
-					</h1>
-					<button type="button" id="loginbtn"
-						class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-						LOGIN &nbsp;&nbsp;</button>
-					<button type="button" id="registerbtn"
-						class="page-scroll waves-effect btn btn-primary">&nbsp;
-						JOIN US &nbsp;&nbsp;</button>
-				</div>
-			</div>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-			<div class="container">
-				<div class="intro-text">
-					<h1>
-						Show Me the <span>Cards</span>
-					</h1>
-					<button type="button" id="logoutbtn"
-						class="page-scroll waves-effect btn btn-primary">
-						&nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
-					<div class="dropdown">
-						<button type="button"
-							class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp;
-							MY MENU &nbsp;&nbsp;</button>
-						<div class="dropdown-content">
-							<a id="mypagebtn" href="#">My Page</a> <a
-								href="/showmethecard/member/list.action">Admin Page</a> <a
-								href="/showmethecard/member/pointList.action">My Point</a> <a
-								href="#">My Q&A</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			</section>
-		</c:otherwise>
-	</c:choose>
+	
 	<section id="client" class="client-section">
 	<div class="container">
 		<div class="row">
@@ -606,16 +559,12 @@ h2 {
 
 
 				<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
-					<div class="eval-item counter-item text-center"
-						style="height: 230px; padding: 25px 35px;">
-						<input class="hidden-rating-no" type="hidden"
-							value="${ ratinglist.eRatingNo }" /> <input
-							class="hidden-rating-writer" type="hidden"
-							value="${ ratinglist.mId }" /> <input
-							class="hidden-rating-isliked" type="hidden"
-							value="${ ratinglist.mLiked }" />
-						<div class="div-star"
-							style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
+					<div class="eval-item counter-item text-center" style="height: 230px; padding: 25px 35px;">
+						<input class="hidden-rating-no" type="hidden" value="${ ratinglist.eRatingNo }" />
+						<input class="hidden-rating-writer" type="hidden" value="${ ratinglist.mId }" />
+						<input class="hidden-rating-isliked" type="hidden" value="${ ratinglist.mLiked }" />
+						
+						<div class="div-star" style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
 							<h2>
 								<c:if test="${ ratinglist.eRating eq 0 }">
 									<span class="star">☆</span>
@@ -753,4 +702,6 @@ h2 {
 	<!-- /.container --> </section>
 
 </body>
+	<!-- Custom JavaScript -->
+    <script src="../resources/assets/js/script.js"></script>
 </html>

@@ -33,7 +33,7 @@ public class EvaluationController {
 	
 	@RequestMapping(value={"/evaluationmain.action", "/", ""}, method=RequestMethod.GET)
 	public String showEvaluation(Model model, HttpServletRequest req) { //////////////////////////////////cardNo
-		Member member = (Member)req.getSession().getAttribute("loginuser");		
+		Member member = (Member)req.getSession().getAttribute("loginuser");
 		
 		int cardNo = 2;
 		
@@ -70,12 +70,11 @@ public class EvaluationController {
 	
 	@RequestMapping(value="showevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String showEvaluationRatingWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
+	public List<EvaluationRating> showEvaluationRatingWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
 		int cardNob = 2;
-		Member member = (Member)req.getSession().getAttribute("loginuser");
-		service.showEvaluationRatingListWithPageNo(cardNob, member.getmId(), 1);
+		Member member = (Member)req.getSession().getAttribute("loginuser");		
 		
-		return null;
+		return service.showEvaluationRatingListWithPageNo(cardNob, member.getmId(), 1);
 	}
 	
 	//합치기

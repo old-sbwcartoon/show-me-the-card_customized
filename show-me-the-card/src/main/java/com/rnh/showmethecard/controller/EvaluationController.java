@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
+import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.service.EvaluationService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
@@ -39,7 +40,7 @@ public class EvaluationController {
 //		String url = "http://j07051.tistory.com/333";
 		String url = "http://crosstheline.tistory.com/41";
 //		String url = "https://www.odpia.org/main.odpia";
-		HtmlParser h = new HtmlParser(url);
+		HtmlParser h = new HtmlParser(url, Literal.ParseHtml.From.WEB);
 
 		model.addAttribute("url", h.getUrl());
 		model.addAttribute("title", h.getTitle());
@@ -80,9 +81,16 @@ public class EvaluationController {
 	//합치기
 	@RequestMapping(value="addevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String addEvaluationRating(HttpServletRequest req, String content) {
+	public String addEvaluationRating(HttpServletRequest req, String content) {		
 		int cardNo = 2;
+		int eRating = 5;
 		Member member = (Member)req.getSession().getAttribute("loginuser");
+		
+		EvaluationRating newRating = new EvaluationRating();
+		newRating.setCardNo(cardNo);
+		newRating.setContent(content);
+		newRating.seteRating(eRating);
+		
 		service.addEvaluationRating(cardNo, member.getmId(), content, 5);
 		
 		return null;
@@ -104,8 +112,7 @@ public class EvaluationController {
 		newComment.setContent(content);
 		newComment.setmId(member.getmId());
 		
-		int newCommentNo = service.addEvaluationComment(newComment).geteCommentNo();
-		System.out.println("newCommentNo = " + newCommentNo);
+		service.addEvaluationComment(newComment);
 		
 		return new Gson().toJson(newComment);
 	}

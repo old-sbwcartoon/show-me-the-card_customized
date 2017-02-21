@@ -148,7 +148,7 @@ $(document).ready(function () {
 				alert("실패");
 			}
 		});
-		$.ajax({
+		/* $.ajax({
 			url : "/showmethecard/search/search.action",
 			method : "get",
 			dataType : "json",
@@ -161,7 +161,7 @@ $(document).ready(function () {
 			error : function(data) {
 				alert("실패");
 			}
-		});
+		}); */
 		
 	  
    }); 	

@@ -12,6 +12,12 @@
 		where m.M_ID = f.M_ID and f.F_NAME= #{ fName }
 		order by m.M_POINT, f.F_POINT desc
  	</select>
+ 	
+ 	<select id="memberSearchCount" resultType="int">
+		SELECT COUNT (*) AS COUNT
+		FROM MEMBER
+		WHERE deleted = '0'
+	</select>	
 
 </mapper>
 

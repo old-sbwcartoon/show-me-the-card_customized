@@ -35,4 +35,22 @@ public class MysqlSearchDao implements SearchDao{
 	@Qualifier("folderMapper")
 	private FolderMapper folderMapper;	
 	
+	@Override
+	public List<Member> memberSearch(int startRow, int lastRow) {
+		
+		RowBounds bounds = new RowBounds(startRow - 1, lastRow - startRow);	
+		
+		List<Member> members = searchMapper.memberSearch(bounds);
+		
+		return members;
+	}
+	
+	@Override
+	public int memberSearchCount() {
+		
+		int count = searchMapper.memberSearchCount();
+		
+		return 0;
+	}
+	
 }

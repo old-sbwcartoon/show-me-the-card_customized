@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.SearchMapper">
+
+ 	<select id="memberSearch" resultType="Member" parameterType="String">
+ 		select m.M_Level, m.M_ID 
+ 		from MEMBER m, FOLDER f
+		where m.M_ID = f.M_ID and f.F_NAME= #{ fName }
+		order by m.M_POINT, f.F_POINT desc
+ 	</select>
+
+</mapper>
+
+
+

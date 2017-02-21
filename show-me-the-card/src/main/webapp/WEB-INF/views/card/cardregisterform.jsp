@@ -158,7 +158,7 @@ $(document).ready(function() {
 	var userInput = "";
 	var tf = true;
 	$('#mycContent').bind('keypress', function(e) {
-        if (e.which == 32 || e.which == 13){//space bar or tab bar
+        if (e.which == 32){//space bar or tab bar
         	if(tagCount < 10){
 	        	tf = true;
 	       		tagArray = $('#mycContent').val().split(' ');
@@ -179,19 +179,24 @@ $(document).ready(function() {
 		       		tagCount++;
 		       		
 	       		}
-        	}
+        	}else if(tagCount >= 10){
+            	
+            	alert("TAG는 총 10개까지만 입력이 가능합니다.");
+            	
+            	$('#mycContent').empty();
+       			$('#mycContent').val(userInput);
+            } 
+//        	else if(e.which == 13){
+//        		alert("너는 지금 엔터를 눌렀어");
+//        	} 
         	
 //        	else { alert("다른건 누르지 말란 말이다!");
 //	        	$('#mycContent').empty();
 //	   			$('#mycContent').val(userInput);
 //        	}
-        }else if(tagCount >= 10){
-        	
-        	alert("TAG는 총 10개까지만 입력이 가능합니다.");
-        	
-        	$('#mycContent').empty();
-   			$('#mycContent').val(userInput);
-        }
+        }else if(e.which == 13){
+        		alert("너는 지금 엔터를 눌렀어");
+        	}
        
         
 	});

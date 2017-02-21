@@ -7,7 +7,7 @@
 
 
 
-<insert id="insertEvaluationRating" parameterType="HashMap">
+<insert id="insertEvaluationRating" parameterType="EvaluationRating">
 	insert into EVALUATION_RATING (
 		M_ID
 		, CARD_NO

@@ -89,12 +89,12 @@ public class CardController {
 		
 		System.out.println(myCardListList.get(0).getMycNo());
 		for(int i=0;i<listLength;i++){
-			String tmp = myCardListList.get(i).getUrl();
+			String tmp = myCardListList.get(0).getUrl();
 			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
-			myCardListList.get(i).setDesc(h.getDesc());
-			myCardListList.get(i).setImg(h.getImg());
+			myCardListList.get(0).setDesc(h.getDesc());
+			myCardListList.get(0).setImg(h.getImg());
 			System.out.println(h.getImg());
-			myCardListList.get(i).setTitle(h.getTitle());
+			myCardListList.get(0).setTitle(h.getTitle());
 		}
 		req.setAttribute("mycardListList", myCardListList);
 		return "card/mycardlist";

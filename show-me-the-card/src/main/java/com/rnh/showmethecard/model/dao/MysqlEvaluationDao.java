@@ -35,13 +35,8 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 
 	@Override
-	public void insertEvaluationRatingLiked(int eRatingNo, String mId, String likedmId) {
-		HashMap<String, String> data = new HashMap<>();
-		data.put("eRatingNo", String.valueOf(new Integer(eRatingNo)));
-		data.put("mId", mId);
-		data.put("likedmId", likedmId);
-		
-		mapper.insertEvaluationRatingLiked(data);
+	public void insertEvaluationRating(EvaluationRating newRating) {
+		mapper.insertEvaluationRating(newRating);
 	}
 
 
@@ -104,10 +99,13 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	}
 
 
+	@Override
+	public void insertEvaluationRatingLiked(int eRatingNo, String mId, String likedmId) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
-
-	
 	
 	
 }

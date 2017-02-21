@@ -8,9 +8,7 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationMapper {
 
-	void insertEvaluationRating(HashMap<String, String> data);
-
-	void insertEvaluationRatingLiked(HashMap<String, String> data);
+	void insertEvaluationRatingLiked(EvaluationRating newRating);
 
 	List<EvaluationRating> selectEvaluationRatingList(int cardNo);
 
@@ -38,5 +36,8 @@ public interface EvaluationMapper {
 	boolean selectExistsEvaluationRatingOfmId(HashMap<String, String> data);
 
 	List<EvaluationRating> selectEvaluationRatingListWithPageNo(HashMap<String, Object> data);
+
+	void insertEvaluationRating(EvaluationRating newRating);
+
 	
 }

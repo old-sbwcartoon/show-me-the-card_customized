@@ -58,7 +58,7 @@ public class EvaluationController {
 		// model.addAttribute("", );
 		
 		////////////////////////////////////////////////////////////////////cardNo));
-		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
+		//model.addAttribute("evalCommentList", service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), 1));
 
 		model.addAttribute("evalRatingList", showEvaluationRatingWithPageNo(cardNo, req, 1));
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(cardNo));
@@ -88,10 +88,11 @@ public class EvaluationController {
 		
 		EvaluationRating newRating = new EvaluationRating();
 		newRating.setCardNo(cardNo);
+		newRating.setmId(member.getmId());		
 		newRating.setContent(content);
 		newRating.seteRating(eRating);
 		
-		service.addEvaluationRating(cardNo, member.getmId(), content, 5);
+		service.addEvaluationRating(newRating);
 		
 		return null;
 	}

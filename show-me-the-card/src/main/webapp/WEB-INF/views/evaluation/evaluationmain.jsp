@@ -296,7 +296,7 @@ h2 {
 		    				content : spaceTrimedContent
 		    			},
 		    			success : function(data) {
-		    				alert("받아온 eCommentNo" + data.eCommentNo);
+		    				//alert("받아온 eCommentNo" + data.eCommentNo);
 		    				$('#div-comment-write').animate({
 								opacity : '0',
 								bottom  : '0px'

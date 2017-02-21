@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
 /**
@@ -21,7 +22,7 @@ public class CardTestController {
 	
 	@RequestMapping(value = "/showcard.action", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public String urlSearch(Model model, String url) {
-		HtmlParser h = new HtmlParser(url);
+		HtmlParser h = new HtmlParser(url, Literal.ParseHtml.From.WEB);
 			
 		model.addAttribute("url", h.getUrl());
 		model.addAttribute("title", h.getTitle());

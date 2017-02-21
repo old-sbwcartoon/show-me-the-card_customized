@@ -162,7 +162,20 @@
 		
 		$("#mypagebtn").click(function() {
 			$("#mypage").modal();
-		});		
+		});
+		
+		$("#registerModal").on('hidden.bs.modal', function() {
+			$("#registerForm").each(function() {
+				this.reset();
+			});
+			$('p').text("");
+		});
+		
+		$("#loginModal").on('hidden.bs.modal', function() {
+			$("#loginForm").each(function() {
+				this.reset();
+			});
+		});
 		
 		$('#daily').click(function() {
 			$.ajax({
@@ -266,6 +279,43 @@
 			});	
 		});
 		
+		// 정규식 검사
+		//아이디 - 영+숫 6~15
+		$('#mId').keyup(function() {
+			var regExp = /(?=.*\d)(?=.*[a-z]).{6,15}/;
+			if ( !regExp.test($('#mId').val())) {
+				$('#idReg').text("아이디 형식이 맞지 않습니다. (영문+숫자 6~15자 이내)");
+			} else {
+				$('#idReg').text("");
+			}
+		});
+		//비밀번호  - 영+숫 6~15
+		$('#password').keyup(function() {
+			var regExp = /(?=.*\d)(?=.*[a-z]).{6,15}/;
+			if ( !regExp.test($('#password').val())) {
+				$('#passwordReg').text("비밀번호 형식이 맞지 않습니다. (영문+숫자 6~15자 이내)");
+			} else {
+				$('#passwordReg').text("");
+			}
+		});
+		//전화번호
+		$('#phone').keyup(function() {
+			var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+			if ( !regExp.test($('#phone').val())) {
+				$('#phoneReg').text("번호 형식이 맞지 않습니다.");
+			} else {
+				$('#phoneReg').text("");
+			}
+		});
+		//이메일
+		$('#email').keyup(function() {
+			var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+			if ( !regExp.test($('#email').val())) {
+				$('#emailReg').text('이메일 형식이 맞지 않습니다.');
+			} else {
+				$('#emailReg').text("");
+			}
+		});
 	});
 	</script>
 </head>
@@ -287,8 +337,10 @@
    	<c:otherwise>
    		<c:import url="/WEB-INF/views/include/navigator.jsp" />
    		<!-- Start Header Section -->
-	    <section class="header" id="home">
-        	<div class="container">
+   		<c:choose>
+   			<c:when test="${ loginuser.userType eq '1' }">
+   				<section class="header" id="home">
+        		<div class="container">
            		<div class="intro-text">
                 	<h1>Show Me the <span>Cards</span></h1>
                 	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
@@ -297,6 +349,22 @@
                 		<div class="dropdown-content">
             				<a id="mypagebtn" href="#">My Page</a>
             				<a href="/showmethecard/member/list.action">Admin Page</a>
+            			</div>	
+                	</div>          		
+                </div>
+        	</div>
+    	</section>
+   			</c:when>
+   			<c:otherwise>
+   				<section class="header" id="home">
+        		<div class="container">
+           		<div class="intro-text">
+                	<h1>Show Me the <span>Cards</span></h1>
+                	<button type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
+                	<div class="dropdown">
+                		<button type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
+                		<div class="dropdown-content">
+            				<a id="mypagebtn" href="#">My Page</a>
             				<a href="/showmethecard/member/pointList.action">My Point</a>
         		   			<a href="/showmethecard/member/qnaList.action">My Q&A</a>
 						</div>	
@@ -304,6 +372,8 @@
                 </div>
         	</div>
     	</section>
+   			</c:otherwise>
+   		</c:choose>
    	</c:otherwise>
 </c:choose>
         
@@ -326,7 +396,7 @@
       			<div class="modal-body">
       				<div class="row">
             		    <div class="col-lg-12">
-                   			<form name="sentMessage" action="/showmethecard/account/login.action" method="post" id="contactForm">
+                   			<form name="sentMessage" action="/showmethecard/account/login.action" method="post" id="loginForm">
                         		<div class="row">
                             		<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                                 		<div class="col-md-12 form-group waves-effect">
@@ -380,19 +450,19 @@
                        		    	<div class="col-md-12 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
                        		      		<div class="form-group">
                    		      				<input style="height: 40;" type="text" class="form-control" placeholder="Id * (영문+숫자 6~15자 이내)" id="mId" name="mId" />
-       		    	                    	<p class="help-block text-danger"></p>
+       		    	                    	<p class="help-block text-danger" id="idReg"></p>
        		    	                    	<button style="height: 30;" id="confirmId" type="button" class="btn btn-primary waves-effect col-md-12 wow fadeInLeft">아이디 중복 확인</button>
 	       		    	                    <br/><br/>
   		        	                        <input style="height: 40;" type="password" class="form-control" placeholder="Password * (영문+숫자 6~15자 이내)" id="password" name="password" />
-                               		        <p class="help-block text-danger"></p>
+                               		        <p class="help-block text-danger" id="passwordReg"></p>
                                		        <input style="height: 40;" type="password" class="form-control" placeholder="Confirm Password *" id="passwordConfirm" />
                                     		<p class="help-block text-danger"></p>
                                     		<input style="height: 40;" type="text" class="form-control" placeholder="Name *" id="mName" name="mName" />
-                                    		<p class="help-block text-danger"></p>
-                                  			<input style="height: 40;" type="tel" class="form-control" placeholder="Phone *" id="phone" name="phone" />
-                                  			<p class="help-block text-danger"></p>
+                                    		<p class="help-block text-danger" id="nameReg"></p>
+                                  			<input style="height: 40;" type="" class="form-control" placeholder="Phone * (000-0000-0000)" id="phone" name="phone" />
+                                  			<p class="help-block text-danger" id="phoneReg"></p>
                                   			<input style="height: 40;" type="email" class="form-control" placeholder="Email *" id="email" name="email"/>
-                                    		<p class="help-block text-danger"></p>
+                                    		<p class="help-block text-danger" id="emailReg"></p>
                                 		</div>
                             		</div>
                             		<div class="clearfix"></div>
@@ -400,7 +470,7 @@
                             			<div class="col-lg-12 text-center">
                                				<div id="success"></div>
                                		 		<button type="button" id="join" class="btn btn-primary waves-effect">&nbsp;&nbsp;&nbsp;JOIN&nbsp;&nbsp;&nbsp;</button>
-                                			<button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">CANCEL</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                			<button type="button" id="joinCancel" class="btn btn-primary waves-effect" data-dismiss="modal">CANCEL</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             			</div>
                             		</div>
                            		</div>                        	   
@@ -461,7 +531,7 @@
     <!-- End Header Section -->    
     
     <!-- Strat Chart Section -->
-    <div class="about-us-section-2">
+    <div class="fun-facts">
     	<div class="container">
     		<div class="row">
     			<div class="col-md-6">

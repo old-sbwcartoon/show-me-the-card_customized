@@ -112,6 +112,7 @@ public class CardController {
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardService.insertMyCardOrCardDb(cardForInsert);
+		
 		return "입력 성공";
 	}
 		

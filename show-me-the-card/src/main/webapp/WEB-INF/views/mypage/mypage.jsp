@@ -361,48 +361,7 @@
 </head>
 <body class="index">
 
-	<c:choose>
-		<c:when test="${ empty sessionScope.loginuser }">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			
-			
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-				<div class="container">
-					<div class="intro-text">
-						<h1>
-							Show Me the <span>Cards</span>
-						</h1>
-						<button type="button" id="loginbtn"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-							LOGIN &nbsp;&nbsp;</button>
-						<button type="button" id="registerbtn"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;
-							JOIN US &nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-				<div class="container">
-					<div class="intro-text">
-						<h1>
-							Show Me the <span>Cards</span>
-						</h1>
-						<button type="button" id="#"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-							LOGOUT &nbsp;&nbsp;</button>
-						<button type="button" id="#"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;
-							MY PAGE &nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</section>
-		</c:otherwise>
-	</c:choose>
+	<c:import url="/WEB-INF/views/include/header.jsp" />
 
 
 			<%-- <button type="button" id="folderbasic" class="folderbasic"
@@ -589,6 +548,7 @@
 	<!-- End Footer Section -->
 
 </body>
+<script src="../resources/assets/js/script.js"></script>
 <!-- Custom JavaScript -->
 <script src="/showmethecard/resources/assets/js/script.js"></script>
 <!-- modal -->
@@ -597,5 +557,5 @@
 	
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	
 </html>

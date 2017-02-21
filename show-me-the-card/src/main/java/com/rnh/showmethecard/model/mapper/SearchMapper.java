@@ -11,7 +11,9 @@ import com.rnh.showmethecard.model.dto.Folder;
 
 public interface SearchMapper {
 	
-	List<Member> memberSearch(RowBounds bounds);
+	//List<Member> memberSearch(RowBounds bounds, String fName);
+	
+	List<Member> memberSearch(String fName);
 	
 	int memberSearchCount();
 	

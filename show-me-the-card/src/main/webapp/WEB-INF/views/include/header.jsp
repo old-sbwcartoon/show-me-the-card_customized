@@ -116,16 +116,27 @@ $(document).ready(function(){
 				<c:otherwise>
 					<ul class="nav navbar-nav navbar-right">
 						<li><button style="height: 80" type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button></li>
-						
-        		        <li><div class="dropdown">
-                			<button style="height: 80" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
-                			<div class="dropdown-content">
-     		       				<a id="mypagebtn" href="#">My Page</a>
-            					<a href="/showmethecard/member/list.action">Admin Page</a>
-            					<a href="/showmethecard/member/pointList.action">My Point</a>
-        				   		<a href="/showmethecard/member/qnaList.action">My Q&A</a>
-							</div>	
-                		</div></li>
+						<c:choose>
+							<c:when test="${ loginuser.userType eq '1' }">
+								<li><div class="dropdown">
+                					<button style="height: 80" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
+              			  			<div class="dropdown-content">
+     		       						<a id="mypagebtn" href="#">My Page</a>
+            							<a href="/showmethecard/member/list.action">Admin Page</a>
+									</div>	
+                				</div></li>
+							</c:when>
+							<c:otherwise>
+								<li><div class="dropdown">
+                					<button style="height: 80" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
+                					<div class="dropdown-content">
+     		       						<a id="mypagebtn" href="#">My Page</a>
+            							<a href="/showmethecard/member/pointList.action">My Point</a>
+        				   				<a href="/showmethecard/member/qnaList.action">My Q&A</a>
+									</div>	
+                				</div></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>		
 				</c:otherwise>
 			</c:choose>

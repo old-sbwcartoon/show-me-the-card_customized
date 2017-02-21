@@ -90,6 +90,7 @@
 $(document).ready(function() {
 	alert("새로운페이지");
 	$('#mycardlist').load("showmycardlist.action");
+	//에이잭스 카운트 불러옴
 	var cardNum, check;
 	var a = 0;
 	var title = "";
@@ -128,8 +129,8 @@ $(document).ready(function() {
 					siteUrl : siteUrl,
 					cName : title,
 					cardNo : cardNum,
-					mycComment : mycContent
-					
+					mycComment : mycContent,
+					tagArray : tagArray
 			};
 			
 			var stringJson = JSON.stringify(frontJson);
@@ -195,8 +196,12 @@ $(document).ready(function() {
 //	   			$('#mycContent').val(userInput);
 //        	}
         }else if(e.which == 13){
-        		alert("너는 지금 엔터를 눌렀어");
-        	}
+        	alert("너는 지금 엔터를 눌렀어");
+        }else if(e.which == 8){
+        	
+        	alert("너는 지금 백스페이스를 눌렀어");
+        	tagArray.pop();
+        }
        
         
 	});
@@ -306,10 +311,11 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</section>
-	<div id="mycardlist"></div>
+	
 	<div class="row">
-		<div class="col-lg-12">
-			<button id="modalbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registercard">+</button>
+		<div class="col-lg-12" >
+			<div><button id="modalbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registercard">+</button></div>
+			<div><div id="mycardlist"></div></div>
 		</div>
 	</div>
 	<div id="test"></div>

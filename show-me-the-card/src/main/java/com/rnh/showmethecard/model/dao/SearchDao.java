@@ -9,7 +9,9 @@ import com.rnh.showmethecard.model.dto.Folder;
 
 public interface SearchDao {
 	
-	List<Member> memberSearch(int startRow, int lastRow);
+	//List<Member> memberSearch(int startRow, int lastRow, String fName);
+	
+	List<Member> memberSearch(String fName);
 	
 	int memberSearchCount();
 

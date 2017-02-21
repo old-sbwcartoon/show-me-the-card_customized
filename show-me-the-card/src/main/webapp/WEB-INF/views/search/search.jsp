@@ -131,18 +131,16 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	Layout.init();    
 	   
-   	$('#search').on("click",function(event){
+   	$('#searchbtn').on("click",function(event){
    		$.ajax({
-			url : "/showmethecard/search/search.action",
+			url : "/showmethecard/search/searchMember.action",
 			method : "get",
+			data : {fName : $('#search').val() } ,
 			dataType : "json",
 			success : function(data, status, xhr) {
-				$('.d').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
-				}
+				alert(data[0].mId);
+				alert(data[0].mLevel);				
 			},
 			error : function(data) {
 				alert("실패");
@@ -170,21 +168,23 @@ $(document).ready(function () {
 </head>
 
 <body>
-	<form:form class="form-horizontal" action="search.action" method="post" id="form">
-		<span class='green_window'> <input type='text' class='input_text' />
-		</span>		
-	<button type='submit' class='sch_smit'>검색</button>
-	</form:form>
+
+	<span class='green_window'> <input type='text' class='input_text' id='search'>
+	</span>		
+	<button type='button' class='sch_smit' id="searchbtn">검색</button>
+	
 	
 	<div class="table-responsive">
 	      <table class="table">
 	          <thead>
-	              <tr>
-	                  <th>Card</th>
-	              </tr>
+	            <tr style="font-size: 18; color: white;">
+				</tr>
 	          </thead>
 	          <tbody class="tbody">
-	     
+						<tr>
+							<th></th>
+							<th></th>
+						</tr>
 	          </tbody>
 	      </table>
        </div>

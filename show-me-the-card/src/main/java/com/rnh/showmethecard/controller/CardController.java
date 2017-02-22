@@ -104,9 +104,12 @@ public class CardController {
 			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
 			myCardListList.get(i).setDesc(h.getDesc());
 			myCardListList.get(i).setImg(h.getImg());
-			System.out.println(h.getImg());
+//			System.out.println(h.getImg());
+			System.out.println(myCardListList.get(i).getImg());
 			myCardListList.get(i).setTitle(h.getTitle());
+			System.out.println(myCardListList.get(i).getUrl());
 		}
+		
 		Collections.reverse(myCardListList);
 		req.setAttribute("mycardListList", myCardListList);
 		return "card/mycardlist";
@@ -124,7 +127,6 @@ public class CardController {
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardService.insertMyCardOrCardDb(cardForInsert);
-		
 		return "입력 성공";
 	}
 		

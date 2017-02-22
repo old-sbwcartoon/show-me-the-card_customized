@@ -14,6 +14,10 @@ public interface SearchDao {
 	List<Member> memberSearch(String fName);
 	
 	int memberSearchCount();
+	
+	List<Card> cardSearch(String cName);
+	
+	int cardSearchCount();
 
 	
 }

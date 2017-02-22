@@ -6,9 +6,8 @@
 
 
 
-
-
-<insert id="insertEvaluationRating" parameterType="EvaluationRating">
+<insert id="insertEvaluationRating" parameterType="EvaluationRating"
+	useGeneratedKeys="true"	keyColumn="E_RATING_NO" keyProperty="eRatingNo">
 	insert into EVALUATION_RATING (
 		M_ID
 		, CARD_NO
@@ -27,13 +26,11 @@
 			AND M_ID = #{mId}
 			AND deleted = 0
 		)
-	<selectKey resultType="Integer" keyProperty="eRatingNo" order="AFTER">
-		select last_insert_id()
-	</selectKey>
 </insert>
 
 
-<insert id="insertEvaluationComment" parameterType="EvaluationComment">
+<insert id="insertEvaluationComment" parameterType="EvaluationComment"
+	useGeneratedKeys="true"	keyColumn="E_COMMENT_NO" keyProperty="eCommentNo">
 	insert into EVALUATION_COMMENT (
 		M_ID
 		, CARD_NO
@@ -44,9 +41,6 @@
 		, #{cardNo}
 		, #{content}
 		)
-	<selectKey resultType="Integer" keyProperty="eCommentNo" order="AFTER">
-        select last_insert_id()
-    </selectKey>
 </insert>
 
 

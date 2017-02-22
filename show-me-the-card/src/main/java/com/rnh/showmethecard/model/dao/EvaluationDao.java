@@ -1,6 +1,5 @@
 package com.rnh.showmethecard.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.rnh.showmethecard.model.dto.EvaluationComment;
@@ -8,7 +7,7 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationDao {
 
-	EvaluationRating insertEvaluationRating(int cardNo, String mId, String content, int eRating);	
+	EvaluationRating insertEvaluationRating(int cardNo, String mId, String content, int eRating);
 
 	void insertEvaluationComment(EvaluationComment newComment);
 

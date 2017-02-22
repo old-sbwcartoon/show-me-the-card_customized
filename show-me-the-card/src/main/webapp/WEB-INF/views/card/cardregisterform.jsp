@@ -120,8 +120,8 @@ $(document).ready(function() {
         
 	});
 	
-	$('#resultTag > span').click(function(){
-			alert($(this).text());
+	$('#resultTag').on("click", "span[id^=tag]",function(){
+		alert($(this).text());
 	});
 	
 	$('#modalbutton').click(function(){

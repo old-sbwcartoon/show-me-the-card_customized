@@ -20,6 +20,7 @@ public class HtmlParser {
 	private String desc;
 	private String img;
 	private boolean urlOk;
+	private String from;
 
 	private Document urlDoc;
 	private Document domainDoc;
@@ -28,8 +29,8 @@ public class HtmlParser {
 	public String getUrl() {
 		return url;
 	}
-	public void setUrl(String url, String from) {
-		switch (from) {
+	public void setUrl(String url) {
+		switch (getFrom()) {
 			case Literal.ParseHtml.From.WEB : 
 				this.url = getProtocolAddedUrl(decodeStr(url));
 				break;
@@ -64,7 +65,13 @@ public class HtmlParser {
 	public void setUrlOk(boolean urlOk) {
 		this.urlOk = urlOk;
 	}
-	
+	public String getFrom() {
+		return from;
+	}
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
 	
 	
 	public HtmlParser(String url, String from) {
@@ -73,14 +80,15 @@ public class HtmlParser {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		setUrl(url, from);
+		setFrom(from);
+		setUrl(url);
 		
 		if (isUrlOk()) {
 			setTitle(getChoosedData(Literal.ParseHtml.Keyword.TITLE));
 			setDesc(getChoosedData(Literal.ParseHtml.Keyword.DESCRIPTION));
 			setImg(getChoosedData(Literal.ParseHtml.Keyword.IMAGE));
 		} else {
-			setUrl(null, from);
+			setUrl(null);
 		}
 	}
 	
@@ -245,117 +253,82 @@ public class HtmlParser {
 				
 			case Literal.ParseHtml.Keyword.IMAGE :
 				
-				Elements ogImg = doc.select("head meta[property=og:image]"); //1. og:tag
-				Elements imgSrc = doc.select("img[src]"); //2. logo > 4. 1st image
-				Elements linkRel = doc.select("link[rel]"); //3-1. favicon > 3-2. icon
 				
+//				//link[rel]?�� ?��?�� ?�� link[icon]?�� 존재?��?���? 찾는?��
+//				String ogImgStr = null;
+//				String logoImgStr = null;
+//				String iconImgStr = null;
+//				String anyImgStr = null;
 				
-				
-				//link[rel]?�� ?��?�� ?�� link[icon]?�� 존재?��?���? 찾는?��
-				String ogImgStr = null;
-				String logoImgStr = null;
-				String iconImgStr = null;
-				String anyImgStr = null;
-				
-				if (ogImg.size() != 0) {
+				Elements ogImg = doc.select("head meta[property=og:image]");
+				if (ogImg.size() != 0) { //1. og:tag
 					for (Element e : ogImg) {
 						if (e.hasAttr("content")) { //2-1 logo
-							ogImgStr = e.attr("content");
-							break;
+							return getChoosedImg(e.attr("content"));
 						}
 					}
 				}
-				if (imgSrc.size() != 0) {
+				
+				Elements imgSrc = doc.select("img[src]");
+				if (imgSrc.size() != 0) { //2. logo > 4. 1st image
 					for (Element e : imgSrc) {
 						if (e.attr("src").contains("logo")) { //2-1 logo
-							logoImgStr = e.attr("src");
-							break;
+							return getChoosedImg(e.attr("src"));
 						}
 					}
 				}
-				if (linkRel.size() != 0) {
+				
+				Elements linkRel = doc.select("link[rel]");
+				if (linkRel.size() != 0) { //3-1. favicon > 3-2. icon
 					for (Element e : linkRel) {
 						if (e.toString().contains("favicon")) { //2-1 favicon
-							iconImgStr = e.attr("href");
-							break;
+							return getChoosedImg(e.attr("href"));
 						} else if (e.toString().contains("icon")) { //2-2 icon
-							iconImgStr = e.attr("href");
-							break;
+							return getChoosedImg(e.attr("href"));
 						}
 					}
 				}
-				if (iconImgStr == null && imgSrc.size() != 0) {
+				
+				if (linkRel.toString() == null && imgSrc.size() != 0) {
+					String firstImgStr = null;
 					for (Element e : imgSrc) {
 						if (e.attr("src").contains(".png")) { //2-1 1st picture.png
-							anyImgStr = e.attr("src");
+							firstImgStr = e.attr("src");
 							break;
 						} else if (e.attr("src").contains(".svc")) { //2-2 1st picture.svc
-							anyImgStr = e.attr("src");
+							firstImgStr = e.attr("src");
 							break;
 						} else if (e.attr("src").contains(".jpg")) { //2-3 1st picture.jpg
-							anyImgStr = e.attr("src");
+							firstImgStr = e.attr("src");
 							break;
 						} else { //2-4 1st picture.*
-							anyImgStr = e.attr("src");
+							firstImgStr = e.attr("src");
 							break;
 						}
 					}
+					return getChoosedImg(firstImgStr);
 				}
 
 				
-				//?��미�? 주소 찾기
-				String parsedImg = null;
-				if (ogImgStr != null) {
-					parsedImg = ogImgStr;
-				} else if (logoImgStr != null) {
-					parsedImg = logoImgStr;
-				} else if (iconImgStr != null){
-					parsedImg = iconImgStr;
-				} else if (anyImgStr != null){
-					parsedImg = anyImgStr;
-				}
-				
-				
-				//주소�? domain ?��?�� 경로?�� ?��??경로�? ?��?�� ?��?�� 경우
-				if (parsedImg != null) {
-					StringBuilder imgUrl = new StringBuilder(100);
-					String domain = getUrlDomain(getUrl());
-					
-					if (parsedImg.contains("://")) { // http://jquery.com/query-wp-content/themes/jquery.com/i/favicon.ico
-						imgUrl.append(parsedImg);
-					} else if (parsedImg.substring(0, 2).equals("//")) { // //jquery.com/jquery-wp-content/themes/jquery.com/i/favicon.ico
-						String protocol = domain.split("://")[0];
-						imgUrl.append(protocol).append(":").append(parsedImg);
-					} else if (parsedImg.substring(0, 1).equals("/")) { // /jquery-wp-content/themes/jquery.com/i/favicon.ico
-						imgUrl.append(domain).append(parsedImg);
-					} else if (parsedImg.contains("../")) {
-						String parsedAddr = parsedImg.substring("../".length(), parsedImg.length());
-						imgUrl.append(domain).append("/").append(parsedAddr);
-					} else if (parsedImg.contains("./")) {
-						String parsedAddr = parsedImg.substring("./".length(), parsedImg.length());
-						imgUrl.append(domain).append("/").append(parsedAddr);
-					} else if (!parsedImg.contains("/")) { // /favicon.ico
-						imgUrl.append(domain).append("/").append(parsedImg);
-					}
-					
-					parsedImg = imgUrl.toString();
-				}
-				data = parsedImg;
 
 				
 		}
 		
 		return data;
+		
+		
 	}
 	
 	
 	
 	private String getChoosedData(String parseKeyword) {
 
+		long start = System.currentTimeMillis();
+		
 		String choosedData = null;
 		if (urlDoc == null) { //urlDoc가 만들어지지 않았다면
 			try {
-				urlDoc = Jsoup.connect(getUrl()).get();
+				urlDoc = Jsoup.connect(getUrl()).timeout(5000).get(); //5초까지만 탐색
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -367,7 +340,7 @@ public class HtmlParser {
 		} else {
 			if (domainDoc == null) { //domainDoc가 만들어지지 않았다면
 				try {
-					domainDoc = Jsoup.connect(getUrlDomain(getUrl())).get();
+					domainDoc = Jsoup.connect(getUrlDomain(getUrl())).timeout(5000).get(); //5초까지만 탐색
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -375,7 +348,56 @@ public class HtmlParser {
 			choosedData = seekData(domainDoc, parseKeyword); //domainDoc에서 찾기
 		}
 		
+		long end = System.currentTimeMillis();
+		System.out.println(String.format("LAP TIME %d", end - start));
+		
 		return choosedData;
 	}
+
 	
+	private String getChoosedImg(String imgStr) {
+		String choosedImgUrl = null;
+		
+		
+		switch (getFrom()) {
+		
+		
+			case Literal.ParseHtml.From.WEB :
+				if (imgStr != null) {
+					StringBuilder imgUrl = new StringBuilder(100);
+					String domain = getUrlDomain(getUrl());
+					
+					if (imgStr.contains("://")) { // http://jquery.com/query-wp-content/themes/jquery.com/i/favicon.ico
+						imgUrl.append(imgStr);
+					} else if (imgStr.substring(0, 2).equals("//")) { // //jquery.com/jquery-wp-content/themes/jquery.com/i/favicon.ico
+						String protocol = domain.split("://")[0];
+						imgUrl.append(protocol).append(":").append(imgStr);
+					} else if (imgStr.substring(0, 1).equals("/")) { // /jquery-wp-content/themes/jquery.com/i/favicon.ico
+						imgUrl.append(domain).append(imgStr);
+					} else if (imgStr.contains("../")) {
+						String parsedAddr = imgStr.substring("../".length(), imgStr.length());
+						imgUrl.append(domain).append("/").append(parsedAddr);
+					} else if (imgStr.contains("./")) {
+						String parsedAddr = imgStr.substring("./".length(), imgStr.length());
+						imgUrl.append(domain).append("/").append(parsedAddr);
+					} else if (!imgStr.contains("/")) { // /favicon.ico
+						imgUrl.append(domain).append("/").append(imgStr);
+					}
+					
+					choosedImgUrl = imgUrl.toString();
+				}				
+				break;
+				
+				
+			case Literal.ParseHtml.From.DB  :
+				choosedImgUrl = imgStr;
+				break;
+		}
+		
+		
+		
+		return choosedImgUrl;
+	}
 }
+
+

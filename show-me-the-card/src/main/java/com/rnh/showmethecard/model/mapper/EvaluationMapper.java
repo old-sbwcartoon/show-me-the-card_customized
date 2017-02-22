@@ -9,7 +9,6 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 public interface EvaluationMapper {
 
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
-
 	void insertEvaluationComment(EvaluationComment newComment);
 
 

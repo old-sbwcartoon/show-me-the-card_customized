@@ -12,4 +12,6 @@ public interface CardMapper {
 	void insertMyCard(HashMap<String, Object> map);
 	List<MyCardList> selectMyCardByFNo(int fNo);
 	String selectUrlFromCardDbByCardNo(int cardNo);
+	
+	List<MyCardList> selectMyCardListByFNo(int fNo);
 }

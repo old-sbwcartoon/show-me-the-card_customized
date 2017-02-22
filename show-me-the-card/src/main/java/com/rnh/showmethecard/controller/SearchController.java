@@ -44,6 +44,18 @@ public class SearchController {
 		return "search/search";
 	}
 	
+	@RequestMapping(value = "searchMember.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String memberSearch(HttpSession session, HttpServletRequest req, String fName) {
+		
+		List<Member> members = searchService.memberSearch(fName);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		String member = gson.toJson(members);
+		
+		return member;
+	}
+
 //	@RequestMapping(value = "searchMember.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 //	public ModelAndView memberSearch(HttpSession session, HttpServletRequest req, String fName) {
 //		
@@ -79,16 +91,16 @@ public class SearchController {
 //		return mav;
 //	}
 	
-	@RequestMapping(value = "searchMember.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "searchCard.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String memberSearch(HttpSession session, HttpServletRequest req, String fName) {
+	public String cardSearch(HttpSession session, HttpServletRequest req, String cName) {
 		
-		List<Member> members = searchService.memberSearch(fName);
+		List<Card> cards = searchService.cardSearch(cName);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		String member = gson.toJson(members);
+		String card = gson.toJson(cards);
 		
-		return member;
+		return card;
 	}
-		
+	
 }

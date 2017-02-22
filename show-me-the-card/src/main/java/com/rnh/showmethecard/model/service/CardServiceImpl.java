@@ -45,23 +45,27 @@ public class CardServiceImpl implements CardService {
 		System.out.println("MYCARD INSERT 성공");
 	}
 	
+//	@Override
+//	public List<MyCardList> readMyCard(int fNo){
+//		
+//		myCardListList = cardDao.selectMyCardByFNo(fNo);
+//		System.out.println(myCardListList.get(0).getMycComment());
+//		for(int i = 0; i< myCardListList.size(); i++){
+//			int tmp = myCardListList.get(i).getCardNo();
+//			System.out.println(tmp);
+//			String tmpResult = cardDao.selectUrlFromCardDbByCardNo(tmp);
+//			myCardListList.get(i).setUrl(tmpResult);
+//			System.out.println(tmpResult);
+//		}
+//		System.out.println("일단성공");
+//		
+//		return myCardListList;
+//	}
+	
 	@Override
 	public List<MyCardList> readMyCard(int fNo){
-		
-		myCardListList = cardDao.selectMyCardByFNo(fNo);
-		System.out.println(myCardListList.get(0).getMycComment());
-		for(int i = 0; i< myCardListList.size(); i++){
-			int tmp = myCardListList.get(i).getCardNo();
-			System.out.println(tmp);
-			String tmpResult = cardDao.selectUrlFromCardDbByCardNo(tmp);
-			myCardListList.get(i).setUrl(tmpResult);
-			System.out.println(tmpResult);
-		}
-		System.out.println("일단성공");
-		
-		return myCardListList;
+		return cardDao.selectMyCardListByFNo(fNo);
 	}
-	
 	
 //	private AdviceNote adviceNote;
 //	private AdviceNoteForList adviceNoteForList;

@@ -14,6 +14,8 @@ public interface CardService {
 	void insertMyCardOrCardDb(CardForInsert cardForInsert);
 	
 	List<MyCardList> readMyCard(int fNo);
+	
+	//List<MyCardList> selectMyCardListByFNo(int fNo);
 	//void insertCardDb(String userId, String url);
 	//void insertMyCard(int cardNo, String mycComment);
 //	

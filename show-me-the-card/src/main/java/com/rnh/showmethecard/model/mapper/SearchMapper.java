@@ -17,4 +17,8 @@ public interface SearchMapper {
 	
 	int memberSearchCount();
 	
+	List<Card> cardSearch(String cName);
+	
+	int cardSearchCount();
+	
 }

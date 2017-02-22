@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.rnh.showmethecard.model.dao.SearchDao;
+import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.Member;
 
 @Service("searchService")
@@ -35,5 +36,14 @@ public class SearchServiceImpl implements SearchService {
 		
 		return members;
 	}
+	
+	@Override
+	public List<Card> cardSearch(String cName) {
+		List<Card> cards = searchDao.cardSearch(cName);
+		//System.out.println(members);
+		
+		return cards;
+	}
+	
 
 }

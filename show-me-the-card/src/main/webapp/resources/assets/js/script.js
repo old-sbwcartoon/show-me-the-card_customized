@@ -41,19 +41,6 @@ $('.navbar-collapse ul li a').click(function () {
     
 
     
-    /*--------------------------------------------------*/
-    /* Counter*/
-    /*--------------------------------------------------*/ 
-        $(document).ready(function () {
-
-                $('.timer').countTo();
-
-                $('.counter-item').appear(function() {
-                    $('.timer').countTo();
-                },{accY: -100});
-            
-        });
-            
 ////------- Testimonial Section
 
 $(document).ready(function() {

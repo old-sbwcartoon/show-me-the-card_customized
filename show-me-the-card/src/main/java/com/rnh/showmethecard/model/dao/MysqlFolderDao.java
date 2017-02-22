@@ -59,6 +59,20 @@ public class MysqlFolderDao implements FolderDao {
 	}
 
 
+	@Override
+	public List<Member> selectMyFollow(String mId) {
+		return (List<Member>) folderMapper.selectMyFollow(mId);
+	}
+
+
+	@Override
+	public void deletefollow(Friend friend) {
+
+		folderMapper.deletefollow(friend);
+		
+	}
+
+
 
 
 

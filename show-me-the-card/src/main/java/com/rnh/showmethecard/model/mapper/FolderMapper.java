@@ -37,4 +37,12 @@ public interface FolderMapper {
 
 
 	void insertfollow(Friend friend);
+
+
+	List<Member> selectMyFollow(String mId);
+
+
+	void deletefollow(Friend friend);
+	
+	
 }

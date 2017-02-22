@@ -66,5 +66,19 @@ public class FolderServiceImpl implements FolderService {
 		
 	}
 
+	@Override
+	public List<Member> selectMyFollow(String mId) {
+		return (List<Member>) folderDao.selectMyFollow(mId);
+	}
+
+	@Override
+	public void deletefollow(String mId, String frId) {
+		Friend friend = new Friend();		
+		friend.setmId(mId);
+		friend.setFrId(frId);
+		folderDao.deletefollow(friend);
+		
+	}
+
 	
 }

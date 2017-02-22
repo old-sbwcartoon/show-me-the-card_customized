@@ -29,4 +29,8 @@ public interface FolderService {
 	List<Member> searchFollow(String mId, String frId);
 
 	void registerfollow(String mId, String frId);
+
+	List<Member> selectMyFollow(String mId);
+
+	void deletefollow(String mId, String frId);
 }

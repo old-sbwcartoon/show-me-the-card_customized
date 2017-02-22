@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <html>
 <head>
 <meta charset="utf-8" />
@@ -107,6 +108,8 @@ $(document).ready(function(){
 		});
 	});	
 	
+	
+	//addbutton 추가버튼 클릭시 버튼날아가고 db저장
 	$('#addbutton').on('click', 'button[id^=button_]',
 			function(event) { 
 				
@@ -124,6 +127,32 @@ $(document).ready(function(){
 						$('#'+b_id).remove();
 						alert("성공");
 						
+					},
+					error : function(data) {
+						alert("실패");
+					}
+				});
+				
+			
+			});
+	
+	
+	$('#frienddiv').on('click', 'button[id^=delete_]',
+			function(event) { 
+				
+				var b_id = event.currentTarget.id;
+				var fr_id = b_id.split("_")[1];
+				
+				$.ajax({
+					url : "deletefollow.action",
+					type : "post",
+					data : {
+						frId : fr_id
+					},
+					dataType : "text",
+					success : function(data) {
+						alert("성공");
+						location.reload()					
 					},
 					error : function(data) {
 						alert("실패");
@@ -153,7 +182,7 @@ $(document).ready(function(){
     			<div class="col-md-6">
     				<h2>User Chart</h2>
     				<ul class="nav nav-tabs"  style="font-size: 23">
-    					<li class="active"><a data-toggle="tab" href="#userTotal" >친구목록()</a></li>
+    					<li class="active"><a data-toggle="tab" href="#userTotal" >친구목록(${fn:length(friends)})</a></li>
 			    		<li><a data-toggle="tab" class = "sendidbutton" id="daily" href="#userDaily" >친구검색</a></li>
     					
     				</ul>
@@ -168,12 +197,14 @@ $(document).ready(function(){
     								</tr>
     								
     							</thead>
-    							<tbody>
-    								<c:forEach var="total" items="${ total }">
-    									<tr>
+    							<tbody id="frienddiv">
+    								<c:forEach var="friend" items="${ friends }">
+    									<tr class="del">
     										<!-- <th>레벨</th> -->
-    										<th>${ total.mId }</th>
-    										<th><button>삭제</button></th>
+    										
+    										<th style ="cursor:hand;" onclick="location.href='/showmethecard/mypage/mypage.action?goId=${ friend.mId }'"><img style="height: 35; width: 35;"
+    										 src='/showmethecard/resources/level/${ friend.mLevel}.PNG' >${ friend.mId }</th>
+    										<th><button id="delete_${ friend.mId }">삭제</button></th>
     									</tr>
 		    						</c:forEach>
     							</tbody>					

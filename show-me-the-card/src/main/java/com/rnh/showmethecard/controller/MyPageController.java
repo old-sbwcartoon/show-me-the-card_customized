@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.FolderDao;
 import com.rnh.showmethecard.model.dto.Folder;
+import com.rnh.showmethecard.model.dto.Friend;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.Notice;
 import com.rnh.showmethecard.model.service.FolderService;
@@ -144,8 +145,8 @@ public class MyPageController {
 		
 		String mId = member.getmId();				
 //		
-//		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
-//		model.addAttribute("folders", folders);	
+		List<Member> friend = (List<Member>) folderService.selectMyFollow(mId);
+		model.addAttribute("friends", friend);	
 		
 		
 		return "mypage/follow";
@@ -196,6 +197,32 @@ public class MyPageController {
 			}
 		String mId = member.getmId();
 		folderService.registerfollow(mId, frId);
+		
+			
+		
+		return "success";
+	}
+	
+	
+	@RequestMapping(value="deletefollow.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
+	@ResponseBody
+	public String DeleteFollow(HttpSession session,HttpServletResponse response,  String frId) {
+		Member member = null;
+		if (session.getAttribute("loginuser") != null) { 
+			member = (Member) session.getAttribute("loginuser");	 
+			} else {				
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
+					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		String mId = member.getmId();
+		folderService.deletefollow(mId, frId);
 		
 			
 		

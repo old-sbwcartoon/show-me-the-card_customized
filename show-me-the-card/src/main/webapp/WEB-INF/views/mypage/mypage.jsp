@@ -177,7 +177,7 @@
 				//folder update ajax
 				$('#u_register').click(
 						function() {
-							if ($('#fName').val() != "") {
+							if ($('#u_fName').val() != "") {
 								$.ajax({
 									url : 'update.action',
 									type : 'post',								
@@ -190,8 +190,10 @@
 									dataType : 'json',
 									success : function(data) {
 										
-										$('#folder_'+ data.fNo).text(data.fName)										
-										$('#myonoffswitch').prop("checked", $('#secret').is(':checked'))	
+										$('#folder_'+ data.fNo).text(data.fName);
+										
+										$('#u_myonoffswitch').prop("checked", data.secret);
+											
 									}
 
 								});
@@ -209,7 +211,7 @@
 				//folder delete ajax
 				$('#u_delete').click(
 						function() {
-							if ($('#fName').val() != "") {
+							if ($('#u_fName').val() != "") {
 								$.ajax({
 									url : 'delete.action',
 									type : 'post',								

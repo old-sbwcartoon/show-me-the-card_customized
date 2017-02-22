@@ -31,4 +31,8 @@ public interface FolderDao {
 
 	void registerfollow(Friend friend);
 
+	List<Member> selectMyFollow(String mId);
+
+	void deletefollow(Friend friend);
+
 }

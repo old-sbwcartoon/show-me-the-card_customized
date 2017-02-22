@@ -60,9 +60,9 @@
 <!-- jQuery Version 2.1.3 -->
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="/showmethecard/resources/js/jquery.longpress.js"></script>
-<!-- <script src="/showmethecard/resources/assets/js/jquery-2.1.3.min.js"></script> -->
+
 
 <!-- Bootstrap Core JavaScript -->
 <script
@@ -84,6 +84,14 @@
 <script src="/showmethecard/resources/assets/js/material.js"></script>
 <script src="/showmethecard/resources/assets/js/waypoints.min.js"></script>
 <!-- longclick js  -->
+<!-- Custom JavaScript -->
+<script src="/showmethecard/resources/assets/js/script.js"></script>
+<!-- modal -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -235,9 +243,27 @@
 				$('#folderpage').on('mouseup', "button[id^=folder_]",
 						function(event) {						
 					
-					
-					location.href= "/showmethecard/card/cardregister.action";
+					var f_fNo = event.currentTarget.childNodes[1].defaultValue
+					/* $('#cardpagesection').load('/showmethecard/card/cardregisterform.jsp'); */ 			
+					/* $('#cardpagesection').load('/showmethecard/card/cardregister.action', f_fNo); */ 			
+					$.ajax({
+						url : 'cardregister.action',
+						type : 'get',								
+						data : {
 							
+							fNo : f_fNo					
+							
+						},
+						dataType : 'html',
+						success : function(data) {
+							
+							$('#cardpagesection').html(data); 
+							
+
+						}
+
+					});
+
 							
 							
 						
@@ -361,48 +387,7 @@
 </head>
 <body class="index">
 
-	<c:choose>
-		<c:when test="${ empty sessionScope.loginuser }">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			
-			
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-				<div class="container">
-					<div class="intro-text">
-						<h1>
-							Show Me the <span>Cards</span>
-						</h1>
-						<button type="button" id="loginbtn"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-							LOGIN &nbsp;&nbsp;</button>
-						<button type="button" id="registerbtn"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;
-							JOIN US &nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-				<div class="container">
-					<div class="intro-text">
-						<h1>
-							Show Me the <span>Cards</span>
-						</h1>
-						<button type="button" id="#"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-							LOGOUT &nbsp;&nbsp;</button>
-						<button type="button" id="#"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;
-							MY PAGE &nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</section>
-		</c:otherwise>
-	</c:choose>
+	<c:import url="/WEB-INF/views/include/header.jsp" />
 
 
 			<%-- <button type="button" id="folderbasic" class="folderbasic"
@@ -587,15 +572,8 @@
 	<!-- Start Footer Section -->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer Section -->
-
 </body>
-<!-- Custom JavaScript -->
-<script src="/showmethecard/resources/assets/js/script.js"></script>
-<!-- modal -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="../resources/assets/js/script.js"></script>
 
 </html>

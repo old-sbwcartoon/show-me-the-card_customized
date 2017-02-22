@@ -22,7 +22,7 @@
 				<a href="#client" class="page-scroll waves-effect"><i class="fa fa-fw fa-comment-o"></i><span>Testimonial</span></a>
 				<a href="#contact" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>Contact</span></a>
 				<a href="/showmethecard/qna/qnaList.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span> Q&A </span></a>
-				<a href="/showmethecard/card/cardregister.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span> CardSearch&Register</span></a>
+				<a href="/showmethecard/mypage/cardregister.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span> CardSearch&Register</span></a>
 				<a href="/showmethecard/notice/noticeList.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span> Notice </span></a>
 				<a href="/showmethecard/evaluation/evaluationmain.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>Evaluation</span></a>
 				<a href="/showmethecard/search/search.action" class="page-scroll waves-effect"><i class="fa fa-fw fa-envelope-o"></i><span>Search</span></a>

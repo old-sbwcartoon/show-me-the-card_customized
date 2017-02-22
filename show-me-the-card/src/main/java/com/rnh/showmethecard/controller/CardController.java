@@ -93,7 +93,7 @@ public class CardController {
 	public String ShowMYCardList(HttpSession session, HttpServletRequest req){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		
+		afNo = 190;
 		List<MyCardList> myCardListList= cardService.readMyCard(afNo);
 		
 		int listLength = myCardListList.size();

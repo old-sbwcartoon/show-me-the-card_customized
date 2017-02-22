@@ -127,6 +127,10 @@
 				$("#password").val("");
 				$("#passwordConfirm").val("");
 				alert("비밀번호가 일치하지 않습니다.");
+			} else if ( !id || !passwd || !email || !phone) {
+				alert("형식에 맞게 입력해주세요.")
+			} else if ($('#mId').val() == "" || $('#password').val() == "" || $('#email').val() == "" || $('#phone').val() == "" || $('#mName').val() == "") {
+				alert("빠집없이 기입해주세요");
 			} else {
 				$("#registerForm").submit();
 				confirm = false;
@@ -281,39 +285,47 @@
 		
 		// 정규식 검사
 		//아이디 - 영+숫 6~15
+		var id = false;
 		$('#mId').keyup(function() {
 			var regExp = /(?=.*\d)(?=.*[a-z]).{6,15}/;
 			if ( !regExp.test($('#mId').val())) {
 				$('#idReg').text("아이디 형식이 맞지 않습니다. (영문+숫자 6~15자 이내)");
 			} else {
 				$('#idReg').text("");
+				id = true;
 			}
 		});
 		//비밀번호  - 영+숫 6~15
+		var passwd = false;
 		$('#password').keyup(function() {
 			var regExp = /(?=.*\d)(?=.*[a-z]).{6,15}/;
 			if ( !regExp.test($('#password').val())) {
 				$('#passwordReg').text("비밀번호 형식이 맞지 않습니다. (영문+숫자 6~15자 이내)");
 			} else {
 				$('#passwordReg').text("");
+				passwd = true;
 			}
 		});
 		//전화번호
+		var phone = false;
 		$('#phone').keyup(function() {
 			var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
 			if ( !regExp.test($('#phone').val())) {
 				$('#phoneReg').text("번호 형식이 맞지 않습니다.");
 			} else {
+				phone = true;
 				$('#phoneReg').text("");
 			}
 		});
 		//이메일
+		var email = false;
 		$('#email').keyup(function() {
 			var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 			if ( !regExp.test($('#email').val())) {
 				$('#emailReg').text('이메일 형식이 맞지 않습니다.');
 			} else {
 				$('#emailReg').text("");
+				email = true;
 			}
 		});
 	});

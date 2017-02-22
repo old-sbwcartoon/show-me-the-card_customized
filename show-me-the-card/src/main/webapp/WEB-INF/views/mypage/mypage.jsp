@@ -333,7 +333,7 @@
 			});
 </script>
 
-<style>
+<style type="text/css">
 
 .onoffswitch {
     position: relative; width: 90px;
@@ -380,6 +380,26 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
+
+
+#div1 {
+	float: left;
+	width: 80%;
+}
+.section-title p {
+    padding-bottom: 0px;
+}
+.team-member-section {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.label label-success{
+	margin-top: 10px;
+}
+/* .img-responsive{
+    max-width: 300px;
+} */
+
 </style>
 
 
@@ -574,6 +594,6 @@
 	<!-- End Footer Section -->
 </body>
 
-<script src="../resources/assets/js/script.js"></script>
+ <script src="../resources/assets/js/script.js"></script>
 
 </html>

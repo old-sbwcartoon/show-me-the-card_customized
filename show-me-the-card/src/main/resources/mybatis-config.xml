@@ -21,6 +21,7 @@
 	<typeAlias type="com.rnh.showmethecard.model.dto.Folder" alias="Folder" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.MemberHistory" alias="MemberHistory" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Qna" alias="Qna" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Friend" alias="Friend" />
   </typeAliases>
   
   <environments default="development">

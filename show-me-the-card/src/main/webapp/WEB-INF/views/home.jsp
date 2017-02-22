@@ -365,8 +365,10 @@
                 		<button type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
                 		<div class="dropdown-content">
             				<a id="mypagebtn" href="#">My Page</a>
+            				<a href="/showmethecard/mypage/mypage.action">Card Page</a>
             				<a href="/showmethecard/member/pointList.action">My Point</a>
         		   			<a href="/showmethecard/member/qnaList.action">My Q&A</a>
+            				<a href="/showmethecard/mypage/myfollow.action">Follow</a>
 						</div>	
                 	</div>          		
                 </div>

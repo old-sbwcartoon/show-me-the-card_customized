@@ -415,6 +415,7 @@
 					src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>
 
 <!--  start folder page section -->
+	
 	<span id = 'folderpage' > 
 		<c:forEach var="folder" items="${ folders }">		
 				<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
@@ -429,14 +430,15 @@
 			src="/showmethecard/resources/images/cardpackplus.png">
 
 	</button>
-
+	
 <!--  End folder page section -->
 
 <!--  start div page section -->
 
-<div id = "cardpagesection">
+<div id = "cardpagesection"></div>
 
-</div>
+
+
 <!--  End div page section -->
 
 	<!-- Start Register Modal Section -->

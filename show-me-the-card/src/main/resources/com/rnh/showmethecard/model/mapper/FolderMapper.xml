@@ -35,6 +35,25 @@
 		WHERE f_NO = #{ fNo }
 	</update>
 	
+
+
+
+
+	
+	<select id="searchFollow" resultType="Member" parameterType="Friend">
+		SELECT M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, M_Level mLevel, USERTYPE
+		FROM rnh2.MEMBER
+		WHERE M_ID like concat('%',#{frId},'%') AND M_ID NOT IN (select FR_ID from rnh2.FRIEND where M_ID = #{mId})  
+        AND deleted=0;  
+	</select>
+	
+	
+	<insert id="insertfollow" parameterType="Friend">
+		INSERT INTO rnh2.FRIEND
+		(M_ID, FR_ID)
+		VALUES
+		( #{ mId }, #{ frId })
+	</insert>
 	
 	<!--<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
 		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate

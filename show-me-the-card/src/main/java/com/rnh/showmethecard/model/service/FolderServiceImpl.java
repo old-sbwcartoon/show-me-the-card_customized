@@ -12,6 +12,7 @@ import com.rnh.showmethecard.common.Util;
 import com.rnh.showmethecard.model.dao.FolderDao;
 import com.rnh.showmethecard.model.dao.MemberDao;
 import com.rnh.showmethecard.model.dto.Folder;
+import com.rnh.showmethecard.model.dto.Friend;
 import com.rnh.showmethecard.model.dto.Member;
 
 @Service("folderService")
@@ -45,6 +46,23 @@ public class FolderServiceImpl implements FolderService {
 	public void deleteFolder(Folder folder) {
 		folderDao.deleteFolder(folder);
 		
+		
+	}
+
+	@Override
+	public List<Member> searchFollow(String mId, String frId) {
+		Friend friend = new Friend();		
+		friend.setmId(mId);
+		friend.setFrId(frId);
+		return (List<Member>) folderDao.searchFollow(friend);
+	}
+
+	@Override
+	public void registerfollow(String mId, String frId) {
+		Friend friend = new Friend();		
+		friend.setmId(mId);
+		friend.setFrId(frId);
+		folderDao.registerfollow(friend);
 		
 	}
 

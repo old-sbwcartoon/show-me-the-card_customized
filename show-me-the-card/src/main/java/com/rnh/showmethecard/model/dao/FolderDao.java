@@ -3,6 +3,8 @@ package com.rnh.showmethecard.model.dao;
 import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Folder;
+import com.rnh.showmethecard.model.dto.Friend;
+import com.rnh.showmethecard.model.dto.Member;
 
 public interface FolderDao {
 	
@@ -23,5 +25,10 @@ public interface FolderDao {
 	void changeFolder(Folder folder);
 
 	void deleteFolder(Folder folder);
+
+	List<Member> searchFollow(Friend friend);
+	
+
+	void registerfollow(Friend friend);
 
 }

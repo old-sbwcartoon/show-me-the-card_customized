@@ -35,10 +35,17 @@ public class MyPageController {
 	private FolderService folderService;
 
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
-	public String searchFolderById(HttpSession session, Model model, HttpServletResponse response) {
+	public String searchFolderById(HttpSession session, Model model, HttpServletResponse response, String goId) {
 		Member member = null;
+		boolean flag = true;
+		String mId = null;
 		if (session.getAttribute("loginuser") != null) { 
-			member = (Member) session.getAttribute("loginuser");	 
+			member = (Member) session.getAttribute("loginuser");
+				if (goId == null) {
+					flag = true; 
+				} else if(member.getmId() != goId) {
+					flag = false;
+				}
 			} else { 
 				PrintWriter writer;
 				try {
@@ -50,13 +57,19 @@ public class MyPageController {
 					e.printStackTrace();
 				}				
 			 
-			} 
+			}
 		
-		String mId = member.getmId();
+		if (flag) {
+			mId = member.getmId();				
+		} else {
+			mId = goId;
+		}
 		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
 		model.addAttribute("folders", folders);		
 		return "mypage/mypage";
 	}
+	
+	
 	
 //	//폴더 등록
 	@RequestMapping(value="register.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
@@ -113,19 +126,82 @@ public class MyPageController {
 	
 	
 	@RequestMapping(value="myfollow.action", method=RequestMethod.GET)
-	public String searchFollowById(HttpSession session, Model model) {
+	public String searchFollowById(HttpSession session, Model model, HttpServletResponse response) {
 		Member member = null;
 		if (session.getAttribute("loginuser") != null) { 
 			member = (Member) session.getAttribute("loginuser");	 
-			} else { 
-				
-			 return "home";
+			} else {				
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
+					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}		
 		
+		String mId = member.getmId();				
+//		
+//		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
+//		model.addAttribute("folders", folders);	
 		
 		
 		return "mypage/follow";
 	}
+	
+	
+	@RequestMapping(value="searchfollow.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
+	@ResponseBody
+	public String SearchFollow(HttpSession session,HttpServletResponse response,  String frId) {
+		Member member = null;
+		if (session.getAttribute("loginuser") != null) { 
+			member = (Member) session.getAttribute("loginuser");	 
+			} else {				
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
+					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		String mId = member.getmId();
+		
+		List<Member> members = (List<Member>) folderService.searchFollow(mId, frId);
+		
+		Gson gson = new Gson();		 
+		return gson.toJson(members);
+	}
+	
+	@RequestMapping(value="registerfollow.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
+	@ResponseBody
+	public String RegisterFollow(HttpSession session,HttpServletResponse response,  String frId) {
+		Member member = null;
+		if (session.getAttribute("loginuser") != null) { 
+			member = (Member) session.getAttribute("loginuser");	 
+			} else {				
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
+					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		String mId = member.getmId();
+		folderService.registerfollow(mId, frId);
+		
+			
+		
+		return "success";
+	}
+	
 	
 //	//아이디 중복 확인
 //	@RequestMapping(value="confirmId.action", method = RequestMethod.POST,  produces = "application/json;charset=utf-8")

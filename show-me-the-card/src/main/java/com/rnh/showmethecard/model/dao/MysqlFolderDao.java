@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.model.dto.Folder;
+import com.rnh.showmethecard.model.dto.Friend;
+import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.mapper.FolderMapper;
 
 @Repository(value = "folderDao")
@@ -41,6 +43,23 @@ public class MysqlFolderDao implements FolderDao {
 		folderMapper.deleteFolder(folder);
 		
 	}
+
+
+	@Override
+	public List<Member> searchFollow(Friend friend) {
+		
+		return (List<Member>) folderMapper.searchFollow(friend);
+	}
+
+
+	@Override
+	public void registerfollow(Friend friend) {
+		folderMapper.insertfollow(friend);
+		
+	}
+
+
+
 
 
 }

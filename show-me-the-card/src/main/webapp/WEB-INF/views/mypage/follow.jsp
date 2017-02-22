@@ -87,56 +87,51 @@
 $(document).ready(function(){
 	
 	
-	$('#daily').click(function() {
+	$('#searchid').on('keyup', function() {
 		$.ajax({
-			url : "/showmethecard/chart/dayChart.action",
-			method : "get",
+			url : "searchfollow.action",
+			type : "post",
+			data : {
+				frId : $('#searchid').val()
+			},
 			dataType : "json",
-			success : function(data, status, xhr) {
+			success : function(data) {
 				$('.d').remove();
 				for (var i = 0; i < data.length; i++) {
-					$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+					$('<tr><th><img style="height: 35; width: 35;" src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG">'+data[i].mId+'</th><th><button id="button_'+ data[i].mId+'">추가</button></th></tr>').appendTo('#addbutton').attr('class','d');
 				}
 			},
 			error : function(data) {
 				alert("실패");
 			}
 		});
-	});
+	});	
 	
-	$('#weekly').click(function() {
-		$.ajax({
-			url : "/showmethecard/chart/weekChart.action",
-			method : "get",
-			dataType : "json",
-			success : function(data, status, xhr) {
-				$('.d').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
-				}
-			},
-			error : function(data) {
-				alert("실패");
-			}
-		});
-	});
-	
-	$('#monthly').click(function() {
-		$.ajax({
-			url : "/showmethecard/chart/monthChart.action",
-			method : "get",
-			dataType : "json",
-			success : function(data, status, xhr) {
-				$('.d').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('<tr><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
-				}
-			},
-			error : function(data) {
-				alert("실패");
-			}
-		});
-	});
+	$('#addbutton').on('click', 'button[id^=button_]',
+			function(event) { 
+				
+				var b_id = event.currentTarget.id;
+				var fr_id = b_id.split("_")[1];
+				
+				$.ajax({
+					url : "registerfollow.action",
+					type : "post",
+					data : {
+						frId : fr_id
+					},
+					dataType : "text",
+					success : function(data) {
+						$('#'+b_id).remove();
+						alert("성공");
+						
+					},
+					error : function(data) {
+						alert("실패");
+					}
+				});
+				
+			
+			});
 });
 	
 </script>
@@ -147,52 +142,8 @@ $(document).ready(function(){
 </head>
 <body class="index">
 
-	<c:choose>
-		<c:when test="${ empty sessionScope.loginuser }">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			
-			
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-				<div class="container">
-					<div class="intro-text">
-						<h1>
-							Show Me the <span>Cards</span>
-						</h1>
-						<button type="button" id="loginbtn"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-							LOGIN &nbsp;&nbsp;</button>
-						<button type="button" id="registerbtn"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;
-							JOIN US &nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-				<div class="container">
-					<div class="intro-text">
-						<h1>
-							Show Me the <span>Cards</span>
-						</h1>
-						<button type="button" id="#"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-							LOGOUT &nbsp;&nbsp;</button>
-						<button type="button" id="#"
-							class="page-scroll waves-effect btn btn-primary">&nbsp;
-							MY PAGE &nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</section>
-		</c:otherwise>
-	</c:choose>
 
-
-
-
+<c:import url="/WEB-INF/views/include/header.jsp" />
 
     <!-- Strat Chart Section -->
     <div class="about-us-section-2">
@@ -203,14 +154,14 @@ $(document).ready(function(){
     				<h2>User Chart</h2>
     				<ul class="nav nav-tabs"  style="font-size: 23">
     					<li class="active"><a data-toggle="tab" href="#userTotal" >친구목록()</a></li>
-			    		<li><a data-toggle="tab" id="daily" href="#userDaily" >친구검색</a></li>
+			    		<li><a data-toggle="tab" class = "sendidbutton" id="daily" href="#userDaily" >친구검색</a></li>
     					
     				</ul>
     				<div class="tab-content">
     					<div id="userTotal" class="tab-pane fade in active">
     						<table class="table">
     							<thead>    								
-    								<tr style="font-size: 18; color: white;">
+    								<tr style="font-size: 18; color: black;">
     									<!-- <th>레벨</th> -->    									
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">삭제버튼</th>
@@ -222,7 +173,7 @@ $(document).ready(function(){
     									<tr>
     										<!-- <th>레벨</th> -->
     										<th>${ total.mId }</th>
-    										<th>${ total.mPoint } 점</th>
+    										<th><button>삭제</button></th>
     									</tr>
 		    						</c:forEach>
     							</tbody>					
@@ -231,50 +182,27 @@ $(document).ready(function(){
     					<div id="userDaily" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr style="font-size: 18; color: white;">
-    									<th style="width: 250">검색</th>
+    								<tr style="font-size: 18; color: black;">
+    									
     									<th><input type="text"
-													class="form-control" placeholder="폴더이름" id="u_fName"
-													name="fName" required
+													class="form-control" placeholder="친구아이디" id="searchid"
+													name="searchid" required
 													data-validation-required-message="Please enter your id.">
 													</th>
+													<th style="width: 250"><button>검색</button></th>
     								</tr>
-    								<tr style="font-size: 18; color: white;">
+    								<tr style="font-size: 18; color: black;">
     									<!-- <th>레벨</th> -->    									
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">추가버튼</th>
     								</tr>
     							</thead>
-    							<tbody id="dailyTable">
+    							<tbody id="addbutton">
 		    					</tbody>					
     						</table>
     					</div>
-    					<div id="userWeekly" class="tab-pane fade">
-    						<table class="table">
-    							<thead>
-    								<tr style="font-size: 18; color: white;">
-    									<!-- <th>레벨</th> -->
-    									<th style="width: 250">아이디</th>
-    									<th style="width: 200">총점</th>
-    								</tr>
-    							</thead>
-    							<tbody id="weeklyTable">
-    							</tbody>					
-    						</table>
-    					</div>
-    					<div id="userMonthly" class="tab-pane fade">
-    						<table class="table">
-    							<thead>
-    								<tr style="font-size: 18; color: white;">
-    									<!-- <th>레벨</th> -->
-    									<th style="width: 250">아이디</th>
-    									<th style="width: 200">총점</th>
-    								</tr>
-    							</thead>
-    							<tbody id="monthlyTable">
-    							</tbody>					
-    						</table>
-    					</div>    					
+    					
+    				   					
     				</div>
     			</div>
     		</div>
@@ -293,19 +221,12 @@ $(document).ready(function(){
 
 
 
+
 	<!-- Start Footer Section -->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer Section -->
-
 </body>
-<!-- Custom JavaScript -->
-<script src="/showmethecard/resources/assets/js/script.js"></script>
-<!-- modal -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ <script src="../resources/assets/js/script.js"></script>
 
 </html>

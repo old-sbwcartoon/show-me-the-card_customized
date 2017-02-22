@@ -3,6 +3,8 @@ package com.rnh.showmethecard.model.service;
 import java.util.List;
 
 import com.rnh.showmethecard.model.dto.Folder;
+import com.rnh.showmethecard.model.dto.Friend;
+import com.rnh.showmethecard.model.dto.Member;
 
 public interface FolderService {
 		
@@ -23,4 +25,8 @@ public interface FolderService {
 	void changeFolder(Folder folder);
 
 	void deleteFolder(Folder folder);
+
+	List<Member> searchFollow(String mId, String frId);
+
+	void registerfollow(String mId, String frId);
 }

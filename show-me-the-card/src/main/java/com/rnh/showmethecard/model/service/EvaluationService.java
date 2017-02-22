@@ -7,7 +7,7 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationService {
 
-	void addEvaluationRating(int cardNo, String mId, String content, int eRating);
+	EvaluationRating addEvaluationRating(int cardNo, String mId, String content, int eRating);
 	
 	void addEvaluationRatingLiked(int eRatingNo, String mId, String likedmId);
 
@@ -27,6 +27,8 @@ public interface EvaluationService {
 	boolean confirmEvaluationRatingOfmId(int cardNo, String mId);
 
 	List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, String getmId, int pageNo);
+
+	EvaluationRating showEvaluationRatingBymId(int cardNo, String mId);
 	
 
 

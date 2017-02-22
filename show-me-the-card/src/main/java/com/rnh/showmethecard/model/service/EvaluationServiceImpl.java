@@ -20,8 +20,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 
 
 	@Override
-	public void addEvaluationRating(int cardNo, String mId, String content, int eRating) {
-		dao.insertEvaluationRating(cardNo, mId, content, eRating);
+	public EvaluationRating addEvaluationRating(int cardNo, String mId, String content, int eRating) {
+		return dao.insertEvaluationRating(cardNo, mId, content, eRating);
 	}
 
 	@Override
@@ -62,6 +62,11 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Override
 	public boolean confirmEvaluationRatingOfmId(int cardNo, String mId) {
 		return dao.selectExistsEvaluationRatingOfmId(cardNo, mId);
+	}
+
+	@Override
+	public EvaluationRating showEvaluationRatingBymId(int cardNo, String mId) {
+		return dao.selectEvaluationRatingBymId(cardNo, mId);
 	}
 
 

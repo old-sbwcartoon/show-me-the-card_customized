@@ -7,7 +7,8 @@
 
 
 
-<insert id="insertEvaluationRating" parameterType="HashMap">
+
+<insert id="insertEvaluationRating" parameterType="EvaluationRating">
 	insert into EVALUATION_RATING (
 		M_ID
 		, CARD_NO
@@ -75,6 +76,33 @@
 </insert>
 
 
+<resultMap id="evaluationRatingMap" type="EvaluationRating">
+		<id property="eRatingNo" column="E_RATING_NO" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="mId" column="M_ID" />
+        <result property="content" column="CONTENT" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="eRating" column="E_RATING" />
+	    <result property="deleted" column="deleted" />
+	    <result property="eLikedSum" column="E_LIKED_SUM" />
+</resultMap>
+
+<select id="selectEvaluationRatingBymId" resultMap="evaluationRatingMap" parameterType="HashMap">
+	select e.E_RATING_NO
+		, e.M_ID
+		, e.CARD_NO
+		, e.E_RATING
+		, e.CONTENT
+		, e.REG_DATE
+		, sum(ifnull(el.ER_LIKED, 0)) E_LIKED_SUM
+	from EVALUATION_RATING e
+		left outer join EVALUATION_RATING_LIKED el
+		on e.E_RATING_NO = el.E_RATING_NO
+	where e.CARD_NO = #{cardNo}
+		AND e.M_ID = #{mId}
+		AND e.deleted = 0
+	group by e.E_RATING_NO
+</select>
 
 
 <select id="selectEvaluationRatingLikedList" resultType="Integer" parameterType="Integer">
@@ -86,7 +114,7 @@
 
 
 
-<resultMap id="evaluationRatingMap" type="EvaluationRating">
+<resultMap id="evaluationRatingWithmLikedMap" type="EvaluationRating">
 		<id property="eRatingNo" column="E_RATING_NO" />
 		<result property="cardNo" column="CARD_NO" />
 		<result property="mId" column="M_ID" />
@@ -98,7 +126,7 @@
 	    <result property="mLiked" column="M_LIKED" />
 </resultMap>
 
-<select id="selectEvaluationRatingListWithPageNo" resultMap="evaluationRatingMap" parameterType="HashMap">
+<select id="selectEvaluationRatingListWithPageNo" resultMap="evaluationRatingWithmLikedMap" parameterType="HashMap">
 	select e.E_RATING_NO
 			, e.CARD_NO
 			, e.M_ID
@@ -113,6 +141,7 @@
 		on e.E_RATING_NO = el.E_RATING_NO
 	where e.CARD_NO = #{cardNo}
 		AND e.deleted = 0
+		AND e.M_ID != #{mId}
 	group by e.E_RATING_NO
 	order by E_LIKED_SUM DESC, e.REG_DATE DESC
 	limit #{articleStartNo}, #{limit}
@@ -158,6 +187,8 @@
 		limit 1
 		)
 </select>
+
+
 
 
 <update id="deleteEvaluationRatingByeRatingNo" parameterType="Integer">

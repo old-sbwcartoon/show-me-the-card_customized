@@ -119,6 +119,15 @@ textarea.autosize {
 	padding-bottom: 5px;
 }
 
+.eval-item {
+	height: 230px;
+	padding: 25px 35px;
+} 
+
+#myeval {
+	background-color: gold;
+} 
+
 .desc {
 	font-size: 15px;
 	letter-spacing: -0.023em;
@@ -137,14 +146,17 @@ textarea.autosize {
 }
 
 #div-eval-submit {
-	margin-top: 100px;
+	margin-top: 50px;
 	width: 10%;
 	float: right;
 }
 
-.div-eval-del {
+#div-eval-del {
 	position: relative;
 	top: -55px
+}
+#div-eval-del img {
+	height: 40px; width: auto;
 }
 
 .img-evaluation-del {
@@ -222,6 +234,23 @@ h2 {
 	    			    		
 		    }
 		    
+		    
+		    /* show writebox or my eval */
+		    if ($('.hidden-rating-isevalrating').val() === 'true') {
+		    	showEvalWriteOrMine("mine");
+		    } else {
+		    	showEvalWriteOrMine("write");
+		    }
+		    
+		    function showEvalWriteOrMine(keyWord) {
+		    	if (keyWord == "write") {
+		    		$('#div-eval-write').css('display', '');
+			    	$('#div-eval-mine').css('display', 'none');
+		    	} else if (keyWord == "mine") {
+		    		$('#div-eval-mine').css('display', '');
+			    	$('#div-eval-write').css('display', 'none');
+		    	}
+		    }
 		    
 		    
 		    
@@ -331,42 +360,28 @@ h2 {
 		    				content : spaceTrimedContent
 		    			},
 		    			success : function(data) {
-		    				alert("받아온 eRatingNo" + data.eRatingNo);
+		    				alert("받아온 eRatingNo" + data);
+							alert("히든발 : " + $("#div-eval-mine").find('.hidden-rating-isliked').val());
 		    				$('#div-eval-write').animate({
-								opacity : '0',
-								top  : '0px'
-							}, function() {
-								$(this).css('display', 'none');
+								opacity : '0'
+							}, function(data) {
+								alert("히든발2 : " + $("#div-eval-mine").find('.hidden-rating-isliked').val());
+								var myEvalDiv = $("#div-eval-mine").clone();
+								
+								myEvalDiv.find('.hidden-rating-no').val() = data.eRatingNo;
+								myEvalDiv.find('.hidden-rating-writer').val() = data.mId;
+								myEvalDiv.find('.hidden-rating-isliked').val() = data.mLiked;
+								alert("히든발2 : " + $("#div-eval-mine").find('.hidden-rating-isliked').val());
+								myEvalDiv.find('.eval-writer-id').text(data.mId);
+								myEvalDiv.find('.div-eval-text-content').text(data.content);
+								myEvalDiv.find('.hidden-liked-sum').val() = 0;
+
+								showEvalWriteOrMine("mine");
 							});
-		    				var newDiv = $('.eval-item').first().clone();
-		    			//	newDiv.find($('.hidden-rating-no')).val(data);
-		    				newDiv.find($('.hidden-rating-writer')).val(loginId);
-		    				newDiv.find($('.hidden-rating-isliked')).val(false);
-		    			//	newDiv.find($('.star')).text(eRating);
-		    				newDiv.find($('.star')).text(3);
-		    				newDiv.find($('.eval-writer-id')).text(loginId);
-		    				newDiv.find($('.div-eval-text-content')).text(spaceTrimedContent);
-		    				showDivLikedAlready($('.div-display-liked'));
-		    				newDiv.find($('.hidden-liked-sum')).val(0);
-		    				newDiv.find($('.liked-sum')).text(0);
-		    				
-		    				newDiv.prependTo($('.div-eval-list'));
 		    			}
 		    		});
 		    	}
 		    });
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
 	    	
 	    	
 	    	
@@ -388,7 +403,11 @@ h2 {
 							data : {
 								eRatingNo : evaluationNo
 							},
-							success : delWithAnimation(evaluationDiv)
+							success :
+								function() {
+									delWithAnimation(evaluationDiv);
+									showEvalWriteOrMine("write");
+								}
 						});
 					}
 				});
@@ -456,55 +475,9 @@ h2 {
 </head>
 <body>
 	<input id="loginusermId" type="hidden" value="${loginuser.mId}" />
-	<c:choose>
-		<c:when test="${ empty sessionScope.loginuser }">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- 삭제하기 -->
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-			<div class="container">
-				<div class="intro-text">
-					<h1>
-						Show Me the <span>Cards</span>
-					</h1>
-					<button type="button" id="loginbtn"
-						class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp;
-						LOGIN &nbsp;&nbsp;</button>
-					<button type="button" id="registerbtn"
-						class="page-scroll waves-effect btn btn-primary">&nbsp;
-						JOIN US &nbsp;&nbsp;</button>
-				</div>
-			</div>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- Start Header Section -->
-			<section class="header" id="home">
-			<div class="container">
-				<div class="intro-text">
-					<h1>
-						Show Me the <span>Cards</span>
-					</h1>
-					<button type="button" id="logoutbtn"
-						class="page-scroll waves-effect btn btn-primary">
-						&nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button>
-					<div class="dropdown">
-						<button type="button"
-							class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp;
-							MY MENU &nbsp;&nbsp;</button>
-						<div class="dropdown-content">
-							<a id="mypagebtn" href="#">My Page</a> <a
-								href="/showmethecard/member/list.action">Admin Page</a> <a
-								href="/showmethecard/member/pointList.action">My Point</a> <a
-								href="#">My Q&A</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			</section>
-		</c:otherwise>
-	</c:choose>
+	<c:import url="/WEB-INF/views/include/header.jsp" />
+	
+	
 	<section id="client" class="client-section">
 	<div class="container">
 		<div class="row">
@@ -565,49 +538,102 @@ h2 {
 
 
 
-
-
-
-
-
 		<div class="row">
 			<div class="col-md-12">
-
-
-
-
-
+			
+			<input class="hidden-rating-isevalrating" type="hidden" value="${ requestScope.isEvalRating }" />
+			
 	<!-- write new eval -->
-			<c:if test="${ requestScope.isEvalRating eq false }">
-				<div id="div-eval-write" class="counter-item text-center"
-					style="height: 230px; padding: 25px 35px;">
-					<div id="erating"
-						style="position: relative; float: left; width: 100%; border-bottom: dotted 2.5pt darkgray;">
+				<div id="div-eval-write" class="eval-item counter-item text-center" style="display: none;">
+					<div id="erating" style="position: relative; float: left; width: 100%; border-bottom: dotted 2.5pt darkgray;">
 						<h2>
 							<span class="star">☆</span>
 						</h2>
 					</div>
-					<div class="div-eval-text">
-						<h2 style="margin-top: 30px;">
-							<textarea id="eval-textarea" name="content" rows="3"
-								maxlength="100"
-								style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-								placeholder="새 품평..! (100글자까지)"></textarea>
-						</h2>
-					</div>
-					<div id="div-eval-submit" class="div-btn waves-effect">
-						<img class="fnc-icon"
-							src="/showmethecard/resources/images/comment-send.png" />
+					<div class="div-eval">
+						<div class="div-eval-text">
+							<h2>
+								<textarea id="eval-textarea" name="content" rows="3"
+									maxlength="100"
+									style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
+									placeholder="새 품평..! (100글자까지)"></textarea>
+							</h2>
+						</div>
+						<div id="div-eval-submit" class="div-btn waves-effect">
+							<img class="fnc-icon"
+								src="/showmethecard/resources/images/comment-send.png" />
+						</div>
 					</div>
 				</div>
-			</c:if>
-	<!-- write end -->				
+	<!-- new eval end -->
+			
+			
+	
+	<!-- my eval -->
+				<div id="div-eval-mine" class="eval-item counter-item text-center" style="display: none;">
+					<input class="hidden-rating-no" type="hidden" value="${ requestScope.myRating.eRatingNo }" />
+					<input class="hidden-rating-writer" type="hidden" value="${ requestScope.myRating.mId }" />
+					<input class="hidden-rating-isliked" type="hidden" value="${ requestScope.myRating.mLiked }" />
+					
+					<div class="div-star" style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
+						<h2>
+							<c:if test="${ requestScope.myRating.eRating eq 0 }">
+								<span class="star">☆</span>
+							</c:if>
+							<c:if test="${ requestScope.myRating.eRating eq 1 }">
+								<span class="star">★</span>
+							</c:if>
+							<c:if test="${ requestScope.myRating.eRating eq 2 }">
+								<span class="star">★★</span>
+							</c:if>
+							<c:if test="${ requestScope.myRating.eRating eq 3 }">
+								<span class="star">★★★</span>
+							</c:if>
+							<c:if test="${ requestScope.myRating.eRating eq 4 }">
+								<span class="star">★★★★</span>
+							</c:if>
+							<c:if test="${ requestScope.myRating.eRating eq 5 }">
+								<span class="star">★★★★★</span>
+							</c:if>
+						</h2>
+					</div>
+					<div id="div-eval-del">
+							<img class="fnc-icon img-evaluation-del"
+								src="/showmethecard/resources/images/comment-del.png" />
+					</div>
+					<div class="div-eval">
+						<div class="div-eval-text">
+							<div class="eval-writer"
+								style="float: left; margin-right: 20px;">
+								<h2>
+									<span class="eval-writer-id">${ requestScope.myRating.mId }</span> 님 :
+								</h2>
+							</div>
+							<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
+								<h2>${ requestScope.myRating.content }</h2>
+							</div>
+							<%-- <div style="position:relative; bottom:0px">
+									<p>
+										등록일: ${ requestScope.myRating.regDate }<br>
+									</p>
+								</div> --%>
+						</div>
+						<div class="div-display-liked text-right">
+							<i class="i-liked-sum service waves-effect liked-already"
+								style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white;">
+								<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
+								<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
+								<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
+							</i>
+						</div>
+					</div>
+				</div>
+	<!-- my eval end -->
 
 
 
 				<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
-					<div class="eval-item counter-item text-center"
-						style="height: 230px; padding: 25px 35px;">
+					<div class="eval-item counter-item text-center">
 						<input class="hidden-rating-no" type="hidden"
 							value="${ ratinglist.eRatingNo }" /> <input
 							class="hidden-rating-writer" type="hidden"
@@ -637,13 +663,6 @@ h2 {
 								</c:if>
 							</h2>
 
-						</div>
-						<div class="div-eval-del">
-							<c:if test="${ loginuser.mId eq ratinglist.mId }">
-								<img class="fnc-icon img-evaluation-del"
-									src="/showmethecard/resources/images/comment-del.png"
-									style="height: 40px; width: auto;" />
-							</c:if>
 						</div>
 						<div class="div-eval">
 							<div class="div-eval-text">

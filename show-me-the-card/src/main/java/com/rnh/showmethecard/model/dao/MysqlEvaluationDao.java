@@ -3,7 +3,6 @@ package com.rnh.showmethecard.model.dao;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
-import com.rnh.showmethecard.model.dto.Qna;
 import com.rnh.showmethecard.model.mapper.EvaluationMapper;
 
 @Repository(value="evaluationDao")
@@ -57,10 +55,9 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 	@Override
 	public List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
-		int limit = Literal.Ui.LIMIT;
+		int limit = Literal.Ui.PAGER_LIMIT;
 		int articleStartNo = (pageNo - 1) * limit;
-		System.out.println(limit);
-		System.out.println(articleStartNo);
+
 		HashMap<String, Object> data = new HashMap<>();
 		data.put("cardNo", cardNo);
 		data.put("mId", mId);
@@ -101,6 +98,28 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.put("cardNo", String.valueOf(cardNo));
 		data.put("mId", mId);
 		return mapper.selectExistsEvaluationRatingOfmId(data);
+	}
+
+
+	@Override
+	public EvaluationRating insertEvaluationRating(int cardNo, String mId, String content, int eRating) {
+		EvaluationRating data = new EvaluationRating();
+		data.setCardNo(cardNo);
+		data.setmId(mId);
+		data.setContent(content);
+		data.seteRating(eRating);
+		mapper.insertEvaluationRating(data);
+		
+		return data;
+	}
+
+
+	@Override
+	public EvaluationRating selectEvaluationRatingBymId(int cardNo, String mId) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("cardNo", String.valueOf(cardNo));
+		data.put("mId", mId);
+		return mapper.selectEvaluationRatingBymId(data);
 	}
 
 

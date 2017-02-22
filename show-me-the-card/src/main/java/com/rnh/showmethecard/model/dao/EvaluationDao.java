@@ -8,7 +8,7 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationDao {
 
-	void insertEvaluationRating(int cardNo, String mId, String content, int eRating);	
+	EvaluationRating insertEvaluationRating(int cardNo, String mId, String content, int eRating);	
 
 	void insertEvaluationComment(EvaluationComment newComment);
 
@@ -31,6 +31,8 @@ public interface EvaluationDao {
 	boolean selectExistsEvaluationRatingOfmId(int cardNo, String mId);
 
 	List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo);
+
+	EvaluationRating selectEvaluationRatingBymId(int cardNo, String mId);
 
 
 	

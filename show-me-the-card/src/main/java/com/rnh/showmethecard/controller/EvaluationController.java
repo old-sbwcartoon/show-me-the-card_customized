@@ -60,22 +60,19 @@ public class EvaluationController {
 		////////////////////////////////////////////////////////////////////cardNo));
 		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
 
-		model.addAttribute("evalRatingList", showEvaluationRatingWithPageNo(cardNo, req, 1));
+		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, 1));
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(cardNo));
 		
-		model.addAttribute("");
+		model.addAttribute("myRating", service.showEvaluationRatingBymId(cardNo, member.getmId()));
 		
 		return "evaluation/evaluationmain";
 	}
 	
 	@RequestMapping(value="showevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String showEvaluationRatingWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
-		int cardNob = 2;
-		Member member = (Member)req.getSession().getAttribute("loginuser");
-		service.showEvaluationRatingListWithPageNo(cardNob, member.getmId(), 1);
-		
-		return null;
+	public List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
+		Member member = (Member)req.getSession().getAttribute("loginuser");		
+		return service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), 1);
 	}
 	
 	//합치기
@@ -91,9 +88,11 @@ public class EvaluationController {
 		newRating.setContent(content);
 		newRating.seteRating(eRating);
 		
-		service.addEvaluationRating(cardNo, member.getmId(), content, 5);
+		String newEvalRating = new Gson().toJson(service.addEvaluationRating(cardNo, member.getmId(), content, 5));
 		
-		return null;
+		System.out.println("from controller evalratingno : " + newEvalRating);
+		
+		return newEvalRating;
 	}
 
 	

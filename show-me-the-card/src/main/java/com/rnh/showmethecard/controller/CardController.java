@@ -1,9 +1,12 @@
 package com.rnh.showmethecard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ import com.rnh.showmethecard.model.service.CardService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
 @Controller
-@RequestMapping(value = "/card")
+@RequestMapping(value = "/mypage")
 public class CardController {
 	
 //	@Autowired
@@ -43,16 +46,23 @@ public class CardController {
 	
 	Member member;
 	String mId;
+	int afNo = 190;
 	
 	Gson gson = new Gson();
 	
 	
 	
-	
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
-	public String cardRegisterForm() {
-		return "card/cardregisterform";
+	public String cardRegisterForm(String fNo, HttpServletResponse response) {
+		if (fNo == null) {
+			return "card/cardregisterform";
+		} else {
+			System.out.println(fNo);
+			afNo = Integer.parseInt(fNo);
+			return "card/cardregisterform";
+		}
+		
 	}
 	
 	@RequestMapping(value="card.action", method=RequestMethod.GET)
@@ -84,7 +94,7 @@ public class CardController {
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
 		
-		List<MyCardList> myCardListList= cardService.readMyCard(190);
+		List<MyCardList> myCardListList= cardService.readMyCard(afNo);
 		
 		int listLength = myCardListList.size();
 		

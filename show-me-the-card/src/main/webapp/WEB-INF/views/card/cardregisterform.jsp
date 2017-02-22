@@ -88,7 +88,8 @@
 <script src="http://code.jquery.com/jquery-3.1.1.js"></script> -->
 <script type="text/javascript">
 $(document).ready(function() {
-	alert("새로운페이지");
+	
+		
 	$('#mycardlist').load("showmycardlist.action");
 	//에이잭스 카운트 불러옴
 	var cardNum, check;
@@ -233,7 +234,7 @@ $(document).ready(function() {
 </style>
 <body class="index">
 	
-	<c:import url="/WEB-INF/views/include/header.jsp" />
+	
 	
 	<!-- 모달 시작 -->
 	<div class="modal fade" id="registercard" role="dialog">
@@ -324,7 +325,7 @@ $(document).ready(function() {
 
 	
 	<!-- Start Footer Section -->
-	<c:import url="/WEB-INF/views/include/footer.jsp" />
+	
 	<!-- End Footer Section -->
 
 </body>

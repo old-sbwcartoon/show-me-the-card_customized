@@ -53,7 +53,10 @@ public class MysqlCardDao implements CardDao {
 	public String selectUrlFromCardDbByCardNo(int cardNo){
 		return cardMapper.selectUrlFromCardDbByCardNo(cardNo);
 	}
-
+	@Override
+	public List<MyCardList> selectMyCardListByFNo(int fNo){
+		return cardMapper.selectMyCardListByFNo(fNo);
+	}
 //	@Override
 //	public Member selectMemberById(String mId) {
 //		Member member = memberMapper.selectMemberById(mId);

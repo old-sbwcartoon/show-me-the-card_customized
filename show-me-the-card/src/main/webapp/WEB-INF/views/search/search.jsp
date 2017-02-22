@@ -134,6 +134,7 @@ $(document).ready(function () {
 
 function search() {
 	   $('.m').remove();
+	   $('.c').remove();
 		if ( $('#search').val() == "") {
 			
 			alert("검색어를 입력해주세요.");
@@ -146,30 +147,30 @@ function search() {
 				dataType : "json",
 				success : function(data, status, xhr) {
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th></tr>').appendTo('.tbody').attr('class', 'm');
+						$('<tr><th><img src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].mId+'">'+data[i].mId+'</a></th></tr>').appendTo('.member').attr('class', 'm');
 					}
 				},
 				error : function(data) {
 					alert("실패");
 				}
 			});
-	   		/* $.ajax({
-				url : "/showmethecard/search/search.action",
+	   		$.ajax({
+				url : "/showmethecard/search/searchCard.action",
 				method : "get",
+				data : { cName : $('#search').val() } ,
 				dataType : "json",
 				success : function(data, status, xhr) {
-					$('.d').remove();
+					$('.c').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+						$('<tr><th>'+data[i].discover+'</th><th><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].siteUrl+'">'+data[i].siteUrl+'</th><th>'+data[i].cName+'</th></tr>').appendTo('.card').attr('class','c');
 					}
 				},
 				error : function(data) {
 					alert("실패");
 				}
-			}); */
+			});
 		};
 }
-
 
 </script>
 </head>
@@ -195,7 +196,7 @@ function search() {
 					<th style="width: 250">아이디</th>
 				</tr>
 	          </thead>
-	          <tbody class="tbody">
+	          <tbody class="member">
 	          
 		      </tbody>
 	      </table>
@@ -204,10 +205,10 @@ function search() {
 	      <table class="table">
 	          <thead>
 	            <tr style="font-size: 18; color: black;">
-	           		<th>레벨</th>
+	           		<th>카드</th>
 				</tr>
 	          </thead>
-	          <tbody class="tbody">
+	          <tbody class="card">
 	          
 		      </tbody>
 	      </table>

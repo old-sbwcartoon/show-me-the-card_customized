@@ -11,7 +11,7 @@
 		FROM MEMBER_HISTORY h, MEMBER m
 		where m.M_ID = h.M_ID AND h.REG_DATE = curdate() AND m.USERTYPE = '0' AND m.deleted = '0'
 		group by h.M_ID
-		order by mPoint desc limit 10
+		order by mLevel desc limit 10
 	</select>
 	<select id="weekChart" resultType="Member">
 		SELECT 

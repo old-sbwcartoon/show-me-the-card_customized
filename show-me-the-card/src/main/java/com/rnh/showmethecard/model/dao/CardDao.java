@@ -10,4 +10,6 @@ public interface CardDao {
 	void insertMyCard(int cardNo, String mycComment);
 	List<MyCardList> selectMyCardByFNo(int fNo);
 	String selectUrlFromCardDbByCardNo(int cardNo);
+	
+	List<MyCardList> selectMyCardListByFNo(int fNo);
 }

@@ -19,7 +19,21 @@
 		FROM MEMBER
 		WHERE deleted = '0'
 	</select>	
-
+	
+	<select id="cardSearch" resultType="Card" parameterType="String">
+		SELECT cd.DISCOVERER discover, cd.SITE_URL siteUrl, cd.C_NAME cName
+		FROM MY_CARD mc, MYC_TAG mt, CARD_DB cd
+		WHERE mc.MYC_NO = mt.MYC_NO AND mc.CARD_NO = cd.CARD_NO
+		AND mt.MYC_NAME like concat('%', #{cName}, '%')
+		ORDER BY mc.SCRAP_COUNT, cd.C_POINT desc	
+	</select>
+	
+	<select id="cardSearchCount" resultType="int">
+		SELECT COUNT(*) AS COUNT
+		FROM MY_CARD
+		WHERE deleted = '0'
+	</select>
+	
 </mapper>
 
 

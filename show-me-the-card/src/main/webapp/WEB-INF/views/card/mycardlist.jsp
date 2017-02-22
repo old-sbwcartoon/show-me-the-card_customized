@@ -9,22 +9,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
-<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+
 <script type="text/javascript">		
 	 	$(document).ready(function() {
-			$('#moveToSite').click(function(){
-				window.open($("#toUrl").val());
-			});
 		}); 
 </script>
 
 
 <section id="team" class="team-member-section" style="background-color : hsr(50,50,50);">
+<c:set var="incNum" value="${0}" />
 <c:forEach var="MyCardList" items="${ mycardListList }">
-
-		<!-- width:294px;  -->
-		<!-- <div class="row" > -->
-		<!-- <div class="col-lg-6 col-md-3"style="float:left;" > -->
+		
 			<div class="col-md-3 col-sm-6">
 			
 				<div class="team-member">
@@ -38,7 +33,7 @@
 						
 						<ul>
 							<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
-							<li id="moveToSiteM"><a href="#"><i class="fa fa-twitter"></i>이동</a></li>
+							<li><a href="${MyCardList.url}" target="_blank"><i class="fa fa-twitter"></i>이동</a></li>
 							<li><a href="#"><i class="fa fa-linkedin"></i>품평</a></li>
 						</ul>
 						<br>
@@ -46,12 +41,11 @@
 						<div><p>test</p></div>
 						
 						<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}"/>
-						<input id="toUrlM" type="hidden" value="${MyCardList.url}"/>
+						<input id='toUrl'+${incNum} type="hidden" value="${MyCardList.url}"/>
+						<input id='incNum' type="hidden" value="${incNum}"/>
 					</div>
 				</div>
 				
-			</div><!-- <div class="col-md-3 col-sm-6">  -->
-		<!-- </div> -->
-
+			</div>
 </c:forEach>
 </section>

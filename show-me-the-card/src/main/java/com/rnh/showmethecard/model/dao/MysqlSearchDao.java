@@ -48,4 +48,20 @@ public class MysqlSearchDao implements SearchDao{
 		return 0;
 	}
 	
+	@Override
+	public List<Card> cardSearch(String cName) {
+		
+		List<Card> cards = searchMapper.cardSearch(cName);
+		
+		return cards;
+	}
+	
+	@Override
+	public int cardSearchCount() {
+		
+		int count = searchMapper.cardSearchCount();
+		
+		return 0;
+	}
+	
 }

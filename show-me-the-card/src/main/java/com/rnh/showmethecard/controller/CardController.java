@@ -1,9 +1,12 @@
 package com.rnh.showmethecard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ import com.rnh.showmethecard.model.service.CardService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
 @Controller
-@RequestMapping(value = "/card")
+@RequestMapping(value = "/mypage")
 public class CardController {
 	
 //	@Autowired
@@ -43,16 +46,23 @@ public class CardController {
 	
 	Member member;
 	String mId;
+	int afNo = 190;
 	
 	Gson gson = new Gson();
 	
 	
 	
-	
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
-	public String cardRegisterForm() {
-		return "card/cardregisterform";
+	public String cardRegisterForm(String fNo, HttpServletResponse response) {
+		if (fNo == null) {
+			return "card/cardregisterform";
+		} else {
+			System.out.println(fNo);
+			afNo = Integer.parseInt(fNo);
+			return "card/cardregisterform";
+		}
+		
 	}
 	
 	@RequestMapping(value="card.action", method=RequestMethod.GET)
@@ -83,20 +93,23 @@ public class CardController {
 	public String ShowMYCardList(HttpSession session, HttpServletRequest req){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		
-		List<MyCardList> myCardListList= cardService.readMyCard(190);
+		afNo = 190;
+		List<MyCardList> myCardListList= cardService.readMyCard(afNo);
 		
 		int listLength = myCardListList.size();
 		
 		System.out.println(myCardListList.get(0).getMycNo());
 		for(int i=0;i<listLength;i++){
-			String tmp = myCardListList.get(0).getUrl();
+			String tmp = myCardListList.get(i).getUrl();
 			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
-			myCardListList.get(0).setDesc(h.getDesc());
-			myCardListList.get(0).setImg(h.getImg());
-			System.out.println(h.getImg());
-			myCardListList.get(0).setTitle(h.getTitle());
+			myCardListList.get(i).setDesc(h.getDesc());
+			myCardListList.get(i).setImg(h.getImg());
+//			System.out.println(h.getImg());
+			System.out.println(myCardListList.get(i).getImg());
+			myCardListList.get(i).setTitle(h.getTitle());
+			System.out.println(myCardListList.get(i).getUrl());
 		}
+		
 		Collections.reverse(myCardListList);
 		req.setAttribute("mycardListList", myCardListList);
 		return "card/mycardlist";
@@ -114,7 +127,6 @@ public class CardController {
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardService.insertMyCardOrCardDb(cardForInsert);
-		
 		return "입력 성공";
 	}
 		

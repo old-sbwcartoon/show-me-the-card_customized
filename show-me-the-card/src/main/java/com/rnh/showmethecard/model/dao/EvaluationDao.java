@@ -7,7 +7,7 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationDao {
 
-	void insertEvaluationRating(EvaluationRating newRating);
+	EvaluationRating insertEvaluationRating(int cardNo, String mId, String content, int eRating);	
 
 	void insertEvaluationComment(EvaluationComment newComment);
 
@@ -31,7 +31,7 @@ public interface EvaluationDao {
 
 	List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo);
 
-	
+	EvaluationRating selectEvaluationRatingBymId(int cardNo, String mId);
 
 
 	

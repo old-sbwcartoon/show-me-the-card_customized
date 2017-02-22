@@ -18,8 +18,11 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Qualifier("evaluationDao")
 	private EvaluationDao dao;
 
-
-
+	@Override
+	public EvaluationRating addEvaluationRating(int cardNo, String mId, String content, int eRating) {
+		return dao.insertEvaluationRating(cardNo, mId, content, eRating);
+	}
+	
 	@Override
 	public void addEvaluationComment(EvaluationComment newComment) {
 		dao.insertEvaluationComment(newComment);
@@ -61,12 +64,9 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public void addEvaluationRating(EvaluationRating newRating) {
-		dao.insertEvaluationRating(newRating);
+	public EvaluationRating showEvaluationRatingBymId(int cardNo, String mId) {
+		return dao.selectEvaluationRatingBymId(cardNo, mId);
 	}
-
-
-
 	
 	
 }

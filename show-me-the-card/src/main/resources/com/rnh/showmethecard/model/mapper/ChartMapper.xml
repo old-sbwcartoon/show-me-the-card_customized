@@ -23,7 +23,7 @@
 		where h.REG_DATE between (curdate() -7) and (curdate()+1) 
 		AND m.USERTYPE = '0' AND m.deleted = '0'
 		group by h.M_ID
-		order by sum(h.point) desc limit 10
+		order by mLevel desc limit 10
 	</select>
 	<select id="monthChart" resultType="Member">
 		SELECT 
@@ -32,13 +32,13 @@
 		FROM MEMBER_HISTORY h, MEMBER m
 		where m.M_ID = h.M_ID AND substring(h.REG_DATE, 6, 2) = substring(curdate(), 6,2) AND m.USERTYPE = '0' AND m.deleted = '0' 
 		group by h.M_ID
-		order by sum(h.point) desc limit 10
+		order by mLevel desc limit 10
 	</select>
 	<select id="totalChart" resultType="Member">
 		SELECT M_ID mId, M_POINT mPoint, M_Level mLevel
 		FROM MEMBER
 		WHERE USERTYPE = '0' AND deleted = '0'
-		order by M_POINT desc limit 10	
+		order by mLevel desc limit 10	
 	</select>
 	
 	<select id="dayCard" resultType="Card">

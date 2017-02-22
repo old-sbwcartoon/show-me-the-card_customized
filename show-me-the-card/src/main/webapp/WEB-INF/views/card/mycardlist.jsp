@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
-<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+
 <script type="text/javascript">		
 	 	$(document).ready(function() {
 			$('#moveToSite').click(function(){

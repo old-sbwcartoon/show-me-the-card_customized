@@ -44,6 +44,7 @@ public class MyPageController {
 				try {
 					writer = response.getWriter();
 					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
+					writer.flush();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

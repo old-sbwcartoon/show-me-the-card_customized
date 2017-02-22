@@ -119,6 +119,10 @@ textarea.autosize {
 	padding-bottom: 5px;
 }
 
+#imgdiv {
+	height: 600px;
+}
+
 .eval-item {
 	height: 230px;
 	padding: 25px 35px;
@@ -189,8 +193,9 @@ h2 {
 <script type="text/javascript">
 		$(document).ready(function() {
 			var loginId = $('#loginusermId').val();
+			var cardNo = $('#cardNo').val();
 			
-			
+			cardNo = 2;
 			
 			
 			var imgDiv = $('#imgdiv');
@@ -321,21 +326,21 @@ h2 {
 		    			url  : '/showmethecard/evaluation/addevalcomment.action',
 		    			type : 'POST',
 		    			data : {
-		    			//	cardNo  : cardNo
+		    				cardNo  : cardNo,
 		    				content : spaceTrimedContent
 		    			},
+		    			dataType : 'json',
 		    			success : function(data) {
-		    				//alert("받아온 eCommentNo" + data.eCommentNo);
-		    				$('#div-comment-write').animate({
+		    				alert("받아온 eCommentNo" + data.eCommentNo);
+		    				/* $('#div-comment-write').animate({
 								opacity : '0',
 								bottom  : '0px'
-							});
-		    				var newDiv = $('.div-comment').first().clone();
-		    				alert(newDiv);
-		    				newDiv.find($('.commentno')).val(data);
-		    				newDiv.find($('.comment-writer-id')).text(loginId)
-		    					.next().text(spaceTrimedContent)
-		    					.next().html('<img class="img-comment-del fnc-icon" src="/showmethecard/resources/images/comment-del.png" style="margin-top:10px; height:26px; width:auto;"/>');
+							}); */
+							$('#comment-textarea').val("");
+		    				var newDiv = $('.div-comment').first().clone(true);
+		    				newDiv.find('.commentno').val(data.eCommentNo);
+		    				newDiv.find('.comment-writer-id').text(loginId);
+		    				newDiv.find('p').text(spaceTrimedContent);
 		    				newDiv.prependTo($('.div-comment-list'));
 		    			}
 		    		});
@@ -355,29 +360,30 @@ h2 {
 		    			url  : '/showmethecard/evaluation/addevalrating.action',
 		    			type : 'POST',
 		    			data : {
-		    			//	cardNo  : cardNo,
+		    				cardNo  : cardNo,
 		    			//	eRating : 3,
 		    				content : spaceTrimedContent
 		    			},
+		    			dataType : 'json',
 		    			success : function(data) {
-		    				alert("받아온 eRatingNo" + data);
-							alert("히든발 : " + $("#div-eval-mine").find('.hidden-rating-isliked').val());
-		    				$('#div-eval-write').animate({
-								opacity : '0'
-							}, function(data) {
-								alert("히든발2 : " + $("#div-eval-mine").find('.hidden-rating-isliked').val());
-								var myEvalDiv = $("#div-eval-mine").clone();
-								
-								myEvalDiv.find('.hidden-rating-no').val() = data.eRatingNo;
-								myEvalDiv.find('.hidden-rating-writer').val() = data.mId;
-								myEvalDiv.find('.hidden-rating-isliked').val() = data.mLiked;
-								alert("히든발2 : " + $("#div-eval-mine").find('.hidden-rating-isliked').val());
-								myEvalDiv.find('.eval-writer-id').text(data.mId);
-								myEvalDiv.find('.div-eval-text-content').text(data.content);
-								myEvalDiv.find('.hidden-liked-sum').val() = 0;
+		    				
+							var newEvalDiv = $("#div-neweval").clone(true);
+							alert("0my Evaldiv" + $("#div-neweval").html());
 
-								showEvalWriteOrMine("mine");
-							});
+		    				$("#div-neweval").remove();
+							showEvalWriteOrMine("mine");
+							
+							
+							alert("my Evaldiv" + newEvalDiv.find($('#div-eval-mine')));
+							
+							newEvalDiv.find($('.hidden-rating-no')).val(data.eRatingNo);
+							newEvalDiv.find($('.hidden-rating-writer')).val(data.mId);
+							newEvalDiv.find($('.hidden-rating-isliked')).val(data.mLiked);
+							newEvalDiv.find($('.eval-writer-id')).text(data.mId);
+							newEvalDiv.find($('.div-eval-text-content')).text(data.content);
+							newEvalDiv.find($('.hidden-liked-sum')).val(0);
+							
+							$('#div-neweval').prepend(newEvalDiv);
 		    			}
 		    		});
 		    	}
@@ -450,8 +456,6 @@ h2 {
 			}
 			
 			
-
-			isConfirm;
 			/* confirm with animation */
 			function confirmWithAnimation(target, message) {
 				target.animate({
@@ -476,6 +480,7 @@ h2 {
 <body>
 	<c:import url="/WEB-INF/views/include/header.jsp" />
 	<input id="loginusermId" type="hidden" value="${loginuser.mId}" />
+	<input id="cardNo" type="hidden" value="${requestScope.cardNo}" />
 	
 	<section id="client" class="client-section">
 	<div class="container">
@@ -525,9 +530,7 @@ h2 {
 		<div class="row">
 			<div class="col-md-12">
 				<div class="counter-item" id="imgdiv">
-					<a id="thumbnaillink" href="${url}"> <img id="thumbnail"
-						src="${img}" />
-					</a>
+					<a id="thumbnaillink" href="${url}"> <img id="thumbnail" src="${img}" /></a>
 				</div>
 
 			</div>
@@ -542,88 +545,90 @@ h2 {
 			
 			<input class="hidden-rating-isevalrating" type="hidden" value="${ requestScope.isEvalRating }" />
 			
-	<!-- write new eval -->
-				<div id="div-eval-write" class="eval-item counter-item text-center" style="display: none;">
-					<div id="erating" style="position: relative; float: left; width: 100%; border-bottom: dotted 2.5pt darkgray;">
-						<h2>
-							<span class="star">☆</span>
-						</h2>
-					</div>
-					<div class="div-eval">
-						<div class="div-eval-text">
+			<div id="div-neweval">
+		<!-- write new eval -->
+					<div id="div-eval-write" class="eval-item counter-item text-center" style="display: none;">
+						<div id="erating" style="position: relative; float: left; width: 100%; border-bottom: dotted 2.5pt darkgray;">
 							<h2>
-								<textarea id="eval-textarea" name="content" rows="3"
-									maxlength="100"
-									style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-									placeholder="새 품평..! (100글자까지)"></textarea>
+								<span class="star">☆</span>
 							</h2>
 						</div>
-						<div id="div-eval-submit" class="div-btn waves-effect">
-							<img class="fnc-icon"
-								src="/showmethecard/resources/images/comment-send.png" />
-						</div>
-					</div>
-				</div>
-	<!-- new eval end -->
-			
-			
-	
-	<!-- my eval -->
-				<div id="div-eval-mine" class="eval-item counter-item text-center" style="display: none;">
-					<input class="hidden-rating-no" type="hidden" value="${ requestScope.myRating.eRatingNo }" />
-					<input class="hidden-rating-writer" type="hidden" value="${ requestScope.myRating.mId }" />
-					<input class="hidden-rating-isliked" type="hidden" value="${ requestScope.myRating.mLiked }" />
-					
-					<div class="div-star" style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
-						<h2>
-							<c:if test="${ requestScope.myRating.eRating eq 0 }">
-								<span class="star">☆</span>
-							</c:if>
-							<c:if test="${ requestScope.myRating.eRating eq 1 }">
-								<span class="star">★</span>
-							</c:if>
-							<c:if test="${ requestScope.myRating.eRating eq 2 }">
-								<span class="star">★★</span>
-							</c:if>
-							<c:if test="${ requestScope.myRating.eRating eq 3 }">
-								<span class="star">★★★</span>
-							</c:if>
-							<c:if test="${ requestScope.myRating.eRating eq 4 }">
-								<span class="star">★★★★</span>
-							</c:if>
-							<c:if test="${ requestScope.myRating.eRating eq 5 }">
-								<span class="star">★★★★★</span>
-							</c:if>
-						</h2>
-					</div>
-					<div id="div-eval-del">
-							<img class="fnc-icon img-evaluation-del"
-								src="/showmethecard/resources/images/comment-del.png" />
-					</div>
-					<div class="div-eval">
-						<div class="div-eval-text">
-							<div class="eval-writer"
-								style="float: left; margin-right: 20px;">
+						<div class="div-eval">
+							<div class="div-eval-text">
 								<h2>
-									<span class="eval-writer-id">${ requestScope.myRating.mId }</span> 님 :
+									<textarea id="eval-textarea" name="content" rows="3"
+										maxlength="100"
+										style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
+										placeholder="새 품평..! (100글자까지)"></textarea>
 								</h2>
 							</div>
-							<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
-								<h2>${ requestScope.myRating.content }</h2>
+							<div id="div-eval-submit" class="div-btn waves-effect">
+								<img class="fnc-icon"
+									src="/showmethecard/resources/images/comment-send.png" />
 							</div>
-							<%-- <div style="position:relative; bottom:0px">
-									<p>
-										등록일: ${ requestScope.myRating.regDate }<br>
-									</p>
-								</div> --%>
 						</div>
-						<div class="div-display-liked text-right">
-							<i class="i-liked-sum service waves-effect liked-already"
-								style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white;">
-								<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
-								<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
-								<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
-							</i>
+					</div>
+		<!-- new eval end -->
+				
+				
+		
+		<!-- my eval -->
+					<div id="div-eval-mine" class="eval-item counter-item text-center" style="display: none;">
+						<input class="hidden-rating-no" type="hidden" value="${ requestScope.myRating.eRatingNo }" />
+						<input class="hidden-rating-writer" type="hidden" value="${ requestScope.myRating.mId }" />
+						<input class="hidden-rating-isliked" type="hidden" value="${ requestScope.myRating.mLiked }" />
+						
+						<div class="div-star" style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
+							<h2>
+								<c:if test="${ requestScope.myRating.eRating eq 0 }">
+									<span class="star">☆</span>
+								</c:if>
+								<c:if test="${ requestScope.myRating.eRating eq 1 }">
+									<span class="star">★</span>
+								</c:if>
+								<c:if test="${ requestScope.myRating.eRating eq 2 }">
+									<span class="star">★★</span>
+								</c:if>
+								<c:if test="${ requestScope.myRating.eRating eq 3 }">
+									<span class="star">★★★</span>
+								</c:if>
+								<c:if test="${ requestScope.myRating.eRating eq 4 }">
+									<span class="star">★★★★</span>
+								</c:if>
+								<c:if test="${ requestScope.myRating.eRating eq 5 }">
+									<span class="star">★★★★★</span>
+								</c:if>
+							</h2>
+						</div>
+						<div id="div-eval-del">
+								<img class="fnc-icon img-evaluation-del"
+									src="/showmethecard/resources/images/comment-del.png" />
+						</div>
+						<div class="div-eval">
+							<div class="div-eval-text">
+								<div class="eval-writer"
+									style="float: left; margin-right: 20px;">
+									<h2>
+										<span class="eval-writer-id">${ requestScope.myRating.mId }</span> 님 :
+									</h2>
+								</div>
+								<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
+									<h2>${ requestScope.myRating.content }</h2>
+								</div>
+								<%-- <div style="position:relative; bottom:0px">
+										<p>
+											등록일: ${ requestScope.myRating.regDate }<br>
+										</p>
+									</div> --%>
+							</div>
+							<div class="div-display-liked text-right">
+								<i class="i-liked-sum service waves-effect liked-already"
+									style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white;">
+									<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
+									<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
+									<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
+								</i>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -722,7 +727,7 @@ h2 {
 						<div style="margin: 10px 0px;"></div>
 					</figure>
 					<figure>
-						<div id="div-comment-write" class="welcome-section text-center"
+						<div id="div-comment-write" class="service text-center"
 							style="height: 220px; margin: 10px 0px;">
 							<p style="padding: 0px;">
 								<textarea id="comment-textarea" name="content" class="autosize"
@@ -749,7 +754,7 @@ h2 {
 					<input class="commentno" type="hidden"
 						value="${ commentlist.eCommentNo }" />
 					<figure>
-					<div class="welcome-section text-center" style="margin: 10px 0px;">
+					<div class="service text-center" style="margin: 10px 0px;">
 						<h4 class="comment-writer-id">${ commentlist.mId }</h4>
 						<p>${ commentlist.content }</p>
 						<c:if test="${ loginuser.mId eq commentlist.mId }">

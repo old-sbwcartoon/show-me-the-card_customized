@@ -42,6 +42,8 @@ public class EvaluationController {
 //		String url = "https://www.odpia.org/main.odpia";
 		HtmlParser h = new HtmlParser(url, Literal.ParseHtml.From.WEB);
 
+		model.addAttribute("cardNo", cardNo);
+		
 		model.addAttribute("url", h.getUrl());
 		model.addAttribute("title", h.getTitle());
 		model.addAttribute("desc", h.getDesc());
@@ -58,7 +60,7 @@ public class EvaluationController {
 		// model.addAttribute("", );
 		
 		////////////////////////////////////////////////////////////////////cardNo));
-		//model.addAttribute("evalCommentList", service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), 1));
+		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
 
 		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, 1));
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(cardNo));
@@ -78,41 +80,28 @@ public class EvaluationController {
 	//합치기
 	@RequestMapping(value="addevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String addEvaluationRating(HttpServletRequest req, String content) {		
-		int cardNo = 2;
+	public String addEvaluationRating(int cardNo, HttpServletRequest req, String content) {	
 		int eRating = 5;
-		Member member = (Member)req.getSession().getAttribute("loginuser");
+		Member member = (Member)req.getSession().getAttribute("loginuser");		
+		EvaluationRating newRating = service.addEvaluationRating(cardNo, member.getmId(), content, 5);
 		
-		EvaluationRating newRating = new EvaluationRating();
-		newRating.setCardNo(cardNo);
-		newRating.setmId(member.getmId());		
-		newRating.setContent(content);
-		newRating.seteRating(eRating);
-		
-		String newEvalRating = new Gson().toJson(service.addEvaluationRating(cardNo, member.getmId(), content, 5));		
-		System.out.println("from controller evalratingno : " + newEvalRating);
-		
-		return newEvalRating;
+		return new Gson().toJson(newRating);
 	}
 
 	
 	@RequestMapping(value="addevalcomment.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String addEvaluationComment(HttpServletRequest req, String content) {
+	public String addEvaluationComment(int cardNo, HttpServletRequest req, String content) {
 		/////////////////////////////////// int cardNo
-		int cardNo = 2;
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-//		System.out.println(member.getmId());
-//		System.out.println(content);
-//		HashMap<String, Object> newCommentNo = service.addEvaluationComment(2, member.getmId(), content);
 
 		EvaluationComment newComment = new EvaluationComment();
-		newComment.setCardNo(cardNo);
+		newComment.setCardNo(2);
 		newComment.setContent(content);
 		newComment.setmId(member.getmId());
 		
 		service.addEvaluationComment(newComment);
-		
+				
 		return new Gson().toJson(newComment);
 	}
 	

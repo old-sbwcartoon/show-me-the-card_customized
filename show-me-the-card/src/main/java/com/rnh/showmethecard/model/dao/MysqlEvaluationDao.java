@@ -19,15 +19,10 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	@Qualifier("evaluationMapper")
 	private EvaluationMapper mapper;
 	
-	
-//	@Override
-//	public void insertEvaluationRating(EvaluationRating newRating) {
-//		mapper.insertEvaluationRating(newRating);		
-//	}
-
 
 	@Override
 	public void insertEvaluationComment(EvaluationComment newComment) {
+		System.out.println(newComment.getmId());
 		mapper.insertEvaluationComment(newComment);
 	}
 
@@ -107,6 +102,7 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.setmId(mId);
 		data.setContent(content);
 		data.seteRating(eRating);
+
 		mapper.insertEvaluationRating(data);
 		
 		return data;

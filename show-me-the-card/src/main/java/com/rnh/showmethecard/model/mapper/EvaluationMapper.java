@@ -8,18 +8,17 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationMapper {
 
-	void insertEvaluationRating(HashMap<String, String> data);
-
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
-
-	List<EvaluationRating> selectEvaluationRatingList(int cardNo);
-
-	float selectEvaluationRatingAvg(int cardNo);
-
-	List<EvaluationComment> selectEvaluationCommentList(int cardNo);
 
 	void insertEvaluationComment(EvaluationComment newComment);
 
+
+	
+	float selectEvaluationRatingAvg(int cardNo);
+
+	List<EvaluationRating> selectEvaluationRatingList(int cardNo);
+
+	List<EvaluationComment> selectEvaluationCommentList(int cardNo);
 	
 	
 	
@@ -38,5 +37,9 @@ public interface EvaluationMapper {
 	boolean selectExistsEvaluationRatingOfmId(HashMap<String, String> data);
 
 	List<EvaluationRating> selectEvaluationRatingListWithPageNo(HashMap<String, Object> data);
+
+	void insertEvaluationRating(EvaluationRating data);
+
+	EvaluationRating selectEvaluationRatingBymId(HashMap<String, String> data);
 	
 }

@@ -1,6 +1,5 @@
 package com.rnh.showmethecard.model.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +65,11 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Override
 	public EvaluationRating showEvaluationRatingBymId(int cardNo, String mId) {
 		return dao.selectEvaluationRatingBymId(cardNo, mId);
+	}
+
+	@Override
+	public int showEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue) {
+		return dao.selectEvaluationRatingNoSumWithCardNo(tName, tConditionName, tConditionValue);
 	}
 	
 	

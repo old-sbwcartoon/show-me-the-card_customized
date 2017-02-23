@@ -30,6 +30,8 @@ public interface EvaluationService {
 
 	EvaluationRating showEvaluationRatingBymId(int cardNo, String mId);
 
+	int showEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue);
+
 	
 
 }

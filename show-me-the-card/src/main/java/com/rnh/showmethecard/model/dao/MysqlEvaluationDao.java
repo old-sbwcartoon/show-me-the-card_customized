@@ -21,13 +21,6 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	
 
 	@Override
-	public void insertEvaluationComment(EvaluationComment newComment) {
-		System.out.println(newComment.getmId());
-		mapper.insertEvaluationComment(newComment);
-	}
-
-
-	@Override
 	public void insertEvaluationRatingLiked(int eRatingNo, String mId, String likedmId) {
 		HashMap<String, String> data = new HashMap<>();
 		data.put("eRatingNo", String.valueOf(new Integer(eRatingNo)));
@@ -45,6 +38,13 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.put("mId", mId);
 		
 		return mapper.selectEvaluationRatingLiked(data);
+	}
+
+
+	@Override
+	public void insertEvaluationComment(EvaluationComment newComment) {
+		System.out.println(newComment.getmId());
+		mapper.insertEvaluationComment(newComment);
 	}
 
 
@@ -115,6 +115,16 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.put("cardNo", String.valueOf(cardNo));
 		data.put("mId", mId);
 		return mapper.selectEvaluationRatingBymId(data);
+	}
+
+
+	@Override
+	public int selectEvaluationRatingNoSumWithCardNo(String tName, String tConditionName, String tConditionValue) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("tName", tName);
+		data.put("tConditionName", tConditionName);
+		data.put("tConditionValue", tConditionValue);
+		return mapper.selectEvaluationRatingNoSumWithCardNo(data);
 	}
 
 

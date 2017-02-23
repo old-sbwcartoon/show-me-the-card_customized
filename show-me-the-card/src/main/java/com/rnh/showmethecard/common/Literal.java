@@ -95,4 +95,17 @@ public class Literal {
 		
 	}
 	
+	public static class Table {
+		
+		public static class Name {
+			
+			public static final String EVALUATION_RATING  = "EVALUATION_RATING";
+			public static final String EVALUATION_COMMENT = "EVALUATION_COMMENT";
+		}
+
+		public static class Column {
+			
+			public static final String CARD_NO  = "CARD_NO";
+		}
+	}
 }

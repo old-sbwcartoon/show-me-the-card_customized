@@ -9,6 +9,8 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 public interface EvaluationMapper {
 
 	void insertEvaluationRatingLiked(HashMap<String, String> data);
+	
+	
 	void insertEvaluationComment(EvaluationComment newComment);
 
 
@@ -40,5 +42,7 @@ public interface EvaluationMapper {
 	void insertEvaluationRating(EvaluationRating data);
 
 	EvaluationRating selectEvaluationRatingBymId(HashMap<String, String> data);
+
+	int selectEvaluationRatingNoSumWithCardNo(HashMap<String, String> data);
 	
 }

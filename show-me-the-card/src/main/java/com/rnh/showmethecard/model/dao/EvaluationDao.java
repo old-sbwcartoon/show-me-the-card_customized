@@ -33,6 +33,8 @@ public interface EvaluationDao {
 
 	EvaluationRating selectEvaluationRatingBymId(int cardNo, String mId);
 
+	int selectEvaluationRatingNoSumWithCardNo(String tName, String tConditionName, String tConditionValue);
+
 
 	
 }

@@ -183,7 +183,13 @@
 </select>
 
 
-
+<select id="selectEvaluationRatingNoSumWithCardNo" resultType="int" parameterType="HashMap">
+	select T_ARTICLE_NO_SUM
+	from ARTICLE_NO_SUM
+	where T_NAME = #{tName}
+		AND T_CONDITION_NAME = #{tConditionName}
+		AND T_CONDITION_VALUE = #{tConditionVAlue}
+</select>
 
 <update id="deleteEvaluationRatingByeRatingNo" parameterType="Integer">
 	update EVALUATION_RATING

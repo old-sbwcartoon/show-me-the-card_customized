@@ -22,7 +22,7 @@
 
 	<div class="col-md-3 col-sm-6">
 	
-		<div style="border: 3px solid red; height: 500px;">
+		<div style="border: 5px solid hsl(0, 100%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px;">
 		
 			<div class="team-member" style="margin: 10px;">
 				<div id="imgdiv"

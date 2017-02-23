@@ -46,7 +46,7 @@ public class CardController {
 	
 	Member member;
 	String mId;
-	int afNo = 190;
+	int afNo;
 	
 	Gson gson = new Gson();
 	

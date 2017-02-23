@@ -33,11 +33,15 @@ public class CardServiceImpl implements CardService {
 		int cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
 		System.out.println("사이트조회 서비스 : " + cardNo);
 		if(cardNo == 0){
+			//카드 db 저장
 			String discoverer = cardForInsert.getDiscoverer();
 			String siteUrl = cardForInsert.getSiteUrl();
 			String cName = cardForInsert.getcName();
 			String imgSrc = cardForInsert.getImgSrc();
 			cardDao.insertCardDb(siteUrl, discoverer, cName, imgSrc);
+			//마이카드 저장
+			cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
+			cardForInsert.setCardNo(cardNo);
 			System.out.println("CARDDB INSERT 성공");
 		}
 		

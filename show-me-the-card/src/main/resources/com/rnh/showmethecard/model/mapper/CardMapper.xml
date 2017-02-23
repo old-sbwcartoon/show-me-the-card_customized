@@ -12,7 +12,7 @@
 	
 	
 	
-	<insert id="insertCardDb">
+	<insert id="insertCardDb" >
 	
 		INSERT INTO rnh2.CARD_DB
 		(site_url, c_point, discoverer, c_name, c_rating, img_src)

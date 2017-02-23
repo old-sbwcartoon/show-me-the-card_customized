@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.rnh.showmethecard.model.dto.CardForInsert;
 import com.rnh.showmethecard.model.dto.MyCardList;
 import com.rnh.showmethecard.model.mapper.CardMapper;
 
@@ -21,7 +22,6 @@ public class MysqlCardDao implements CardDao {
 	
 	@Override
 	public int selectCardDbBySiteUrl(String siteUrl) {
-		System.out.println("mysql");
 		String a = cardMapper.selectCardDbBySiteUrl(siteUrl);
 		int b = 0;
 		if(a == null){
@@ -37,18 +37,15 @@ public class MysqlCardDao implements CardDao {
 	}
 	
 	@Override
-	public void insertMyCard(int cardNo, String mycComment) {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("cardNo", cardNo);
-		map.put("mycComment", mycComment);
-		cardMapper.insertMyCard(map);
+	public void insertMyCard(CardForInsert cardForInsert) {
+		cardMapper.insertMyCard(cardForInsert);
 	}
 	
-	public void insertMyTag(int cardNo, String mycTag) {
+	public void insertMyTag(int mycNo, String mycName) {
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("cardNo", cardNo);
-		map.put("mycTag", mycTag);
-		cardMapper.insertMyCard(map);
+		map.put("mycNo", mycNo);
+		map.put("mycName", mycName);
+		cardMapper.insertMycTag(map);
 	}
 	
 	@Override

@@ -30,31 +30,45 @@ public class CardServiceImpl implements CardService {
 	
 	@Override
 	public void insertMyCardOrCardDb(CardForInsert cardForInsert){
-		int cardNo = cardForInsert.getCardNo();
+		int cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
+		System.out.println("사이트조회 서비스 : " + cardNo);
 		if(cardNo == 0){
+			//카드 db 저장
 			String discoverer = cardForInsert.getDiscoverer();
 			String siteUrl = cardForInsert.getSiteUrl();
 			String cName = cardForInsert.getcName();
 			String imgSrc = cardForInsert.getImgSrc();
 			cardDao.insertCardDb(siteUrl, discoverer, cName, imgSrc);
+			//마이카드 저장
+			cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
+			cardForInsert.setCardNo(cardNo);
 			System.out.println("CARDDB INSERT 성공");
 		}
-		cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
-		System.out.println(cardNo);
-		String mycComment = cardForInsert.getMycComment();
-		cardDao.insertMyCard(cardNo, mycComment);
-		String mycTag = "";
-		for(int i = 0 ; i < cardForInsert.getMycTagsArr().length ; i++){
-			mycTag = cardForInsert.getMycTagsArr()[i];
-			System.out.println(mycTag);
-			cardDao.insertMyTag(cardNo, mycTag);
-		}
+		
+		int fNo = cardForInsert.getfNo();
+		cardForInsert.setCardNo(cardNo);
+		
+		cardDao.insertMyCard(cardForInsert);
+		
+		int mycNo = cardForInsert.getMycNo();
+		System.out.println(mycNo);
+		
+//		int mycNo = cardForInsert.get
 		System.out.println("MYCARD INSERT 성공");
+		
+		String mycName = "";
+		System.out.println("test :"+ cardForInsert.getMycTagsArr()[0]);
+		
+		for(int i = 0 ; i < cardForInsert.getMycTagsArr().length ; i++){
+			mycName = cardForInsert.getMycTagsArr()[i];
+			System.out.println(mycName);
+			cardDao.insertMyTag(mycNo, mycName);
+		}
+		System.out.println("MYCTAG INSERT 성공");
 	}
 	
 	@Override
 	public List<MyCardList> readMyCard(int fNo){
-		System.out.println(fNo);
 		return cardDao.selectMyCardListByFNo(fNo);
 	}
 	

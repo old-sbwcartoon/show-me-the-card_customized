@@ -11,7 +11,9 @@ public class CardForInsert implements Serializable {
 	private String mycComment;
 	private String[] mycTagsArr;
 	private String imgSrc;
-	
+	private int fNo;
+	private int mycNo;
+	private int scrapCount;
 	
 	public String getSiteUrl() {
 		return siteUrl;
@@ -54,6 +56,24 @@ public class CardForInsert implements Serializable {
 	}
 	public void setImgSrc(String imgSrc) {
 		this.imgSrc = imgSrc;
+	}
+	public int getfNo() {
+		return fNo;
+	}
+	public void setfNo(int fNo) {
+		this.fNo = fNo;
+	}
+	public int getMycNo() {
+		return mycNo;
+	}
+	public void setMycNo(int mycNo) {
+		this.mycNo = mycNo;
+	}
+	public int getScrapCount() {
+		return scrapCount;
+	}
+	public void setScrapCount(int scrapCount) {
+		this.scrapCount = scrapCount;
 	}
 	
 }

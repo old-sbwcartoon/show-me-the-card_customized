@@ -13,8 +13,8 @@
 	<insert id="insertCardDb">
 	
 		INSERT INTO rnh2.CARD_DB
-		(site_url, c_point, discoverer, c_name, c_rating)
-		VALUES (#{siteUrl}, 0, #{discoverer}, #{cName}, 0)	
+		(site_url, c_point, discoverer, c_name, c_rating, img_src)
+		VALUES (#{siteUrl}, 0, #{discoverer}, #{cName}, 0, #{imgSrc})	
 		
 	</insert>
 	
@@ -22,26 +22,23 @@
 	
 		INSERT INTO  rnh2.MY_CARD
 		(card_no, f_no, myc_comment, scrap_count)
-		VALUES (#{cardNo}, 190, #{mycComment}, 0)	
+		VALUES (#{cardNo}, 254, #{mycComment}, 0)	
 		
 	</insert>
 	
-	<select id="selectMyCardByFNo" resultType="MyCardList" parameterType="int">
-	SELECT myc_no mycNo, card_no cardNo, myc_comment mycComment, scrap_count scrapCount
-	FROM rnh2.MY_CARD
-	WHERE f_no = #{fNo}
-	</select>
+	<insert id="insertMycTag" parameterType="HashMap">
+		
+		INSERT INTO  rnh2.MYC_TAG
+		(myc_no, myc_name)
+		VALUES (#{cardNo}, #{mycName})
+		
+	</insert>
 	
-	<select id="selectUrlFromCardDbByCardNo" resultType="String" parameterType="int">
-	SELECT site_url siteUrl
-	FROM rnh2.CARD_DB
-	WHERE card_no = #{cardNo}
-	</select>
 	
 	<select id="selectMyCardListByFNo" resultType="MyCardList" parameterType="int">
-		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url
+		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName
 		FROM MY_CARD mc, CARD_DB cd
-		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO=190;
+		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO=254;
 	</select>
  	<!-- <select id="SelectNoticeList" resultType="Notice" parameterType="int">
 	

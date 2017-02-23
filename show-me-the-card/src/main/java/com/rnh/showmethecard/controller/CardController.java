@@ -54,12 +54,13 @@ public class CardController {
 	
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
-	public String cardRegisterForm(String fNo, HttpServletResponse response) {
+	public String cardRegisterForm(Model model, String fNo, HttpServletResponse response) {
 		if (fNo == null) {
 			return "card/cardregisterform";
 		} else {
 			System.out.println(fNo);
 			afNo = Integer.parseInt(fNo);
+			model.addAttribute("getFNo", fNo);
 			return "card/cardregisterform";
 		}
 		
@@ -93,21 +94,16 @@ public class CardController {
 	public String ShowMYCardList(HttpSession session, HttpServletRequest req){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		afNo = 190;
+		afNo = 254;
 		List<MyCardList> myCardListList= cardService.readMyCard(afNo);
 		
 		int listLength = myCardListList.size();
 		
-		System.out.println(myCardListList.get(0).getMycNo());
 		for(int i=0;i<listLength;i++){
 			String tmp = myCardListList.get(i).getUrl();
 			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
 			myCardListList.get(i).setDesc(h.getDesc());
-			myCardListList.get(i).setImg(h.getImg());
-//			System.out.println(h.getImg());
-			System.out.println(myCardListList.get(i).getImg());
 			myCardListList.get(i).setTitle(h.getTitle());
-			System.out.println(myCardListList.get(i).getUrl());
 		}
 		
 		Collections.reverse(myCardListList);
@@ -117,7 +113,7 @@ public class CardController {
 	
 	@RequestMapping(value="cardregisterfin.action", method=RequestMethod.POST)
 	@ResponseBody
-	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson, String yg) {
+	public String cardRegisterfinal(HttpSession session,  @RequestBody String stringJson) {
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
 		System.out.println(stringJson);
@@ -126,6 +122,7 @@ public class CardController {
 		HtmlParser h = new HtmlParser(cardForInsert.getSiteUrl(), Literal.ParseHtml.From.WEB);
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
+		cardForInsert.setImgSrc(h.getImg());
 		cardService.insertMyCardOrCardDb(cardForInsert);
 		return "입력 성공";
 	}

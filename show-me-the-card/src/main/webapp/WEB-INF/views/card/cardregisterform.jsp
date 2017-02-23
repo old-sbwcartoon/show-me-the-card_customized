@@ -4,9 +4,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-		
+	alert($('#getFNo').val());
 	$('#mycardlist').load("showmycardlist.action");
-	//에이잭스 카운트 불러옴
 	var cardNum, check;
 	var a = 0;
 	var title = "";
@@ -140,8 +139,7 @@ $(document).ready(function() {
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<div class="row">
 						<div class="col-sm-12">
-							<div class="section-title text-center wow fadeInDown"
-								data-wow-duration="2s" data-wow-delay="50ms">
+							<div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
 								<h2>ADD MY CARD</h2>
 							</div>
 						</div>
@@ -213,4 +211,5 @@ $(document).ready(function() {
 			<div><div id="mycardlist"></div></div>
 		</div>
 	</div>
+	<input id="getFNo" type="hidden" value="${getFNO}"/>
 	<div id="test"></div>

@@ -32,8 +32,8 @@ public class MysqlCardDao implements CardDao {
 	}
 	
 	@Override
-	public void insertCardDb(String siteUrl, String discoverer, String cName) {
-		cardMapper.insertCardDb(siteUrl, discoverer, cName);
+	public void insertCardDb(String siteUrl, String discoverer, String cName, String imgSrc) {
+		cardMapper.insertCardDb(siteUrl, discoverer, cName, imgSrc);
 	}
 	
 	@Override
@@ -44,15 +44,13 @@ public class MysqlCardDao implements CardDao {
 		cardMapper.insertMyCard(map);
 	}
 	
-	@Override
-	public List<MyCardList> selectMyCardByFNo(int fNo){
-		return (List<MyCardList>) cardMapper.selectMyCardByFNo(fNo);
+	public void insertMyTag(int cardNo, String mycTag) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cardNo", cardNo);
+		map.put("mycTag", mycTag);
+		cardMapper.insertMyCard(map);
 	}
 	
-	@Override
-	public String selectUrlFromCardDbByCardNo(int cardNo){
-		return cardMapper.selectUrlFromCardDbByCardNo(cardNo);
-	}
 	@Override
 	public List<MyCardList> selectMyCardListByFNo(int fNo){
 		return cardMapper.selectMyCardListByFNo(fNo);

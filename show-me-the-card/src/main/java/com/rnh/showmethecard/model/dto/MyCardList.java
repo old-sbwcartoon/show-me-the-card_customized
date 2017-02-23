@@ -17,6 +17,8 @@ public class MyCardList implements Serializable {
 	private String mycComment;
 	private int mycNo;
 	private int scrapCount;
+	private String imgSrc;
+	
 	
 	public int getMycNo() {
 		return mycNo;
@@ -65,5 +67,11 @@ public class MyCardList implements Serializable {
 	}
 	public void setMycComment(String mycComment) {
 		this.mycComment = mycComment;
+	}
+	public String getImgSrc() {
+		return imgSrc;
+	}
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
 	}
 }

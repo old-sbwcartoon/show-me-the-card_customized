@@ -35,35 +35,26 @@ public class CardServiceImpl implements CardService {
 			String discoverer = cardForInsert.getDiscoverer();
 			String siteUrl = cardForInsert.getSiteUrl();
 			String cName = cardForInsert.getcName();
-			cardDao.insertCardDb(siteUrl, discoverer, cName);
+			String imgSrc = cardForInsert.getImgSrc();
+			cardDao.insertCardDb(siteUrl, discoverer, cName, imgSrc);
 			System.out.println("CARDDB INSERT 성공");
 		}
 		cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
 		System.out.println(cardNo);
 		String mycComment = cardForInsert.getMycComment();
 		cardDao.insertMyCard(cardNo, mycComment);
+		String mycTag = "";
+		for(int i = 0 ; i < cardForInsert.getMycTagsArr().length ; i++){
+			mycTag = cardForInsert.getMycTagsArr()[i];
+			System.out.println(mycTag);
+			cardDao.insertMyTag(cardNo, mycTag);
+		}
 		System.out.println("MYCARD INSERT 성공");
 	}
 	
-//	@Override
-//	public List<MyCardList> readMyCard(int fNo){
-//		
-//		myCardListList = cardDao.selectMyCardByFNo(fNo);
-//		System.out.println(myCardListList.get(0).getMycComment());
-//		for(int i = 0; i< myCardListList.size(); i++){
-//			int tmp = myCardListList.get(i).getCardNo();
-//			System.out.println(tmp);
-//			String tmpResult = cardDao.selectUrlFromCardDbByCardNo(tmp);
-//			myCardListList.get(i).setUrl(tmpResult);
-//			System.out.println(tmpResult);
-//		}
-//		System.out.println("일단성공");
-//		
-//		return myCardListList;
-//	}
-	
 	@Override
 	public List<MyCardList> readMyCard(int fNo){
+		System.out.println(fNo);
 		return cardDao.selectMyCardListByFNo(fNo);
 	}
 	

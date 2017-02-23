@@ -9,6 +9,9 @@ public class CardForInsert implements Serializable {
 	private String cName;
 	private int cardNo;
 	private String mycComment;
+	private String[] mycTagsArr;
+	private String imgSrc;
+	
 	
 	public String getSiteUrl() {
 		return siteUrl;
@@ -39,6 +42,18 @@ public class CardForInsert implements Serializable {
 	}
 	public void setMycComment(String mycComment) {
 		this.mycComment = mycComment;
+	}
+	public String[] getMycTagsArr() {
+		return mycTagsArr;
+	}
+	public void setMycTagsArr(String[] mycTagsArr) {
+		this.mycTagsArr = mycTagsArr;
+	}
+	public String getImgSrc() {
+		return imgSrc;
+	}
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
 	}
 	
 }

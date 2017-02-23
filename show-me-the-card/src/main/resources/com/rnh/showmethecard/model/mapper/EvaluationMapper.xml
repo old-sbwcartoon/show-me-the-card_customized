@@ -141,10 +141,12 @@
 	limit #{articleStartNo}, #{limit}
 </select>
 
-<select id="selectEvaluationRatingAvg" resultType="Float" parameterType="Integer">
-	select round(avg(E_RATING), 3)
+<select id="selectEvaluationRatingAvg" resultType="Float" parameterType="HashMap">
+	select ifnull(round(avg(E_RATING), 3), -1)
 	from EVALUATION_RATING
 	where CARD_NO = #{cardNo}
+		AND deleted = 0
+	<!-- having count(*) > #{minArticleNo} -->
 </select>
 
 
@@ -183,12 +185,12 @@
 </select>
 
 
-<select id="selectEvaluationRatingNoSumWithCardNo" resultType="int" parameterType="HashMap">
+<select id="selectEvaluationRatingNoSumWithCardNo" resultType="Integer" parameterType="HashMap">
 	select T_ARTICLE_NO_SUM
 	from ARTICLE_NO_SUM
 	where T_NAME = #{tName}
 		AND T_CONDITION_NAME = #{tConditionName}
-		AND T_CONDITION_VALUE = #{tConditionVAlue}
+		AND T_CONDITION_VALUE = #{tConditionValue}
 </select>
 
 <update id="deleteEvaluationRatingByeRatingNo" parameterType="Integer">
@@ -209,5 +211,27 @@
 </update>
 
 
+<resultMap id="cardDbMap" type="Card">
+	<id property="cardNo" column="CARD_NO" />
+	<result property="siteUrl" column="SITE_URL" />
+	<result property="cPoint" column="C_POINT" />
+	<result property="regDate" column="REG_DATE" />
+	<result property="discover" column="DISCOVERER" />
+	<result property="cName" column="C_NAME" />
+	<result property="cRating" column="C_RATING" />
+</resultMap>
 
+<select id="selectCardDbByCardNo" resultMap="cardDbMap" parameterType="Integer">
+	select CARD_NO
+		, SITE_URL
+		, C_POINT
+		<!-- , date_format(REG_DATE, "%Y/%c/%e %T") REG_DATE -->
+		, REG_DATE
+		, DISCOVERER
+		, C_NAME
+		, C_RATING
+	from CARD_DB
+	where CARD_NO = #{cardNo}
+</select>
+	
 </mapper>

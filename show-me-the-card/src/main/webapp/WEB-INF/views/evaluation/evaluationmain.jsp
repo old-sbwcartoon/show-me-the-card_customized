@@ -119,7 +119,19 @@ textarea.autosize {
 	padding-bottom: 5px;
 }
 
-#imgdiv {
+#div-thumbnail {
+	height: 800px;
+}
+
+#div-thumbnail-img {
+	height: 600px;
+}
+
+#div-thumbnail-text {
+	height: 200px;
+}
+
+#link-thumbnail {
 	height: 600px;
 }
 
@@ -211,17 +223,23 @@ h2 {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
+			//var cardRegDate = $('#hidden-card-regdate').val();
+			
+			//new Date(cardRegDate);
+			//var formatChangedRegDate = new Date(cardRegDate).getFullYear() + '/' + cardRegDate.getMonth() + 1 + '/' cardRegDate.getDate();
+			
+			//$('#card-regdate').text(formatChangedRegDate);
 			
 			
-			var imgDiv = $('#imgdiv');
-			var img = $('#thumbnail');
+		    /* 이미지 크기 결정 */
+			var imgDiv = $('#div-thumbnail-img');
+			var img = $('#img-thumbnail');
 			var imgWidth = img.width(); // 초기 값
 			var imgHeight = img.height(); // 초기 값
 			
 		    var divisor = 2;
 		    var ratio = 0.75;
 			
-		    /* 이미지 크기 결정 */
 		    if (img.width() > img.height()) { // 사진의 가로가 세로보다 크면
 		    	if (img.width() < imgDiv.width() / divisor) { // 그런데 div를 어떤 숫자로 나눈 값보다 작으면
 		    		img.css("width", imgDiv.width() * ratio);
@@ -245,7 +263,7 @@ h2 {
 		    /* 이미지를 가운데 정렬하기 위해 더미 div 생성 */
 		    function addDummyDiv() {
 	    		imgDiv.prepend($('<div>', {
-			    	id  : "dummybeforethumbnail",
+			    	id  : "div-dummy-thumbnail",
 			    	css : {
 			    		height  : (imgDiv.height() - img.height()) / 2
 			    		, width : imgDiv.width()
@@ -298,6 +316,9 @@ h2 {
 		    	var star = "";
 		    	var starNo = Math.round(decimalStarNo);
 
+		    	if (starNo == -1) {
+		    		star = "☆☆☆☆☆";
+		    	}
 	    		if (starNo == 0) {
 	    			star = '☆';
 	    		} else {
@@ -451,7 +472,7 @@ h2 {
 							newEvalDiv.find('.hidden-star-no').val(data.eRating);
 							setStar(newEvalDiv.find('#div-eval-mine .star'), data.eRating);
 							
-							newEvalDiv.find('.eval-writer-id').text(data.mId);
+							newEvalDiv.find('.eval-writer-id').text("내 품평 : ");
 							newEvalDiv.find('.div-eval-text-content').find('h2').text(data.content);
 							newEvalDiv.find('.hidden-liked-sum').val(data.eLikedSum);
 							newEvalDiv.find('.liked-sum').text(data.eLikedSum);
@@ -556,27 +577,29 @@ h2 {
 </head>
 <body>
 	<c:import url="/WEB-INF/views/include/header.jsp" />
-	<input id="loginusermId" type="hidden" value="${loginuser.mId}" />
-	<input id="cardNo" type="hidden" value="${requestScope.cardNo}" />
+	<input id="loginusermId" type="hidden" value="${ loginuser.mId }" />
+	<input id="cardNo" type="hidden" value="${ requestScope.card.cardNo }" />
 	
-	<section id="client" class="client-section">
+	<section id="eval-rating" class="client-section">
 	<div class="container">
 		<div class="row">
 			<div id="div-title" class="col-md-12">
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="50ms">
-					<h2>${title}</h2>
+					<h2>${requestScope.htmlParser.title}</h2>
 					<br>
 					<h4 style="color: gold;">#해쉬태그 #해쉬태그 #해쉬태그</h4>
 					<h2>..</h2>
-					<p>${desc}</p>
+					<p>${requestScope.htmlParser.desc}</p>
 				</div>
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="10ms">
 					<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
 					<h2 style="color: gold;">
-							<span class="star"></span>
-						${ requestScope.eRatingAvg }
+						<span class="star"></span>
+						<c:if test="${ requestScope.eRatingAvg ne -1 }">
+							${ requestScope.eRatingAvg }
+						</c:if>
 					</h2>
 				</div>
 				<br>
@@ -586,11 +609,19 @@ h2 {
 		</div><!-- row end -->
 		<div class="row">
 			<div class="col-md-12">
-				<div class="counter-item" id="imgdiv">
-					<a id="thumbnaillink" href="${url}"> <img id="thumbnail" src="${img}" /></a>
+				<div id="div-thumbnail" class="counter-item">
+					<div id="div-thumbnail-img">
+						<a id="link-thumbnail" href="${requestScope.htmlParser.url}"> <img id="img-thumbnail" src="${requestScope.htmlParser.img}" /></a>
+					</div>
+					<div id="div-thumbnail-text">
+						<h2>POINT : ${ requestScope.card.cPoint }</h2>
+						<h2>DISCOVERER : ${ requestScope.card.discover } 님</h2>
+						<input id="hidden-card-regdate" type="hidden" value="${ requestScope.card.regDate }" />
+						<h4>등록일 : ${ requestScope.card.regDate }</h4>
+					</div>
 				</div>
-
 			</div>
+			
 		</div><!-- row end -->
 	</div><!-- container end -->
 
@@ -742,8 +773,8 @@ h2 {
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 	</section>
-	<!-- End Client Section -->
-	<section id="about-us" class="about-us-section-1">
+	<!-- end eval-rating section -->
+	<section id="eval-comment" class="services-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 col-sm-12">

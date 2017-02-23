@@ -31,36 +31,24 @@ public class EvaluationController {
 	private EvaluationService service;
 	
 	@RequestMapping(value={"/evaluationmain.action", "/", ""}, method=RequestMethod.GET)
-	public String showEvaluation(int cardNo, Model model, HttpServletRequest req, int pageNo) { //////////////////////////////////cardNo
+	public String showEvaluation(int cardNo, Model model, HttpServletRequest req) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
+		int pageNo = 1;
+		
+		Card card = service.showCardDb(cardNo);
+		HtmlParser htmlParser = new HtmlParser(card.getSiteUrl(), Literal.ParseHtml.From.DB);
 
-//		String url = "http://j07051.tistory.com/333";
-		String url = "http://crosstheline.tistory.com/41";
-//		String url = "https://www.odpia.org/main.odpia";
-		HtmlParser h = new HtmlParser(url, Literal.ParseHtml.From.WEB);
-
-		model.addAttribute("cardNo", cardNo);
+		//card
+		model.addAttribute("htmlParser", htmlParser);
+		model.addAttribute("card", card);
 		
-		model.addAttribute("url", h.getUrl());
-		model.addAttribute("title", h.getTitle());
-		model.addAttribute("desc", h.getDesc());
-		model.addAttribute("img", h.getImg());
-		int pageNoSum = service.showEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));
-		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, member.getmId()));//////////////////////////////////cardNo
-		model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
-		
-		// 전체 Point, 최초 등록일
-		Card c = new Card();
-		model.addAttribute("cPoint", c.getcPoint());
-		model.addAttribute("regDate", c.getRegDate());
-		
-		
-		
+		//evaluation
+		int pageNoSum = service.showEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));		
+		model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));		
+		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, member.getmId()));
 		model.addAttribute("evalCommentList", service.showEvaluationCommentList(cardNo));
-
-		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, pageNo));
+		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, pageNo));		
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(cardNo));
-		
 		model.addAttribute("myRating", service.showEvaluationRatingBymId(cardNo, member.getmId()));
 		
 		return "evaluation/evaluationmain";

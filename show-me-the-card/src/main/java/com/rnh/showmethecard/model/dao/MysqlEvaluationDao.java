@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.common.Literal;
+import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.mapper.EvaluationMapper;
@@ -43,7 +44,6 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 	@Override
 	public void insertEvaluationComment(EvaluationComment newComment) {
-		System.out.println(newComment.getmId());
 		mapper.insertEvaluationComment(newComment);
 	}
 
@@ -64,7 +64,11 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 	@Override
 	public float selectEvaluationRatingAvg(int cardNo) {
-		return mapper.selectEvaluationRatingAvg(cardNo);
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("cardNo", cardNo);
+		data.put("minArticleNo", Literal.Analysis.Average.MIN_ARTICLE_NO);
+		
+		return mapper.selectEvaluationRatingAvg(data);
 	}
 
 
@@ -128,7 +132,10 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	}
 
 
-
+	@Override
+	public Card selectCardDbByCardNo(int cardNo) {
+		return mapper.selectCardDbByCardNo(cardNo);
+	}
 
 
 

@@ -95,6 +95,7 @@ public class Literal {
 		
 	}
 	
+	
 	public static class Table {
 		
 		public static class Name {
@@ -106,6 +107,15 @@ public class Literal {
 		public static class Column {
 			
 			public static final String CARD_NO  = "CARD_NO";
+		}
+	}
+	
+	
+	public static class Analysis {
+		
+		public static class Average {
+			
+			public static final int MIN_ARTICLE_NO = 3;
 		}
 	}
 }

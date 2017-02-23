@@ -2,6 +2,7 @@ package com.rnh.showmethecard.model.service;
 
 import java.util.List;
 
+import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
@@ -31,6 +32,8 @@ public interface EvaluationService {
 	EvaluationRating showEvaluationRatingBymId(int cardNo, String mId);
 
 	int showEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue);
+
+	Card showCardDb(int cardNo);
 
 	
 

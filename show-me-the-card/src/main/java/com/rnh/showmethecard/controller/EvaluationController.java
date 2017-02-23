@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.rnh.showmethecard.common.Literal;
@@ -32,11 +31,9 @@ public class EvaluationController {
 	private EvaluationService service;
 	
 	@RequestMapping(value={"/evaluationmain.action", "/", ""}, method=RequestMethod.GET)
-	public String showEvaluation(Model model, HttpServletRequest req) { //////////////////////////////////cardNo
+	public String showEvaluation(int cardNo, Model model, HttpServletRequest req, int pageNo) { //////////////////////////////////cardNo
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-		
-		int cardNo = 2;
-		
+
 //		String url = "http://j07051.tistory.com/333";
 		String url = "http://crosstheline.tistory.com/41";
 //		String url = "https://www.odpia.org/main.odpia";
@@ -48,16 +45,20 @@ public class EvaluationController {
 		model.addAttribute("title", h.getTitle());
 		model.addAttribute("desc", h.getDesc());
 		model.addAttribute("img", h.getImg());
-		
+		int pageNoSum = service.showEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));
 		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, member.getmId()));//////////////////////////////////cardNo
+		model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
+		
 		// 전체 Point, 최초 등록일
 		Card c = new Card();
 		model.addAttribute("cPoint", c.getcPoint());
 		model.addAttribute("regDate", c.getRegDate());
 		
-		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
+		
+		
+		model.addAttribute("evalCommentList", service.showEvaluationCommentList(cardNo));
 
-		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, 1));
+		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, pageNo));
 		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(cardNo));
 		
 		model.addAttribute("myRating", service.showEvaluationRatingBymId(cardNo, member.getmId()));
@@ -69,7 +70,7 @@ public class EvaluationController {
 	@ResponseBody
 	public List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");		
-		return service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), 1);
+		return service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), pageNo);
 	}
 	
 	//합치기
@@ -90,7 +91,7 @@ public class EvaluationController {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
 
 		EvaluationComment newComment = new EvaluationComment();
-		newComment.setCardNo(2);
+		newComment.setCardNo(cardNo);
 		newComment.setContent(content);
 		newComment.setmId(member.getmId());
 		

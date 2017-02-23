@@ -197,6 +197,10 @@ h2 {
 	cursor: pointer;
 }
 
+#div-write-erating {
+	cursor: pointer;
+}
+
 .fnc-icon {
 	cursor: pointer;
 }
@@ -207,8 +211,6 @@ h2 {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
-			
-			cardNo = 2;
 			
 			
 			var imgDiv = $('#imgdiv');
@@ -338,17 +340,25 @@ h2 {
 		    
 		    
 		    /* 별품평 제어 */
-		    var arr = $('#div-write-erating').find('.star')
+		    var arr = $('#div-write-erating').find('.star');
 		    var starArr = [];
+		    
+		    $('#div-write-erating').on("click", function() {
+		    	$('#hidden-set-star-no').val($(this).attr('title'));
+		    	arr.text('☆');
+		    });
 	    	for(i = 0; i < arr.length; i++) {
 	    		starArr[i] = arr.eq(i);
-	    		starArr[i].on("mouseover", function() {
+	    		starArr[i].on("mouseover", function(event) {
+	    			event.stopPropagation();
 	    			$(this).text('★').prevAll().text('★');
 	    		});
-	    		starArr[i].on("mouseout", function() {
+	    		starArr[i].on("mouseout", function(event) {
+	    			event.stopPropagation();
 	    			$(this).text('☆').prevAll().text('☆');
 	    		});
-	    		starArr[i].on("click", function() {
+	    		starArr[i].on("click", function(event) {
+	    			event.stopPropagation();
 	    			$(this).off("mouseover").off("mouseout").prevAll().off("mouseover").off("mouseout");
 	    			$(this).nextAll().off("mouseover").off("mouseout");
 	    			$(this).text('★').prevAll().text('★');
@@ -358,8 +368,18 @@ h2 {
 	    		});
 	    	}
 
-	    	
-		    
+	    	var pageNoHidden = $('#hidden-pageno-eval');
+			$('#go-prev').on("click", function() {
+				if (pageNoHidden.val() > 1) {
+					pageNoHidden.val(pageNoHidden.val() - 1);
+				}
+			});
+			var pageNoMax = $('#hidden-pagenomax-eval').val();
+			$('#go-next').on("click", function() {
+				if (pageNoHidden.val() > pageNoMax) {
+					pageNoHidden.val(pageNoHidden.val() + 1);
+				}
+			});
 		    
 		    /* 좋아요 누르면 실행 */
 		    $('.div-display-liked').each(function() {
@@ -409,7 +429,6 @@ h2 {
 		    $("#div-eval-submit").click(function() {
 		    	var spaceTrimedContent = $.trim($('#eval-textarea').val());
 
-    			alert($('#hidden-set-star-no').val());
 		    	if (spaceTrimedContent &&// spaceTrimedContent가 not !(null || "" || NaN || 0) 
 		    			confirm("등록하시겠습니까?")) {
 		    		
@@ -585,7 +604,7 @@ h2 {
 				<div id="div-neweval">
 				<!-- write new eval -->
 					<div id="div-eval-write" class="eval-item counter-item text-center" style="display: none;">
-						<div id="div-write-erating" class="border-bottom-dotted" style="position: relative; float: left; width: 100%;">
+						<div id="div-write-erating" class="border-bottom-dotted" style="position: relative; float: left; width: 100%;" title="0">
 							<input id="hidden-set-star-no" type="hidden" value="0" />
 							<h2>
 								<span class="star" title="1">☆</span>
@@ -633,7 +652,7 @@ h2 {
 								<div class="eval-writer"
 									style="float: left; margin-right: 20px;">
 									<h2>
-										<span class="eval-writer-id">${ requestScope.myRating.mId }</span> 님 :
+										<span class="eval-writer-id">내 품평 : </span>
 									</h2>
 								</div>
 								<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
@@ -715,9 +734,11 @@ h2 {
 		
 					</div><!-- eval-list end -->
 				<div class="text-center" >
+					<input id="hidden-pageno-eval" type="hidden" value="1" />
+					<input id="hidden-pagenomax-eval" type="hidden" value="${ requestScope.evalPageNoMax }" />
 					<h1><span id="go-prev">&lt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="go-next">></span></h1>
 				</div>
-			</div><!-- col-md-12 -->		
+			</div><!-- col-md-12 -->
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 	</section>

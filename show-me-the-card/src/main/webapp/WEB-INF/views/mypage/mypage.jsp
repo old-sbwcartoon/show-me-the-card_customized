@@ -139,7 +139,7 @@
 							if ($('#fName').val() != "") {
 								$.ajax({
 									url : 'register.action',
-									type : 'post',								
+									type : 'post',
 									data : {
 										mId : $('#mId').val(),
 										fName : $('#fName').val(),
@@ -157,7 +157,7 @@
 										$('#folderpage').append(
 												/* li) */
 
-										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '">'+ data.fName + '</button>')
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><span class="ftext">'+ data.fName + '</span></button>')
 
 										) 
 
@@ -179,8 +179,8 @@
 						function() {
 							if ($('#u_fName').val() != "") {
 								$.ajax({
-									url : 'update.action',
-									type : 'post',								
+									url : 'folderupdate.action',
+									type : 'post',
 									data : {
 										mId : $('#u_mId').val(),
 										fNo : $('#u_m_fNo').val(),
@@ -189,10 +189,16 @@
 									},
 									dataType : 'json',
 									success : function(data) {
+										var fName = data.fName
+										$('#folder_'+ data.fNo).find('.ftext').text(fName);
 										
-										$('#folder_'+ data.fNo).text(data.fName);
+										var booleans = data.secret; 
+										if (booleans) {
+											$('#u_myonoffswitch').prop("checked", true);
+										} else {
+											$('#u_myonoffswitch').prop("checked", false);
+										}						
 										
-										$('#u_myonoffswitch').prop("checked", data.secret);
 											
 									}
 
@@ -287,11 +293,10 @@
 							
 							//var fNo1= event.currentTarget.childNodes[1].defaultValue
 											
-							var u_fnameis = event.currentTarget.childNodes[3].data;
+							var u_ftext = $(event.currentTarget).find('.ftext').text();
 							
-							$('#u_fName').attr('value',
-									event.currentTarget.childNodes[3].data);														
-							$('#u_fName').val(event.currentTarget.childNodes[3].data);							
+																					
+							$('#u_fName').val(u_ftext);
 							
 							var u_f_modal = $("#u_loginModal");
 							
@@ -304,7 +309,7 @@
 																					
 							
 							//$('#u_myonoffswitch').prop("checked", booleans)
-							if (booleans == "true") {
+							if (booleans == 'true') {
 								$('#u_myonoffswitch').prop("checked", true);
 							} else {
 								$('#u_myonoffswitch').prop("checked", false);
@@ -312,7 +317,7 @@
 							
 							var switchchecked1 = $('#u_myonoffswitch').is(":checked");
 							
-							$('#u_m_fNo').attr('value','fNo')
+							$('#u_m_fNo').attr('value',fNo)
 							
 							u_f_modal.modal('show');
 							//longpress event end
@@ -422,7 +427,7 @@
 		<c:forEach var="folder" items="${ folders }">		
 				<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
 					style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
-						src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }>${ folder.fName }</button>		
+						src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><span class="ftext">${ folder.fName }</span></button>		
 		</c:forEach>
 	</span>
 

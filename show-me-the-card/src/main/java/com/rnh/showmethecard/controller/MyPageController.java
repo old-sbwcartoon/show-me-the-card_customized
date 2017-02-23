@@ -43,10 +43,11 @@ public class MyPageController {
 		if (session.getAttribute("loginuser") != null) { 
 			member = (Member) session.getAttribute("loginuser");
 				if (goId == null) {
-					flag = true; 
+					mId = member.getmId();				 
 				} else if(member.getmId() != goId) {
-					flag = false;
+					mId = goId;
 				}
+				
 			} else { 
 				PrintWriter writer;
 				try {
@@ -60,11 +61,7 @@ public class MyPageController {
 			 
 			}
 		
-		if (flag) {
-			mId = member.getmId();				
-		} else {
-			mId = goId;
-		}
+		
 		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
 		model.addAttribute("folders", folders);		
 		return "mypage/mypage";
@@ -76,6 +73,7 @@ public class MyPageController {
 	@RequestMapping(value="register.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
 	@ResponseBody
 	public String RegisterFolder(Folder folder, String fName, String mId, boolean secret) {
+		
 		folder.setfName(fName);
 		folder.setmId(mId);
 		folder.setSecret(secret);
@@ -88,19 +86,20 @@ public class MyPageController {
 
 	
 	//폴더 수정
-	@RequestMapping(value="update.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
+	@RequestMapping(value="folderupdate.action", method=RequestMethod.POST, produces = "application/json;charset=utf-8" )
 	@ResponseBody
-	public String ChangeFolder(Folder folder, String fName, String mId, String fNo, boolean secret) {
-		
+	public String ChangeFolder(Folder folder, String fName, String mId, int fNo, boolean secret) {
+
 		folder.setfName(fName);
-		int fNo1 = Integer.parseInt(fNo);
-		folder.setfNo(fNo1);
+		
+		folder.setfNo(fNo);
 		folder.setmId(mId);		
 		folder.setSecret(secret);
 		
 		folderService.changeFolder(folder);
 		
 		Gson gson = new Gson();	
+		
 		
 		return gson.toJson(folder);
 	}

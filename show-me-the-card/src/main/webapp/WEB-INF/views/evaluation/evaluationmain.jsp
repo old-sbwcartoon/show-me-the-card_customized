@@ -139,6 +139,18 @@ textarea.autosize {
 	margin-top: 16px;
 }
 
+.div-line {
+	height: 40px;
+	width: 100%;
+}
+
+.border-bottom-dotted {
+	 border-bottom: dotted 2.5pt darkgray;
+}
+.border-top-dotted {
+	 border-top: dotted 2.5pt darkgray;
+}
+
 .div-eval {
 	position: relative;
 	top: 35px;
@@ -181,8 +193,8 @@ h2 {
 	margin-top: -5px;
 }
 
-.star {
-	
+#div-eval-write .star {
+	cursor: pointer;
 }
 
 .fnc-icon {
@@ -194,6 +206,7 @@ h2 {
 		$(document).ready(function() {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
+			var ratingAvg = $('#hidden-star-avg').val();
 			
 			cardNo = 2;
 			
@@ -247,59 +260,16 @@ h2 {
 		    	showEvalWriteOrMine("write");
 		    }
 		    
-		    function showEvalWriteOrMine(keyWord) {
-		    	if (keyWord == "write") {
-		    		$('#div-eval-write').css('display', '');
-			    	$('#div-eval-mine').css('display', 'none');
-		    	} else if (keyWord == "mine") {
-		    		$('#div-eval-mine').css('display', '');
-			    	$('#div-eval-write').css('display', 'none');
-		    	}
-		    }
+		    /* setting star average */
+		    setStar($('#div-title .star'), ratingAvg);
 		    
-		    
-		    
-		    /* 좋아요 누르면 실행 */
-		    $('.div-display-liked').each(function() {
-		    	var writerId = $(this).parent().parent().find($('.hidden-rating-writer')).val();
-		    	var isLiked  = $(this).parent().parent().find($('.hidden-rating-isliked')).val();
-    			var divLiked = $(this).parent().parent();
-		    	
-		    	
-		    	if ( (isLiked === 'true') || (loginId == writerId) ) {
-		    		showDivLikedAlready($(this));
-			    } else {
-			    	showDivLikedYet($(this));
-			    }
-		    	
-		    	
-		    	$(this).find($('.i-liked-sum')).click(function() {	    			
-		    		if ( (loginId != writerId) && //로그인한 유저와 글쓴이 아이디가 다르고
-		    				(isLiked === 'false') && //좋아요!! 를 아직 누르지 않았고
-		    				(confirm("좋아요?")) ) { //확인을 눌렀다면
-		    			
-			    		$.ajax({
-			    			url  : '/showmethecard/evaluation/addevalratingliked.action',
-				    		type : 'POST',
-				    		data : {
-				    			eRatingNo : divLiked.find($('.hidden-rating-no')).val(),
-				    			mId       : writerId
-				    		},
-				    		success : function() {
-				    			var hiddenData = divLiked.find($('.hidden-liked-sum'));
-				    			var likedSum = parseInt(hiddenData.val());
-				    			hiddenData.next(find('.liked-sum')).text(likedSum + 1);
-				    			showDivLikedAlready(divLiked);
-						    	
-			    				isLiked = true;
-				    		}
-				    	});
-
-		    		}		    		
-		    	});
-		    		
+		    $('.div-star').each(function() {
+		    	setStar( $(this).find('.star'), $(this).find('.hidden-star-no').val() );
 		    });
 		    
+		    //// custom functions ////////////////////////////////////////////////////////////////////////////////////////
+		    
+		    /* show div by having liked */
 		    function showDivLikedYet(target) {
 		    	target.find($('.liked-yet')).css('display', '');
 		    	target.find($('.liked-already')).css('display', 'none');
@@ -310,151 +280,41 @@ h2 {
 		    	target.find($('.liked-already')).css('display', '');
 		    }
 		    
-		    
-		    /* textarea auto resize */
-		    /* $("textarea.autosize").on('keydown keyup', function () {
-	    		$(this).height(1).height( $(this).prop('scrollHeight')+12 );
-	    	}); */
-		    
-	    	/* submit comment */
-		    $("#div-comment-submit").click(function() {
-		    	var spaceTrimedContent = $.trim($('#comment-textarea').val());
-		    	
-		    	if (spaceTrimedContent) { // spaceTrimedContent가 not !(null || "" || NaN || 0) 
-		    		
-		    		$.ajax({
-		    			url  : '/showmethecard/evaluation/addevalcomment.action',
-		    			type : 'POST',
-		    			data : {
-		    				cardNo  : cardNo,
-		    				content : spaceTrimedContent
-		    			},
-		    			dataType : 'json',
-		    			success : function(data) {
-		    				alert("받아온 eCommentNo" + data.eCommentNo);
-		    				/* $('#div-comment-write').animate({
-								opacity : '0',
-								bottom  : '0px'
-							}); */
-							$('#comment-textarea').val("");
-		    				var newDiv = $('.div-comment').first().clone(true);
-		    				newDiv.find('.commentno').val(data.eCommentNo);
-		    				newDiv.find('.comment-writer-id').text(loginId);
-		    				newDiv.find('p').text(spaceTrimedContent);
-		    				newDiv.prependTo($('.div-comment-list'));
-		    			}
-		    		});
+		    /* show eval write or mine */
+		    function showEvalWriteOrMine(keyWord) {
+		    	if (keyWord == "write") {
+		    		$('#div-eval-write').css('display', '');
+			    	$('#div-eval-mine').css('display', 'none');
+		    	} else if (keyWord == "mine") {
+		    		$('#div-eval-mine').css('display', '');
+			    	$('#div-eval-write').css('display', 'none');
 		    	}
-		    });
+		    }
+		    		    
+		    /* set rating star */
+		    function setStar(targetTag, decimalStarNo) {
+		    	var star = "";
+		    	var starNo = Math.round(decimalStarNo);
 
-	    	
-	    	
-	    	
-	    	/* submit evaluation */
-		    $("#div-eval-submit").click(function() {
-		    	var spaceTrimedContent = $.trim($('#eval-textarea').val());
-		    	
-		    	if (spaceTrimedContent) { // spaceTrimedContent가 not !(null || "" || NaN || 0) 
-		    		
-		    		$.ajax({
-		    			url  : '/showmethecard/evaluation/addevalrating.action',
-		    			type : 'POST',
-		    			data : {
-		    				cardNo  : cardNo,
-		    			//	eRating : 3,
-		    				content : spaceTrimedContent
-		    			},
-		    			dataType : 'json',
-		    			success : function(data) {
-		    				
-							var newEvalDiv = $("#div-neweval").clone(true);
-							alert("0my Evaldiv" + $("#div-neweval").html());
-
-		    				$("#div-neweval").remove();
-							showEvalWriteOrMine("mine");
-							
-							
-							alert("my Evaldiv" + newEvalDiv.find($('#div-eval-mine')));
-							
-							newEvalDiv.find($('.hidden-rating-no')).val(data.eRatingNo);
-							newEvalDiv.find($('.hidden-rating-writer')).val(data.mId);
-							newEvalDiv.find($('.hidden-rating-isliked')).val(data.mLiked);
-							newEvalDiv.find($('.eval-writer-id')).text(data.mId);
-							newEvalDiv.find($('.div-eval-text-content')).text(data.content);
-							newEvalDiv.find($('.hidden-liked-sum')).val(0);
-							
-							$('#div-neweval').prepend(newEvalDiv);
-		    			}
-		    		});
-		    	}
-		    });
-	    	
-	    	
-	    	
-	    	
-	    	/* delete evaluation */
-			$('.img-evaluation-del').each(function() {
-				var evaluationDiv = $(this).parent().parent();
-				var writermId = evaluationDiv.find($('.hidden-rating-writer')).val();
-				var evaluationNo = evaluationDiv.find($('.hidden-rating-no')).val();
-
-				$(this).click(function() {
-
-					if ( (loginId == writermId) && 
-						(confirm("삭제하시겠습니까?")) ) {
-						
-						$.ajax({
-							url  : '/showmethecard/evaluation/delevalrating.action',
-							type : 'POST',
-							data : {
-								eRatingNo : evaluationNo
-							},
-							success :
-								function() {
-									delWithAnimation(evaluationDiv);
-									showEvalWriteOrMine("write");
-								}
-						});
-					}
-				});
-				
-			});
-	    	
-	    	/* delete comment */
-			$('.img-comment-del').each(function() {
-				var commentDiv = $(this).parent().parent().parent();
-				var commentNo = commentDiv.find($('.commentno')).val();
-				var writermId = $(this).parent().find($('.comment-writer-id')).text();
-				
-				$(this).click(function() {
-					
-					if ( (loginId == writermId) && 
-						(confirm("삭제하시겠습니까?")) ) {
-						
-						$.ajax({
-							url : '/showmethecard/evaluation/delevalcomment.action',
-							type : 'POST',
-							data : {
-								eCommentNo : commentNo
-							},
-							success : delWithAnimation(commentDiv)
-						});
-					}
-				});
-				
-			});
+	    		if (starNo == 0) {
+	    			star = '☆';
+	    		} else {
+	    			for (var i = 0; i < starNo; i++) {
+			    		star += '★';
+			    	}
+	    		}
+		    	targetTag.text(star);
+		    }
 
 			/* delete with animation */
 			function delWithAnimation(target) {
 				target.animate({
-					opacity : '0',
-					top : '0px'
+					opacity : '0'
 				},
 				function() {
 					target.remove();
 				});
-			}
-			
+			}			
 			
 			/* confirm with animation */
 			function confirmWithAnimation(target, message) {
@@ -474,6 +334,204 @@ h2 {
 				return isConfirm;
 			}
 			
+		    //// event listener /////////////////////////////////////////////////////////////////////////////////////////
+		    
+		    
+		    /* 별품평 제어 */
+		    var arr = $('#div-write-erating').find('.star')
+		    var starArr = [];
+	    	for(i = 0; i < arr.length; i++) {
+	    		starArr[i] = arr.eq(i);
+	    		starArr[i].on("mouseover", function() {
+	    			$(this).text('★').prevAll().text('★');
+	    		});
+	    		starArr[i].on("mouseout", function() {
+	    			$(this).text('☆').prevAll().text('☆');
+	    		});
+	    		starArr[i].on("click", function() {
+	    			$(this).off("mouseover").off("mouseout").prevAll().off("mouseover").off("mouseout");
+	    			$(this).nextAll().off("mouseover").off("mouseout");
+	    			$(this).text('★').prevAll().text('★');
+	    			$(this).nextAll().text('☆');
+
+	    			$('#hidden-set-star-no').val($(this).attr('title'));
+	    		});
+	    	}
+
+	    	
+		    
+		    
+		    /* 좋아요 누르면 실행 */
+		    $('.div-display-liked').each(function() {
+		    	var divLiked = $(this).parent().parent();
+		    	var writerId = divLiked.find($('.hidden-rating-writer')).val();
+		    	var isLiked  = divLiked.find($('.hidden-rating-isliked')).val();
+		    	
+		    	if ( (isLiked === 'true') || (loginId == writerId) ) {
+		    		showDivLikedAlready($(this));
+			    } else {
+			    	showDivLikedYet($(this));
+			    }
+		    });
+			
+		    
+	    	$(document).on("click", '.i-liked-sum',
+	    		function(event) {
+		    			var divLiked = $(event.target).parent().parent().parent();
+				    	var writerId = divLiked.find($('.hidden-rating-writer')).val();
+				    	var isLikedHidden  = divLiked.find($('.hidden-rating-isliked'));
+    	
+			    		if ( (loginId != writerId) && //로그인한 유저와 글쓴이 아이디가 다르고
+			    				(isLikedHidden.val() === 'false') && //좋아요!! 를 아직 누르지 않았고
+			    				(confirm("좋아요?")) ) { //확인을 눌렀다면
+			    			
+				    		$.ajax({
+				    			url  : '/showmethecard/evaluation/addevalratingliked.action',
+					    		type : 'POST',
+					    		data : {
+					    			eRatingNo : divLiked.find($('.hidden-rating-no')).val(),
+					    			mId       : writerId
+					    		},
+					    		success : function() {
+					    			var hiddenData = $(event.target).parent().find('.hidden-liked-sum');
+					    			var likedSum = parseInt(hiddenData.val());
+					    			$(event.target).parent().find('.liked-sum').text(likedSum + 1);
+					    			showDivLikedAlready(divLiked);
+					    		}
+					    	});
+		    		}
+    		});
+		    
+	    	
+	    	
+
+	    	/* submit evaluation */
+		    $("#div-eval-submit").click(function() {
+		    	var spaceTrimedContent = $.trim($('#eval-textarea').val());
+
+    			alert($('#hidden-set-star-no').val());
+		    	if (spaceTrimedContent &&// spaceTrimedContent가 not !(null || "" || NaN || 0) 
+		    			confirm("등록하시겠습니까?")) {
+		    		
+		    		$.ajax({
+		    			url  : '/showmethecard/evaluation/addevalrating.action',
+		    			type : 'POST',
+		    			data : {
+		    				cardNo  : cardNo,
+		    				eRating : $('#hidden-set-star-no').val(),
+		    				content : spaceTrimedContent
+		    			},
+		    			dataType : 'json',
+		    			success : function(data) {
+							var newEvalDiv = $("#div-eval-submit").parent().parent().parent();
+
+							newEvalDiv.find('.hidden-rating-no').val(data.eRatingNo);
+							newEvalDiv.find('.hidden-rating-writer').val(data.mId);
+							newEvalDiv.find('.hidden-rating-isliked').val(data.mLiked);
+							newEvalDiv.find('.hidden-rating-writer').val(data.mId);
+							newEvalDiv.find('.hidden-star-no').val(data.eRating);
+							setStar(newEvalDiv.find('#div-eval-mine .star'), data.eRating);
+							
+							newEvalDiv.find('.eval-writer-id').text(data.mId);
+							newEvalDiv.find('.div-eval-text-content').find('h2').text(data.content);
+							newEvalDiv.find('.hidden-liked-sum').val(data.eLikedSum);
+							newEvalDiv.find('.liked-sum').text(data.eLikedSum);
+							
+							showEvalWriteOrMine("mine");
+		    			}
+		    		});
+		    	}
+		    });
+	    	
+	    	
+	    	/* submit comment */
+		    $('#div-comment-submit').click(function() {
+		    	var spaceTrimedContent = $.trim($('#comment-textarea').val());
+		    	
+		    	if (spaceTrimedContent) { // spaceTrimedContent가 not !(null || "" || NaN || 0) 
+		    		
+		    		$.ajax({
+		    			url  : '/showmethecard/evaluation/addevalcomment.action',
+		    			type : 'POST',
+		    			data : {
+		    				cardNo  : cardNo,
+		    				content : spaceTrimedContent
+		    			},
+		    			dataType : 'json',
+		    			success : function(data) {
+		    				/* $('#div-comment-write').animate({
+								opacity : '0',
+								bottom  : '0px'
+							}); */
+							$('#comment-textarea').val("");
+		    				var newDiv = $('.div-comment').first().clone(true);
+		    				newDiv.find('.commentno').val(data.eCommentNo);
+		    				if (newDiv.find('.comment-writer-id').text() != loginId) {
+		    					var commentDelHtml = $('<img class="fnc-icon img-comment-del" src="/showmethecard/resources/images/comment-del.png" style="margin-top: 10px; height: 26px; width: auto;"/>');
+		    					newDiv.find('figure').find('div').append(commentDelHtml);
+		    				}
+		    				newDiv.find('.comment-writer-id').text(loginId);
+		    				newDiv.find('p').text(spaceTrimedContent);
+		    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
+		    			}
+		    		});
+		    	}
+		    });
+
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	/* delete evaluation */
+			 $('#div-neweval').on("click", '.img-evaluation-del',
+				 function(event) {
+					var evaluationDiv = $(event.target).parent().parent();
+					var writermId = evaluationDiv.find($('.hidden-rating-writer')).val();
+					var evaluationNo = evaluationDiv.find($('.hidden-rating-no')).val();
+	
+					if ( (loginId == writermId) && 
+						(confirm("삭제하시겠습니까?")) ) {
+						
+						$.ajax({
+							url  : '/showmethecard/evaluation/delevalrating.action',
+							type : 'POST',
+							data : {
+								eRatingNo : evaluationNo
+							},
+							success :
+								function() {
+									$('#eval-textarea').val("");
+									showEvalWriteOrMine("write");
+								}
+						});
+					}
+			});
+	    	
+	    	/* delete comment */
+			$('.div-comment-list').on("click", '.img-comment-del',
+					function(event) {
+						var commentDiv = $(event.target).parent().parent().parent();
+						var commentNo = commentDiv.find('.commentno').val();
+						var writermId = commentDiv.find('.comment-writer-id').text();
+						
+							if ( (loginId == writermId) && 
+								(confirm("삭제하시겠습니까?")) ) {
+								
+								$.ajax({
+									url : '/showmethecard/evaluation/delevalcomment.action',
+									type : 'POST',
+									data : {
+										eCommentNo : commentNo
+									},
+									success : delWithAnimation(commentDiv)
+								});
+					}
+				
+			});
+
+			
 		});
 	</script>
 </head>
@@ -485,7 +543,7 @@ h2 {
 	<section id="client" class="client-section">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div id="div-title" class="col-md-12">
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="50ms">
 					<h2>${title}</h2>
@@ -496,29 +554,9 @@ h2 {
 				</div>
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="10ms">
+					<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
 					<h2 style="color: gold;">
-						<c:if test="${ requestScope.eRatingAvg lt 1.000 }">
-							<span class="star">☆</span>
-						</c:if>
-						<c:if
-							test="${ requestScope.eRatingAvg lt 2.000 and requestScope.eRatingAvg ge 1.000 }">
-							<span class="star">★</span>
-						</c:if>
-						<c:if
-							test="${ requestScope.eRatingAvg lt 3.000 and requestScope.eRatingAvg ge 2.000 }">
-							<span class="star">★★</span>
-						</c:if>
-						<c:if
-							test="${ requestScope.eRatingAvg lt 4.000 and requestScope.eRatingAvg ge 3.000 }">
-							<span class="star">★★★</span>
-						</c:if>
-						<c:if
-							test="${ requestScope.eRatingAvg lt 5.000 and requestScope.eRatingAvg ge 4.000 }">
-							<span class="star">★★★★</span>
-						</c:if>
-						<c:if test="${ requestScope.eRatingAvg eq 5.000 }">
-							<span class="star">★★★★★</span>
-						</c:if>
+							<span class="star"></span>
 						${ requestScope.eRatingAvg }
 					</h2>
 				</div>
@@ -526,7 +564,7 @@ h2 {
 				<br>
 				<br>
 			</div>
-		</div>
+		</div><!-- row end -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="counter-item" id="imgdiv">
@@ -534,32 +572,36 @@ h2 {
 				</div>
 
 			</div>
-		</div>
+		</div><!-- row end -->
+	</div><!-- container end -->
 
 
 
-
-
+	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
-			
-			<input class="hidden-rating-isevalrating" type="hidden" value="${ requestScope.isEvalRating }" />
-			
-			<div id="div-neweval">
-		<!-- write new eval -->
+			<div class="col-md-12">			
+				<input class="hidden-rating-isevalrating" type="hidden" value="${ requestScope.isEvalRating }" />
+				
+				<div id="div-neweval">
+				<!-- write new eval -->
 					<div id="div-eval-write" class="eval-item counter-item text-center" style="display: none;">
-						<div id="erating" style="position: relative; float: left; width: 100%; border-bottom: dotted 2.5pt darkgray;">
+						<div id="div-write-erating" class="border-bottom-dotted" style="position: relative; float: left; width: 100%;">
+							<input id="hidden-set-star-no" type="hidden" value="0" />
 							<h2>
-								<span class="star">☆</span>
+								<span class="star" title="1">☆</span>
+								<span class="star" title="2">☆</span>
+								<span class="star" title="3">☆</span>
+								<span class="star" title="4">☆</span>
+								<span class="star" title="5">☆</span>
 							</h2>
 						</div>
 						<div class="div-eval">
 							<div class="div-eval-text">
 								<h2>
 									<textarea id="eval-textarea" name="content" rows="3"
-										maxlength="100"
+										maxlength="50"
 										style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-										placeholder="새 품평..! (100글자까지)"></textarea>
+										placeholder="새 품평..! (50글자까지)"></textarea>
 								</h2>
 							</div>
 							<div id="div-eval-submit" class="div-btn waves-effect">
@@ -567,39 +609,21 @@ h2 {
 									src="/showmethecard/resources/images/comment-send.png" />
 							</div>
 						</div>
-					</div>
-		<!-- new eval end -->
+					</div><!-- new eval end -->
 				
-				
-		
-		<!-- my eval -->
+					
+					
+				<!-- my eval -->
 					<div id="div-eval-mine" class="eval-item counter-item text-center" style="display: none;">
 						<input class="hidden-rating-no" type="hidden" value="${ requestScope.myRating.eRatingNo }" />
 						<input class="hidden-rating-writer" type="hidden" value="${ requestScope.myRating.mId }" />
 						<input class="hidden-rating-isliked" type="hidden" value="${ requestScope.myRating.mLiked }" />
 						
-						<div class="div-star" style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
-							<h2>
-								<c:if test="${ requestScope.myRating.eRating eq 0 }">
-									<span class="star">☆</span>
-								</c:if>
-								<c:if test="${ requestScope.myRating.eRating eq 1 }">
-									<span class="star">★</span>
-								</c:if>
-								<c:if test="${ requestScope.myRating.eRating eq 2 }">
-									<span class="star">★★</span>
-								</c:if>
-								<c:if test="${ requestScope.myRating.eRating eq 3 }">
-									<span class="star">★★★</span>
-								</c:if>
-								<c:if test="${ requestScope.myRating.eRating eq 4 }">
-									<span class="star">★★★★</span>
-								</c:if>
-								<c:if test="${ requestScope.myRating.eRating eq 5 }">
-									<span class="star">★★★★★</span>
-								</c:if>
-							</h2>
+						<div class="div-star border-bottom-dotted" style="width: 100%;">
+							<input class="hidden-star-no" type="hidden" value="${ requestScope.myRating.eRating }" />
+							<h2><span class="star"></span></h2>
 						</div>
+						
 						<div id="div-eval-del">
 								<img class="fnc-icon img-evaluation-del"
 									src="/showmethecard/resources/images/comment-del.png" />
@@ -624,90 +648,79 @@ h2 {
 							<div class="div-display-liked text-right">
 								<i class="i-liked-sum service waves-effect liked-already"
 									style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white;">
-									<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
-									<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
-									<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
+										<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
+										<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
+										<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
 								</i>
 							</div>
 						</div>
-					</div>
+					</div><!-- my eval end -->
+					
+					
+				</div><!-- new eval end -->
+		
+		
+		<div class="div-line border-top-dotted"></div>
+		
+		
+				<div id="div-eval-list">
+						<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
+							<div class="eval-item counter-item text-center" style="height: 230px; padding: 25px 35px;">
+								<input class="hidden-rating-no" type="hidden" value="${ ratinglist.eRatingNo }" />
+								<input class="hidden-rating-writer" type="hidden" value="${ ratinglist.mId }" />
+								<input class="hidden-rating-isliked" type="hidden" value="${ ratinglist.mLiked }" />
+								
+								<div class="div-star border-bottom-dotted" style="width: 100%;">
+									<input class="hidden-star-no" type="hidden" value="${ ratinglist.eRating }" />
+									<h2><span class="star"></span></h2>
+								</div>
+								
+								<div class="div-eval">
+									<div class="div-eval-text">
+										<div class="eval-writer"
+											style="float: left; margin-right: 20px;">
+											<h2>
+												<span class="eval-writer-id">${ ratinglist.mId }</span> 님 :
+											</h2>
+										</div>
+										<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
+											<h2>${ ratinglist.content }</h2>
+										</div>
+										<%-- <div style="position:relative; bottom:0px">
+												<p>
+													등록일: ${ ratinglist.regDate }<br>
+												</p>
+											</div> --%>
+									</div>
+									<div class="div-display-liked text-right">
+		
+										<i class="i-liked-sum service waves-effect liked-yet"
+											style="border: none; border-radius: 2px; padding: 10px 20px; display: none">
+												<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
+												<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
+												<img class="img-liked" src="/showmethecard/resources/images/liked.png" style="width: 30px;" />
+										</i>
+										<i class="i-liked-sum service waves-effect liked-already"
+											style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white; display: none">
+												<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
+												<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
+												<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
+										</i>
+		
+									</div>
+		
+								</div>
+							</div>
+						</c:forEach>
+		
+					</div><!-- eval-list end -->
+				<div class="text-center" >
+					<h1><span id="go-prev">&lt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="go-next">></span></h1>
 				</div>
-	<!-- my eval end -->
-
-
-
-				<c:forEach var="ratinglist" items="${ requestScope.evalRatingList }">
-					<div class="eval-item counter-item text-center" style="height: 230px; padding: 25px 35px;">
-						<input class="hidden-rating-no" type="hidden" value="${ ratinglist.eRatingNo }" />
-						<input class="hidden-rating-writer" type="hidden" value="${ ratinglist.mId }" />
-						<input class="hidden-rating-isliked" type="hidden" value="${ ratinglist.mLiked }" />
-						
-						<div class="div-star" style="width: 100%; border-bottom: dotted 2.5pt darkgray;">
-							<h2>
-								<c:if test="${ ratinglist.eRating eq 0 }">
-									<span class="star">☆</span>
-								</c:if>
-								<c:if test="${ ratinglist.eRating eq 1 }">
-									<span class="star">★</span>
-								</c:if>
-								<c:if test="${ ratinglist.eRating eq 2 }">
-									<span class="star">★★</span>
-								</c:if>
-								<c:if test="${ ratinglist.eRating eq 3 }">
-									<span class="star">★★★</span>
-								</c:if>
-								<c:if test="${ ratinglist.eRating eq 4 }">
-									<span class="star">★★★★</span>
-								</c:if>
-								<c:if test="${ ratinglist.eRating eq 5 }">
-									<span class="star">★★★★★</span>
-								</c:if>
-							</h2>
-
-						</div>
-						<div class="div-eval">
-							<div class="div-eval-text">
-								<div class="eval-writer"
-									style="float: left; margin-right: 20px;">
-									<h2>
-										<span class="eval-writer-id">${ ratinglist.mId }</span> 님 :
-									</h2>
-								</div>
-								<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
-									<h2>${ ratinglist.content }</h2>
-								</div>
-								<%-- <div style="position:relative; bottom:0px">
-										<p>
-											등록일: ${ ratinglist.regDate }<br>
-										</p>
-									</div> --%>
-							</div>
-							<div class="div-display-liked text-right">
-
-								<i class="i-liked-sum service waves-effect liked-yet"
-									style="border: none; border-radius: 2px; padding: 10px 20px; display: none">
-									<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
-									<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
-									<img class="img-liked" src="/showmethecard/resources/images/liked.png" style="width: 30px;" />
-								</i>
-								<i class="i-liked-sum service waves-effect liked-already"
-									style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white; display: none">
-									<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
-									<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
-									<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
-								</i>
-
-							</div>
-
-						</div>
-					</div>
-				</c:forEach>
-
-			</div>
-		</div>
-		<!-- /.row -->
-	</div>
-	<!-- /.container --> </section>
+			</div><!-- col-md-12 -->		
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+	</section>
 	<!-- End Client Section -->
 	<section id="about-us" class="about-us-section-1">
 	<div class="container">
@@ -748,21 +761,19 @@ h2 {
 		</div>
 
 		<div id="columns" class="row div-comment-list">
-			<c:forEach var="commentlist"
-				items="${ requestScope.evalCommentList }">
+			<c:forEach var="commentlist" items="${ requestScope.evalCommentList }">
 				<div class="div-comment">
-					<input class="commentno" type="hidden"
-						value="${ commentlist.eCommentNo }" />
+					<input class="commentno" type="hidden" value="${ commentlist.eCommentNo }" />
 					<figure>
-					<div class="service text-center" style="margin: 10px 0px;">
-						<h4 class="comment-writer-id">${ commentlist.mId }</h4>
-						<p>${ commentlist.content }</p>
-						<c:if test="${ loginuser.mId eq commentlist.mId }">
-							<img class="fnc-icon img-comment-del"
-								src="/showmethecard/resources/images/comment-del.png"
-								style="margin-top: 10px; height: 26px; width: auto;" />
-						</c:if>
-					</div>
+						<div class="service text-center" style="margin: 10px 0px;">
+							<h4 class="comment-writer-id">${ commentlist.mId }</h4>
+							<p>${ commentlist.content }</p>
+							<c:if test="${ loginuser.mId eq commentlist.mId }">
+								<img class="fnc-icon img-comment-del"
+									src="/showmethecard/resources/images/comment-del.png"
+									style="margin-top: 10px; height: 26px; width: auto;" />
+							</c:if>
+						</div>
 					</figure>
 				</div>
 			</c:forEach>

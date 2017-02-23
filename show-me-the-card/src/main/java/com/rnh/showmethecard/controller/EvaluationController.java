@@ -55,11 +55,6 @@ public class EvaluationController {
 		model.addAttribute("cPoint", c.getcPoint());
 		model.addAttribute("regDate", c.getRegDate());
 		
-		// 전체 스크랩 수 // evaluation? my_card 합
-		// model.addAttribute("scrapCount", e.getScrapCount());
-		// model.addAttribute("", );
-		
-		////////////////////////////////////////////////////////////////////cardNo));
 		model.addAttribute("evalCommentList", service.showEvaluationCommentList(2));
 
 		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, 1));
@@ -78,12 +73,11 @@ public class EvaluationController {
 	}
 	
 	//합치기
-	@RequestMapping(value="addevalrating.action", method=RequestMethod.POST)
+	@RequestMapping(value="addevalrating.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String addEvaluationRating(int cardNo, HttpServletRequest req, String content) {	
-		int eRating = 5;
+	public String addEvaluationRating(int cardNo, HttpServletRequest req, String content, int eRating) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");		
-		EvaluationRating newRating = service.addEvaluationRating(cardNo, member.getmId(), content, 5);
+		EvaluationRating newRating = service.addEvaluationRating(cardNo, member.getmId(), content, eRating);
 		
 		return new Gson().toJson(newRating);
 	}
@@ -111,10 +105,6 @@ public class EvaluationController {
 	@ResponseBody
 	public String addEvaluationRatingLiked(int eRatingNo, String mId, HttpServletRequest req) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-		System.out.println("addevalrating");
-		System.out.println("no " + eRatingNo );
-		System.out.println("id " + mId);
-		System.out.println("lid" + member.getmId());
 		service.addEvaluationRatingLiked(eRatingNo, mId, member.getmId());
 		return null;
 	}
@@ -124,25 +114,9 @@ public class EvaluationController {
 	
 	
 	
-	
-	@RequestMapping(value="showevalcommentlist.action", method=RequestMethod.GET)
-	public ModelAndView showEvaluationCommentList(int cardNo) {
-		List<EvaluationComment> evalCommentList = service.showEvaluationCommentList(2);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("evaluation/evaluationmain");
-		mav.addObject("evalCommentList", evalCommentList);
-		
-		return mav;
-	}
-	
-	
-	
-	
 	@RequestMapping(value="delevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
 	public String deleteEvaluationRating(int eRatingNo) {
-		System.out.println("eRatingNo : " + eRatingNo);
 		service.deleteEvaluationRatingByeRatingNo(eRatingNo);
 		return null;
 	}

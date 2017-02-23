@@ -323,8 +323,6 @@ public class HtmlParser {
 	
 	private String getChoosedData(String parseKeyword) {
 
-		long start = System.currentTimeMillis();
-		
 		String choosedData = null;
 		if (urlDoc == null) { //urlDoc가 만들어지지 않았다면
 			try {
@@ -347,10 +345,7 @@ public class HtmlParser {
 			}
 			choosedData = seekData(domainDoc, parseKeyword); //domainDoc에서 찾기
 		}
-		
-		long end = System.currentTimeMillis();
-		System.out.println(String.format("LAP TIME %d", end - start));
-		
+				
 		return choosedData;
 	}
 

@@ -39,7 +39,8 @@
 						<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
 						<li><a href="${MyCardList.url}" target="_blank"><i
 								class="fa fa-twitter"></i>이동</a></li>
-						<li><a href="#"><i class="fa fa-linkedin"></i>품평</a></li>
+						<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
+						
 					</ul>
 					<br>
 
@@ -58,9 +59,6 @@
 					<h3>${MyCardList.mycComment}</h3>
 			</div>
 		</div>
-		<div>
-					<h3>${MyCardList.mycComment}</h3>
-				</div>
 		
 	</div>
 </c:forEach>

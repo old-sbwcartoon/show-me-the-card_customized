@@ -22,6 +22,7 @@
 	<typeAlias type="com.rnh.showmethecard.model.dto.MemberHistory" alias="MemberHistory" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Qna" alias="Qna" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Friend" alias="Friend" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.CardForInsert" alias="CardForInsert" />
   </typeAliases>
   
   <environments default="development">

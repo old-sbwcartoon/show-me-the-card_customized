@@ -58,9 +58,9 @@ public class CardController {
 		if (fNo == null) {
 			return "card/cardregisterform";
 		} else {
-			System.out.println(fNo);
 			afNo = Integer.parseInt(fNo);
 			model.addAttribute("getFNo", fNo);
+			
 			return "card/cardregisterform";
 		}
 		
@@ -91,20 +91,20 @@ public class CardController {
 	}
 	
 	@RequestMapping(value="showmycardlist.action", method=RequestMethod.GET)
-	public String ShowMYCardList(HttpSession session, HttpServletRequest req){
+	public String ShowMYCardList(HttpSession session, HttpServletRequest req, int fNo){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		afNo = 254;
-		List<MyCardList> myCardListList= cardService.readMyCard(afNo);
+		System.out.println("b"+fNo);
+		List<MyCardList> myCardListList= cardService.readMyCard(fNo);
 		
 		int listLength = myCardListList.size();
 		
-		for(int i=0;i<listLength;i++){
-			String tmp = myCardListList.get(i).getUrl();
-			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
-			myCardListList.get(i).setDesc(h.getDesc());
-			myCardListList.get(i).setTitle(h.getTitle());
-		}
+//		for(int i=0;i<listLength;i++){
+//			String tmp = myCardListList.get(i).getUrl();
+//			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
+//			myCardListList.get(i).setDesc(h.getDesc());
+//			myCardListList.get(i).setTitle(h.getTitle());
+//		}
 		
 		Collections.reverse(myCardListList);
 		req.setAttribute("mycardListList", myCardListList);
@@ -123,6 +123,7 @@ public class CardController {
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardForInsert.setImgSrc(h.getImg());
+		
 		cardService.insertMyCardOrCardDb(cardForInsert);
 		return "입력 성공";
 	}

@@ -4,8 +4,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	alert($('#getFNo').val());
-	$('#mycardlist').load("showmycardlist.action");
+	var getFNo = ${getFNo};
+	$('#mycardlist').load("showmycardlist.action?fNo="+getFNo);
 	var cardNum, check;
 	var a = 0;
 	var title = "";
@@ -45,7 +45,8 @@ $(document).ready(function() {
 					cName : title,
 					cardNo : cardNum,
 					mycComment : mycContent,
-					tagArray : tagArray
+					mycTagsArr : tagArray,
+					fNo : getFNo
 			};
 			
 			var stringJson = JSON.stringify(frontJson);

@@ -10,6 +10,8 @@
 		SELECT card_no cardNo FROM CARD_DB WHERE site_url = #{siteUrl} AND deleted = 0;
 	</select>
 	
+	
+	
 	<insert id="insertCardDb">
 	
 		INSERT INTO rnh2.CARD_DB
@@ -18,19 +20,21 @@
 		
 	</insert>
 	
-	<insert id="insertMyCard" parameterType="HashMap">
+	<insert id="insertMyCard" parameterType="CardForInsert" useGeneratedKeys="true" 
+	 		keyColumn="MYC_NO" keyProperty="mycNo">
 	
-		INSERT INTO  rnh2.MY_CARD
+		INSERT INTO rnh2.MY_CARD
 		(card_no, f_no, myc_comment, scrap_count)
-		VALUES (#{cardNo}, 254, #{mycComment}, 0)	
+		VALUES (#{cardNo},#{fNo}, #{mycComment}, 0)	
 		
 	</insert>
-	
+	<!-- card_no, f_no, 
+	#{cardNo}, #{fNo}, -->
 	<insert id="insertMycTag" parameterType="HashMap">
 		
-		INSERT INTO  rnh2.MYC_TAG
+		INSERT INTO rnh2.MYC_TAG
 		(myc_no, myc_name)
-		VALUES (#{cardNo}, #{mycName})
+		VALUES (#{mycNo}, #{mycName})
 		
 	</insert>
 	
@@ -38,7 +42,7 @@
 	<select id="selectMyCardListByFNo" resultType="MyCardList" parameterType="int">
 		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName
 		FROM MY_CARD mc, CARD_DB cd
-		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO=254;
+		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO = #{fNo}
 	</select>
  	<!-- <select id="SelectNoticeList" resultType="Notice" parameterType="int">
 	

@@ -82,6 +82,13 @@ public class MysqlQnaDao implements QnaDao{
 		qnaMapper.UpdateQnaGroupNo(qNo);
 	}
 	
+	@Override
+	public void UpdateQnaStep(int qNo) {
 
-	
+
+		qnaMapper.UpdateQnaStep(qNo);
+		
+	}
+		
+		
 }

@@ -50,7 +50,7 @@
 	<update id="UpdateQnaGroupNo" parameterType="Integer">
 	
 		UPDATE QNA
-		SET GROUP_NO = #{qNo}
+		SET GROUP_NO = #{groupNo}
 		WHERE Q_NO = #{qNo}
 	
 	</update>
@@ -80,13 +80,21 @@
 		
 	</select>
 	
-	<insert id="InsertReply" parameterType="Qna">
+	<insert id="InsertReply" parameterType="Qna" useGeneratedKeys="true" keyProperty="qNo" keyColumn="Q_NO">
 	
 		INSERT INTO QNA
 		(TITLE, CONTENT, M_ID, GROUP_NO, STEP, DEPTH)
 		VALUES (#{title}, #{content}, #{mId}, #{groupNo}, #{step}+1, #{depth}+1 )	
 					
 	</insert>
+	
+	<update id="UpdateQnaStep" parameterType="Integer">
+	
+		UPDATE QNA
+		SET STEP = #{step} + 1
+		WHERE Q_NO = #{qNo}
+	
+	</update>
 	
 
 </mapper>

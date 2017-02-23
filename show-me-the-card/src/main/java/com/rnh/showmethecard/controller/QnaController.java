@@ -110,6 +110,7 @@ public class QnaController {
 	@RequestMapping(value = "deleteQna.action", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	
 	public String DeleteQna(int qNo) {
+		
 		Qna qna = new Qna();
 		
 		qna.setTitle("삭제");
@@ -163,11 +164,15 @@ public class QnaController {
 	
 	@RequestMapping(value = "reply.action", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	public String InsertReply(Qna qna, HttpSession session) {
+		
 		Qna qna1 = (Qna)session.getAttribute("qna");
+		
 		qna.setGroupNo(qna1.getGroupNo());
 		qna.setDepth(qna1.getDepth());
 		qna.setStep(qna1.getStep());
+		
 		qnaService.InsertReply(qna);
+		qnaService.UpdateQnaStep(qna.getqNo());
 		
 		return "redirect:/qna/qnaList.action";
 	}

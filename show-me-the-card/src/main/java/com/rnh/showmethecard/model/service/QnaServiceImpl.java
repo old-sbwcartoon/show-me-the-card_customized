@@ -79,4 +79,12 @@ public class QnaServiceImpl implements QnaService {
 		qnaDao.UpdateQnaGroupNo(qNo);
 		
 	}
+	
+	@Override
+	public void UpdateQnaStep(int qNo) {
+
+
+		qnaDao.UpdateQnaStep(qNo);
+		
+	}
 }

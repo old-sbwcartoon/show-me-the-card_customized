@@ -26,4 +26,6 @@ public interface QnaDao {
 	void InsertReply(Qna qna);
 	
 	void UpdateQnaGroupNo(int qNo);
+	
+	void UpdateQnaStep(int qNo);
 }

@@ -7,6 +7,12 @@
 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+    // 줄바꿈 
+    pageContext.setAttribute("br", "<br/>");
+    pageContext.setAttribute("cn", "\n");
+%> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +22,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<!-- Bootstrap Core CSS -->
 <link rel="stylesheet" type="text/css"
@@ -113,13 +122,16 @@
 
 		<br /> <br /> <br /> <br /> <br />
 		<div class="container">
-			<div style="padding-top: 25px; text-align: center">
+			<div style="padding-top: 25px;">
 				<div id="inputcontent">
 					<div id="inputmain">
-						<div class="inputsubtitle">게시판 글 내용</div>
+						<div class="inputsubtitle" class="table-responsive" style="text-align: center">
+							<H1>게시판 글 내용</H1>
+						</div>
+						<br />
 
 
-						<table>
+						<table class="table">
 							<tr>
 								<th>No</th>
 								<td>${notice.nNo}</td>
@@ -137,21 +149,21 @@
 								<td><fmt:formatDate value="${notice.regDate}"
 										pattern="yyyy-MM-dd" /></td>
 							</tr>							
-							<c:set var="br" value="
+							<c:set var="br" value="							
 " />
 	
 
 							<tr>
 								<th>내용</th>
 								<td style="height: 200px; vertical-align: top">
-
-								${ fn:replace(fn:replace(notice.content, br, "<br>"), " ", "&nbsp;")}
+								<br />
+								${ fn:replace(qna.content, cn, "<br/>")}
 								</td>
 							</tr>
 						</table>
 
 
-						<div class="buttons">
+						<div class="buttons" style="text-align: center">
 							<c:if test="${ loginuser.userType eq '1'}">
 								<a href="update.action?nNo=${notice.nNo}">수정</a>
 								<a href='javascript:doDelete(${notice.nNo})'>삭제</a>

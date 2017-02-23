@@ -29,4 +29,6 @@ public interface QnaMapper {
 	
 	void UpdateQnaGroupNo(int qNo);
 	
+	void UpdateQnaStep(int qNo);
+	
 }

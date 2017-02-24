@@ -61,6 +61,7 @@ $(document).ready(function(){
 
 	<style type="text/css">
 	.header1 li {
+		padding: 4px;
 		float: left;
 	}
 
@@ -68,7 +69,7 @@ $(document).ready(function(){
     	display: inline-block;
     	color: white;
     	text-align: center;
-    	padding: 14px 16px;
+    	/* padding: 20px 16px; */
     	text-decoration: none;
 	}
 	
@@ -109,17 +110,17 @@ $(document).ready(function(){
 			<c:choose>
 				<c:when test="${ empty sessionScope.loginuser }">
 					<ul  class="nav navbar-nav navbar-right">
-						<li><button style="height: 80" type="button" id="loginbtn" class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp; LOGIN &nbsp;&nbsp;</button></li>
-	        			<li><button style="height: 80" type="button" id="registerbtn" class="page-scroll waves-effect btn btn-primary">&nbsp; JOIN US &nbsp;&nbsp;</button></li>
+						<li><button style="height: 60; margin:10px 5px;" type="button" id="loginbtn" class="page-scroll waves-effect btn btn-primary">&nbsp;&nbsp;&nbsp; LOGIN &nbsp;&nbsp;</button></li>
+	        			<li><button style="height: 60; margin:10px 5px;" type="button" id="registerbtn" class="page-scroll waves-effect btn btn-primary">&nbsp; JOIN US &nbsp;&nbsp;</button></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
 					<ul class="nav navbar-nav navbar-right">
-						<li><button style="height: 80" type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button></li>
+						<li><button style="height: 60; margin:10px 5px;" type="button"  id="logoutbtn" class="page-scroll waves-effect btn btn-primary"> &nbsp;&nbsp;&nbsp; LOGOUT &nbsp;&nbsp;</button></li>
 						<c:choose>
 							<c:when test="${ loginuser.userType eq '1' }">
 								<li><div class="dropdown">
-                					<button style="height: 80" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
+                					<button style="height: 60; margin:10px 5px;" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
               			  			<div class="dropdown-content">
      		       						<a id="mypagebtn" href="#">My Page</a>
             							<a href="/showmethecard/member/list.action">Admin Page</a>
@@ -128,7 +129,7 @@ $(document).ready(function(){
 							</c:when>
 							<c:otherwise>
 								<li><div class="dropdown">
-                					<button style="height: 80" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
+                					<button style="height: 60; margin:10px 5px;" type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
                 					<div class="dropdown-content">
      		       						<a id="mypagebtn" href="#">My Page</a>
      		       						<a href="/showmethecard/mypage/mypage.action">Card Page</a>

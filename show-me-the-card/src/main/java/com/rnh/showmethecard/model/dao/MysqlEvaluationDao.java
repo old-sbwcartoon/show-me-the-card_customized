@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.common.Literal;
+import com.rnh.showmethecard.model.dto.BestTag;
+import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.mapper.EvaluationMapper;
@@ -19,13 +21,6 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	@Qualifier("evaluationMapper")
 	private EvaluationMapper mapper;
 	
-
-	@Override
-	public void insertEvaluationComment(EvaluationComment newComment) {
-		System.out.println(newComment.getmId());
-		mapper.insertEvaluationComment(newComment);
-	}
-
 
 	@Override
 	public void insertEvaluationRatingLiked(int eRatingNo, String mId, String likedmId) {
@@ -49,6 +44,12 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 
 	@Override
+	public void insertEvaluationComment(EvaluationComment newComment) {
+		mapper.insertEvaluationComment(newComment);
+	}
+
+
+	@Override
 	public List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
 		int limit = Literal.Ui.PAGER_LIMIT;
 		int articleStartNo = (pageNo - 1) * limit;
@@ -64,7 +65,11 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 	@Override
 	public float selectEvaluationRatingAvg(int cardNo) {
-		return mapper.selectEvaluationRatingAvg(cardNo);
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("cardNo", cardNo);
+		data.put("minArticleNo", Literal.Analysis.Average.MIN_ARTICLE_NO);
+		
+		return mapper.selectEvaluationRatingAvg(data);
 	}
 
 
@@ -118,7 +123,39 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	}
 
 
+	@Override
+	public int selectEvaluationRatingNoSumWithCardNo(String tName, String tConditionName, String tConditionValue) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("tName", tName);
+		data.put("tConditionName", tConditionName);
+		data.put("tConditionValue", tConditionValue);
+		return mapper.selectEvaluationRatingNoSumWithCardNo(data);
+	}
 
+
+	@Override
+	public Card selectCardDbByCardNo(int cardNo) {
+		return mapper.selectCardDbByCardNo(cardNo);
+	}
+
+
+	@Override
+	public boolean selectExistsEvaluationCommentOfmId(int cardNo, String mId) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("cardNo", cardNo);
+		data.put("mId", mId);
+		
+		return mapper.selectExistsEvaluationCommentOfmId(data);
+	}
+
+
+	@Override
+	public List<BestTag> selectBestTag(int valueNo, String columnName) {
+		BestTag bestTag = new BestTag();
+		bestTag.setValueNo(valueNo);
+		bestTag.setColumnName(columnName);
+		return mapper.selectBestTag(bestTag);
+	}
 
 
 

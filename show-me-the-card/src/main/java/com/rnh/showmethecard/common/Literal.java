@@ -40,14 +40,18 @@ public class Literal {
 		public static class Member {
 			
 			
-			public static final String ATTENDANCE           = "로그인";
-			public static final String DISCOVERY_NEW_CARD   = "카드 첫등록";
-			public static final String COMMENT_FIRST_TIME   = "첫댓글";
-			public static final String EVALUATION           = "첫품평";
-			public static final String SCRAPPED             = "스크랩";
-			public static final String VISITOR_PER_HUNDRED  = "방문/100";
-			public static final String FOLLOWER_PER_ONE     = "팔로/1";
+			public static final String ATTENDANCE                      = "로그인";
+			public static final String DISCOVERY_NEW_CARD              = "카드 첫등록";
 			
+			public static final String SCRAPPED                        = "스크랩";
+			public static final String VISITOR_PER_HUNDRED             = "방문/100";
+			public static final String FOLLOWER_PER_ONE                = "팔로/1";
+
+			public static final String EVALUATION_RATING               = "첫품평";	
+			public static final String DEL_EVALUATION_RATING           = "품평 삭제";
+			
+			public static final String EVALUATION_COMMENT_FIRST_TIME   = "첫댓글";
+			public static final String DEL_EVALUATION_COMMENT_ALL      = "최후의 댓글 삭제";
 			
 			/*
 			 * 회원 포인트 히스토리 point
@@ -58,13 +62,17 @@ public class Literal {
 				int point = 0;
 				
 				switch (content) {
-					case ATTENDANCE :           point = 30;  break;
-					case DISCOVERY_NEW_CARD :   point = 5;   break;
-					case COMMENT_FIRST_TIME :   point = 1;   break;
-					case EVALUATION :           point = 20;  break;
-					case SCRAPPED :             point = 10;  break;
-					case VISITOR_PER_HUNDRED :  point = 1;   break;
-					case FOLLOWER_PER_ONE :     point = 5;   break;
+					case ATTENDANCE :                      point = 30;  break;
+					case DISCOVERY_NEW_CARD :              point = 5;   break;					
+					case SCRAPPED :                        point = 10;  break;
+					case VISITOR_PER_HUNDRED :             point = 1;   break;
+					case FOLLOWER_PER_ONE :                point = 5;   break;
+
+					case EVALUATION_RATING :               point = 20;  break;
+					case DEL_EVALUATION_RATING :           point = -20; break;
+					
+					case EVALUATION_COMMENT_FIRST_TIME :   point = 1;   break;
+					case DEL_EVALUATION_COMMENT_ALL :      point = -1;  break;
 				}
 				
 				return point;
@@ -95,4 +103,27 @@ public class Literal {
 		
 	}
 	
+	
+	public static class Table {
+		
+		public static class Name {
+			
+			public static final String EVALUATION_RATING  = "EVALUATION_RATING";
+			public static final String EVALUATION_COMMENT = "EVALUATION_COMMENT";
+		}
+
+		public static class Column {
+			
+			public static final String CARD_NO  = "CARD_NO";
+		}
+	}
+	
+	
+	public static class Analysis {
+		
+		public static class Average {
+			
+			public static final int MIN_ARTICLE_NO = 3;
+		}
+	}
 }

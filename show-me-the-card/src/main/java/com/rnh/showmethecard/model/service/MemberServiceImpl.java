@@ -141,15 +141,29 @@ public class MemberServiceImpl implements MemberService {
 		history.setPoint(Literal.Content.Member.getPoint(content));
 		
 		
+		if (content.equals(Literal.Content.Member.ATTENDANCE)) { //하루에 한 번만 실행할 content
+			boolean result = dao.selectPointExits(history.getmId(), history.getContent()); //오늘 point 내역 있는지
+			if ( !result ) {
+				//없으면 insert
+				dao.insertPointHistory(history);
+			} else {
+				//있으면 update
+				dao.updatePointHistory(history.getmId(), history.getContent());
+			}
+		} else {
+			dao.insertPointHistory(history);
+		}
+		
+		
 		//point insert
-		boolean result = dao.selectPointExits(history.getmId(), history.getContent());
+		/*boolean result = dao.selectPointExits(history.getmId(), history.getContent());
 		if ( !result ) {
 			//없으면 insert
 			dao.insertPointHistory(history);
 		} else {
 			//있으면 update
 			dao.updatePointHistory(history.getmId(), history.getContent());
-		}
+		}*/
 		
 		//전제 포인트 update
 		dao.updateMemberPoint(member.getmId());

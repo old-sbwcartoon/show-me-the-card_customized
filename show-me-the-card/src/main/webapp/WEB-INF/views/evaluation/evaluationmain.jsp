@@ -119,7 +119,20 @@ textarea.autosize {
 	padding-bottom: 5px;
 }
 
-#imgdiv {
+#div-thumbnail {
+	height: 800px;
+}
+
+#div-thumbnail-img {
+	height: 600px;
+}
+
+#div-thumbnail-text {
+	margin-top: 20px;
+	height: ;
+}
+
+#link-thumbnail {
 	height: 600px;
 }
 
@@ -197,6 +210,10 @@ h2 {
 	cursor: pointer;
 }
 
+#div-write-erating {
+	cursor: pointer;
+}
+
 .fnc-icon {
 	cursor: pointer;
 }
@@ -207,19 +224,19 @@ h2 {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
+			var pageNoMax = $('#hidden-pagenomax-eval').val();
 			
-			cardNo = 2;
+			alert(pageNoMax);
 			
-			
-			var imgDiv = $('#imgdiv');
-			var img = $('#thumbnail');
+		    /* 이미지 크기 결정 */
+			var imgDiv = $('#div-thumbnail-img');
+			var img = $('#img-thumbnail');
 			var imgWidth = img.width(); // 초기 값
 			var imgHeight = img.height(); // 초기 값
 			
 		    var divisor = 2;
 		    var ratio = 0.75;
 			
-		    /* 이미지 크기 결정 */
 		    if (img.width() > img.height()) { // 사진의 가로가 세로보다 크면
 		    	if (img.width() < imgDiv.width() / divisor) { // 그런데 div를 어떤 숫자로 나눈 값보다 작으면
 		    		img.css("width", imgDiv.width() * ratio);
@@ -243,7 +260,7 @@ h2 {
 		    /* 이미지를 가운데 정렬하기 위해 더미 div 생성 */
 		    function addDummyDiv() {
 	    		imgDiv.prepend($('<div>', {
-			    	id  : "dummybeforethumbnail",
+			    	id  : "div-dummy-thumbnail",
 			    	css : {
 			    		height  : (imgDiv.height() - img.height()) / 2
 			    		, width : imgDiv.width()
@@ -296,6 +313,9 @@ h2 {
 		    	var star = "";
 		    	var starNo = Math.round(decimalStarNo);
 
+		    	if (starNo == -1) {
+		    		star = "☆☆☆☆☆";
+		    	}
 	    		if (starNo == 0) {
 	    			star = '☆';
 	    		} else {
@@ -338,17 +358,25 @@ h2 {
 		    
 		    
 		    /* 별품평 제어 */
-		    var arr = $('#div-write-erating').find('.star')
+		    var arr = $('#div-write-erating').find('.star');
 		    var starArr = [];
+		    
+		    $('#div-write-erating').on("click", function() {
+		    	$('#hidden-set-star-no').val($(this).attr('title'));
+		    	arr.text('☆');
+		    });
 	    	for(i = 0; i < arr.length; i++) {
 	    		starArr[i] = arr.eq(i);
-	    		starArr[i].on("mouseover", function() {
+	    		starArr[i].on("mouseover", function(event) {
+	    			event.stopPropagation();
 	    			$(this).text('★').prevAll().text('★');
 	    		});
-	    		starArr[i].on("mouseout", function() {
+	    		starArr[i].on("mouseout", function(event) {
+	    			event.stopPropagation();
 	    			$(this).text('☆').prevAll().text('☆');
 	    		});
-	    		starArr[i].on("click", function() {
+	    		starArr[i].on("click", function(event) {
+	    			event.stopPropagation();
 	    			$(this).off("mouseover").off("mouseout").prevAll().off("mouseover").off("mouseout");
 	    			$(this).nextAll().off("mouseover").off("mouseout");
 	    			$(this).text('★').prevAll().text('★');
@@ -358,8 +386,18 @@ h2 {
 	    		});
 	    	}
 
-	    	
-		    
+	    	var pageNoHidden = $('#hidden-pageno-eval');
+			$('#go-prev').on("click", function() {
+				if (pageNoHidden.val() > 1) {
+					pageNoHidden.val(pageNoHidden.val() - 1);
+				}
+			});
+			var pageNoMax = $('#hidden-pagenomax-eval').val();
+			$('#go-next').on("click", function() {
+				if (pageNoHidden.val() > pageNoMax) {
+					pageNoHidden.val(pageNoHidden.val() + 1);
+				}
+			});
 		    
 		    /* 좋아요 누르면 실행 */
 		    $('.div-display-liked').each(function() {
@@ -409,7 +447,6 @@ h2 {
 		    $("#div-eval-submit").click(function() {
 		    	var spaceTrimedContent = $.trim($('#eval-textarea').val());
 
-    			alert($('#hidden-set-star-no').val());
 		    	if (spaceTrimedContent &&// spaceTrimedContent가 not !(null || "" || NaN || 0) 
 		    			confirm("등록하시겠습니까?")) {
 		    		
@@ -432,7 +469,7 @@ h2 {
 							newEvalDiv.find('.hidden-star-no').val(data.eRating);
 							setStar(newEvalDiv.find('#div-eval-mine .star'), data.eRating);
 							
-							newEvalDiv.find('.eval-writer-id').text(data.mId);
+							newEvalDiv.find('.eval-writer-id').text("내 품평 : ");
 							newEvalDiv.find('.div-eval-text-content').find('h2').text(data.content);
 							newEvalDiv.find('.hidden-liked-sum').val(data.eLikedSum);
 							newEvalDiv.find('.liked-sum').text(data.eLikedSum);
@@ -445,7 +482,7 @@ h2 {
 	    	
 	    	
 	    	/* submit comment */
-		    $('#div-comment-submit').click(function() {
+		    $('#div-comment-submit').on("click", function() {
 		    	var spaceTrimedContent = $.trim($('#comment-textarea').val());
 		    	
 		    	if (spaceTrimedContent) { // spaceTrimedContent가 not !(null || "" || NaN || 0) 
@@ -463,16 +500,30 @@ h2 {
 								opacity : '0',
 								bottom  : '0px'
 							}); */
+							alert($('.div-comment-list').find('.div-comment').size());
 							$('#comment-textarea').val("");
-		    				var newDiv = $('.div-comment').first().clone(true);
-		    				newDiv.find('.commentno').val(data.eCommentNo);
-		    				if (newDiv.find('.comment-writer-id').text() != loginId) {
-		    					var commentDelHtml = $('<img class="fnc-icon img-comment-del" src="/showmethecard/resources/images/comment-del.png" style="margin-top: 10px; height: 26px; width: auto;"/>');
-		    					newDiv.find('figure').find('div').append(commentDelHtml);
-		    				}
-		    				newDiv.find('.comment-writer-id').text(loginId);
-		    				newDiv.find('p').text(spaceTrimedContent);
-		    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
+							
+							/* if ($('.div-comment-list').find('.div-comment').size() <= 1) {
+								var firstCommentDiv = $('#div-comment-first');
+								firstCommentDiv.find('.commentno').val(data.eCommentNo);
+								firstCommentDiv.find('.comment-writer-id').text(data.mId);
+								firstCommentDiv.find('p').text(data.content);
+								$('#div-comment-first').css('display', '');
+							} else { */
+								var newDiv = $('#div-comment-first').clone(true);
+								newDiv.css('display', '');
+			    				newDiv.find('.commentno').val(data.eCommentNo);
+			    				newDiv.find('#hidden-comment-isfirst').val(false);
+			    				/* if (newDiv.find('.comment-writer-id').text() != loginId) {
+			    					var commentDelHtml = $('<img class="fnc-icon img-comment-del" src="/showmethecard/resources/images/comment-del.png" style="margin-top: 10px; height: 26px; width: auto;"/>');
+			    					newDiv.find('figure').find('div').append(commentDelHtml);
+			    				} */
+			    				newDiv.find('.comment-writer-id').text(loginId);
+			    				newDiv.find('p').text(spaceTrimedContent);
+			    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
+							/* } */
+							
+		    				
 		    			}
 		    		});
 		    	}
@@ -523,9 +574,21 @@ h2 {
 									url : '/showmethecard/evaluation/delevalcomment.action',
 									type : 'POST',
 									data : {
+										cardNo : cardNo,
 										eCommentNo : commentNo
 									},
-									success : delWithAnimation(commentDiv)
+									success : function() {
+										if (commentDiv.find('#hidden-comment-isfirst').val() === 'true') {
+											commentDiv.animate({
+												opacity : '0'
+											},
+											function() {
+												commentDiv.css('display', 'none');
+											});
+										} else {
+											delWithAnimation(commentDiv);
+										}
+									}
 								});
 					}
 				
@@ -537,27 +600,29 @@ h2 {
 </head>
 <body>
 	<c:import url="/WEB-INF/views/include/header.jsp" />
-	<input id="loginusermId" type="hidden" value="${loginuser.mId}" />
-	<input id="cardNo" type="hidden" value="${requestScope.cardNo}" />
+	<input id="loginusermId" type="hidden" value="${ loginuser.mId }" />
+	<input id="cardNo" type="hidden" value="${ requestScope.card.cardNo }" />
 	
-	<section id="client" class="client-section">
+	<section id="eval-rating" class="client-section">
 	<div class="container">
 		<div class="row">
 			<div id="div-title" class="col-md-12">
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="50ms">
-					<h2>${title}</h2>
+					<h2>${requestScope.htmlParser.title}</h2>
 					<br>
 					<h4 style="color: gold;">#해쉬태그 #해쉬태그 #해쉬태그</h4>
 					<h2>..</h2>
-					<p>${desc}</p>
+					<p>${requestScope.htmlParser.desc}</p>
 				</div>
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="10ms">
 					<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
 					<h2 style="color: gold;">
-							<span class="star"></span>
-						${ requestScope.eRatingAvg }
+						<span class="star"></span>
+						<c:if test="${ requestScope.eRatingAvg ne -1 }">
+							${ requestScope.eRatingAvg }
+						</c:if>
 					</h2>
 				</div>
 				<br>
@@ -567,11 +632,19 @@ h2 {
 		</div><!-- row end -->
 		<div class="row">
 			<div class="col-md-12">
-				<div class="counter-item" id="imgdiv">
-					<a id="thumbnaillink" href="${url}"> <img id="thumbnail" src="${img}" /></a>
+				<div id="div-thumbnail" class="counter-item">
+					<div id="div-thumbnail-img">
+						<a id="link-thumbnail" href="${requestScope.htmlParser.url}"> <img id="img-thumbnail" src="${requestScope.htmlParser.img}" /></a>
+					</div>
+					<div id="div-thumbnail-text">
+						<h2>POINT : ${ requestScope.card.cPoint }</h2>
+						<h2>DISCOVERER : ${ requestScope.card.discover } 님</h2>
+						<input id="hidden-card-regdate" type="hidden" value="${ requestScope.card.regDate }" />
+						<h4>등록일 : ${ requestScope.card.regDate }</h4>
+					</div>
 				</div>
-
 			</div>
+			
 		</div><!-- row end -->
 	</div><!-- container end -->
 
@@ -585,7 +658,7 @@ h2 {
 				<div id="div-neweval">
 				<!-- write new eval -->
 					<div id="div-eval-write" class="eval-item counter-item text-center" style="display: none;">
-						<div id="div-write-erating" class="border-bottom-dotted" style="position: relative; float: left; width: 100%;">
+						<div id="div-write-erating" class="border-bottom-dotted" style="position: relative; float: left; width: 100%;" title="0">
 							<input id="hidden-set-star-no" type="hidden" value="0" />
 							<h2>
 								<span class="star" title="1">☆</span>
@@ -633,7 +706,7 @@ h2 {
 								<div class="eval-writer"
 									style="float: left; margin-right: 20px;">
 									<h2>
-										<span class="eval-writer-id">${ requestScope.myRating.mId }</span> 님 :
+										<span class="eval-writer-id">내 품평 : </span>
 									</h2>
 								</div>
 								<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
@@ -715,14 +788,16 @@ h2 {
 		
 					</div><!-- eval-list end -->
 				<div class="text-center" >
+					<input id="hidden-pageno-eval" type="hidden" value="1" />
+					<input id="hidden-pagenomax-eval" type="hidden" value="${ requestScope.evalPageNoMax }" />
 					<h1><span id="go-prev">&lt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="go-next">></span></h1>
 				</div>
-			</div><!-- col-md-12 -->		
+			</div><!-- col-md-12 -->
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 	</section>
-	<!-- End Client Section -->
-	<section id="about-us" class="about-us-section-1">
+	<!-- end eval-rating section -->
+	<section id="eval-comment" class="services-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
@@ -730,6 +805,7 @@ h2 {
 					<h2>Say Comments</h2>
 					<p>hello, little ones !!!</p>
 				</div>
+
 				
 	<!-- write new comment -->
 				<div id="columns" class="row">
@@ -761,6 +837,19 @@ h2 {
 		</div>
 
 		<div id="columns" class="row div-comment-list">
+			<div id="div-comment-first" class="div-comment" style="display: none;">
+				<input class="commentno" type="hidden" value="" />
+				<input id="hidden-comment-isfirst" type="hidden" value="true" />
+				<figure>
+					<div class="service text-center" style="margin: 10px 0px;">
+						<h4 class="comment-writer-id"></h4>
+						<p></p>
+						<img class="fnc-icon img-comment-del"
+							src="/showmethecard/resources/images/comment-del.png"
+							style="margin-top: 10px; height: 26px; width: auto;" />
+					</div>
+				</figure>
+			</div>
 			<c:forEach var="commentlist" items="${ requestScope.evalCommentList }">
 				<div class="div-comment">
 					<input class="commentno" type="hidden" value="${ commentlist.eCommentNo }" />

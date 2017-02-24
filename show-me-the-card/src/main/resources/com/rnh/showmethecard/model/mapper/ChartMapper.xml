@@ -9,7 +9,7 @@
 			h.M_ID mId,
 		    sum(h.point) mPoint, m.M_Level mLevel
 		FROM MEMBER_HISTORY h, MEMBER m
-		where m.M_ID = h.M_ID AND h.REG_DATE = curdate() AND m.USERTYPE = '0' AND m.deleted = '0'
+		where m.M_ID = h.M_ID AND left(h.REG_DATE, 10) = curdate() AND m.USERTYPE = '0' AND m.deleted = '0'
 		group by h.M_ID
 		order by mLevel desc limit 10
 	</select>
@@ -44,7 +44,7 @@
 	<select id="dayCard" resultType="Card">
 		SELECT c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover
 		FROM CARD_DB c, CARD_HISTORY h
-		WHERE c.CARD_NO = h.CARD_NO AND h.REG_DATE = curdate() AND c.deleted = '0'
+		WHERE c.CARD_NO = h.CARD_NO AND left(h.REG_DATE, 10) = curdate() AND c.deleted = '0'
 		group by c.CARD_NO
 		order by cPoint desc limit 10
 	</select>

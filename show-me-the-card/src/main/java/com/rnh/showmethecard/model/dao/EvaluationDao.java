@@ -2,6 +2,8 @@ package com.rnh.showmethecard.model.dao;
 
 import java.util.List;
 
+import com.rnh.showmethecard.model.dto.BestTag;
+import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
@@ -32,6 +34,14 @@ public interface EvaluationDao {
 	List<EvaluationRating> selectEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo);
 
 	EvaluationRating selectEvaluationRatingBymId(int cardNo, String mId);
+
+	int selectEvaluationRatingNoSumWithCardNo(String tName, String tConditionName, String tConditionValue);
+
+	Card selectCardDbByCardNo(int cardNo);
+
+	boolean selectExistsEvaluationCommentOfmId(int cardNo, String mId);
+
+	List<BestTag> selectBestTag(int cardNo, String columnName);
 
 
 	

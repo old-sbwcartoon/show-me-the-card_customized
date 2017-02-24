@@ -57,7 +57,6 @@ public class CardServiceImpl implements CardService {
 		System.out.println("MYCARD INSERT 성공");
 		
 		String mycName = "";
-		System.out.println("test :"+ cardForInsert.getMycTagsArr()[0]);
 		
 		for(int i = 0 ; i < cardForInsert.getMycTagsArr().length ; i++){
 			mycName = cardForInsert.getMycTagsArr()[i];

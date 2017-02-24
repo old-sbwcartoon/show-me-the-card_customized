@@ -178,12 +178,21 @@
 		select E_RATING_NO
 		from EVALUATION_RATING
 		where CARD_NO = #{cardNo}
-			AND deleted = 0
 			AND M_ID = #{mId}
+			AND deleted = 0
 		limit 1
 		)
 </select>
-
+<select id="selectExistsEvaluationCommentOfmId" resultType="boolean" parameterType="HashMap">
+	select exists (
+		select E_COMMENT_NO
+		from EVALUATION_COMMENT
+		where CARD_NO = #{cardNo}
+			AND M_ID = #{mId}
+			AND deleted = 0
+		limit 1
+		)
+</select>
 
 <select id="selectEvaluationRatingNoSumWithCardNo" resultType="Integer" parameterType="HashMap">
 	select T_ARTICLE_NO_SUM
@@ -225,13 +234,23 @@
 	select CARD_NO
 		, SITE_URL
 		, C_POINT
-		<!-- , date_format(REG_DATE, "%Y/%c/%e %T") REG_DATE -->
-		, REG_DATE
+		, date_format(REG_DATE, "%Y/%c/%e %T") REG_DATE
 		, DISCOVERER
 		, C_NAME
 		, C_RATING
 	from CARD_DB
 	where CARD_NO = #{cardNo}
 </select>
-	
+
+<select id="selectBestTag" resultType="BestTag" parameterType="BestTag">
+	select mt.MYC_NAME as bestTagName, max(mt.REG_DATE) as regDate, count(MYC_NAME) as tagCount
+        from MYC_TAG mt, MY_CARD myc
+        where mt.MYC_NO = myc.MYC_NO        
+			AND ${columnName} = #{valueNo}            
+			AND myc.deleted = 0
+		group by mt.MYC_NAME
+        order by tagCount DESC, regDate DESC
+        limit 3;
+</select>
+
 </mapper>

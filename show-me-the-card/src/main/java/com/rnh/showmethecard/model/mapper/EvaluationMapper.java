@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
@@ -48,5 +49,10 @@ public interface EvaluationMapper {
 
 
 	Card selectCardDbByCardNo(int cardNo);
+
+	boolean selectExistsEvaluationCommentOfmId(HashMap<String, Object> data);
+
+
+	List<BestTag> selectBestTag(BestTag bestTag);
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.common.Literal;
+import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
@@ -135,6 +136,25 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	@Override
 	public Card selectCardDbByCardNo(int cardNo) {
 		return mapper.selectCardDbByCardNo(cardNo);
+	}
+
+
+	@Override
+	public boolean selectExistsEvaluationCommentOfmId(int cardNo, String mId) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("cardNo", cardNo);
+		data.put("mId", mId);
+		
+		return mapper.selectExistsEvaluationCommentOfmId(data);
+	}
+
+
+	@Override
+	public List<BestTag> selectBestTag(int valueNo, String columnName) {
+		BestTag bestTag = new BestTag();
+		bestTag.setValueNo(valueNo);
+		bestTag.setColumnName(columnName);
+		return mapper.selectBestTag(bestTag);
 	}
 
 

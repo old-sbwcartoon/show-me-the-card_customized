@@ -70,55 +70,155 @@ $(document).ready(function() {
 		}
 	});
 	
-	var tagArray  = new Array;
+	/* var tagArray  = new Array;
+	var compareArray = new Array;
 	var tagCount  = 0;
 	var userInput = "";
+	var preUserInput = "";
 	var tf = true;
-	$('#mycContent').bind('keypress', function(e) {
-        if (e.which == 32){//space bar or tab bar
+	var strTmp;
+	$('#mycContent').bind('keyup', function(e) {
+        if (e.which == 32){
+        	//debugger;
+        	// compareArray = $('#mycContent').val().split(' ');
+        	//if( tagArray != compareArray && userInput != ""){
+   			//	$('#mycContent').val(userInput);
+   			//	alert("잘못된 방식입니다.2");
+   			//}
         	if(tagCount < 10){
 	        	tf = true;
-	       		tagArray = $('#mycContent').val().split(' ');
+	       		 	
+	       			tagArray = $('#mycContent').val().split(' ');
+	       			copareArray = tagArray;
+	       			if (tagArray[tagCount] == "") {
+	       				$('#mycContent').val(userInput);
+	       				tf = false;
+	       				alert('빈공간입니다.');
+	       				tagArray.pop();
+	       			}
+	       		
+	       				
+	       		tagArray.pop(); 
 	       		
 	       		for(var i = 0 ; i < tagCount; i++){
 	       			if( tagArray[i] == tagArray[tagCount]){
-		       			$('#mycContent').empty();
 		       			$('#mycContent').val(userInput);
-		       			//alert(userInput);
 		       			tf =false;
 		       			alert("중복입니다.");
 	       			}
 	       			
 	       		}
 	       		if(tf){
+	       			
+	       			
 		       		userInput = $('#mycContent').val();
 		       		$("#resultTag").append("<span class='label label-success allTags' id='tag"+tagCount+"'>"+ tagArray[tagCount] +"</span> ");
 		       		tagCount++;
+	       			
 		       		
 	       		}
         	}else if(tagCount >= 10){
             	
             	alert("TAG는 총 10개까지만 입력이 가능합니다.");
             	
-            	$('#mycContent').empty();
        			$('#mycContent').val(userInput);
-            } 
-//        	else if(e.which == 13){
-//        		alert("너는 지금 엔터를 눌렀어");
-//        	} 
-        	
-//        	else { alert("다른건 누르지 말란 말이다!");
-//	        	$('#mycContent').empty();
-//	   			$('#mycContent').val(userInput);
-//        	}
+            }
+        	//else{
+            //	alert("잘못된 접근입니다.");
+            //	$('#mycContent').val(userInput);
+            //}
         }else if(e.which == 13){
         	alert("너는 지금 엔터를 눌렀어");
         }else if(e.which == 8){
-        	alert("너는 지금 백스페이스를 눌렀어");
+        	$("#resultTag > span").last().remove();
+        	
+        	
+   			
+   			tagCount--;	
+   			userInput = "";
+	   		for(var i = 0; i < tagCount; i++){
+	   				userInput += tagArray[i];
+	   				userInput += " ";
+	   		}	   			
+   			
+   			
+   			$('#mycContent').val(userInput);
+   			if(tagCount < 0){
+   				tagCount = 0;
+   			}    	
         }
-       
         
+	}); */
+	
+	var tagArray  = new Array;
+	var tagCount  = 0;
+	var tf = true;
+	var strTmp = "";
+	$('#mycContent').bind('keydown', function(e) {
+		if (e.which == 32 || e.which == 13){
+			//debugger;
+			if(tagCount < 10){ 
+				addindex();
+			}else{
+        		alert("Tag는 10개 이하만 입력 가능합니다.");
+        		$('#mycContent').val("");
+        	}
+        }else if(e.which == 8){
+   
+        	deleteindex();
+        	
+        }else if(e.which >= 60 && e.which <= 90){
+        }else{
+        }
 	});
+	$('#mycContent').bind('keyup', function(e) {
+        if (e.which == 32 && e.which == 13){
+        	
+        }else if(e.which == 8){
+        	
+        }else{
+        	
+        }
+	});
+	
+	var addindex = function(){
+		
+			strTmp = $('#mycContent').val().replace(/ /g, '');
+			if(strTmp != ""){
+				//debugger;
+				tf=true;
+				for(var i = 0 ; i < tagCount; i++){
+	   				if( tagArray[i] == strTmp){
+	   				tf=false;
+	       			alert("중복입니다.");
+	       			break;
+	   				}
+				}
+	   		
+				if(tf){
+				tagArray.push(strTmp);
+   				$("#resultTag").append("<span class='label label-success allTags' id='tag" + tagCount +"'>"+ strTmp +"  <i class='glyphicon glyphicon-remove-circle'></i></span>");
+   				
+   				tagCount++;
+				}
+				$('#mycContent').val("");
+			}
+	}
+	
+	var deleteindex = function(){
+		if(tagCount < 0){
+			tagCount = 0;
+		}
+		if( $('#mycContent').val() == ""){
+		$("#resultTag > span").last().remove();
+		tagArray.pop();
+		tagCount--;
+		}
+	}
+	
+	
+	////////////////////////////////////
+	
 	
 	$('#resultTag').on("click", "span[id^=tag]",function(){
 		alert($(this).text());
@@ -130,7 +230,16 @@ $(document).ready(function() {
 	
 });
 </script>
-
+<style>
+.label-success {
+    float: left;
+    margin: 3px;
+}
+.glyphicon {
+    top: 3px;
+    color: red;
+}
+</style>
 	<!-- 모달 시작 -->
 	<div class="modal fade" id="registercard" role="dialog">
 		<div class="modal-dialog">
@@ -166,9 +275,16 @@ $(document).ready(function() {
 										<input type="text" class="form-control" placeholder="사이트 혹은 페이지의 이름입니다." id="cName" />
 										<p class="help-block text-danger"></p>
 									</div>
+									<!-- <div><h2 id="resultTag2"></h2></div><br>
+									<div class="col-md-12 form-group waves-effect">
+										<p>Tag</p>
+										
+										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent2" />
+										<p class="help-block text-danger"></p>
+									</div> -->
 									<div><h2 id="resultTag"></h2></div><br>
 									<div class="col-md-12 form-group waves-effect">
-										<p>Tag & 내용</p>
+										<p>Tag</p><p style="color=red;"> so</p>
 										
 										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent" />
 										<p class="help-block text-danger"></p>

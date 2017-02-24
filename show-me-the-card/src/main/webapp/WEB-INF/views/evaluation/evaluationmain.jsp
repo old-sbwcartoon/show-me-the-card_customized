@@ -128,7 +128,8 @@ textarea.autosize {
 }
 
 #div-thumbnail-text {
-	height: 200px;
+	margin-top: 20px;
+	height: ;
 }
 
 #link-thumbnail {
@@ -223,13 +224,9 @@ h2 {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
-			//var cardRegDate = $('#hidden-card-regdate').val();
+			var pageNoMax = $('#hidden-pagenomax-eval').val();
 			
-			//new Date(cardRegDate);
-			//var formatChangedRegDate = new Date(cardRegDate).getFullYear() + '/' + cardRegDate.getMonth() + 1 + '/' cardRegDate.getDate();
-			
-			//$('#card-regdate').text(formatChangedRegDate);
-			
+			alert(pageNoMax);
 			
 		    /* 이미지 크기 결정 */
 			var imgDiv = $('#div-thumbnail-img');
@@ -485,7 +482,7 @@ h2 {
 	    	
 	    	
 	    	/* submit comment */
-		    $('#div-comment-submit').click(function() {
+		    $('#div-comment-submit').on("click", function() {
 		    	var spaceTrimedContent = $.trim($('#comment-textarea').val());
 		    	
 		    	if (spaceTrimedContent) { // spaceTrimedContent가 not !(null || "" || NaN || 0) 
@@ -503,16 +500,30 @@ h2 {
 								opacity : '0',
 								bottom  : '0px'
 							}); */
+							alert($('.div-comment-list').find('.div-comment').size());
 							$('#comment-textarea').val("");
-		    				var newDiv = $('.div-comment').first().clone(true);
-		    				newDiv.find('.commentno').val(data.eCommentNo);
-		    				if (newDiv.find('.comment-writer-id').text() != loginId) {
-		    					var commentDelHtml = $('<img class="fnc-icon img-comment-del" src="/showmethecard/resources/images/comment-del.png" style="margin-top: 10px; height: 26px; width: auto;"/>');
-		    					newDiv.find('figure').find('div').append(commentDelHtml);
-		    				}
-		    				newDiv.find('.comment-writer-id').text(loginId);
-		    				newDiv.find('p').text(spaceTrimedContent);
-		    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
+							
+							/* if ($('.div-comment-list').find('.div-comment').size() <= 1) {
+								var firstCommentDiv = $('#div-comment-first');
+								firstCommentDiv.find('.commentno').val(data.eCommentNo);
+								firstCommentDiv.find('.comment-writer-id').text(data.mId);
+								firstCommentDiv.find('p').text(data.content);
+								$('#div-comment-first').css('display', '');
+							} else { */
+								var newDiv = $('#div-comment-first').clone(true);
+								newDiv.css('display', '');
+			    				newDiv.find('.commentno').val(data.eCommentNo);
+			    				newDiv.find('#hidden-comment-isfirst').val(false);
+			    				/* if (newDiv.find('.comment-writer-id').text() != loginId) {
+			    					var commentDelHtml = $('<img class="fnc-icon img-comment-del" src="/showmethecard/resources/images/comment-del.png" style="margin-top: 10px; height: 26px; width: auto;"/>');
+			    					newDiv.find('figure').find('div').append(commentDelHtml);
+			    				} */
+			    				newDiv.find('.comment-writer-id').text(loginId);
+			    				newDiv.find('p').text(spaceTrimedContent);
+			    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
+							/* } */
+							
+		    				
 		    			}
 		    		});
 		    	}
@@ -563,9 +574,21 @@ h2 {
 									url : '/showmethecard/evaluation/delevalcomment.action',
 									type : 'POST',
 									data : {
+										cardNo : cardNo,
 										eCommentNo : commentNo
 									},
-									success : delWithAnimation(commentDiv)
+									success : function() {
+										if (commentDiv.find('#hidden-comment-isfirst').val() === 'true') {
+											commentDiv.animate({
+												opacity : '0'
+											},
+											function() {
+												commentDiv.css('display', 'none');
+											});
+										} else {
+											delWithAnimation(commentDiv);
+										}
+									}
 								});
 					}
 				
@@ -782,6 +805,7 @@ h2 {
 					<h2>Say Comments</h2>
 					<p>hello, little ones !!!</p>
 				</div>
+
 				
 	<!-- write new comment -->
 				<div id="columns" class="row">
@@ -813,6 +837,19 @@ h2 {
 		</div>
 
 		<div id="columns" class="row div-comment-list">
+			<div id="div-comment-first" class="div-comment" style="display: none;">
+				<input class="commentno" type="hidden" value="" />
+				<input id="hidden-comment-isfirst" type="hidden" value="true" />
+				<figure>
+					<div class="service text-center" style="margin: 10px 0px;">
+						<h4 class="comment-writer-id"></h4>
+						<p></p>
+						<img class="fnc-icon img-comment-del"
+							src="/showmethecard/resources/images/comment-del.png"
+							style="margin-top: 10px; height: 26px; width: auto;" />
+					</div>
+				</figure>
+			</div>
 			<c:forEach var="commentlist" items="${ requestScope.evalCommentList }">
 				<div class="div-comment">
 					<input class="commentno" type="hidden" value="${ commentlist.eCommentNo }" />

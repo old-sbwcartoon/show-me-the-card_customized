@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.rnh.showmethecard.model.dao.EvaluationDao;
+import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
@@ -76,6 +77,16 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Override
 	public Card showCardDb(int cardNo) {
 		return dao.selectCardDbByCardNo(cardNo);
+	}
+
+	@Override
+	public boolean confirmEvaluationCommentOfmId(int cardNo, String mId) {
+		return dao.selectExistsEvaluationCommentOfmId(cardNo, mId);
+	}
+
+	@Override
+	public List<BestTag> showBestTag(int valueNo, String columnName) {		
+		return dao.selectBestTag(valueNo, columnName);
 	}
 	
 	

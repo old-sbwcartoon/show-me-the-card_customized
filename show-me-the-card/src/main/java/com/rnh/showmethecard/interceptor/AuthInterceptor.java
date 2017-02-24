@@ -1,5 +1,7 @@
 package com.rnh.showmethecard.interceptor;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,14 +15,25 @@ public class AuthInterceptor implements HandlerInterceptor {
 			throws Exception {
 				
 		String url = request.getRequestURI();
+		
+		
 		boolean redirect = false;
-		if (url.contains("/*/")) {
-
+		if (url.contains("home.action") || url.contains("login.action") ) {
+			redirect = false;
+			
+		} else {
+			System.out.println(redirect+"1");
+			if (request.getSession().getAttribute("loginuser") == null){
+				redirect = true;
+			}
+			
 		}
 		if (redirect) {
+			System.out.println(redirect+"2");			 
 			response.sendRedirect(
-				"/showmethecard/account/login.action");
+				"/showmethecard/home.action");
 		}
+		System.out.println(redirect+"3");
 		return !redirect;//false가 반환되면 요청 처리 중단
 	}
 	@Override //after returning of controller method

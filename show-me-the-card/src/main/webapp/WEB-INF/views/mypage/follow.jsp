@@ -161,6 +161,11 @@ $(document).ready(function(){
 				
 			
 			});
+	
+	$('#userTotal').click(function(event) {
+		reload()
+	});
+	
 });
 	
 </script>
@@ -182,7 +187,7 @@ $(document).ready(function(){
     			<div class="col-md-6">
     				<h2>User Chart</h2>
     				<ul class="nav nav-tabs"  style="font-size: 23">
-    					<li class="active"><a data-toggle="tab" href="#userTotal" >친구목록(${fn:length(friends)})</a></li>
+    					<li id = "refreshlist" class="active"><a href="myfollow.action" >친구목록(${fn:length(friends)})</a></li>
 			    		<li><a data-toggle="tab" class = "sendidbutton" id="daily" href="#userDaily" >친구검색</a></li>
     					
     				</ul>

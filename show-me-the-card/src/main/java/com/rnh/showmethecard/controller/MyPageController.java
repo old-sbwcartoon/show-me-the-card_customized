@@ -38,29 +38,15 @@ public class MyPageController {
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
 	public String searchFolderById(HttpSession session, Model model, HttpServletResponse response, String goId) {
 		Member member = null;
-		boolean flag = true;
+		
 		String mId = null;
-		if (session.getAttribute("loginuser") != null) { 
+		 
 			member = (Member) session.getAttribute("loginuser");
 				if (goId == null) {
 					mId = member.getmId();				 
 				} else if(member.getmId() != goId) {
 					mId = goId;
-				}
-				
-			} else { 
-				PrintWriter writer;
-				try {
-					writer = response.getWriter();
-					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
-					writer.flush();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}				
-			 
-			}
-		
+				}			
 		
 		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
 		model.addAttribute("folders", folders);		
@@ -128,22 +114,11 @@ public class MyPageController {
 	@RequestMapping(value="myfollow.action", method=RequestMethod.GET)
 	public String searchFollowById(HttpSession session, Model model, HttpServletResponse response) {
 		Member member = null;
-		if (session.getAttribute("loginuser") != null) { 
-			member = (Member) session.getAttribute("loginuser");	 
-			} else {				
-				PrintWriter writer;
-				try {
-					writer = response.getWriter();
-					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
-					writer.flush();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}		
-		
-		String mId = member.getmId();				
-//		
+		String mId = null;
+		 
+			member = (Member) session.getAttribute("loginuser");
+			mId = member.getmId();
+
 		List<Member> friend = (List<Member>) folderService.selectMyFollow(mId);
 		model.addAttribute("friends", friend);	
 		
@@ -156,19 +131,8 @@ public class MyPageController {
 	@ResponseBody
 	public String SearchFollow(HttpSession session,HttpServletResponse response,  String frId) {
 		Member member = null;
-		if (session.getAttribute("loginuser") != null) { 
-			member = (Member) session.getAttribute("loginuser");	 
-			} else {				
-				PrintWriter writer;
-				try {
-					writer = response.getWriter();
-					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
-					writer.flush();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+		
+		member = (Member) session.getAttribute("loginuser");
 		String mId = member.getmId();
 		
 		List<Member> members = (List<Member>) folderService.searchFollow(mId, frId);
@@ -181,19 +145,9 @@ public class MyPageController {
 	@ResponseBody
 	public String RegisterFollow(HttpSession session,HttpServletResponse response,  String frId) {
 		Member member = null;
-		if (session.getAttribute("loginuser") != null) { 
-			member = (Member) session.getAttribute("loginuser");	 
-			} else {				
-				PrintWriter writer;
-				try {
-					writer = response.getWriter();
-					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
-					writer.flush();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+		 
+			member = (Member) session.getAttribute("loginuser");
+			
 		String mId = member.getmId();
 		folderService.registerfollow(mId, frId);
 		
@@ -207,19 +161,7 @@ public class MyPageController {
 	@ResponseBody
 	public String DeleteFollow(HttpSession session,HttpServletResponse response,  String frId) {
 		Member member = null;
-		if (session.getAttribute("loginuser") != null) { 
-			member = (Member) session.getAttribute("loginuser");	 
-			} else {				
-				PrintWriter writer;
-				try {
-					writer = response.getWriter();
-					writer.println("<script>alert('Need Login'); location.href='/showmethecard/home.action';</script>");
-					writer.flush();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+		member = (Member) session.getAttribute("loginuser");	 
 		String mId = member.getmId();
 		folderService.deletefollow(mId, frId);
 		
@@ -242,6 +184,10 @@ public class MyPageController {
 //	}
 		
 }
+
+
+
+
 
 
 

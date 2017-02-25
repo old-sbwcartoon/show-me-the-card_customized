@@ -157,7 +157,7 @@
 										$('#folderpage').append(
 												/* li) */
 
-										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><span class="ftext">'+ data.fName + '</span></button>')
+										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/folder.png"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><span class="ftext">'+ data.fName + '</span></button>')
 
 										) 
 
@@ -426,13 +426,13 @@
 	<span id = 'folderpage' > 
 		<c:forEach var="folder" items="${ folders }">		
 				<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
-					style="border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
-						src="/showmethecard/resources/images/cardpack.jpg"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><span class="ftext">${ folder.fName }</span></button>		
+					style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
+						src="/showmethecard/resources/images/folder.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><div class="ftext">${ folder.fName }</button>		
 		</c:forEach>
 	</span>
 
 	<button type="button" id="addFolder"
-		style="border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 75px; height: 100px">
+		style="background-color:#FFFFFF; border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 75px; height: 100px">
 		<img style="height: 100px" class="btn-img"
 			src="/showmethecard/resources/images/cardpackplus.png">
 

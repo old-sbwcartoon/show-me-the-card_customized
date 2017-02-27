@@ -160,28 +160,37 @@ public class HtmlParser {
 	
 	
 	private String getProtocolAddedUrl(String url) {
-		StringBuilder protocolAddedUrl = new StringBuilder(100);
+		StringBuilder protocolAddedUrl = new StringBuilder(100);		
 		
-		if (checkUrlOk(url)) {
+		//url 가공
+		String originalUrl = null;
+		if (url.length() - 1 == url.lastIndexOf("/")) { // url의 마지막 글자가 "/" 라면은
+			originalUrl = url.substring(0, url.lastIndexOf("/")); // 마지막 "/" 제거
+		} else {
+			originalUrl = url;
+		}
+		System.out.println(originalUrl);
+		//url 연결 확인
+		if (checkUrlOk(originalUrl)) {
 			setUrlOk(true);
-			return url;
+			return originalUrl;
 		} else {
 			String newUrl = null;
-			if (!url.contains("://")) { //http 없으면 붙이고
-				newUrl = protocolAddedUrl.append("http://").toString() + url;
+			if (!originalUrl.contains("://")) { //http 없으면 붙이고
+				newUrl = protocolAddedUrl.append("http://").toString() + originalUrl;
 				if (checkUrlOk(newUrl)) {
 					setUrlOk(true);
 					return newUrl;
 				}
 			}
-			if (!url.contains("www.")) { //접속 오류나면 www. 붙이고
-				newUrl = protocolAddedUrl.append("www.").toString() + url;				
+			if (!originalUrl.contains("www.")) { //접속 오류나면 www. 붙이고
+				newUrl = protocolAddedUrl.append("www.").toString() + originalUrl;
 				if (checkUrlOk(newUrl)) {
 					setUrlOk(true);
 					return newUrl;
 				}
 			}
-		}		
+		}
 		setUrlOk(false);
 		return null; // 모두 오류나면 url=null
 	}

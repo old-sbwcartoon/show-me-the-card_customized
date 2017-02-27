@@ -32,8 +32,8 @@ public class MysqlCardDao implements CardDao {
 	}
 	
 	@Override
-	public void insertCardDb(String siteUrl, String discoverer, String cName, String imgSrc) {
-		cardMapper.insertCardDb(siteUrl, discoverer, cName, imgSrc);
+	public void insertCardDb(String siteUrl, String discoverer, String cName, String imgSrc, String urlDesc) {
+		cardMapper.insertCardDb(siteUrl, discoverer, cName, imgSrc, urlDesc);
 	}
 	
 	@Override

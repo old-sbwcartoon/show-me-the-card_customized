@@ -123,7 +123,12 @@ public class Literal {
 		
 		public static class Average {
 			
-			public static final int MIN_ARTICLE_NO = 3;
+			public static final int MIN_ARTICLE_NO = 2;
 		}
+	}
+	
+	public static class Search {
+		
+		public static final int THRESHOLD  = 10; // 검색어 count 최소 percent
 	}
 }

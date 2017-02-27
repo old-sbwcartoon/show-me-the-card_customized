@@ -15,8 +15,8 @@
 	<insert id="insertCardDb" >
 	
 		INSERT INTO rnh2.CARD_DB
-		(site_url, c_point, discoverer, c_name, c_rating, img_src)
-		VALUES (#{siteUrl}, 0, #{discoverer}, #{cName}, 0, #{imgSrc})	
+		(site_url, c_point, discoverer, c_name, c_rating, img_src, urldesc)
+		VALUES (#{siteUrl}, 0, #{discoverer}, #{cName}, 0, #{imgSrc}, #{urlDesc})	
 		
 	</insert>
 	
@@ -40,7 +40,7 @@
 	
 	
 	<select id="selectMyCardListByFNo" resultType="MyCardList" parameterType="int">
-		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName
+		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName, cd.DISCOVERER discoverer, cd.URLDESC urlDesc
 		FROM MY_CARD mc, CARD_DB cd
 		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO = #{fNo}
 	</select>

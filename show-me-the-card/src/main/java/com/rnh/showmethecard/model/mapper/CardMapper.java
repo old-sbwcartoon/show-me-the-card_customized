@@ -10,7 +10,7 @@ import com.rnh.showmethecard.model.dto.MyCardList;
 
 public interface CardMapper {
 	String selectCardDbBySiteUrl(String siteUrl);
-	void insertCardDb(@Param("siteUrl")String siteUrl, @Param("discoverer")String discoverer,@Param("cName")String cName, @Param("imgSrc")String imgSrc);
+	void insertCardDb(@Param("siteUrl")String siteUrl, @Param("discoverer")String discoverer,@Param("cName")String cName, @Param("imgSrc")String imgSrc, @Param("urlDesc")String urlDesc);
 	void insertMyCard(CardForInsert cardForInsert);
 	void insertMycTag(HashMap<String, Object> map);
 	

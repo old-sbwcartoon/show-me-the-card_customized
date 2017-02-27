@@ -105,6 +105,18 @@ public class CardController {
 //			myCardListList.get(i).setDesc(h.getDesc());
 //			myCardListList.get(i).setTitle(h.getTitle());
 //		}
+//		
+//		myCardListList.get(0).getCardNo(),
+//		myCardListList.get(0).getClass(),
+//		myCardListList.get(0).getDesc(),
+//		myCardListList.get(0).getImg(),
+//		myCardListList.get(0).getImgSrc(),
+//		myCardListList.get(0).getMycComment(),
+//		myCardListList.get(0).getMycNo(),
+//		myCardListList.get(0).getScrapCount(),
+//		myCardListList.get(0).getTitle(),
+//		myCardListList.get(0).getUrl()
+		
 		
 		Collections.reverse(myCardListList);
 		req.setAttribute("mycardListList", myCardListList);
@@ -123,6 +135,8 @@ public class CardController {
 		cardForInsert.setSiteUrl(h.getUrl());
 		cardForInsert.setDiscoverer(mId);
 		cardForInsert.setImgSrc(h.getImg());
+		cardForInsert.setcName(h.getTitle());
+		cardForInsert.setUrlDesc(h.getDesc());
 		
 		cardService.insertMyCardOrCardDb(cardForInsert);
 		return "입력 성공";

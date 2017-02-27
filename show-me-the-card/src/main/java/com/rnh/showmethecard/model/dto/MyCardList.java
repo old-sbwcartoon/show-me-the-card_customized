@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class MyCardList implements Serializable {
 	
 	private String url;
-	private String title;
+	private String cName;
 	private String desc;
 	private String img;
 	private int cardNo;
@@ -18,7 +18,8 @@ public class MyCardList implements Serializable {
 	private int mycNo;
 	private int scrapCount;
 	private String imgSrc;
-	
+	private String discoverer;
+	private String urlDesc;
 	
 	public int getMycNo() {
 		return mycNo;
@@ -38,11 +39,11 @@ public class MyCardList implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getTitle() {
-		return title;
+	public String getcName() {
+		return cName;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
 	public String getDesc() {
 		return desc;
@@ -73,5 +74,17 @@ public class MyCardList implements Serializable {
 	}
 	public void setImgSrc(String imgSrc) {
 		this.imgSrc = imgSrc;
+	}
+	public String getDiscoverer() {
+		return discoverer;
+	}
+	public void setDiscoverer(String discoverer) {
+		this.discoverer = discoverer;
+	}
+	public String getUrlDesc() {
+		return urlDesc;
+	}
+	public void setUrlDesc(String urlDesc) {
+		this.urlDesc = urlDesc;
 	}
 }

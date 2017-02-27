@@ -13,7 +13,7 @@ public class Card implements Serializable {
 	private int cardNo;
 	private String siteUrl;
 	private int cPoint;
-	private String regDate;
+	private Date regDate;
 	private String discover;
 	private String cName;
 	private float cRating;
@@ -36,10 +36,10 @@ public class Card implements Serializable {
 	public void setcPoint(int cPoint) {
 		this.cPoint = cPoint;
 	}
-	public String getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(String regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 	public String getDiscover() {

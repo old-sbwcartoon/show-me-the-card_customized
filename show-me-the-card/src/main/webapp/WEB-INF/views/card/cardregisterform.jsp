@@ -9,7 +9,7 @@ $(document).ready(function() {
 	var cardNum, check;
 	var a = 0;
 	var title = "";
-	var mycContent = "";
+	var mycContent2 = "";
 	$('#siteUrl').blur(function() {
 		siteUrl = $('#siteUrl').val();
 		$.ajax ({
@@ -38,13 +38,13 @@ $(document).ready(function() {
 			a=0;
 			cardNum = $('#cardNoCheck').val();
 			check = $('#check').val();
-			mycContent = $('#mycContent').val();
+			mycContent2 = $('#mycContent2').val();
 			
 			var frontJson = {
 					siteUrl : siteUrl,
 					cName : title,
 					cardNo : cardNum,
-					mycComment : mycContent,
+					mycComment : mycContent2,
 					mycTagsArr : tagArray,
 					fNo : getFNo
 			};
@@ -284,9 +284,15 @@ $(document).ready(function() {
 									</div> -->
 									<div><h2 id="resultTag"></h2></div><br>
 									<div class="col-md-12 form-group waves-effect">
-										<p>Tag</p><p style="color=red;"> so</p>
+										<p>Tag</p><p style="color:red">※TAG는 총 10개까지 등록이 가능하며, 중복되는 내용은 입력할 수 없습니다.</p>
 										
-										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent" />
+										<input type="text" class="form-control" placeholder="태그를 하나씩  입력하세요 *" id="mycContent" />
+										<p class="help-block text-danger"></p>
+									</div>
+									<div class="col-md-12 form-group waves-effect">
+										<p>나의 코멘트</p>
+										
+										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent2" />
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>

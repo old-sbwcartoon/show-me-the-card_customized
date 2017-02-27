@@ -16,53 +16,46 @@
 </script>
 
 
-<section id="team" class="team-member-section" style="background-color : hsr(50,50,50);">
-<c:set var="incNum" value="${0}" />
+<section id="team" class="team-member-section" style="background-color : hsl(0, 100%, 50%);">
+<%-- <c:set var="incNum" value="${0}" /> --%>
 <c:forEach var="MyCardList" items="${ mycardListList }">
 
 	<div class="col-md-3 col-sm-6">
 	
-		<div style="border: 5px solid hsl(0, 100%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px;">
-		
-			<div class="team-member" style="margin: 10px;">
-				<div id="imgdiv"
-					style="height: 290px; text-align: center; overflow: hidden;">
-					<img id="imgSrc" src="${MyCardList.imgSrc}"
-						class="img-responsive thumbnail" alt="">
-				</div>
-				<div class="team-details">
-					<h4 id="titleM">${MyCardList.title}</h4>
-
-					<p id="contentM" class="description">${MyCardList.mycComment}</p>
-
-					<ul>
-						<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
-						<li><a href="${MyCardList.url}" target="_blank"><i
-								class="fa fa-twitter"></i>이동</a></li>
-						<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
-						
-					</ul>
-					<br>
-
-					<div>
-						<p>test</p>
+		<div style="border: 10px solid hsl(200, 100%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(50, 50%, 80%);">
+			<div style="border: 5px solid hsl(200, 0%, 0%); height: 460px; margin:10px;">
+				<div class="team-member" style="margin: 10px;">
+					<div id="imgdiv"
+						style="height: 290px; text-align: center; overflow: hidden;">
+						<img id="imgSrc" src="${MyCardList.imgSrc}"
+							class="img-responsive thumbnail" alt="">
 					</div>
-					<ul>
-						<li><a href="#"><i class="fa fa-facebook"></i>카드삭제</a></li>
-					</ul>
 
-					<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}" />
-					<input id='toUrl' +${incNum} type="hidden"
-						value="${MyCardList.url}" /> <input id='incNum' type="hidden"
-						value="${incNum}" />
+					<div class="team-details">
+						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
+						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
+							<li><a href="${ MyCardList.url }" target="_blank"><i class="fa fa-twitter"></i>이동</a></li>
+							<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
+						</ul>
+						<br>
+	
+						<div>
+							<p>최초발견자 : ${MyCardList.discoverer}</p>
+						</div>
+	
+						<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}" />
+						<input id='toUrl' type="hidden" value="${MyCardList.url}" />
+						<%-- <input id='incNum' type="hidden" value="${incNum}" /> --%>
+					</div>
 				</div>
-			</div>
-			
-			<div>
-					<h3>${MyCardList.mycComment}</h3>
+				
+				<div style="text-align: center;">
+						<h3>${MyCardList.mycComment}</h3>
+				</div>
 			</div>
 		</div>
-		
 	</div>
 </c:forEach>
 </section>

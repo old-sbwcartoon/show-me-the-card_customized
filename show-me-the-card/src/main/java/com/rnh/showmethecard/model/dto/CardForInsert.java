@@ -14,6 +14,7 @@ public class CardForInsert implements Serializable {
 	private int fNo;
 	private int mycNo;
 	private int scrapCount;
+	private String urlDesc;
 	
 	public String getSiteUrl() {
 		return siteUrl;
@@ -74,6 +75,12 @@ public class CardForInsert implements Serializable {
 	}
 	public void setScrapCount(int scrapCount) {
 		this.scrapCount = scrapCount;
+	}
+	public String getUrlDesc() {
+		return urlDesc;
+	}
+	public void setUrlDesc(String urlDesc) {
+		this.urlDesc = urlDesc;
 	}
 	
 }

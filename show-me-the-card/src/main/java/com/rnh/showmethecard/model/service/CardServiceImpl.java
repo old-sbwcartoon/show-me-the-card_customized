@@ -38,7 +38,8 @@ public class CardServiceImpl implements CardService {
 			String siteUrl = cardForInsert.getSiteUrl();
 			String cName = cardForInsert.getcName();
 			String imgSrc = cardForInsert.getImgSrc();
-			cardDao.insertCardDb(siteUrl, discoverer, cName, imgSrc);
+			String urlDesc = cardForInsert.getUrlDesc();
+			cardDao.insertCardDb(siteUrl, discoverer, cName, imgSrc, urlDesc);
 			//마이카드 저장
 			cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
 			cardForInsert.setCardNo(cardNo);

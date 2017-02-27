@@ -20,12 +20,15 @@
 		WHERE deleted = '0'
 	</select>	
 	
-	<select id="cardSearch" resultType="Card" parameterType="String">
-		SELECT cd.DISCOVERER discover, cd.SITE_URL siteUrl, cd.C_NAME cName
-		FROM MY_CARD mc, MYC_TAG mt, CARD_DB cd
-		WHERE mc.MYC_NO = mt.MYC_NO AND mc.CARD_NO = cd.CARD_NO
+	<select id="cardSearch" resultType="Card" parameterType="String">		
+		select cd.SITE_URL siteUrl, cd.C_NAME cName, mt.MYC_NAME, cd.CARD_NO, 
+				count(*) as cmt, SUM(cd.C_POINT) as total, cd.SITE_URL, max(mt.REG_DATE) as regDate
+		from  MYC_TAG mt, MY_CARD myc, CARD_DB cd
+		where mt.MYC_NO = myc.MYC_NO AND myc.CARD_NO = cd.CARD_NO
 		AND mt.MYC_NAME like concat('%', #{cName}, '%')
-		ORDER BY mc.SCRAP_COUNT, cd.C_POINT desc	
+		group by mt.MYC_NAME, cd.CARD_NO, cd.SITE_URL
+		having sum(cmt) * (0.1) <![CDATA[ < ]]> cmt
+		order by cmt DESC, regDate DESC	
 	</select>
 	
 	<select id="cardSearchCount" resultType="int">

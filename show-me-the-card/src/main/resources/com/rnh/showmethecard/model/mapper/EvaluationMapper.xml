@@ -141,12 +141,14 @@
 	limit #{articleStartNo}, #{limit}
 </select>
 
-<select id="selectEvaluationRatingAvg" resultType="Float" parameterType="HashMap">
-	select ifnull(round(avg(E_RATING), 3), -1)
+<select id="selectEvaluationRatingAvg" resultType="float" parameterType="HashMap">
+	select 
+		case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 3)
+			else -1
+		end
 	from EVALUATION_RATING
 	where CARD_NO = #{cardNo}
 		AND deleted = 0
-	<!-- having count(*) > #{minArticleNo} -->
 </select>
 
 
@@ -234,7 +236,7 @@
 	select CARD_NO
 		, SITE_URL
 		, C_POINT
-		, date_format(REG_DATE, "%Y/%c/%e %T") REG_DATE
+		, REG_DATE
 		, DISCOVERER
 		, C_NAME
 		, C_RATING

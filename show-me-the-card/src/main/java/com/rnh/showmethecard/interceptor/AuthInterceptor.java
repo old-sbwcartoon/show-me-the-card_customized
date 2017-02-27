@@ -18,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 		
 		boolean redirect = false;
-		if (url.contains("home.action") || url.contains("login.action") ) {
+		if (url.contains("home.action") || url.contains("login.action") || url.contains("chart") ) {
 			redirect = false;
 			
 		} else {

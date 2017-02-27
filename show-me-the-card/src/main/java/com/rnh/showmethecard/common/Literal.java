@@ -123,7 +123,7 @@ public class Literal {
 		
 		public static class Average {
 			
-			public static final int MIN_ARTICLE_NO = 3;
+			public static final int MIN_ARTICLE_NO = 2;
 		}
 	}
 }

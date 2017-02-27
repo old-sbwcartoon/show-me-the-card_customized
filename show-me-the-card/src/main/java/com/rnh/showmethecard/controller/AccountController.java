@@ -48,7 +48,12 @@ public class AccountController {
 			member = point.updateMemberPointAndLevel(Literal.Content.Member.ATTENDANCE, member);
 			session.setAttribute("loginuser", member);
 			
-			return "redirect:/mypage/mypage.action";
+			if (member.getUserType().equals("1")) {
+				return "redirect:/home.action";
+			} else {
+				return "redirect:/mypage/mypage.action";				
+			}
+			
 		} else {
 			//로그인 실패 alert
 			try {

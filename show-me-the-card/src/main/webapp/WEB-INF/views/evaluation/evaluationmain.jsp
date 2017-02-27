@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -224,9 +225,7 @@ h2 {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
-			var pageNoMax = $('#hidden-pagenomax-eval').val();
 			
-			alert(pageNoMax);
 			
 		    /* 이미지 크기 결정 */
 			var imgDiv = $('#div-thumbnail-img');
@@ -314,7 +313,7 @@ h2 {
 		    	var starNo = Math.round(decimalStarNo);
 
 		    	if (starNo == -1) {
-		    		star = "☆☆☆☆☆";
+		    		star = "평가가 더 필요해요!";
 		    	}
 	    		if (starNo == 0) {
 	    			star = '☆';
@@ -611,9 +610,14 @@ h2 {
 					data-wow-duration="2s" data-wow-delay="50ms">
 					<h2>${requestScope.htmlParser.title}</h2>
 					<br>
-					<h4 style="color: gold;">#해쉬태그 #해쉬태그 #해쉬태그</h4>
+					<h4 style="color: gold;">
+					<c:forEach var="bestTag" items="${ requestScope.bestTagList }">
+							#${ bestTag.bestTagName }&nbsp;&nbsp;
+					</c:forEach>
+					</h4>
 					<h2>..</h2>
 					<p>${requestScope.htmlParser.desc}</p>
+					
 				</div>
 				<div class="section-title text-center wow fadeInDown"
 					data-wow-duration="2s" data-wow-delay="10ms">
@@ -640,7 +644,7 @@ h2 {
 						<h2>POINT : ${ requestScope.card.cPoint }</h2>
 						<h2>DISCOVERER : ${ requestScope.card.discover } 님</h2>
 						<input id="hidden-card-regdate" type="hidden" value="${ requestScope.card.regDate }" />
-						<h4>등록일 : ${ requestScope.card.regDate }</h4>
+						<h4>등록일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h4>
 					</div>
 				</div>
 			</div>
@@ -789,8 +793,8 @@ h2 {
 					</div><!-- eval-list end -->
 				<div class="text-center" >
 					<input id="hidden-pageno-eval" type="hidden" value="1" />
-					<input id="hidden-pagenomax-eval" type="hidden" value="${ requestScope.evalPageNoMax }" />
-					<h1><span id="go-prev">&lt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="go-next">></span></h1>
+					<%-- <input id="hidden-pagenomax-eval" type="hidden" value="${ requestScope.evalPageNoMax }" />
+					<h1><span id="go-prev">&lt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="go-next">></span></h1> --%>
 				</div>
 			</div><!-- col-md-12 -->
 		</div><!-- /.row -->

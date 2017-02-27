@@ -47,6 +47,9 @@
 					<div>
 						<p>test</p>
 					</div>
+					<ul>
+						<li><a href="#"><i class="fa fa-facebook"></i>카드삭제</a></li>
+					</ul>
 
 					<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}" />
 					<input id='toUrl' +${incNum} type="hidden"

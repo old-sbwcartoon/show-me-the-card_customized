@@ -22,6 +22,7 @@ import com.rnh.showmethecard.model.dto.Friend;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.Notice;
 import com.rnh.showmethecard.model.service.FolderService;
+import com.rnh.showmethecard.model.service.MemberService;
 
 @Controller
 @RequestMapping(value = "/mypage")
@@ -34,6 +35,10 @@ public class MyPageController {
 	@Autowired
 	@Qualifier("folderService")
 	private FolderService folderService;
+	
+	@Autowired
+	@Qualifier("memberService")
+	private MemberService memberService;
 
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
 	public String searchFolderById(HttpSession session, Model model, HttpServletResponse response, String goId) {
@@ -49,7 +54,12 @@ public class MyPageController {
 				}			
 		
 		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
-		model.addAttribute("folders", folders);		
+		model.addAttribute("folders", folders);
+		
+		Member owner = memberService.getMemberBymId(mId);
+		
+		model.addAttribute("poLevel", owner.getmLevel());
+		model.addAttribute("pageOwner", mId);
 		return "mypage/mypage";
 	}
 	

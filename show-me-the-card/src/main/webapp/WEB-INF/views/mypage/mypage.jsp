@@ -131,8 +131,49 @@
 					
 					$("#loginModal").modal('show');
 					
+					
 				});
 
+				$('#fName').on("keypress", function(key){
+					if (key.which == 13)  {
+						if ($('#fName').val() != "") {
+							$.ajax({
+								url : 'register.action',
+								type : 'post',
+								data : {
+									mId : $('#mId').val(),
+									fName : $('#fName').val(),
+									secret : $('#myonoffswitch').is(":checked")
+								},
+								dataType : 'json',
+								success : function(data) {
+									/* var li = $('#folderbasic').clone(true);
+									li.find('#folderbasicimg').attr('src', "/showmethecard/resources/images/cardpack.png")
+									li.css('display' , 'inline')
+									li.attr("id", "folder_"+ data.fNo)
+									li.find('#fNo').attr("value", data.fNo)
+									li.text(data.fName)  */
+									var uurl = "url('/showmethecard/resources/images/folder.png')"
+									  var appendbutton = $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><div id="folderbasicimg" style="height: 100px; background-Image:'+uurl +'; background-size:65% 95%; background-repeat:no-repeat; background-position:center top; line-height:130px; text-align:center; font-size:15pt;" class="btn-img">#BEST TAG</div><input type="hidden" id="fNo" name="fNo" value="' + data.fNo + '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><div class="ftext">'+ data.fName + '</div></button>')
+									
+									
+									$('#folderpage').append(
+											/* li) */
+										appendbutton
+
+									) 
+
+								}
+
+							});
+						} else {
+							alert("폴더 명을 입력하세요.");
+							return false;
+						}
+					}
+					
+				});
+				
 				// 폴더 register ajax
 				$('#register').click(
 						function() {							
@@ -154,7 +195,7 @@
 										li.find('#fNo').attr("value", data.fNo)
 										li.text(data.fName)  */
 										var uurl = "url('/showmethecard/resources/images/folder.png')"
-										  var appendbutton = $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><div id="folderbasicimg" style="height: 100px; background-Image:'+uurl +'; background-size:65% 95%; background-repeat:no-repeat; background-position:center top; line-height:130px; text-align:center; font-size:15pt;" class="btn-img">#BEST TAG</div><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><span class="ftext">'+ data.fName + '</span></button>')
+										  var appendbutton = $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><div id="folderbasicimg" style="height: 100px; background-Image:'+uurl +'; background-size:65% 95%; background-repeat:no-repeat; background-position:center top; line-height:130px; text-align:center; font-size:15pt;" class="btn-img">#BEST TAG</div><input type="hidden" id="fNo" name="fNo" value="' + data.fNo + '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><div class="ftext">'+ data.fName + '</div></button>')
 										
 										
 										$('#folderpage').append(

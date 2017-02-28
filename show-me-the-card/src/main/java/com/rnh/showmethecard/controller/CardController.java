@@ -94,28 +94,9 @@ public class CardController {
 	public String ShowMYCardList(HttpSession session, HttpServletRequest req, int fNo){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		System.out.println("b"+fNo);
 		List<MyCardList> myCardListList= cardService.readMyCard(fNo);
 		
 		int listLength = myCardListList.size();
-		
-//		for(int i=0;i<listLength;i++){
-//			String tmp = myCardListList.get(i).getUrl();
-//			HtmlParser h = new HtmlParser(tmp, Literal.ParseHtml.From.DB);
-//			myCardListList.get(i).setDesc(h.getDesc());
-//			myCardListList.get(i).setTitle(h.getTitle());
-//		}
-//		
-//		myCardListList.get(0).getCardNo(),
-//		myCardListList.get(0).getClass(),
-//		myCardListList.get(0).getDesc(),
-//		myCardListList.get(0).getImg(),
-//		myCardListList.get(0).getImgSrc(),
-//		myCardListList.get(0).getMycComment(),
-//		myCardListList.get(0).getMycNo(),
-//		myCardListList.get(0).getScrapCount(),
-//		myCardListList.get(0).getTitle(),
-//		myCardListList.get(0).getUrl()
 		
 		
 		Collections.reverse(myCardListList);
@@ -141,6 +122,23 @@ public class CardController {
 		cardService.insertMyCardOrCardDb(cardForInsert);
 		return "입력 성공";
 	}
+	
+	
+/*	@RequestMapping(value="scrap.action", method=RequestMethod.GET)
+	public String ShowMY(HttpSession session, HttpServletRequest req, String ownerId, int fNo){
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
+		System.out.println("b"+fNo);
+		List<MyCardList> myCardListList= cardService.readMyCard(fNo);
+		
+		int listLength = myCardListList.size();
+		
+		
+		Collections.reverse(myCardListList);
+		req.setAttribute("mycardListList", myCardListList);
+		return "card/mycardlist";
+	}*/
+	
 		
 }
 

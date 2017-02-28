@@ -162,7 +162,7 @@ function search() {
 				success : function(data, status, xhr) {
 					$('.c').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].siteUrl+'">'+data[i].siteUrl+'</th><th>'+data[i].cName+'</th></tr>').appendTo('.card').attr('class','c');
+						$('<tr><th><a href='+ data[i].siteUrl+' target=_blank>'+data[i].siteUrl+'</th><th>'+data[i].cName+'</th></tr>').appendTo('.card').attr('class','c');
 					}
 				},
 				error : function(data) {

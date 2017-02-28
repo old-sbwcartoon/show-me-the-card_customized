@@ -153,11 +153,13 @@
 										li.attr("id", "folder_"+ data.fNo)
 										li.find('#fNo').attr("value", data.fNo)
 										li.text(data.fName)  */
+										var uurl = "url('/showmethecard/resources/images/folder.png')"
+										  var appendbutton = $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><div id="folderbasicimg" style="height: 100px; background-Image:'+uurl +'; background-size:65% 95%; background-repeat:no-repeat; background-position:center top; line-height:130px; text-align:center; font-size:15pt;" class="btn-img">#BEST TAG</div><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><span class="ftext">'+ data.fName + '</span></button>')
+										
 										
 										$('#folderpage').append(
 												/* li) */
-
-										  $('<button type="button" id="folder_' + data.fNo + '" class="folderbasic" style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"	src="/showmethecard/resources/images/folder.png"><input type="hidden" id="fNo" name="fNo" value="' + data.fNo+ '"><input type="hidden" id="secret" name="secret" value="' + data.secret + '"><span class="ftext">'+ data.fName + '</span></button>')
+											appendbutton
 
 										) 
 
@@ -407,6 +409,8 @@
 /* .img-responsive{
     max-width: 300px;
 } */
+
+
 
 </style>
 

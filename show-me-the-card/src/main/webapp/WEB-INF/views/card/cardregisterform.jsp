@@ -313,7 +313,7 @@ $(document).ready(function() {
 	<!-- 모달 끝 -->
 	
 	<!-- Start Contact Us Section -->
-	<section id="contact" class="contact contact-section">
+	<!-- <section id="contact" class="contact contact-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -325,7 +325,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	
 	<div class="row">
 		<div class="col-lg-12" >

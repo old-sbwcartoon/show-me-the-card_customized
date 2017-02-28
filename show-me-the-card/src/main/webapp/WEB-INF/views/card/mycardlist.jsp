@@ -22,8 +22,8 @@
 
 	<div class="col-md-3 col-sm-6">
 	
-		<div style="border: 10px solid hsl(200, 100%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(50, 50%, 80%);">
-			<div style="border: 5px solid hsl(200, 0%, 0%); height: 460px; margin:10px;">
+		<div style="border: 10px solid hsl(200, 75%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(200, 50%, 80%);">
+			<div style="border: 5px solid hsl(200, 0%, 30%); height: 460px; margin:10px;">
 				<div class="team-member" style="margin: 10px;">
 					<div id="imgdiv"
 						style="height: 290px; text-align: center; overflow: hidden;">

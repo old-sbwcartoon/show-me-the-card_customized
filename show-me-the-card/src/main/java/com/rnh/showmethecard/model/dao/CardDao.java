@@ -11,5 +11,7 @@ public interface CardDao {
 	void insertMyCard(CardForInsert cardForInsert);
 	void insertMyTag(int mycNo, String mycName);
 	
+	void insertMyCardWithCardNo(CardForInsert cardForInsert);
+	
 	List<MyCardList> selectMyCardListByFNo(int fNo);
 }

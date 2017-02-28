@@ -3,7 +3,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	var asdf = "${pageOwner}";
+	alert(asdf);
 	var getFNo = ${getFNo};
 	$('#mycardlist').load("showmycardlist.action?fNo="+getFNo);
 	var cardNum, check;
@@ -222,6 +223,7 @@ $(document).ready(function() {
 	
 	$('#resultTag').on("click", "span[id^=tag]",function(){
 		alert($(this).text());
+		
 	});
 	
 	$('#modalbutton').click(function(){

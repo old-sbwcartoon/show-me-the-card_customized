@@ -11,7 +11,6 @@
 <script type="text/javascript">		
 		$(document).ready(function() {
 			$('#moveToSite').click(function(){
-				
 				window.open($("#toUrl").val());
 			});
 		});

@@ -14,5 +14,7 @@ public interface CardMapper {
 	void insertMyCard(CardForInsert cardForInsert);
 	void insertMycTag(HashMap<String, Object> map);
 	
+	void insertMyCardWithCardNo(CardForInsert cardForInsert);
+	
 	List<MyCardList> selectMyCardListByFNo(int fNo);
 }

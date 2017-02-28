@@ -72,6 +72,11 @@ public class CardServiceImpl implements CardService {
 		return cardDao.selectMyCardListByFNo(fNo);
 	}
 	
+	@Override
+	public void ScrapAction(CardForInsert cardForInsert){
+		cardDao.insertMyCardWithCardNo(cardForInsert);
+	}
+	
 //	private AdviceNote adviceNote;
 //	private AdviceNoteForList adviceNoteForList;
 //	private List<AdviceNoteForList> adviceNoteForListList;

@@ -251,14 +251,15 @@
 				$('#folderpage').on('mouseup', "button[id^=folder_]",
 						function(event) {						
 					
-					var f_fNo = event.currentTarget.childNodes[1].defaultValue
+					var f_fNo = event.currentTarget.childNodes[1].defaultValue;
+					
 					/* $('#cardpagesection').load('/showmethecard/card/cardregisterform.jsp'); */ 			
 					/* $('#cardpagesection').load('/showmethecard/card/cardregister.action', f_fNo); */ 			
 					$.ajax({
 						url : 'cardregister.action',
 						type : 'get',								
 						data : {
-							
+							pageOwner : ${pageOwner},
 							fNo : f_fNo					
 							
 						},
@@ -417,6 +418,7 @@
 	<c:import url="/WEB-INF/views/include/header.jsp" />
 
 <div style="line-height:80px; margin-left:40;font-size:30pt;" ><img style="height: 80; width: 80;" src='/showmethecard/resources/level/${ poLevel}.PNG' > ${ pageOwner} </div>
+
 			<%-- <button type="button" id="folderbasic" class="folderbasic"
 				style="display : none; border: 0px; margin: 0px; padding: 0px; width: 75px; height: 100px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
 					src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>

@@ -8,22 +8,38 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-</head>
 
 <script type="text/javascript">		
-	 	$(document).ready(function() {
-		}); 
+	$(document).ready(function() {
+		/* $('#resultTag').on("click", "span[id^=tag]",function(){
+			alert($(this).text());
+			
+			
+		}); */
+	 		$("#scrapUl").on("click", "li[id^=scrap]", function(){
+	 			alert($(this).text());
+	 			debugger;
+	 			
+	 			
+	 			
+	 			
+				//alert(asdf);
+	 		});
+	}); 	
 </script>
 
+</head>
 
 <section id="team" class="team-member-section" style="background-color : hsl(0, 100%, 50%);">
 <%-- <c:set var="incNum" value="${0}" /> --%>
 <c:forEach var="MyCardList" items="${ mycardListList }">
+<%--<c:set var="증감변수명" value="${incNum + 1}"/> --%>
 
+	
 	<div class="col-md-3 col-sm-6">
 	
-		<div style="border: 10px solid hsl(200, 100%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(50, 50%, 80%);">
-			<div style="border: 5px solid hsl(200, 0%, 0%); height: 460px; margin:10px;">
+		<div style="border: 10px solid hsl(200, 75%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(200, 50%, 80%);">
+			<div style="border: 5px solid hsl(200, 0%, 30%); height: 460px; margin:10px;">
 				<div class="team-member" style="margin: 10px;">
 					<div id="imgdiv"
 						style="height: 290px; text-align: center; overflow: hidden;">
@@ -34,8 +50,8 @@
 					<div class="team-details">
 						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
 						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>
-						<ul>
-							<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>
+						<ul id="scrapUl">
+							<li id="scrapBtn"><i class="fa fa-facebook"></i>스크랩</li>
 							<li><a href="${ MyCardList.url }" target="_blank"><i class="fa fa-twitter"></i>이동</a></li>
 							<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
 						</ul>

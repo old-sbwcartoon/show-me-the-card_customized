@@ -15,9 +15,9 @@ public interface EvaluationService {
 
 	void addEvaluationComment(EvaluationComment newComment);
 
-	float showEvaluationRatingAvg(int cardNo);
+	float searchEvaluationRatingAvg(int cardNo);
 
-	List<EvaluationComment> showEvaluationCommentList(int cardNo);
+	List<EvaluationComment> searchEvaluationCommentList(int cardNo);
 
 
 
@@ -28,17 +28,17 @@ public interface EvaluationService {
 
 	boolean confirmEvaluationRatingOfmId(int cardNo, String mId);
 
-	List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, String getmId, int pageNo);
+	List<EvaluationRating> searchEvaluationRatingListWithPageNo(int cardNo, String getmId, int pageNo);
 
-	EvaluationRating showEvaluationRatingBymId(int cardNo, String mId);
+	EvaluationRating searchEvaluationRatingBymId(int cardNo, String mId);
 
-	int showEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue);
+	int searchEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue);
 
-	Card showCardDb(int cardNo);
+	Card searchCardDb(int cardNo);
 
 	boolean confirmEvaluationCommentOfmId(int cardNo, String mId);
 
-	List<BestTag> showBestTag(int valueNo, String columnName);
+	List<BestTag> searchBestTag(int valueNo, String columnName);
 
 	
 

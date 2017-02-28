@@ -143,7 +143,7 @@
 
 <select id="selectEvaluationRatingAvg" resultType="float" parameterType="HashMap">
 	select 
-		case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 3)
+		case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 1)
 			else -1
 		end
 	from EVALUATION_RATING
@@ -194,14 +194,6 @@
 			AND deleted = 0
 		limit 1
 		)
-</select>
-
-<select id="selectEvaluationRatingNoSumWithCardNo" resultType="Integer" parameterType="HashMap">
-	select T_ARTICLE_NO_SUM
-	from ARTICLE_NO_SUM
-	where T_NAME = #{tName}
-		AND T_CONDITION_NAME = #{tConditionName}
-		AND T_CONDITION_VALUE = #{tConditionValue}
 </select>
 
 <update id="deleteEvaluationRatingByeRatingNo" parameterType="Integer">
@@ -273,7 +265,7 @@ where f.M_ID = m.M_ID
     AND m.deleted = 0
     AND myc.deleted = 0
     AND c.deleted = 0
-order by m.M_POINT DESC, f.F_POINT DESC, myc.REG_DATE DESC;
+order by m.M_POINT DESC, f.F_POINT DESC, myc.REG_DATE DESC
 </select>
 
 <select id="selectBestTag" resultType="BestTag" parameterType="BestTag">

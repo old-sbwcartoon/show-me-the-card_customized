@@ -511,7 +511,6 @@ h2 {
 		    			},
 		    			dataType : 'json',
 		    			success : function(data) {
-							alert($('.div-comment-list').find('.div-comment').size());
 							$('#comment-textarea').val("");
 							
 							var newDiv = $('#div-comment-first').clone(true);

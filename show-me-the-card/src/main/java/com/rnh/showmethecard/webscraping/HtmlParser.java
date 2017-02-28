@@ -80,9 +80,9 @@ public class HtmlParser {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+		System.out.println(url);
 		setFrom(from);
 		setUrl(url);
-		
 		if (isUrlOk()) {
 			setTitle(getChoosedData(Literal.ParseHtml.Keyword.TITLE));
 			setDesc(getChoosedData(Literal.ParseHtml.Keyword.DESCRIPTION));

@@ -53,7 +53,7 @@ public class EvaluationController {
 		//model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
 		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, member.getmId()));
 		model.addAttribute("evalCommentList", service.searchEvaluationCommentList(cardNo));
-		model.addAttribute("evalRatingList", searchEvaluationRatingListWithPageNo(cardNo, req, pageNo));		
+		model.addAttribute("evalRatingList", searchEvaluationRatingListWithPageNo(cardNo, req, pageNo));
 		model.addAttribute("eRatingAvg", service.searchEvaluationRatingAvg(cardNo)); //아무도 평가를 하지 않았을 때는 -1 반환
 		model.addAttribute("myRating", service.searchEvaluationRatingBymId(cardNo, member.getmId()));
 		

@@ -244,6 +244,38 @@
 	where CARD_NO = #{cardNo}
 </select>
 
+
+<resultMap id="BestNamedMap" type="BestNamed">
+	<result property="mId" column="M_ID" />
+	<result property="mPoint" column="M_POINT" />
+	<result property="fName" column="F_NAME" />
+	<result property="fPoint" column="F_POINT" />
+	<result property="ftName1" column="FT_NAME1" />
+	<result property="ftName2" column="FT_NAME2" />
+	<result property="ftName3" column="FT_NAME3" />
+</resultMap>
+
+<select id="selectBestNamed" resultMap="BestNamedMap" parameterType="Integer">
+	select m.M_Id, m.M_POINT, f.F_NAME, f.F_POINT, f.F_NO, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
+-- case when (select m.M_Id, m.M_POINT, f.F_NAME, f.F_POINT, f.F_NO, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3) is null then -1
+-- 	else (select m.M_Id, m.M_POINT, f.F_NAME, f.F_POINT, f.F_NO, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3)
+-- end
+from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c, F_TAG ft
+where f.M_ID = m.M_ID
+	AND f.F_NO = myc.F_NO
+    AND myc.CARD_NO = c.CARD_NO
+    AND myc.CARD_NO = #{cardNo}
+    AND ft.F_NO = f.F_NO
+    AND f.SECRET = 0 
+    
+    AND USERTYPE = 0
+    AND f.deleted = 0
+    AND m.deleted = 0
+    AND myc.deleted = 0
+    AND c.deleted = 0
+order by m.M_POINT DESC, f.F_POINT DESC, myc.REG_DATE DESC;
+</select>
+
 <select id="selectBestTag" resultType="BestTag" parameterType="BestTag">
 	select mt.MYC_NAME as bestTagName, max(mt.REG_DATE) as regDate, count(MYC_NAME) as tagCount
         from MYC_TAG mt, MY_CARD myc

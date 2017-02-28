@@ -120,21 +120,38 @@ textarea.autosize {
 	padding-bottom: 5px;
 }
 
+#div-card {
+	margin-bottom: 80px;
+}
+
+#div-title {
+	padding: 20px;
+}
+
 #div-thumbnail {
-	height: 800px;
+	height: 400px;
+	width: 260px;
+	border-radius: 2px;
 }
 
 #div-thumbnail-img {
-	height: 600px;
+	height: 260px;
+	width: 260px;
+	cursor: pointer;
+	background-color: white;
 }
 
 #div-thumbnail-text {
-	margin-top: 20px;
 	height: ;
+	background-color: white;
+	text-align: right;
+	padding: 20px;
 }
 
 #link-thumbnail {
-	height: 600px;
+	/* height: 300px;
+	width: 260px; */
+	display: block;
 }
 
 .eval-item {
@@ -233,23 +250,24 @@ h2 {
 			var imgWidth = img.width(); // 초기 값
 			var imgHeight = img.height(); // 초기 값
 			
-		    var divisor = 2;
-		    var ratio = 0.75;
+		    var divisor = 3;
+		    var bigRatio = 0.75;
+		    var smallRatio = 0.20;
 			
 		    if (img.width() > img.height()) { // 사진의 가로가 세로보다 크면
 		    	if (img.width() < imgDiv.width() / divisor) { // 그런데 div를 어떤 숫자로 나눈 값보다 작으면
-		    		img.css("width", imgDiv.width() * ratio);
+		    		img.css("width", imgDiv.width() * smallRatio);
 		    	} else { // 그런데 div를 어떤 숫자로 나눈 값보다 크거나 같으면
-			    	img.css("width", imgDiv.width()); // 사진의 가로를 div에 맞추고 세로는 auto
+			    	img.css("width", imgDiv.width() * bigRatio); // 사진의 가로를 div에 맞추고 세로는 auto
 		    	}
 		    	img.css("height", 'auto');
 	    		addDummyDiv();
 	    		
 		    } else {
 		    	if (img.height() < imgDiv.height() / divisor) {
-		    		img.css("height", imgDiv.height() * ratio);
+		    		img.css("height", imgDiv.height() * smallRatio);
 		    	} else {
-			    	img.css("height", imgDiv.height()); // 사진의 세로를 div에 맞추고 가로는 auto
+			    	img.css("height", imgDiv.height() * bigRatio); // 사진의 세로를 div에 맞추고 가로는 auto
 		    	}
 		    	img.css("width", 'auto');
 	    		addDummyDiv();
@@ -264,11 +282,9 @@ h2 {
 			    		height  : (imgDiv.height() - img.height()) / 2
 			    		, width : imgDiv.width()
 			    	}
-		    	}));
-	    			    		
+		    	}));	    			    		
 		    }
-		    
-		    
+		    		    
 		    /* show writebox or my eval */
 		    if ($('.hidden-rating-isevalrating').val() === 'true') {
 		    	showEvalWriteOrMine("mine");
@@ -495,34 +511,17 @@ h2 {
 		    			},
 		    			dataType : 'json',
 		    			success : function(data) {
-		    				/* $('#div-comment-write').animate({
-								opacity : '0',
-								bottom  : '0px'
-							}); */
 							alert($('.div-comment-list').find('.div-comment').size());
 							$('#comment-textarea').val("");
 							
-							/* if ($('.div-comment-list').find('.div-comment').size() <= 1) {
-								var firstCommentDiv = $('#div-comment-first');
-								firstCommentDiv.find('.commentno').val(data.eCommentNo);
-								firstCommentDiv.find('.comment-writer-id').text(data.mId);
-								firstCommentDiv.find('p').text(data.content);
-								$('#div-comment-first').css('display', '');
-							} else { */
-								var newDiv = $('#div-comment-first').clone(true);
-								newDiv.css('display', '');
-			    				newDiv.find('.commentno').val(data.eCommentNo);
-			    				newDiv.find('#hidden-comment-isfirst').val(false);
-			    				/* if (newDiv.find('.comment-writer-id').text() != loginId) {
-			    					var commentDelHtml = $('<img class="fnc-icon img-comment-del" src="/showmethecard/resources/images/comment-del.png" style="margin-top: 10px; height: 26px; width: auto;"/>');
-			    					newDiv.find('figure').find('div').append(commentDelHtml);
-			    				} */
-			    				newDiv.find('.comment-writer-id').text(loginId);
-			    				newDiv.find('p').text(spaceTrimedContent);
-			    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
-							/* } */
-							
+							var newDiv = $('#div-comment-first').clone(true);
+							newDiv.css('display', '');
+		    				newDiv.find('.commentno').val(data.eCommentNo);
+		    				newDiv.find('#hidden-comment-isfirst').val(false);
+		    				newDiv.find('.comment-writer-id').text(loginId);
+		    				newDiv.find('p').text(spaceTrimedContent);
 		    				
+		    				newDiv.hide().prependTo($('.div-comment-list')).fadeIn(1000);
 		    			}
 		    		});
 		    	}
@@ -603,53 +602,52 @@ h2 {
 	<input id="cardNo" type="hidden" value="${ requestScope.card.cardNo }" />
 	
 	<section id="eval-rating" class="client-section">
-	<div class="container">
+	<div id="div-card" class="container">
 		<div class="row">
-			<div id="div-title" class="col-md-12">
-				<div class="section-title text-center wow fadeInDown"
-					data-wow-duration="2s" data-wow-delay="50ms">
-					<h2>${requestScope.htmlParser.title}</h2>
-					<br>
-					<h4 style="color: gold;">
-					<c:forEach var="bestTag" items="${ requestScope.bestTagList }">
-							#${ bestTag.bestTagName }&nbsp;&nbsp;
-					</c:forEach>
-					</h4>
-					<h2>..</h2>
-					<p>${requestScope.htmlParser.desc}</p>
-					
-				</div>
-				<div class="section-title text-center wow fadeInDown"
-					data-wow-duration="2s" data-wow-delay="10ms">
-					<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
-					<h2 style="color: gold;">
-						<span class="star"></span>
-						<c:if test="${ requestScope.eRatingAvg ne -1 }">
-							${ requestScope.eRatingAvg }
-						</c:if>
-					</h2>
-				</div>
-				<br>
-				<br>
-				<br>
-			</div>
-		</div><!-- row end -->
-		<div class="row">
-			<div class="col-md-12">
-				<div id="div-thumbnail" class="counter-item">
-					<div id="div-thumbnail-img">
-						<a id="link-thumbnail" href="${requestScope.htmlParser.url}"> <img id="img-thumbnail" src="${requestScope.htmlParser.img}" /></a>
+			<div class="col-md-12" class="counter-item">
+				<div id="div-thumbnail" style="float:left;">
+					<div id="div-thumbnail-img" class="text-center" onclick="window.open('${requestScope.htmlParser.url}')">
+						<img id="img-thumbnail" src="${requestScope.htmlParser.img}" />
 					</div>
 					<div id="div-thumbnail-text">
-						<h2>POINT : ${ requestScope.card.cPoint }</h2>
-						<h2>DISCOVERER : ${ requestScope.card.discover } 님</h2>
+						<span class="label label-danger" style="font-size: 12pt;">${ requestScope.card.cPoint }</span>
+						<h5>DISCOVERER : ${ requestScope.card.discover } 님</h5>
 						<input id="hidden-card-regdate" type="hidden" value="${ requestScope.card.regDate }" />
-						<h4>등록일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h4>
+						<h5>등록일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h5>
 					</div>
 				</div>
+				<div id="div-title">
+					<div class="section-title text-center wow">
+						<h2 style="margin-bottom: 20px;">${requestScope.htmlParser.title}</h2>
+						<!-- <br> -->
+						<h4 style="color: gold;">
+						<c:forEach var="bestTag" items="${ requestScope.bestTagList }">
+								#${ bestTag.bestTagName }&nbsp;&nbsp;&nbsp;
+						</c:forEach>
+						</h4>
+						<br>
+						<!-- <h2>..</h2> -->
+						<p>${requestScope.htmlParser.desc}</p>
+						
+					</div>
+					<div class="section-title text-center">
+						<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
+						<h2 style="color: gold;">
+							<span class="star"></span>
+							<c:if test="${ requestScope.eRatingAvg ne -1 }">
+								${ requestScope.eRatingAvg }
+							</c:if>
+						</h2>
+					</div>
+					<br>
+					<br>
+					<br>
+				</div>
+				
+				
 			</div>
 			
-		</div><!-- row end -->
+		</div><!-- row end -->		
 	</div><!-- container end -->
 
 
@@ -678,7 +676,7 @@ h2 {
 									<textarea id="eval-textarea" name="content" rows="3"
 										maxlength="50"
 										style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-										placeholder="새 품평..! (50글자까지)"></textarea>
+										placeholder="새 품평..! 한 카드에 한 번만 작성할 수 있습니다. (50글자까지)"></textarea>
 								</h2>
 							</div>
 							<div id="div-eval-submit" class="div-btn waves-effect">

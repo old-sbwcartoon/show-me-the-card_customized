@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.common.Point;
 import com.rnh.showmethecard.model.dto.BestTag;
@@ -22,7 +21,6 @@ import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.service.EvaluationService;
-import com.rnh.showmethecard.model.service.MemberService;
 import com.rnh.showmethecard.webscraping.HtmlParser;
 
 @Controller
@@ -39,37 +37,37 @@ public class EvaluationController {
 	
 	
 	@RequestMapping(value={"/evaluationmain.action", "/", ""}, method=RequestMethod.GET)
-	public String showEvaluation(int cardNo, Model model, HttpServletRequest req) {
+	public String searchEvaluation(int cardNo, Model model, HttpServletRequest req) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
 		int pageNo = 1;
 		
-		Card card = service.showCardDb(cardNo);
+		Card card = service.searchCardDb(cardNo);
 		HtmlParser htmlParser = new HtmlParser(card.getSiteUrl(), Literal.ParseHtml.From.DB);
 
 		//card
 		model.addAttribute("htmlParser", htmlParser);
 		model.addAttribute("card", card);
 		//evaluation
-		int pageNoSum = service.showEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));		
+		//int pageNoSum = service.searchEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));		
 
-		model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
+		//model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
 		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, member.getmId()));
-		model.addAttribute("evalCommentList", service.showEvaluationCommentList(cardNo));
-		model.addAttribute("evalRatingList", showEvaluationRatingListWithPageNo(cardNo, req, pageNo));		
-		model.addAttribute("eRatingAvg", service.showEvaluationRatingAvg(cardNo)); //아무도 평가를 하지 않았을 때는 -1 반환
-		model.addAttribute("myRating", service.showEvaluationRatingBymId(cardNo, member.getmId()));
+		model.addAttribute("evalCommentList", service.searchEvaluationCommentList(cardNo));
+		model.addAttribute("evalRatingList", searchEvaluationRatingListWithPageNo(cardNo, req, pageNo));		
+		model.addAttribute("eRatingAvg", service.searchEvaluationRatingAvg(cardNo)); //아무도 평가를 하지 않았을 때는 -1 반환
+		model.addAttribute("myRating", service.searchEvaluationRatingBymId(cardNo, member.getmId()));
 		
-		List<BestTag> bestTagList = service.showBestTag(cardNo, "CARD_NO");
+		List<BestTag> bestTagList = service.searchBestTag(cardNo, "CARD_NO");
 		model.addAttribute("bestTagList", bestTagList);
 		
 		return "evaluation/evaluationmain";
 	}
 	
-	@RequestMapping(value="showevalrating.action", method=RequestMethod.POST)
+	@RequestMapping(value="searchevalrating.action", method=RequestMethod.POST)
 	@ResponseBody
-	public List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
+	public List<EvaluationRating> searchEvaluationRatingListWithPageNo(int cardNo, HttpServletRequest req, int pageNo) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
-		return service.showEvaluationRatingListWithPageNo(cardNo, member.getmId(), pageNo);
+		return service.searchEvaluationRatingListWithPageNo(cardNo, member.getmId(), pageNo);
 	}
 	
 	//합치기

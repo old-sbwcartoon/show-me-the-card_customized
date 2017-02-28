@@ -35,17 +35,17 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public List<EvaluationRating> showEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
+	public List<EvaluationRating> searchEvaluationRatingListWithPageNo(int cardNo, String mId, int pageNo) {
 		return dao.selectEvaluationRatingListWithPageNo(cardNo, mId, pageNo);
 	}
 
 	@Override
-	public float showEvaluationRatingAvg(int cardNo) {
+	public float searchEvaluationRatingAvg(int cardNo) {
 		return dao.selectEvaluationRatingAvg(cardNo);
 	}
 
 	@Override
-	public List<EvaluationComment> showEvaluationCommentList(int cardNo) {
+	public List<EvaluationComment> searchEvaluationCommentList(int cardNo) {
 		return dao.selectEvaluationCommentList(cardNo);
 	}
 
@@ -65,17 +65,17 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public EvaluationRating showEvaluationRatingBymId(int cardNo, String mId) {
+	public EvaluationRating searchEvaluationRatingBymId(int cardNo, String mId) {
 		return dao.selectEvaluationRatingBymId(cardNo, mId);
 	}
 
 	@Override
-	public int showEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue) {
+	public int searchEvaluationRatingNoSum(String tName, String tConditionName, String tConditionValue) {
 		return dao.selectEvaluationRatingNoSumWithCardNo(tName, tConditionName, tConditionValue);
 	}
 
 	@Override
-	public Card showCardDb(int cardNo) {
+	public Card searchCardDb(int cardNo) {
 		return dao.selectCardDbByCardNo(cardNo);
 	}
 
@@ -85,7 +85,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public List<BestTag> showBestTag(int valueNo, String columnName) {		
+	public List<BestTag> searchBestTag(int valueNo, String columnName) {		
 		return dao.selectBestTag(valueNo, columnName);
 	}
 	

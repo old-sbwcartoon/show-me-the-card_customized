@@ -184,8 +184,10 @@ $(document).ready(function(){
     	<div class="container">
     		<div class="row">
     			
-    			<div class="col-md-6">
-    				<h2>User Chart</h2>
+    			<div class="col-md-8" style = "margin-left: 190px;">
+    				<h1>Follow</h1>
+    				<br/>
+    				<br/>
     				<ul class="nav nav-tabs"  style="font-size: 23">
     					<li id = "refreshlist" class="active"><a href="myfollow.action" >친구목록(${fn:length(friends)})</a></li>
 			    		<li><a data-toggle="tab" class = "sendidbutton" id="daily" href="#userDaily" >친구검색</a></li>

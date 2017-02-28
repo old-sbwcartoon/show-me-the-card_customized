@@ -24,6 +24,7 @@
 	<typeAlias type="com.rnh.showmethecard.model.dto.Friend" alias="Friend" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.CardForInsert" alias="CardForInsert" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.BestTag" alias="BestTag" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.BestNamed" alias="BestNamed" />
   </typeAliases>
   
   <environments default="development">

@@ -252,14 +252,14 @@
 						function(event) {						
 					
 					var f_fNo = event.currentTarget.childNodes[1].defaultValue;
-					
+					var owner = "${pageOwner}";
 					/* $('#cardpagesection').load('/showmethecard/card/cardregisterform.jsp'); */ 			
 					/* $('#cardpagesection').load('/showmethecard/card/cardregister.action', f_fNo); */ 			
 					$.ajax({
 						url : 'cardregister.action',
 						type : 'get',								
 						data : {
-							pageOwner : ${pageOwner},
+							pageOwner : owner,
 							fNo : f_fNo					
 							
 						},

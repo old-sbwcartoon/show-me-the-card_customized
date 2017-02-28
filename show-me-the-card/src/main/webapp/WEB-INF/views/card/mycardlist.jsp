@@ -30,6 +30,7 @@
 						<img id="imgSrc" src="${MyCardList.imgSrc}"
 							class="img-responsive thumbnail" alt="">
 					</div>
+
 					<div class="team-details">
 						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
 						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>

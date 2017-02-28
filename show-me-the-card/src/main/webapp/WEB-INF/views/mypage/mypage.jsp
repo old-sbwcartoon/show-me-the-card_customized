@@ -422,22 +422,24 @@
 					src="/showmethecard/resources/images/cardpack.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }>${ folder.fName }</button> --%>
 
 <!--  start folder page section -->
-	
+<div id = 'ygsection' >	
 	<span id = 'folderpage' > 
 		<c:forEach var="folder" items="${ folders }">		
 				<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
-					style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><img id="folderbasicimg" style="height: 100px" class="btn-img"
-						src="/showmethecard/resources/images/folder.png"><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><div class="ftext">${ folder.fName }</button>		
+					style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><div id="folderbasicimg" style="height: 100px; background-image:url('/showmethecard/resources/images/folder.png'); background-size:65% 95%; background-repeat:no-repeat; background-position:center top; line-height:130px; text-align:center; font-size:15pt;" class="btn-img"
+						>#BEST TAG</div><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><div class="ftext">${ folder.fName }</div></button>		
 		</c:forEach>
 	</span>
 
+<span>
 	<button type="button" id="addFolder"
-		style="background-color:#FFFFFF; border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 75px; height: 100px">
-		<img style="height: 100px" class="btn-img"
-			src="/showmethecard/resources/images/cardpackplus.png">
-
+		style="background-color:#FFFFFF; border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 200px; height: 130px;">
+		<img style="height: 100px;margin-top: -35;margin-bottom: 0px;" class="btn-img"
+			src="/showmethecard/resources/images/folder plus.png">
+<div >&nbsp;폴더 추가&nbsp; </div>
 	</button>
-	
+</span>
+</div>
 <!--  End folder page section -->
 
 <!--  start div page section -->

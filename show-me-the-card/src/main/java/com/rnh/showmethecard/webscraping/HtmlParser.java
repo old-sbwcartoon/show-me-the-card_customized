@@ -94,40 +94,40 @@ public class HtmlParser {
 	}
 	
 	private String decodeStr(String str) {
-		try {
-//			if (Pattern.matches("^%[(\w\w){2}]", str))
-			
-			
-			
-			if (str.contains("%")) {
-				String seeAddr = str.substring(str.indexOf("%"), str.indexOf("%") + 5);
-				
-				if (urlDoc != null) { // doc ?��?�� ?��?��
-					Elements wilds = urlDoc.select("meta");
-					for (Element e : wilds) {
-						String lowerCaseStr = e.toString().toLowerCase();
-						if (lowerCaseStr.replaceAll(" ","").contains("charset=utf-8") || e.attr("charset").toLowerCase().equals("utf-8")) {
-							str = URLDecoder.decode(str, "utf-8");
+		if (str != null) {
+			try {
+//				if (Pattern.matches("^%[(\w\w){2}]", str))
+				if (str.contains("%")) {
+					String seeAddr = str.substring(str.indexOf("%"), str.indexOf("%") + 5);
+					
+					if (urlDoc != null) { // doc ?��?�� ?��?��
+						Elements wilds = urlDoc.select("meta");
+						for (Element e : wilds) {
+							String lowerCaseStr = e.toString().toLowerCase();
+							if (lowerCaseStr.replaceAll(" ","").contains("charset=utf-8") || e.attr("charset").toLowerCase().equals("utf-8")) {
+								str = URLDecoder.decode(str, "utf-8");
+							}
 						}
+					} else if (str.toLowerCase().contains("ie=utf-8") || str.toLowerCase().contains("ie=utf8") ||
+							(seeAddr.substring(0, 1).equals("%") &&
+									seeAddr.substring(seeAddr.length() - 2).contains("%"))) {
+						
+						
+						 // if (encoded) seeAddr.equals("%글글%");
+//				
+//				Elements nativeData = urlDoc.select("meta");
+//				
+//				for (Element e : nativeData) {
+//					if (e.toString().toLowerCase().contains("charset=utf-8") ||
+//							e.attr("charset").toLowerCase().contains("utf-8")) {
+						str = URLDecoder.decode(str, "utf-8");
 					}
-				} else if (str.toLowerCase().contains("ie=utf-8") || str.toLowerCase().contains("ie=utf8") ||
-						(seeAddr.substring(0, 1).equals("%") &&
-								seeAddr.substring(seeAddr.length() - 2).contains("%"))) {
-					
-					
-					 // if (encoded) seeAddr.equals("%글글%");
-//			
-//			Elements nativeData = urlDoc.select("meta");
-//			
-//			for (Element e : nativeData) {
-//				if (e.toString().toLowerCase().contains("charset=utf-8") ||
-//						e.attr("charset").toLowerCase().contains("utf-8")) {
-					str = URLDecoder.decode(str, "utf-8");
 				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
 			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
+		
 				
 		
 		return str;
@@ -151,37 +151,44 @@ public class HtmlParser {
 	
 	
 	private String getProtocolAddedUrl(String url) {
-		StringBuilder protocolAddedUrl = new StringBuilder(100);		
 		
-		//url 가공
-		String originalUrl = null;
-		if (url.length() - 1 == url.lastIndexOf("/")) { // url의 마지막 글자가 "/" 라면은
-			originalUrl = url.substring(0, url.lastIndexOf("/")); // 마지막 "/" 제거
-		} else {
-			originalUrl = url;
-		}
-		System.out.println(originalUrl);
-		//url 연결 확인
-		if (checkUrlOk(originalUrl)) {
-			setUrlOk(true);
-			return originalUrl;
-		} else {
-			String newUrl = null;
-			if (!originalUrl.contains("://")) { //http 없으면 붙이고
-				newUrl = protocolAddedUrl.append("http://").toString() + originalUrl;
-				if (checkUrlOk(newUrl)) {
-					setUrlOk(true);
-					return newUrl;
+		if (url == "" || url == null) {
+			//do nothing1
+		} else {StringBuilder protocolAddedUrl = new StringBuilder(100);		
+		
+			//url 가공
+			String originalUrl = null;
+			
+			if (url.length() - 1 == url.lastIndexOf("/")) { // url의 마지막 글자가 "/" 라면은
+				originalUrl = url.substring(0, url.lastIndexOf("/")); // 마지막 "/" 제거
+			} else {
+				originalUrl = url;
+			}
+
+			//url 연결 확인
+			if (checkUrlOk(originalUrl)) {
+				setUrlOk(true);
+				return originalUrl;
+			} else {
+				String newUrl = null;
+				if (!originalUrl.contains("://")) { //http 없으면 붙이고
+					newUrl = protocolAddedUrl.append("http://").toString() + originalUrl;
+					if (checkUrlOk(newUrl)) {
+						setUrlOk(true);
+						return newUrl;
+					}
+				}
+				if (!originalUrl.contains("www.")) { //접속 오류나면 www. 붙이고
+					newUrl = protocolAddedUrl.append("www.").toString() + originalUrl;
+					if (checkUrlOk(newUrl)) {
+						setUrlOk(true);
+						return newUrl;
+					}
 				}
 			}
-			if (!originalUrl.contains("www.")) { //접속 오류나면 www. 붙이고
-				newUrl = protocolAddedUrl.append("www.").toString() + originalUrl;
-				if (checkUrlOk(newUrl)) {
-					setUrlOk(true);
-					return newUrl;
-				}
-			}
+				
 		}
+			
 		setUrlOk(false);
 		return null; // 모두 오류나면 url=null
 	}

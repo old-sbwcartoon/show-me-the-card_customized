@@ -264,28 +264,29 @@
 	<result property="fName" column="F_NAME" />
 	<result property="fPoint" column="F_POINT" />
 	<result property="mycRegDate" column="REG_DATE" />
-	<!-- <result property="ftName1" column="FT_NAME1" />
+	<result property="ftName1" column="FT_NAME1" />
 	<result property="ftName2" column="FT_NAME2" />
-	<result property="ftName3" column="FT_NAME3" /> -->
+	<result property="ftName3" column="FT_NAME3" />
 </resultMap>
 
 <select id="selectBestNamed" resultMap="BestNamedMap" parameterType="Integer">
-	select distinct m.M_Id, m.M_POINT, m.M_Level, f.F_NAME, f.F_POINT, max(myc.REG_DATE) REG_DATE-- , ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
-	from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c -- , F_TAG ft
+	select distinct m.M_Id, m.M_POINT, m.M_Level, f.F_NAME, f.F_POINT, max(myc.REG_DATE) REG_DATE, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
+	
+    from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c, F_TAG ft
 	where f.M_ID = m.M_ID
 		AND f.F_NO = myc.F_NO
 	    AND myc.CARD_NO = c.CARD_NO
-	    AND c.CARD_NO = #{cardNo}
--- 		AND ft.F_NO = f.F_NO
---    AND f.SECRET = 0 
+ 	    AND c.CARD_NO = #{ cardNo }
+		AND ft.F_NO = f.F_NO
+-- 		AND f.SECRET = 0 
     
 	    AND USERTYPE = 0
 	    AND f.deleted = 0
 	    AND m.deleted = 0
 	    AND myc.deleted = 0
 	    AND c.deleted = 0
-	group by m.M_ID, f.F_NAME, f.F_POINT
-	order by f.F_POINT DESC, m.M_POINT DESC, REG_DATE DESC
+ 	group by m.M_ID, f.F_NAME, f.F_POINT, f.F_NO
+	order by f.F_POINT DESC, m.M_POINT DESC-- , REG_DATE DESC
 	limit 3
 </select>
 

@@ -86,8 +86,13 @@
 
 
 <style type="text/css">
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
 p, h4, h5 {
 	line-height: 180%;
+}
+h2 {
+	line-height: 140%;
 }
 #columns {
 	column-width: 300px;
@@ -100,8 +105,9 @@ p, h4, h5 {
 	padding: 10px;
 }
 
-textarea.autosize {
-	height: 20px;
+
+.eval-writer {
+	height: 115px;
 }
 
 #div-card-container {
@@ -119,6 +125,14 @@ textarea.autosize {
 	padding: 20px;
 }
 
+/* #div-info-title h2 {
+	font-family: 'Hanna', serif;
+} */
+
+#div-info-desc {
+	margin-top: 100px;
+}
+
 #div-info-tag {
 	padding: 20px 0px;
 	border-bottom: dotted 2.5pt darkgray;
@@ -130,7 +144,7 @@ textarea.autosize {
 #div-eval-best-list {
 	width: 100%;
 	padding: 40px 0px;
-	text-align: justify;
+	font-family: 'Hanna', serif;
 	color: #AFAFAF;
 	border-bottom: dotted 2.5pt darkgray;
 }
@@ -141,11 +155,8 @@ textarea.autosize {
 	margin: 20px;
 }
 
-#div-thumbnail-img, #div-info-titledesc {
-	height: 260px;
-}
-
 #div-thumbnail-img {
+	height: 260px;
 	width: 260px;
 	position: relative;
 	cursor: pointer;
@@ -156,7 +167,7 @@ textarea.autosize {
 	border-radius: 3px;
 }
 
-#div-thumbnail-text, #div-info-tag {
+#div-thumbnail-text {
 	height: 150px;
 }
 
@@ -203,7 +214,7 @@ textarea.autosize {
 
 .div-eval {
 	position: relative;
-	top: 35px;
+	top: 30px;
 }
 
 .div-eval-text {
@@ -250,6 +261,10 @@ h2 {
 	cursor: pointer;
 }
 
+.div-eval-text h4 {
+	margin: 0px;
+}
+
 .fnc-icon {
 	cursor: pointer;
 }
@@ -275,7 +290,8 @@ h2 {
 			var loginId = $('#loginusermId').val();
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
-			
+			var title = $('#hidden-htmlparser-title').val();
+			var desc = $('#hidden-htmlparser-desc').val();
 			
 		    /* 이미지 크기 결정 */
 			var imgDiv = $('#div-thumbnail-img');
@@ -321,10 +337,33 @@ h2 {
 		    /* div-info의 너비 정하기 */
 		    var divCardColPaddingPx = 80;
 		    $('#div-info').css('width', $('div.container').width() - $('#div-thumbnail').width() - divCardColPaddingPx + 'px');
-
+		    /* desc 문자열 길이 조정 후 적용하기
+		    $('#div-info-title').find('h2').text(subStr(title, 28)); */
+		    $('#div-info-title').find('h2').text(title);
+		    /* desc 문자열 길이 조정 후 적용하기 */
+		    $('#div-info-desc').find('p').text(subStr(desc, 120));
+		    $('#div-info-desc').find('p').attr('title', desc); // add default tooltip
+		    
 		    /* best evaluation set font size */
 		    $('.div-eval-best').each(function() {
-			    $(this).css('font-size', $(this).width() / $(this).text().length + 'pt');
+		    	var eval = $(this).find('input[type=hidden]').val();
+		    	var evalSpan = $(this).find('.content');
+		    	var ratio = 0.75;
+		    	var threshold = 30;
+		    	var maxSize = 50;
+		    	
+		    	evalSpan.attr('title',eval); // add default tooltip
+		    	
+		    	if (eval.length > threshold) {
+		    		eval = subStr(eval, threshold);
+		    	}
+		    	evalSpan.text(eval);
+		    	
+		    	var fontSize = Math.floor( ($(this).width() / eval.length) * ratio);
+		    	if (fontSize > maxSize) {
+		    		fontSize = maxSize;
+		    	}
+		    	evalSpan.css('font-size', fontSize + 'pt'); //div의 width를 글자 수로 나눈 pt
 		    });
 		    
 		    
@@ -348,6 +387,14 @@ h2 {
 		    
 		    
 		    //// custom functions ////////////////////////////////////////////////////////////////////////////////////////
+		    
+		    /* substitue string length */
+		    function subStr(str, length) {
+		    	if (str.length > length) {
+		    		str = str.substring(0, length) + "..";
+			    }
+		    	return str;
+		    }
 		    
 		    /* show div by having liked */
 		    function showDivLikedYet(target) {
@@ -533,7 +580,7 @@ h2 {
 							setStar(newEvalDiv.find('#div-eval-mine .star'), data.eRating);
 							
 							newEvalDiv.find('.eval-writer-id').text("내 품평 : ");
-							newEvalDiv.find('.div-eval-text-content').find('h2').text(data.content);
+							newEvalDiv.find('.div-eval-text-content').find('h4').text(data.content);
 							newEvalDiv.find('.hidden-liked-sum').val(data.eLikedSum);
 							newEvalDiv.find('.liked-sum').text(data.eLikedSum);
 							
@@ -658,7 +705,7 @@ h2 {
 		<div class="row">
 			<div id="div-card-col" class="col-md-12" class="counter-item">				
 				<div id="div-thumbnail" style="float:left;">
-					<div id="div-thumbnail-img" class="text-center" onclick="window.open('${requestScope.htmlParser.url}')">
+					<div id="div-thumbnail-img" class="text-center" onclick="window.open('${requestScope.htmlParser.url}')" title="${requestScope.htmlParser.url}로 이동">
 						<img id="img-thumbnail" src="${requestScope.htmlParser.img}" />
 						<span class="label label-danger" style="position: absolute; bottom: 0px; right: 0px">${ requestScope.card.cPoint }</span>
 					</div>
@@ -675,18 +722,20 @@ h2 {
 						<br>
 						<input id="hidden-card-regdate" type="hidden" value="${ requestScope.card.regDate }" />
 						<h5>발견자 : ${ requestScope.card.discover } 님<br>
-						등록일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h5>
+						발견일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h5>
 					</div>
 				</div>
 			
 			
 				<div id="div-info">
-					<div id="div-info-titledesc" class="section-title text-left wow" style="position: relative;">
+					<div id="div-info-titledesc" class="section-title text-left wow">
 						<div id="div-info-title">
-							<h2 style="padding-top: 20px;">${requestScope.htmlParser.title}</h2>
+							<input id="hidden-htmlparser-title" type="hidden" value="${ requestScope.htmlParser.title }" />
+							<h2 style="padding-top: 20px;"></h2>
 						</div>
-						<div id="div-info-desc" style="position: absolute; bottom: 0px;">
-							<p style="padding:0px; margin:0px;">${requestScope.htmlParser.desc}</p>
+						<div id="div-info-desc">
+							<input id="hidden-htmlparser-desc" type="hidden" value="${ requestScope.htmlParser.desc }" />
+							<p style="padding:0px; margin:0px;"></p>
 						</div>
 					</div>
 					<div id="div-info-tag">
@@ -699,10 +748,11 @@ h2 {
 					</div>
 					
 					<c:if test="${ requestScope.bestEvalRatingList != '[]' }">
-					<div id="div-eval-best-list">
+					<div id="div-eval-best-list" class="text-center" style="line-height: 4.2em;">
 						<c:forEach var="bestEvalRating" items="${ requestScope.bestEvalRatingList }">
 						<div class="div-eval-best">
-							${ bestEvalRating.content }
+							<input type="hidden" value="${ bestEvalRating.content }" />
+							<span class="content"></span>
 						</div>
 						</c:forEach>
 					</div>
@@ -710,7 +760,7 @@ h2 {
 							
 					<div class="row" style="margin:40px 0px;">
 						<div class="col-md-12">
-	    					<h2 style="color: gold">이 카드를 가진 인기 폴더 Best 3</h2>
+	    					<h4 style="color: gold">이 카드를 가진 인기 폴더 Best 3</h4>
 	    					<div id="div-folder" class="tab-pane fade in active">
 	    						<table class="table">
 	    							<thead>
@@ -782,12 +832,12 @@ h2 {
 						</div>
 						<div class="div-eval">
 							<div class="div-eval-text">
-								<h2>
+								<h4>
 									<textarea id="eval-textarea" name="content" rows="3"
-										maxlength="50"
+										maxlength="100"
 										style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-										placeholder="새 품평..! 하나만 작성할 수 있습니다. (50글자까지)"></textarea>
-								</h2>
+										placeholder="새 품평..! 한 카드에 하나만 작성할 수 있습니다."></textarea>
+								</h4>
 							</div>
 							<div id="div-eval-submit" class="div-btn waves-effect">
 								<img class="fnc-icon"
@@ -814,15 +864,15 @@ h2 {
 									src="/showmethecard/resources/images/comment-del.png" />
 						</div>
 						<div class="div-eval">
-							<div class="div-eval-text">
+							<div class="div-eval-text text-left">
 								<div class="eval-writer"
 									style="float: left; margin-right: 20px;">
-									<h2>
+									<h4>
 										<span class="eval-writer-id">내 품평 : </span>
-									</h2>
+									</h4>
 								</div>
-								<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
-									<h2>${ requestScope.myRating.content }</h2>
+								<div class="div-eval-text-content" style="margin-left: 20px;">
+									<h4>${ requestScope.myRating.content }</h4>
 								</div>
 								<%-- <div style="position:relative; bottom:0px">
 										<p>
@@ -863,15 +913,15 @@ h2 {
 								</div>
 								
 								<div class="div-eval">
-									<div class="div-eval-text">
+									<div class="div-eval-text text-left">
 										<div class="eval-writer"
 											style="float: left; margin-right: 20px;">
-											<h2>
+											<h4>
 												<span class="eval-writer-id">${ ratinglist.mId }</span> 님 :
-											</h2>
+											</h4>
 										</div>
-										<div class="div-eval-text-content" style="float: left; margin-left: 20px;">
-											<h2>${ ratinglist.content }</h2>
+										<div class="div-eval-text-content" style="margin-left: 20px;">
+											<h4>${ ratinglist.content }</h4>
 										</div>
 										<%-- <div style="position:relative; bottom:0px">
 												<p>
@@ -936,7 +986,7 @@ h2 {
 								<textarea id="comment-textarea" name="content" class="autosize"
 									rows="5" maxlength="300"
 									style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-									style='IME-MODE:active;' placeholder="새 댓글..! (300글자까지)"></textarea>
+									style='IME-MODE:active;' placeholder="새 댓글..!"></textarea>
 							</p>
 							<div id="div-comment-submit" class="waves-effect">
 								<img class="fnc-icon"

@@ -14,4 +14,10 @@ public interface CardDao {
 	void insertMyCardWithCardNo(CardForInsert cardForInsert);
 	
 	List<MyCardList> selectMyCardListByFNo(int fNo);
+	
+	void insertMyCardWithMycNo(int mycNo, int fNo);
+	
+	List<Integer> selectFolderByMId(String mId);
+	
+	void upDelMyCardByMycNo(int mycNo);
 }

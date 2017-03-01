@@ -42,7 +42,7 @@
 	<select id="selectMyCardListByFNo" resultType="MyCardList" parameterType="int">
 		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName, cd.DISCOVERER discoverer, cd.URLDESC urlDesc
 		FROM MY_CARD mc, CARD_DB cd
-		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO = #{fNo}
+		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO = #{fNo} AND mc.deleted = 0
 	</select>
 	
 	<insert id="insertMyCardWithCardNo" parameterType="CardForInsert">
@@ -50,6 +50,25 @@
 		(card_no, f_no, myc_comment, scrap_count)
 		VALUES (#{cardNo},#{fNo}, #{mycComment}, 0)
 	</insert>
+	
+	<insert id="insertMyCardWithMycNo">
+		INSERT INTO rnh2.MY_CARD
+		(card_no, f_no, myc_comment, scrap_count)
+		SELECT card_no, #{fNo}, myc_comment, scrap_count FROM MY_CARD WHERE myc_no = #{mycNo}
+	</insert>
+	
+	<select id="selectFolderByMId" resultType="List" parameterType="String">
+		SELECT f_no
+		FROM rnh2.FOLDER
+		WHERE m_id = #{ mId } AND deleted = 0
+	</select>
+	
+	<update id="upDelMyCardByMycNo" parameterType="int">
+		UPDATE rnh2.MY_CARD
+		SET
+		DELETED ='1'
+		WHERE myc_no = #{ mycNo }		
+	</update>
  	<!-- <select id="SelectNoticeList" resultType="Notice" parameterType="int">
 	
 		SELECT n_no nNo, title title, content content, m_id mId, reg_date regDate

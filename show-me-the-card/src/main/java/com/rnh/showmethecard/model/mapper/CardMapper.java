@@ -17,4 +17,10 @@ public interface CardMapper {
 	void insertMyCardWithCardNo(CardForInsert cardForInsert);
 	
 	List<MyCardList> selectMyCardListByFNo(int fNo);
+	
+	void insertMyCardWithMycNo(@Param("mycNo") int mycNo, @Param("fNo") int fNo);
+	
+	List<Integer> selectFolderByMId(String mId);
+	
+	void upDelMyCardByMycNo(int mycNo);
 }

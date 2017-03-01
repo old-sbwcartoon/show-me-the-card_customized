@@ -57,6 +57,21 @@ public class MysqlCardDao implements CardDao {
 	public void insertMyCardWithCardNo(CardForInsert cardForInsert){
 		
 	}
+	
+	@Override
+	public void insertMyCardWithMycNo(int mycNo,  int fNo){
+		cardMapper.insertMyCardWithMycNo(mycNo, fNo);
+	}
+	
+	@Override
+	public List<Integer> selectFolderByMId(String mId){
+		return cardMapper.selectFolderByMId(mId);
+	}
+	
+	@Override
+	public void upDelMyCardByMycNo(int mycNo){
+		
+	}
 //	@Override
 //	public Member selectMemberById(String mId) {
 //		Member member = memberMapper.selectMemberById(mId);

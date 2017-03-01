@@ -3,10 +3,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var asdf = "${pageOwner}";
-	alert(asdf);
+	var pageOwner = "${pageOwner}";
+	alert(pageOwner);
 	var getFNo = ${getFNo};
-	$('#mycardlist').load("showmycardlist.action?fNo="+getFNo);
+	$('#mycardlist').load("showmycardlist.action?fNo="+getFNo+"&pageOwner="+pageOwner);
 	var cardNum, check;
 	var a = 0;
 	var title = "";
@@ -166,7 +166,7 @@ $(document).ready(function() {
         	}
         }else if(e.which == 8){
    
-        	deleteindex();
+        	
         	
         }else if(e.which >= 60 && e.which <= 90){
         }else{
@@ -176,7 +176,7 @@ $(document).ready(function() {
         if (e.which == 32 && e.which == 13){
         	
         }else if(e.which == 8){
-        	
+        	deleteindex();
         }else{
         	
         }
@@ -185,12 +185,14 @@ $(document).ready(function() {
 	var addindex = function(){
 		
 			strTmp = $('#mycContent').val().replace(/ /g, '');
+			
 			if(strTmp != ""){
 				//debugger;
 				tf=true;
 				for(var i = 0 ; i < tagCount; i++){
 	   				if( tagArray[i] == strTmp){
 	   				tf=false;
+	   				
 	       			alert("중복입니다.");
 	       			break;
 	   				}
@@ -198,8 +200,8 @@ $(document).ready(function() {
 	   		
 				if(tf){
 				tagArray.push(strTmp);
-   				$("#resultTag").append("<span class='label label-success allTags' id='tag" + tagCount +"'>"+ strTmp +"  <i class='glyphicon glyphicon-remove-circle'></i></span>");
-   				
+   				$("#resultTag").append("<span class='label label-success allTags' id='tag'>"+ strTmp +"  <i class='glyphicon glyphicon-remove-circle'></i></span>");
+   				debugger;
    				tagCount++;
 				}
 				$('#mycContent').val("");
@@ -207,13 +209,13 @@ $(document).ready(function() {
 	}
 	
 	var deleteindex = function(){
-		if(tagCount < 0){
-			tagCount = 0;
-		}
 		if( $('#mycContent').val() == ""){
 		$("#resultTag > span").last().remove();
 		tagArray.pop();
 		tagCount--;
+		}
+		if(tagCount < 0){
+			tagCount = 0;
 		}
 	}
 	
@@ -222,7 +224,19 @@ $(document).ready(function() {
 	
 	
 	$('#resultTag').on("click", "span[id^=tag]",function(){
-		alert($(this).text());
+		debugger;
+		var strTmp2 = $(this).text().replace(/ /g, '');
+		var intTmp = tagArray.indexOf(strTmp2);
+		for(var i = intTmp;i<tagCount;i++){
+			tagArray[i]= tagArray[i+1];
+		}
+		tagArray.pop();
+		//tagArray.splice(tagArray.indexOf(strTmp2),1);
+		$(this).remove();
+		tagCount--;
+		if(tagCount < 0){
+			tagCount = 0;
+		}
 		
 	});
 	

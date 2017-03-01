@@ -16,15 +16,16 @@
 			
 			
 		}); */
-	 		$("#scrapUl").on("click", "li[id^=scrap]", function(){
+	 		/* $("#scrapUrl").on("click", "li[id^=scrap]", function(){
 	 			alert($(this).text());
 	 			debugger;
-	 			
+	 			var ssss = $("#hiddenInput > input[id^=myc]").val();
+	 			alert(ssss);
 	 			
 	 			
 	 			
 				//alert(asdf);
-	 		});
+	 		}); */
 	}); 	
 </script>
 
@@ -50,8 +51,8 @@
 					<div class="team-details">
 						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
 						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>
-						<ul id="scrapUl">
-							<li id="scrapBtn"><i class="fa fa-facebook"></i>스크랩</li>
+						<ul id="scrapUrl">
+							<li><a href="/showmethecard/mypage/scrap.action?mycNo=${ MyCardList.mycNo }&pageOwner=${pageOwner}"><i class="fa fa-facebook"></i>스크랩</a></li>
 							<li><a href="${ MyCardList.url }" target="_blank"><i class="fa fa-twitter"></i>이동</a></li>
 							<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
 						</ul>
@@ -60,9 +61,11 @@
 						<div>
 							<p>최초발견자 : ${MyCardList.discoverer}</p>
 						</div>
-	
+						<div id="hiddenInput">
 						<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}" />
 						<input id='toUrl' type="hidden" value="${MyCardList.url}" />
+						<input id='mycNo' type="hidden" value="${MyCardList.mycNo}" />
+						</div>
 						<%-- <input id='incNum' type="hidden" value="${incNum}" /> --%>
 					</div>
 				</div>
@@ -70,6 +73,9 @@
 				<div style="text-align: center;">
 						<h3>${MyCardList.mycComment}</h3>
 				</div>
+				<c:if test="${ pageOwner == mId }">
+				<h3><a style="float:right;margin-top:10px;margin-right:10px;"><i class='glyphicon glyphicon-remove-circle'></i>삭제</a></h3>
+				</c:if>
 			</div>
 		</div>
 	</div>

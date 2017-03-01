@@ -27,7 +27,6 @@ public class MysqlCardDao implements CardDao {
 		if(a == null){
 			return b;
 		}
-//		System.out.printf("a: %d//b: %d \n", a , b );
 		return b = Integer.parseInt(a);
 	}
 	
@@ -70,45 +69,8 @@ public class MysqlCardDao implements CardDao {
 	
 	@Override
 	public void upDelMyCardByMycNo(int mycNo){
-		
+		cardMapper.upDelMyCardByMycNo(mycNo);
 	}
-//	@Override
-//	public Member selectMemberById(String mId) {
-//		Member member = memberMapper.selectMemberById(mId);
-//		return member;
-//	}
-//
-//	@Override
-//	public Member selectMemberByIdAndPasswd(String mId, String password) {
-//		HashMap<String, Object> params = new HashMap<>();
-//		params.put("mId", mId);
-//		params.put("password", password);
-//		
-//		Member member = memberMapper.selectMemberByIdAndPasswd(params);
-//		return member;
-//	}
-//
-//	@Override
-//	public void updateMemberById(Member member) {
-//		memberMapper.updateMemberById(member);	
-//	}
-//
-//	@Override
-//	public void deleteMemberById(String mId) {
-//		memberMapper.deleteMemberById(mId);		
-//	}
-//
-//	@Override
-//	public List<Member> selectMemberList() {
-//		List<Member> members = memberMapper.selectMembers();
-//		return members;
-//	}
-//
-//	@Override
-//	public List<MemberHistory> selectPointHistory(String mId) {
-//		List <MemberHistory> history = memberMapper.selectPointHistory(mId);
-//		return history;
-//	}
 
 }
 

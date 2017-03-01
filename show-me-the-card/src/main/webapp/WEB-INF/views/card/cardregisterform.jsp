@@ -342,13 +342,18 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</section> -->
-	
+	<div style="background-color:hsl(210, 60%, 50%)">
+	<hr style="border-width: 2px;">
 	<div class="row">
-		<div class="col-lg-12" >
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom:20px;">
 <!-- 			<div><button id="modalbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registercard">+</button></div> -->
-			<div><button id="modalbutton" type="button" class="btn btn-info btn-lg" >+</button></div>
-			<div><div id="mycardlist"></div></div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>
+			<c:if test="${ pageOwner == mId }">
+			<div class="col-lg-1"><button id="modalbutton" type="button" class="btn btn-info btn-lg" >+</button></div>
+			</c:if>
 		</div>
+		<div><div id="mycardlist"></div></div>
 	</div>
 	<input id="getFNo" type="hidden" value="${getFNO}"/>
 	<div id="test"></div>
+	</div>

@@ -27,7 +27,9 @@
 			<div class="col-sm-12">
 				<div class="section-title">
 					<h4>선택하신 주소는</h4>
+					<c:if test="${cardNo == 0 }">
 					<p>최초 등록 입니다.</p>
+					</c:if>
 				</div>
 			</div>
 		</div>

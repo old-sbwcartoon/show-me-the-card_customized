@@ -32,12 +32,6 @@ import com.rnh.showmethecard.webscraping.HtmlParser;
 @RequestMapping(value = "/mypage")
 public class CardController {
 	
-//	@Autowired
-//	@Qualifier("cardDao")
-//	private CardDao dao;
-//	public void setDao(CardDao dao) {
-//		this.dao = dao;
-//	}
 	@Autowired
 	@Qualifier("cardService")
 	private CardService cardService;
@@ -54,13 +48,17 @@ public class CardController {
 	
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
-	public String cardRegisterForm(Model model, String fNo, String pageOwner, HttpServletResponse response) {
+	public String cardRegisterForm(HttpSession session,Model model, String fNo, String pageOwner, HttpServletResponse response) {
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
+		
 		if (fNo == null) {
 			return "card/cardregisterform";
 		} else {
 			afNo = Integer.parseInt(fNo);
 			model.addAttribute("getFNo", fNo);
 			model.addAttribute("pageOwner", pageOwner);
+			model.addAttribute("mId", mId);
 			return "card/cardregisterform";
 		}
 		
@@ -98,7 +96,6 @@ public class CardController {
 		System.out.println(pageOwner);
 		int listLength = myCardListList.size();
 		
-		//model.addAttribute("pageOwner", pageOwner);
 		Collections.reverse(myCardListList);
 		req.setAttribute("mId", mId);
 		req.setAttribute("pageOwner", pageOwner);
@@ -130,18 +127,29 @@ public class CardController {
 	public void scrap(HttpSession session, HttpServletRequest req,int mycNo, String pageOwner){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		System.out.println(pageOwner);
-		System.out.println(mycNo);
+//		System.out.println(pageOwner);
+//		System.out.println(mycNo);
 		if(mId == pageOwner){
 			System.out.println("본인");
 		}else{
 			System.out.println("타인");
 			cardService.ScrapAction(mycNo, mId);
 		}
-		//return "mypage/mypage";
 	}
 	
-		
+	@RequestMapping(value="delmycard.action", method=RequestMethod.GET)
+	public void delmycard(HttpSession session, HttpServletRequest req,int mycNo, String pageOwner){
+		member = (Member) session.getAttribute("loginuser");
+		mId = member.getmId();
+//		System.out.println(pageOwner);
+//		System.out.println(mycNo);
+		if(mId == pageOwner){
+			System.out.println("본인");
+		}else{
+			System.out.println("타인");
+			cardService.delMyCard(mycNo);
+		}
+	}	
 }
 
 

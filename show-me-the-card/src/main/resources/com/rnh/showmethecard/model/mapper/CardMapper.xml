@@ -57,9 +57,9 @@
 		SELECT card_no, #{fNo}, myc_comment, scrap_count FROM MY_CARD WHERE myc_no = #{mycNo}
 	</insert>
 	
-	<select id="selectFolderByMId" resultType="List" parameterType="String">
+	<select id="selectFolderByMId" resultType="java.util.List" parameterType="String">
 		SELECT f_no
-		FROM rnh2.FOLDER
+		FROM FOLDER
 		WHERE m_id = #{ mId } AND deleted = 0
 	</select>
 	
@@ -69,54 +69,6 @@
 		DELETED ='1'
 		WHERE myc_no = #{ mycNo }		
 	</update>
- 	<!-- <select id="SelectNoticeList" resultType="Notice" parameterType="int">
-	
-		SELECT n_no nNo, title title, content content, m_id mId, reg_date regDate
-
-		FROM NOTICE
-		
-		WHERE deleted = '0'
-		
-	</select>
-	
-	<insert id="InsertNotice" parameterType="Notice">
-	
-		INSERT INTO NOTICE
-		(N_NO, TITLE, CONTENT, M_ID)
-		VALUES (NOTICE_SEQUENCE.nextVal, #{title}, #{content}, #{M_id})	
-		
-	</insert>
-	
-	
-	
-	<update id="DeleteNotice" parameterType="Notice">
-	
-		UPDATE NOTICE
-		SET deleted = '1', TITLE = #{title}
-		WHERE N_NO = #{nNo}			
-		
-	</update>
-	 
-	
-	<update id="UpdateNotice" parameterType="Notice">
-	
-		UPDATE NOTICE
-		SET TITLE = #{title}, CONTENT = #{content}
-		WHERE N_NO = #{nNo}	
-		
-	</update>	
-	
-	
-	
-	<select id="SelectNoticeDetail" parameterType="int" resultType="Notice">
-	
-		SELECT n_no nNo, title title, content content, m_id mId, reg_date regDate
-
-		FROM NOTICE
-		
-		WHERE n_no = #{nNo}
-		
-	</select> -->
 
 </mapper>
 

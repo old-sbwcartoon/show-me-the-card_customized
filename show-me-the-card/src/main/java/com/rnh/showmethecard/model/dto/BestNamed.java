@@ -1,12 +1,17 @@
 package com.rnh.showmethecard.model.dto;
 
+import java.sql.Date;
+
 public class BestNamed {
 
 	
 	public String mId;
 	public int mPoint;
+	public int mLevel;
 	public String fName;
 	public int fPoint;
+	public Date mycRegDate;
+	
 	public String ftName1;
 	public String ftName2;
 	public String ftName3;
@@ -24,6 +29,12 @@ public class BestNamed {
 	public void setmPoint(int mPoint) {
 		this.mPoint = mPoint;
 	}
+	public int getmLevel() {
+		return mLevel;
+	}
+	public void setmLevel(int mLevel) {
+		this.mLevel = mLevel;
+	}
 	public String getfName() {
 		return fName;
 	}
@@ -35,6 +46,12 @@ public class BestNamed {
 	}
 	public void setfPoint(int fPoint) {
 		this.fPoint = fPoint;
+	}
+	public Date getMycRegDate() {
+		return mycRegDate;
+	}
+	public void setMycRegDate(Date mycRegDate) {
+		this.mycRegDate = mycRegDate;
 	}
 	public String getFtName1() {
 		return ftName1;

@@ -33,4 +33,6 @@ public interface FolderService {
 	List<Member> selectMyFollow(String mId);
 
 	void deletefollow(String mId, String frId);
+
+	void setBestFolderTag(String ftName, String bestTag, int fNo);
 }

@@ -2,6 +2,7 @@ package com.rnh.showmethecard.model.service;
 
 import java.util.List;
 
+import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
@@ -39,6 +40,10 @@ public interface EvaluationService {
 	boolean confirmEvaluationCommentOfmId(int cardNo, String mId);
 
 	List<BestTag> searchBestTag(int valueNo, String columnName);
+
+	List<BestNamed> searchBestNamed(int cardNo);
+
+	List<EvaluationRating> searchBestEvaluationRatingList(int cardNo, String mId);
 
 	
 

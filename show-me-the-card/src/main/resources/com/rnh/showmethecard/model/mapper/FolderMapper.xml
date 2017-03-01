@@ -7,8 +7,11 @@
 <mapper namespace="com.rnh.showmethecard.model.mapper.FolderMapper">	
 	
 	<select id="selectFolderById" resultType="Folder" parameterType="String">
-		SELECT F_NO fNo, F_NAME fName, F_POINT fPoint, secret, deleted, M_ID mId
-		FROM rnh2.FOLDER
+				
+		SELECT fd.F_NO fNO, F_NAME fName, F_POINT fPoint, secret, deleted, M_ID mId, ft.FT_NAME1 bestTag
+		FROM rnh2.FOLDER fd
+		LEFT JOIN rnh2.F_TAG ft
+        ON fd.F_NO = ft.F_NO
 		WHERE M_ID = #{ mId } AND deleted = 0; 
 	</select>
 	
@@ -44,7 +47,7 @@
 		SELECT M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, M_Level mLevel, USERTYPE
 		FROM rnh2.MEMBER
 		WHERE M_ID like concat('%',#{frId},'%') AND M_ID NOT IN (select FR_ID from rnh2.FRIEND where M_ID = #{mId})  
-        AND M_ID NOT LIKE #{mId} AND deleted=0 ;  
+        AND M_ID NOT LIKE #{mId} AND deleted=0 AND USERTYPE=0;  
 	</select>
 	
 	<select id="selectMyFollow" resultType="Member" parameterType="String">
@@ -63,9 +66,24 @@
 	</insert>
 	
 	
-	<insert id="deletefollow" parameterType="Friend">
+	<delete id="deletefollow" parameterType="Friend">
 		DELETE FROM rnh2.FRIEND
 		WHERE M_ID = #{ mId } and FR_ID = #{ frId }; 
+		
+	</delete>
+	
+	<insert id="updateBestFolderTag">
+		
+			
+		
+		INSERT INTO rnh2.F_TAG
+		(F_NO, ${ftName})
+		VALUES
+		(${ fNo }, #{ bestTag })
+		ON DUPLICATE KEY
+		UPDATE		
+		${ftName} = #{bestTag}
+					
 		
 	</insert>
 	

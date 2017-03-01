@@ -2,6 +2,8 @@ package com.rnh.showmethecard.model.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.rnh.showmethecard.model.dto.Folder;
 import com.rnh.showmethecard.model.dto.Friend;
 import com.rnh.showmethecard.model.dto.Member;
@@ -43,6 +45,9 @@ public interface FolderMapper {
 
 
 	void deletefollow(Friend friend);
+
+
+	void updateBestFolderTag(@Param("ftName")String ftName, @Param("bestTag")String bestTag, @Param("fNo")int fNo);
 	
 	
 }

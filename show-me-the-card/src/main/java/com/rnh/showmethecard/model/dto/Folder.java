@@ -11,8 +11,15 @@ public class Folder implements Serializable {
 	private Boolean secret;
 	private Boolean deleted;
 	private String mId;
-	
+	private String bestTag;
 	private int fNo;	
+	
+	public String getBestTag() {
+		return bestTag;
+	}
+	public void setBestTag(String bestTag) {
+		this.bestTag = bestTag;
+	}
 	public int getfNo() {
 		return fNo;
 	}

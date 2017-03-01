@@ -105,8 +105,9 @@ h2 {
 	padding: 10px;
 }
 
-textarea.autosize {
-	height: 20px;
+
+.eval-writer {
+	height: 115px;
 }
 
 #div-card-container {

@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
@@ -10,8 +11,7 @@ import com.rnh.showmethecard.model.dto.EvaluationRating;
 
 public interface EvaluationMapper {
 
-	void insertEvaluationRatingLiked(HashMap<String, String> data);
-	
+	void insertEvaluationRatingLiked(HashMap<String, String> data);	
 	
 	void insertEvaluationComment(EvaluationComment newComment);
 
@@ -36,7 +36,6 @@ public interface EvaluationMapper {
 	
 	int selectEvaluationRatingLiked(HashMap<String, String> data);
 
-
 	boolean selectExistsEvaluationRatingOfmId(HashMap<String, String> data);
 
 	List<EvaluationRating> selectEvaluationRatingListWithPageNo(HashMap<String, Object> data);
@@ -47,12 +46,14 @@ public interface EvaluationMapper {
 
 	int selectEvaluationRatingNoSumWithCardNo(HashMap<String, String> data);
 
-
 	Card selectCardDbByCardNo(int cardNo);
 
 	boolean selectExistsEvaluationCommentOfmId(HashMap<String, Object> data);
 
-
 	List<BestTag> selectBestTag(BestTag bestTag);
+
+	List<BestNamed> selectBestNamed(int cardNo);
+
+	List<EvaluationRating> selectBestEvaluationRatingListWithCardNo(HashMap<String, Object> data);
 	
 }

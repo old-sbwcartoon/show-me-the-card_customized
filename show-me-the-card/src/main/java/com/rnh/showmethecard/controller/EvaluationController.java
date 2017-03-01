@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.common.Point;
+import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
@@ -39,6 +40,7 @@ public class EvaluationController {
 	@RequestMapping(value={"/evaluationmain.action", "/", ""}, method=RequestMethod.GET)
 	public String searchEvaluation(int cardNo, Model model, HttpServletRequest req) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
+		String mId = member.getmId();
 		int pageNo = 1;
 		
 		Card card = service.searchCardDb(cardNo);
@@ -51,14 +53,17 @@ public class EvaluationController {
 		//int pageNoSum = service.searchEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));		
 
 		//model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
-		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, member.getmId()));
+		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, mId));
 		model.addAttribute("evalCommentList", service.searchEvaluationCommentList(cardNo));
 		model.addAttribute("evalRatingList", searchEvaluationRatingListWithPageNo(cardNo, req, pageNo));
 		model.addAttribute("eRatingAvg", service.searchEvaluationRatingAvg(cardNo)); //아무도 평가를 하지 않았을 때는 -1 반환
-		model.addAttribute("myRating", service.searchEvaluationRatingBymId(cardNo, member.getmId()));
+		model.addAttribute("myRating", service.searchEvaluationRatingBymId(cardNo, mId));		
+		model.addAttribute("bestEvalRatingList", service.searchBestEvaluationRatingList(cardNo, mId)); //list 값 없으면 [] 반환
 		
 		List<BestTag> bestTagList = service.searchBestTag(cardNo, "CARD_NO");
 		model.addAttribute("bestTagList", bestTagList);
+		List<BestNamed> bestNamedList = service.searchBestNamed(cardNo);
+		model.addAttribute("bestNamedList", bestNamedList);
 		
 		return "evaluation/evaluationmain";
 	}
@@ -112,11 +117,8 @@ public class EvaluationController {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
 		service.addEvaluationRatingLiked(eRatingNo, mId, member.getmId());
 		return null;
-	}
-	
-	
-	
-	
+	}	
+		
 	
 	
 	@RequestMapping(value="delevalrating.action", method=RequestMethod.POST)

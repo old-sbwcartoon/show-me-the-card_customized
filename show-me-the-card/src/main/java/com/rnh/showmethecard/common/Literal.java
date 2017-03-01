@@ -100,6 +100,7 @@ public class Literal {
 	public static class Ui {
 		
 		public static final int PAGER_LIMIT = 3;
+		public static final int BEST_EVALUATION_RATING_LIST_LIMIT = 10;
 		
 	}
 	

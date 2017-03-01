@@ -86,9 +86,13 @@
 
 
 <style type="text/css">
+p, h4, h5 {
+	line-height: 180%;
+}
 #columns {
 	column-width: 300px;
 }
+
 
 #columns figure {
 	display: inline-block;
@@ -100,51 +104,66 @@ textarea.autosize {
 	height: 20px;
 }
 
-.box {
-	background-color: rgb(220, 220, 220);
-	border-radius: 4px;
-	border: solid 2.5pt darkgray;
-	margin: 30px 20px;
-	padding: 5px 5px;
-	float: left;
-}
-
-.title {
-	font-size: 24px;
-	font-weight: bold;
-	font-style: italic;
-	word-break: keep-all;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	border-bottom: dotted 2.5pt darkgray;
-	padding-bottom: 5px;
-}
-
-#div-card {
+#div-card-container {
 	margin-bottom: 80px;
 }
 
-#div-title {
+#div-card-col {
+	background-color: #333333;
+	padding: 20px 0px;
+	border-radius: 3px;
+}
+
+#div-info {
+	float: left;
 	padding: 20px;
 }
 
+#div-info-tag {
+	padding: 20px 0px;
+	border-bottom: dotted 2.5pt darkgray;
+}
+/* #div-info-text {
+	text-align: left;
+} */
+
+#div-eval-best-list {
+	width: 100%;
+	padding: 40px 0px;
+	text-align: justify;
+	color: #AFAFAF;
+	border-bottom: dotted 2.5pt darkgray;
+}
+
 #div-thumbnail {
-	height: 400px;
+	height: 380px;
 	width: 260px;
-	border-radius: 2px;
+	margin: 20px;
+}
+
+#div-thumbnail-img, #div-info-titledesc {
+	height: 260px;
 }
 
 #div-thumbnail-img {
-	height: 260px;
 	width: 260px;
+	position: relative;
 	cursor: pointer;
-	background-color: white;
+	/* background-color: white; */
+}
+
+#img-thumbnail {
+	border-radius: 3px;
+}
+
+#div-thumbnail-text, #div-info-tag {
+	height: 150px;
 }
 
 #div-thumbnail-text {
-	height: ;
-	background-color: white;
-	text-align: right;
+	/* background-color: white; */
+	color: darkgray;
+	text-align: left;
 	padding: 20px;
 }
 
@@ -220,7 +239,6 @@ textarea.autosize {
 }
 
 h2 {
-	font-style: italic;
 	margin-top: -5px;
 }
 
@@ -235,6 +253,21 @@ h2 {
 .fnc-icon {
 	cursor: pointer;
 }
+
+#eval-comment {
+	background-color: #ddd;
+}
+
+.label {
+	border-radius: 3px;
+	font-size: 12pt;
+}
+
+.service {
+
+
+}
+
 </style>
 
 <script type="text/javascript">
@@ -251,7 +284,7 @@ h2 {
 			var imgHeight = img.height(); // 초기 값
 			
 		    var divisor = 3;
-		    var bigRatio = 0.75;
+		    var bigRatio = 1.0;
 		    var smallRatio = 0.20;
 			
 		    if (img.width() > img.height()) { // 사진의 가로가 세로보다 크면
@@ -284,7 +317,18 @@ h2 {
 			    	}
 		    	}));	    			    		
 		    }
-		    		    
+
+		    /* div-info의 너비 정하기 */
+		    var divCardColPaddingPx = 80;
+		    $('#div-info').css('width', $('div.container').width() - $('#div-thumbnail').width() - divCardColPaddingPx + 'px');
+
+		    /* best evaluation set font size */
+		    $('.div-eval-best').each(function() {
+			    $(this).css('font-size', $(this).width() / $(this).text().length + 'pt');
+		    });
+		    
+		    
+		    
 		    /* show writebox or my eval */
 		    if ($('.hidden-rating-isevalrating').val() === 'true') {
 		    	showEvalWriteOrMine("mine");
@@ -293,11 +337,15 @@ h2 {
 		    }
 		    
 		    /* setting star average */
-		    setStar($('#div-title .star'), ratingAvg);
+		    // setStar($('#div-info .star'), ratingAvg);
+		    setStar($('#div-thumbnail .star'), ratingAvg);
 		    
 		    $('.div-star').each(function() {
 		    	setStar( $(this).find('.star'), $(this).find('.hidden-star-no').val() );
 		    });
+		    
+		    
+		    
 		    
 		    //// custom functions ////////////////////////////////////////////////////////////////////////////////////////
 		    
@@ -494,8 +542,8 @@ h2 {
 		    		});
 		    	}
 		    });
-	    	
-	    	
+
+
 	    	/* submit comment */
 		    $('#div-comment-submit').on("click", function() {
 		    	var spaceTrimedContent = $.trim($('#comment-textarea').val());
@@ -512,6 +560,10 @@ h2 {
 		    			dataType : 'json',
 		    			success : function(data) {
 							$('#comment-textarea').val("");
+
+							/* if ($('.div-comment').size() == 1) {
+								$('#div-line-comment').css('display', '');
+							} */
 							
 							var newDiv = $('#div-comment-first').clone(true);
 							newDiv.css('display', '');
@@ -581,6 +633,7 @@ h2 {
 											},
 											function() {
 												commentDiv.css('display', 'none');
+												/* commentDiv.parent().preve().find('#div-line-comment').css('display', 'none'); */
 											});
 										} else {
 											delWithAnimation(commentDiv);
@@ -601,51 +654,109 @@ h2 {
 	<input id="cardNo" type="hidden" value="${ requestScope.card.cardNo }" />
 	
 	<section id="eval-rating" class="client-section">
-	<div id="div-card" class="container">
+	<div id="div-card-container" class="container">
 		<div class="row">
-			<div class="col-md-12" class="counter-item">
+			<div id="div-card-col" class="col-md-12" class="counter-item">				
 				<div id="div-thumbnail" style="float:left;">
 					<div id="div-thumbnail-img" class="text-center" onclick="window.open('${requestScope.htmlParser.url}')">
 						<img id="img-thumbnail" src="${requestScope.htmlParser.img}" />
+						<span class="label label-danger" style="position: absolute; bottom: 0px; right: 0px">${ requestScope.card.cPoint }</span>
 					</div>
 					<div id="div-thumbnail-text">
-						<span class="label label-danger" style="font-size: 12pt;">${ requestScope.card.cPoint }</span>
-						<h5>DISCOVERER : ${ requestScope.card.discover } 님</h5>
+						<div class="section-title text-center">
+							<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
+							<span style="font-size: 18pt; color: gold;">
+								<span class="star"></span>
+								<c:if test="${ requestScope.eRatingAvg ne -1 }">
+									${ requestScope.eRatingAvg }
+								</c:if>
+							</span>
+						</div>
+						<br>
 						<input id="hidden-card-regdate" type="hidden" value="${ requestScope.card.regDate }" />
-						<h5>등록일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h5>
+						<h5>발견자 : ${ requestScope.card.discover } 님<br>
+						등록일 : <fmt:formatDate value="${ requestScope.card.regDate }" pattern="yyyy/MM/dd kk:mm:ss" /></h5>
 					</div>
 				</div>
-				<div id="div-title">
-					<div class="section-title text-center wow">
-						<h2 style="margin-bottom: 20px;">${requestScope.htmlParser.title}</h2>
-						<!-- <br> -->
+			
+			
+				<div id="div-info">
+					<div id="div-info-titledesc" class="section-title text-left wow" style="position: relative;">
+						<div id="div-info-title">
+							<h2 style="padding-top: 20px;">${requestScope.htmlParser.title}</h2>
+						</div>
+						<div id="div-info-desc" style="position: absolute; bottom: 0px;">
+							<p style="padding:0px; margin:0px;">${requestScope.htmlParser.desc}</p>
+						</div>
+					</div>
+					<div id="div-info-tag">
 						<h4 style="color: gold;">
 						<c:forEach var="bestTag" items="${ requestScope.bestTagList }">
-								#${ bestTag.bestTagName }&nbsp;&nbsp;&nbsp;
+							#${ bestTag.bestTagName }
+							<br>
 						</c:forEach>
 						</h4>
-						<br>
-						<!-- <h2>..</h2> -->
-						<p>${requestScope.htmlParser.desc}</p>
-						
 					</div>
-					<div class="section-title text-center">
-						<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
-						<h2 style="color: gold;">
-							<span class="star"></span>
-							<c:if test="${ requestScope.eRatingAvg ne -1 }">
-								${ requestScope.eRatingAvg }
-							</c:if>
-						</h2>
+					
+					<c:if test="${ requestScope.bestEvalRatingList != '[]' }">
+					<div id="div-eval-best-list">
+						<c:forEach var="bestEvalRating" items="${ requestScope.bestEvalRatingList }">
+						<div class="div-eval-best">
+							${ bestEvalRating.content }
+						</div>
+						</c:forEach>
 					</div>
-					<br>
-					<br>
-					<br>
-				</div>
-				
-				
+					</c:if>
+							
+					<div class="row" style="margin:40px 0px;">
+						<div class="col-md-12">
+	    					<h2 style="color: gold">이 카드를 가진 인기 폴더 Best 3</h2>
+	    					<div id="div-folder" class="tab-pane fade in active">
+	    						<table class="table">
+	    							<thead>
+	    								<tr style="font-size: 18; color: white;">
+	    									<th>폴더 점수</th>
+	    									<th>폴더 이름</th>
+	    									<th>태그1</th>
+	    									<th>태그2</th>
+	    									<th>태그3</th>
+	    									<th>마지막 업데이트</th>
+	    									<th>레벨</th>
+	    									<th>아이디</th>
+	    								</tr>
+	    							</thead>
+	    							<tbody>
+	    								<c:forEach var="bestNamed" items="${ requestScope.bestNamedList }">
+	    									<tr style="font-size: 18; color: darkgray;">
+	    										<th>${ bestNamed.fPoint } 점</th>
+												<th>${ bestNamed.fName }</th>
+												<th>${ bestNamed.ftName1 }</th>
+												<th>${ bestNamed.ftName2 }</th>
+												<th>${ bestNamed.ftName3 }</th>
+												<th>${ bestNamed.mycRegDate }</th>
+	    										<th><img style="height: 35; width: 35;" src="/showmethecard/resources/level/${ bestNamed.mLevel }.PNG"></th>
+												<th><a href="/showmethecard/mypage/mypage.action?goId=${ bestNamed.mId }">${ bestNamed.mId }</a></th>
+	    									</tr>
+			    						</c:forEach>
+	    							</tbody>
+	    						</table>
+	    					</div>    					
+	    				</div><!-- col-md-6 end -->
+	    			</div><!--  row end -->
+	    			
+	    			
+	    			<!-- <div class="row">
+						<div class="col-md-12">
+	    					<h2 style="color: gold">이 카드의 태그를 가진 인기 카드 Best 3</h2>
+	    					<div id="div-folder" class="tab-pane fade in active">
+	    						
+	    					</div>    					
+	    				</div>col-md-6 end
+	    			</div> row end -->
+					
+					
+				</div><!-- div-info end -->
 			</div>
-			
 		</div><!-- row end -->		
 	</div><!-- container end -->
 
@@ -675,7 +786,7 @@ h2 {
 									<textarea id="eval-textarea" name="content" rows="3"
 										maxlength="50"
 										style="height: 100%; width: 100%; overflow: hidden; border: none; resize: none;"
-										placeholder="새 품평..! 한 카드에 한 번만 작성할 수 있습니다. (50글자까지)"></textarea>
+										placeholder="새 품평..! 하나만 작성할 수 있습니다. (50글자까지)"></textarea>
 								</h2>
 							</div>
 							<div id="div-eval-submit" class="div-btn waves-effect">
@@ -720,12 +831,14 @@ h2 {
 									</div> --%>
 							</div>
 							<div class="div-display-liked text-right">
-								<i class="i-liked-sum service waves-effect liked-already"
-									style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white;">
-										<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
-										<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
-										<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
-								</i>
+								<div>
+									<i class="i-liked-sum service waves-effect liked-already"
+										style="border: none; border-radius: 3px; padding: 10px 20px; background-color: #26a8e1; color: white;">
+											<input class="hidden-liked-sum" type="hidden" value="${ requestScope.myRating.eLikedSum }" />
+											<span class="liked-sum">${ requestScope.myRating.eLikedSum }</span>&nbsp;
+											<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
+									</i>
+								</div>
 							</div>
 						</div>
 					</div><!-- my eval end -->
@@ -769,13 +882,13 @@ h2 {
 									<div class="div-display-liked text-right">
 		
 										<i class="i-liked-sum service waves-effect liked-yet"
-											style="border: none; border-radius: 2px; padding: 10px 20px; display: none">
+											style="border: none; border-radius: 3px; padding: 10px 20px; display: none">
 												<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
 												<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
 												<img class="img-liked" src="/showmethecard/resources/images/liked.png" style="width: 30px;" />
 										</i>
 										<i class="i-liked-sum service waves-effect liked-already"
-											style="border: none; border-radius: 2px; padding: 10px 20px; background-color: #26a8e1; color: white; display: none">
+											style="border: none; border-radius: 3px; padding: 10px 20px; background-color: #26a8e1; color: white; display: none">
 												<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
 												<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
 												<img class="img-liked" src="/showmethecard/resources/images/liked-inversed.png" style="width: 30px;" />
@@ -809,7 +922,7 @@ h2 {
 
 				
 	<!-- write new comment -->
-				<div id="columns" class="row">
+				<div id="columns" class="row write-comment">
 					<figure class="dummy-figure">
 						<div style="margin: 10px 0px;"></div>
 					</figure>
@@ -836,7 +949,12 @@ h2 {
 	
 			</div>
 		</div>
+		
+		<div id="div-line-comment" class="div-line border-top-dotted"></div>
 
+		<%-- <c:if test="${ requestScope.evalCommentList ne '[]' }">
+		<div id="div-line-comment-removable" class="div-line border-top-dotted"></div>
+		</c:if> --%>
 		<div id="columns" class="row div-comment-list">
 			<div id="div-comment-first" class="div-comment" style="display: none;">
 				<input class="commentno" type="hidden" value="" />

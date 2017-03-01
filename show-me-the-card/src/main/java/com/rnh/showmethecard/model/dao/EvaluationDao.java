@@ -2,6 +2,7 @@ package com.rnh.showmethecard.model.dao;
 
 import java.util.List;
 
+import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
@@ -42,6 +43,10 @@ public interface EvaluationDao {
 	boolean selectExistsEvaluationCommentOfmId(int cardNo, String mId);
 
 	List<BestTag> selectBestTag(int cardNo, String columnName);
+
+	List<BestNamed> selectBestNamed(int cardNo);
+
+	List<EvaluationRating> selectBestEvaluationRatingListWithCardNo(int cardNo, String mId);
 
 
 	

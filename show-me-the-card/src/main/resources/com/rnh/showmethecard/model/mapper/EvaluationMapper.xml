@@ -141,6 +141,26 @@
 	limit #{articleStartNo}, #{limit}
 </select>
 
+<select id="selectBestEvaluationRatingListWithCardNo" resultMap="evaluationRatingWithmLikedMap" parameterType="HashMap">
+	select e.E_RATING_NO
+			, e.CARD_NO
+			, e.M_ID
+			, e.CONTENT
+			, e.REG_DATE
+			, e.E_RATING
+			, e.deleted
+			, sum(ifnull(el.ER_LIKED, 0)) E_LIKED_SUM
+            , sum(ifnull((select el.LIKED_M_ID = #{mId}), 0)) M_LIKED
+	from EVALUATION_RATING e
+		left outer join EVALUATION_RATING_LIKED el
+		on e.E_RATING_NO = el.E_RATING_NO
+	where e.CARD_NO = #{cardNo}
+		AND e.deleted = 0
+	group by e.E_RATING_NO
+	order by E_LIKED_SUM DESC, e.REG_DATE DESC
+	limit #{limit}
+</select>
+
 <select id="selectEvaluationRatingAvg" resultType="float" parameterType="HashMap">
 	select 
 		case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 1)
@@ -240,32 +260,33 @@
 <resultMap id="BestNamedMap" type="BestNamed">
 	<result property="mId" column="M_ID" />
 	<result property="mPoint" column="M_POINT" />
+	<result property="mLevel" column="M_Level" />
 	<result property="fName" column="F_NAME" />
 	<result property="fPoint" column="F_POINT" />
-	<result property="ftName1" column="FT_NAME1" />
+	<result property="mycRegDate" column="REG_DATE" />
+	<!-- <result property="ftName1" column="FT_NAME1" />
 	<result property="ftName2" column="FT_NAME2" />
-	<result property="ftName3" column="FT_NAME3" />
+	<result property="ftName3" column="FT_NAME3" /> -->
 </resultMap>
 
 <select id="selectBestNamed" resultMap="BestNamedMap" parameterType="Integer">
-	select m.M_Id, m.M_POINT, f.F_NAME, f.F_POINT, f.F_NO, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
--- case when (select m.M_Id, m.M_POINT, f.F_NAME, f.F_POINT, f.F_NO, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3) is null then -1
--- 	else (select m.M_Id, m.M_POINT, f.F_NAME, f.F_POINT, f.F_NO, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3)
--- end
-from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c, F_TAG ft
-where f.M_ID = m.M_ID
-	AND f.F_NO = myc.F_NO
-    AND myc.CARD_NO = c.CARD_NO
-    AND myc.CARD_NO = #{cardNo}
-    AND ft.F_NO = f.F_NO
-    AND f.SECRET = 0 
+	select distinct m.M_Id, m.M_POINT, m.M_Level, f.F_NAME, f.F_POINT, max(myc.REG_DATE) REG_DATE-- , ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
+	from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c -- , F_TAG ft
+	where f.M_ID = m.M_ID
+		AND f.F_NO = myc.F_NO
+	    AND myc.CARD_NO = c.CARD_NO
+	    AND c.CARD_NO = #{cardNo}
+-- 		AND ft.F_NO = f.F_NO
+--    AND f.SECRET = 0 
     
-    AND USERTYPE = 0
-    AND f.deleted = 0
-    AND m.deleted = 0
-    AND myc.deleted = 0
-    AND c.deleted = 0
-order by m.M_POINT DESC, f.F_POINT DESC, myc.REG_DATE DESC
+	    AND USERTYPE = 0
+	    AND f.deleted = 0
+	    AND m.deleted = 0
+	    AND myc.deleted = 0
+	    AND c.deleted = 0
+	group by m.M_ID, f.F_NAME, f.F_POINT
+	order by f.F_POINT DESC, m.M_POINT DESC, REG_DATE DESC
+	limit 3
 </select>
 
 <select id="selectBestTag" resultType="BestTag" parameterType="BestTag">

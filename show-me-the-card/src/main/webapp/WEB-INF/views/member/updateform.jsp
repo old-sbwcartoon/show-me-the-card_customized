@@ -61,7 +61,9 @@
 				alert("비밀번호가 일치하지 않습니다.");
 			} else if ($("#password").val() == "") {
 				alert("비밀번호를 입력해주세요!");
-			} else {
+			} else if (!passwd || !email || !phone) {
+				alert("형식에 맞게 입력해주세요!")
+			} else{
 				//정보수정
 				$("#updateForm").submit();
 			}
@@ -75,8 +77,44 @@
 		    	location.href="/showmethecard/member/deleteMember.action";
 		    } 
 		});		
+		
+	//정규식
+	//비밀번호  - 영+숫 6~15
+	var passwd = false;
+	$('#password').keyup(function() {
+		var regExp = /(?=.*\d)(?=.*[a-z]).{6,15}/;
+		if ( !regExp.test($('#password').val())) {
+			$('#passwordReg').text("비밀번호 형식이 맞지 않습니다. (영문+숫자 6~15자 이내)");
+		} else {
+			$('#passwordReg').text("");
+			passwd = true;
+		}
 	});
-
+	//전화번호
+	var phone = true;
+	$('#phone').keyup(function() {
+		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+		if ( !regExp.test($('#phone').val())) {
+			$('#phoneReg').text("번호 형식이 맞지 않습니다.");
+			phone = false;
+		} else {
+			phone = true;
+			$('#phoneReg').text("");
+		}
+	});
+	//이메일
+	var email = true;
+	$('#email').keyup(function() {
+		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		if ( !regExp.test($('#email').val())) {
+			$('#emailReg').text('이메일 형식이 맞지 않습니다.');
+			email = false;
+		} else {
+			$('#emailReg').text("");
+			email = true;
+		}
+	});
+});
 	</script>
 </head>
 
@@ -107,22 +145,27 @@
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">PASSWORD</h3>
                                     <input type="password" class="form-control" placeholder="Your Password *" name="password" id="password">
+                                    <p class="help-block text-danger" id="passwordReg"></p>
                                 </div>
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">PASSWORD CONFIRM</h3>
                                     <input type="password" class="form-control" placeholder="Your Password *" id="passwordConfirm">
+                                	<p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group waves-effect">
 	                                <h3 class="help-block text-danger">NAME</h3>
-                                    <input type="text" class="form-control" placeholder="Your Name *" name="mName" value="${ loginuser.mName }">
+                                    <input type="text" class="form-control" placeholder="Your Name *" id="mName" name="mName" value="${ loginuser.mName }">
+                                	<p class="help-block text-danger" id="nameReg"></p>
                                 </div>
                                 <div class="form-group waves-effect">
                                 	<h3 class="help-block text-danger">PHONE</h3>
-                                	<input type="tel" class="form-control" placeholder="Your Phone *" name="phone" value="${ loginuser.phone }">
+                                	<input type="tel" class="form-control" placeholder="Your Phone *" id="phone" name="phone" value="${ loginuser.phone }">
+                                	<p class="help-block text-danger" id="phoneReg"></p>
                                 </div>
                                 <div class="form-group waves-effect">
                                 	<h3 class="help-block text-danger">EMAIL</h3>
-                                    <input type="email" class="form-control" placeholder="Your Email *" name="email" value="${ loginuser.email }">
+                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" name="email" value="${ loginuser.email }">
+                                	<p class="help-block text-danger" id="emailReg"></p>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -139,10 +182,6 @@
         </div>
     </section>
      
-    <!-- Start Footer Section -->
-    <c:import url="/WEB-INF/views/include/footer.jsp" />
-    <!-- End Footer Section -->   
-    
 </body>
  <!-- Custom JavaScript -->
     <script src="../resources/assets/js/script.js"></script>

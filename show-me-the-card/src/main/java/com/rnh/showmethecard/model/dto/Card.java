@@ -17,7 +17,14 @@ public class Card implements Serializable {
 	private String discover;
 	private String cName;
 	private float cRating;
+	private String imgSrc;
 	
+	public String getImgSrc() {
+		return imgSrc;
+	}
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
+	}
 	public int getCardNo() {
 		return cardNo;
 	}

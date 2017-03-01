@@ -91,11 +91,7 @@
             </div>              
         </div>        
     </section>
-    
-    <!-- Start Footer Section -->
-    <c:import url="/WEB-INF/views/include/footer.jsp" />
-    <!-- End Footer Section -->   
-    
+
 </body>
 	<!-- Custom JavaScript -->
     <script src="../resources/assets/js/script.js"></script>

@@ -2,6 +2,7 @@ package com.rnh.showmethecard.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.rnh.showmethecard.model.dao.FolderDao;
+import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Folder;
 import com.rnh.showmethecard.model.dto.Friend;
 import com.rnh.showmethecard.model.dto.Member;
 import com.rnh.showmethecard.model.dto.Notice;
+import com.rnh.showmethecard.model.service.EvaluationService;
 import com.rnh.showmethecard.model.service.FolderService;
 import com.rnh.showmethecard.model.service.MemberService;
 
@@ -39,19 +42,28 @@ public class MyPageController {
 	@Autowired
 	@Qualifier("memberService")
 	private MemberService memberService;
+	
+	@Autowired
+	@Qualifier("evaluationService")
+	private EvaluationService evaluationService;
 
 	@RequestMapping(value="mypage.action", method=RequestMethod.GET)
 	public String searchFolderById(HttpSession session, Model model, HttpServletResponse response, String goId) {
 		Member member = null;
 		
 		String mId = null;
-		 
+		boolean ownerPlag = false;
 			member = (Member) session.getAttribute("loginuser");
 				if (goId == null) {
-					mId = member.getmId();				 
+					mId = member.getmId();
+					ownerPlag = true;
 				} else if(member.getmId() != goId) {
 					mId = goId;
-				}			
+				} else if(member.getmId() == goId) {					
+					System.out.println("dd");
+					ownerPlag = true;
+					mId = goId;
+				}
 		
 		List<Folder> folders = (List<Folder>) folderService.searchFolderById(mId);
 		model.addAttribute("folders", folders);
@@ -60,6 +72,21 @@ public class MyPageController {
 		
 		model.addAttribute("poLevel", owner.getmLevel());
 		model.addAttribute("pageOwner", mId);
+		model.addAttribute("ownerPlag", ownerPlag);
+		
+		
+		String[] ftName = {"FT_NAME1", "FT_NAME2", "FT_NAME3"};
+		for (int j = 0; j < folders.size(); j++) {
+			
+			List<BestTag> bestTagList = evaluationService.searchBestTag(folders.get(j).getfNo(), "F_NO");
+			
+			for (int i = 0; i < bestTagList.size(); i++) {
+				String bestTag = bestTagList.get(i).getBestTagName();
+				
+				folderService.setBestFolderTag(ftName[i], bestTag, folders.get(j).getfNo());
+			}
+		}
+		
 		return "mypage/mypage";
 	}
 	

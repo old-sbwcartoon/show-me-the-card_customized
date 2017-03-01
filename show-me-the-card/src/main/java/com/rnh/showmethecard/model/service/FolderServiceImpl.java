@@ -80,5 +80,11 @@ public class FolderServiceImpl implements FolderService {
 		
 	}
 
+	@Override
+	public void setBestFolderTag(String ftName, String bestTag, int fNo) {
+		folderDao.setBestFolderTag(ftName, bestTag, fNo);
+		
+	}
+
 	
 }

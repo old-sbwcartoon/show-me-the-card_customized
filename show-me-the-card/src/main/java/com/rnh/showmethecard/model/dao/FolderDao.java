@@ -35,4 +35,6 @@ public interface FolderDao {
 
 	void deletefollow(Friend friend);
 
+	void setBestFolderTag(String ftName, String bestTag, int fNo);
+
 }

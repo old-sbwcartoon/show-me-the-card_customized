@@ -73,8 +73,15 @@ public class CardServiceImpl implements CardService {
 	}
 	
 	@Override
-	public void ScrapAction(CardForInsert cardForInsert){
-		cardDao.insertMyCardWithCardNo(cardForInsert);
+	public void ScrapAction(int mycNo, String mId){
+		List<Integer> fNoList = cardDao.selectFolderByMId(mId);
+		int fNo;
+		if(fNoList.isEmpty()){
+			//insertFolder
+		}else{
+			fNo = fNoList.get(fNoList.size() - 1);
+			cardDao.insertMyCardWithMycNo(mycNo, fNo);
+		}
 	}
 	
 //	private AdviceNote adviceNote;

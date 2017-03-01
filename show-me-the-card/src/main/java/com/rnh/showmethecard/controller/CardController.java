@@ -54,13 +54,13 @@ public class CardController {
 	
 
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
-	public String cardRegisterForm(Model model, String fNo, HttpServletResponse response) {
+	public String cardRegisterForm(Model model, String fNo, String pageOwner, HttpServletResponse response) {
 		if (fNo == null) {
 			return "card/cardregisterform";
 		} else {
 			afNo = Integer.parseInt(fNo);
 			model.addAttribute("getFNo", fNo);
-			
+			model.addAttribute("pageOwner", pageOwner);
 			return "card/cardregisterform";
 		}
 		
@@ -91,15 +91,17 @@ public class CardController {
 	}
 	
 	@RequestMapping(value="showmycardlist.action", method=RequestMethod.GET)
-	public String ShowMYCardList(HttpSession session, HttpServletRequest req, int fNo){
+	public String ShowMYCardList(HttpSession session, HttpServletRequest req, int fNo, String pageOwner){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
 		List<MyCardList> myCardListList= cardService.readMyCard(fNo);
-		
+		System.out.println(pageOwner);
 		int listLength = myCardListList.size();
 		
-		
+		//model.addAttribute("pageOwner", pageOwner);
 		Collections.reverse(myCardListList);
+		req.setAttribute("mId", mId);
+		req.setAttribute("pageOwner", pageOwner);
 		req.setAttribute("mycardListList", myCardListList);
 		return "card/mycardlist";
 	}
@@ -124,20 +126,20 @@ public class CardController {
 	}
 	
 	
-/*	@RequestMapping(value="scrap.action", method=RequestMethod.GET)
-	public String ShowMY(HttpSession session, HttpServletRequest req, String ownerId, int fNo){
+	@RequestMapping(value="scrap.action", method=RequestMethod.GET)
+	public void scrap(HttpSession session, HttpServletRequest req,int mycNo, String pageOwner){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
-		System.out.println("b"+fNo);
-		List<MyCardList> myCardListList= cardService.readMyCard(fNo);
-		
-		int listLength = myCardListList.size();
-		
-		
-		Collections.reverse(myCardListList);
-		req.setAttribute("mycardListList", myCardListList);
-		return "card/mycardlist";
-	}*/
+		System.out.println(pageOwner);
+		System.out.println(mycNo);
+		if(mId == pageOwner){
+			System.out.println("본인");
+		}else{
+			System.out.println("타인");
+			cardService.ScrapAction(mycNo, mId);
+		}
+		//return "mypage/mypage";
+	}
 	
 		
 }

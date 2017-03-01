@@ -15,7 +15,7 @@ public interface CardService {
 	
 	List<MyCardList> readMyCard(int fNo);
 	
-	void ScrapAction(CardForInsert cardForInsert);
+	void ScrapAction(int mycNo, String mId);
 	//List<MyCardList> selectMyCardListByFNo(int fNo);
 	//void insertCardDb(String userId, String url);
 	//void insertMyCard(int cardNo, String mycComment);

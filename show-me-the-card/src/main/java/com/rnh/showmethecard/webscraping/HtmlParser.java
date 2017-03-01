@@ -31,6 +31,7 @@ public class HtmlParser {
 	}
 	public void setUrl(String url) {
 		switch (getFrom()) {
+		
 			case Literal.ParseHtml.From.WEB : 
 				this.url = getProtocolAddedUrl(decodeStr(url));
 				break;
@@ -114,7 +115,7 @@ public class HtmlParser {
 								seeAddr.substring(seeAddr.length() - 2).contains("%"))) {
 					
 					
-					 // if (encoded) seeAddr.equals("%?��?��%");
+					 // if (encoded) seeAddr.equals("%글글%");
 //			
 //			Elements nativeData = urlDoc.select("meta");
 //			
@@ -135,9 +136,9 @@ public class HtmlParser {
 	
 	
 	/**
-	 * @param str : ?���? 문자?��
-	 * @param length : 보여�? �??�� ?��
-	 * @return ?���? 문자?�� + " ...."
+	 * @param str : 원본 문자열
+	 * @param length : 남길 글자 수
+	 * @return 남은 문자열 + " ...."
 	 */
 	private String subStrLength(String str, int length) {
 		if (length == 0) {
@@ -147,16 +148,6 @@ public class HtmlParser {
 		}
 		return str;
 	}
-	
-	
-	/*
-	private String getImgUrl(String imgSrc) {
-		if (!imgSrc.contains("http")) {
-			imgSrc = getUrlDomain(getUrl()) + imgSrc;
-		}
-		return imgSrc;
-	}
-	*/
 	
 	
 	private String getProtocolAddedUrl(String url) {
@@ -212,7 +203,7 @@ public class HtmlParser {
 		
 		
 		domain.append(protocol).append("://"); //domain == "http(s)://"		
-		if (urlAddr.contains("/")) { /*주소�? '/'�? ?��?��?���? ?��?�� 경우*/
+		if (urlAddr.contains("/")) { /*주소가 프로토콜 제외하고 '/'를 포함하는 경우*/
 			domain.append(urlAddr.substring(0, urlAddr.indexOf("/"))); //domain == "http(s)://domain주소"
 		} else {
 			domain.append(urlAddr);
@@ -262,13 +253,6 @@ public class HtmlParser {
 				
 			case Literal.ParseHtml.Keyword.IMAGE :
 				
-				
-//				//link[rel]?�� ?��?�� ?�� link[icon]?�� 존재?��?���? 찾는?��
-//				String ogImgStr = null;
-//				String logoImgStr = null;
-//				String iconImgStr = null;
-//				String anyImgStr = null;
-				
 				Elements ogImg = doc.select("head meta[property=og:image]");
 				if (ogImg.size() != 0) { //1. og:tag
 					for (Element e : ogImg) {
@@ -317,15 +301,11 @@ public class HtmlParser {
 					}
 					return getChoosedImg(firstImgStr);
 				}
-
 				
-
 				
 		}
 		
 		return data;
-		
-		
 	}
 	
 	

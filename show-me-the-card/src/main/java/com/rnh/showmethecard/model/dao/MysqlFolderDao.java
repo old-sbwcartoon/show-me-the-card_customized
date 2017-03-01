@@ -73,6 +73,13 @@ public class MysqlFolderDao implements FolderDao {
 	}
 
 
+	@Override
+	public void setBestFolderTag(String ftName, String bestTag, int fNo) {
+		folderMapper.updateBestFolderTag(ftName, bestTag, fNo);
+		
+	}
+
+
 
 
 

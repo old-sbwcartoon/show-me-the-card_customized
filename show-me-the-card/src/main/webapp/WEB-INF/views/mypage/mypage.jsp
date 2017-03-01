@@ -474,10 +474,11 @@
 		<c:forEach var="folder" items="${ folders }">		
 				<button type="button" id="folder_${ folder.fNo }" class="folderbasic"
 					style="background-color:#FFFFFF; border: 0px; margin: 0px; padding: 0px; width: 200px; height: 130px; margin-bottom: 20px"><div id="folderbasicimg" style="height: 100px; background-image:url('/showmethecard/resources/images/folder.png'); background-size:65% 95%; background-repeat:no-repeat; background-position:center top; line-height:130px; text-align:center; font-size:15pt;" class="btn-img"
-						>#BEST TAG</div><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><div class="ftext">${ folder.fName }</div></button>		
+						>#${folder.bestTag }</div><input type="hidden" id="fNo" name="fNo" value=${ folder.fNo }><input type="hidden" id="secret" name="secret" value=${ folder.secret }><div class="ftext">${ folder.fName }</div></button>		
 		</c:forEach>
 	</span>
 
+<c:if test="${ ownerPlag }">
 <span>
 	<button type="button" id="addFolder"
 		style="background-color:#FFFFFF; border: 0px; margin: 0px; margin-bottom: 20px; padding: 0px; width: 200px; height: 130px;">
@@ -486,6 +487,7 @@
 <div >&nbsp;폴더 추가&nbsp; </div>
 	</button>
 </span>
+</c:if>
 </div>
 <!--  End folder page section -->
 

@@ -148,7 +148,7 @@ function search() {
 				dataType : "json",
 				success : function(data, status, xhr) {
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].mId+'" style="width:150px; height:80px;">'+data[i].mId+'</a></th></tr>').appendTo('.member').attr('class', 'm');
+						$('<tr><th style="width: 50"><img src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG"></th><th style="width: 100"><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].mId+'" style="width:150px; height:80px;">'+data[i].mId+'</a></th></tr>').appendTo('.member').attr('class', 'm');
 					}
 				},
 				error : function(data) {
@@ -193,8 +193,8 @@ function search() {
 	      <table class="table">
 	          <thead>
 	            <tr style="font-size: 18; color: black;">
-	           		<th>레벨</th>
-					<th style="width: 250">아이디</th>
+	           		<th style="width: 50">레벨</th>
+					<th style="width: 150">아이디</th>
 				</tr>
 	          </thead>
 	          <tbody class="member">

@@ -42,14 +42,14 @@
 	</select>
 	
 	<select id="dayCard" resultType="Card">
-		SELECT c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover, c.IMG_SRC imgSrc
+		SELECT c.CARD_NO cardNo, c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover, c.IMG_SRC imgSrc
 		FROM CARD_DB c, CARD_HISTORY h
 		WHERE c.CARD_NO = h.CARD_NO AND left(h.REG_DATE, 10) = curdate() AND c.deleted = '0'
 		group by c.CARD_NO
 		order by cPoint desc limit 10		
 	</select>
 	<select id="weekCard" resultType="Card">
-		SELECT c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover, c.IMG_SRC imgSrc
+		SELECT c.CARD_NO cardNo, c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover, c.IMG_SRC imgSrc
 		FROM CARD_DB c 
 		inner join CARD_HISTORY h
 		on c.CARD_NO = h.CARD_NO
@@ -58,14 +58,14 @@
 		order by cPoint desc limit 10;
 	</select>
 	<select id="monthCard" resultType="Card">
-		SELECT c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover, c.IMG_SRC imgSrc
+		SELECT c.CARD_NO cardNo, c.C_NAME cName, sum(h.CH_POINT) cPoint, c.SITE_URL siteUrl, c.DISCOVERER discover, c.IMG_SRC imgSrc
 		FROM CARD_DB c, CARD_HISTORY h
 		WHERE c.CARD_NO = h.CARD_NO AND substring(h.REG_DATE, 6, 2) = substring(curdate(), 6,2) AND c.deleted = '0'
 		group by c.CARD_NO
 		order by cPoint desc limit 10;
 	</select>
 	<select id="totalCard" resultType="Card">
-		SELECT C_NAME cName, SITE_URL siteUrl, C_POINT cPoint, DISCOVERER discover, IMG_SRC imgSrc
+		SELECT CARD_NO cardNo, C_NAME cName, SITE_URL siteUrl, C_POINT cPoint, DISCOVERER discover, IMG_SRC imgSrc
 		FROM CARD_DB
 		order by C_POINT desc limit 10
 	</select>

@@ -166,7 +166,7 @@
 				this.reset();
 			});
 		});
-		
+
 		$('#daily').click(function() {
 			$.ajax({
 				url : "/showmethecard/chart/dayChart.action",
@@ -174,8 +174,8 @@
 				dataType : "json",
 				success : function(data, status, xhr) {
 					$('.d').remove();
-					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+					for (var i = 0; i < data.length; i++) { 												
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -192,7 +192,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -209,7 +209,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th>'+data[i].mId+'</th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -217,7 +217,7 @@
 				}
 			});
 		});
-		
+
 		$('#dailyCard').click(function(){
 			$.ajax({
 				url : "/showmethecard/chart/dayCard.action",
@@ -226,7 +226,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"</th><th>'+data[i].cName+'</th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -243,7 +243,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"</th><th>'+data[i].cName+'</th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -260,7 +260,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"</th><th>'+data[i].cName+'</th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -362,10 +362,8 @@
                 		<button type="button" class="dropbtn page-scroll waves-effect btn btn-primary">&nbsp; MY MENU &nbsp;&nbsp;</button>
                 		<div class="dropdown-content">
             				<a id="mypagebtn" href="#">My Page</a>
-            				<a href="/showmethecard/mypage/mypage.action">Card Page</a>
             				<a href="/showmethecard/member/pointList.action">My Point</a>
         		   			<a href="/showmethecard/member/qnaList.action">My Q&A</a>
-            				<a href="/showmethecard/mypage/myfollow.action">Follow</a>
 						</div>	
                 	</div>          		
                 </div>
@@ -555,8 +553,8 @@
     							<tbody>
     								<c:forEach var="totalCard" items="${ totalCard }">
     									<tr>
-    										<th><img  style="width: 130px; height: 80px;" alt="${ totalCard.siteUrl }" src=" ${ totalCard.imgSrc }"></th>
-    										<th>${ totalCard.cName }</th>
+    										<th><img style="width: 130px; height: 80px;" alt="${ totalCard.siteUrl }" src=" ${ totalCard.imgSrc }"></th>
+    										<th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo=${ totalCard.cardNo }">${ totalCard.cName }</a></th>
     										<th>${ totalCard.discover }</th>
     										<th>${ totalCard.cPoint } 점</th>
     									</tr>
@@ -630,7 +628,7 @@
     								<c:forEach var="total" items="${ total }">
     									<tr>
     										<th><img style="height: 35; width: 35;" src="resources/level/${ total.mLevel }.PNG"></th>
-    										<th>${ total.mId }</th>
+    										<th onclick="location.href='/showmethecard/mypage/mypage.action?goId=${ total.mId }'"><a>${ total.mId }</a></th>
     										<th>${ total.mPoint } 점</th>
     									</tr>
 		    						</c:forEach>

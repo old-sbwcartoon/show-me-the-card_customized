@@ -125,11 +125,10 @@
 </head>
 <body>
 
+	<c:import url="/WEB-INF/views/include/header.jsp" />
 	<!-- Start Contact Us Section -->
 	<section id="contact" class="contact contact-section">
 		<div id="pageContainer">
-			<c:import url="/WEB-INF/views/include/navigator.jsp" />
-			<!-- 삭제하기 -->
 			<div class="jumbotron">
 				<h1 id="maintitle">공지사항 작성</h1>
 

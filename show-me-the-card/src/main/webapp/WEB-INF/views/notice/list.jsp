@@ -92,16 +92,8 @@
 
 </head>
 <body>
-
-	<c:import url="/WEB-INF/views/include/navigator.jsp" />
-
-	<!-- Start Contact Us Section -->
-	<section id="contact" class="contact contact-section"> <!-- <div id="preloader">
-		<div id="status">&nbsp;</div>
-	</div>
-
-	<br/>
-	<br/> -->
+	<c:import url="/WEB-INF/views/include/header.jsp" />
+	<section id="contact" class="contact contact-section"> 
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">

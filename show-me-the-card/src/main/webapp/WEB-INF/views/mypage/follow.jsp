@@ -247,22 +247,6 @@ $(document).ready(function(){
     	</div>
     </div>
     <!-- End Chart Section --> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!-- Start Footer Section -->
-	<c:import url="/WEB-INF/views/include/footer.jsp" />
-	<!-- End Footer Section -->
 </body>
 
  <script src="../resources/assets/js/script.js"></script>

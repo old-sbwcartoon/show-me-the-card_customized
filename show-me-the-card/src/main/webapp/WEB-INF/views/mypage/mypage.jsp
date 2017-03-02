@@ -637,21 +637,6 @@
 		</div>
 	</div>
 	<!-- End Update Section -->
-
-
-
-
-
-
-
-
-
-
-
-
-	<!-- Start Footer Section -->
-	<c:import url="/WEB-INF/views/include/footer.jsp" />
-	<!-- End Footer Section -->
 </body>
 
  <script src="../resources/assets/js/script.js"></script>

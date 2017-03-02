@@ -18,6 +18,7 @@ public class Card implements Serializable {
 	private String cName;
 	private float cRating;
 	private String imgSrc;
+	private int cLevel;
 	
 	public String getImgSrc() {
 		return imgSrc;
@@ -66,5 +67,11 @@ public class Card implements Serializable {
 	}
 	public void setcRating(float cRating) {
 		this.cRating = cRating;
+	}
+	public int getcLevel() {
+		return cLevel;
+	}
+	public void setcLevel(int cLevel) {
+		this.cLevel = cLevel;
 	}
 }

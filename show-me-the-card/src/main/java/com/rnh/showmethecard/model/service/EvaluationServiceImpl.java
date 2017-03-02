@@ -10,6 +10,7 @@ import com.rnh.showmethecard.model.dao.EvaluationDao;
 import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
@@ -56,8 +57,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public void deleteEvaluationRatingByeRatingNo(int eRatingNo) {
-		dao.deleteEvaluationRatingByeRatingNo(eRatingNo);
+	public void deleteEvaluationRatingByeRatingNo(int cardNo, int eRatingNo) {
+		dao.deleteEvaluationRatingByeRatingNo(cardNo, eRatingNo);
 	}
 
 	@Override
@@ -98,6 +99,11 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Override
 	public List<EvaluationRating> searchBestEvaluationRatingList(int cardNo, String mId) {
 		return dao.selectBestEvaluationRatingListWithCardNo(cardNo, mId);
+	}
+
+	@Override
+	public CardBasicInfo searchCardBasicInfo(int cardNo) {
+		return dao.selectCardBasicInfo(cardNo);
 	}
 	
 	

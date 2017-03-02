@@ -11,6 +11,7 @@ import com.rnh.showmethecard.common.Literal;
 import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.mapper.EvaluationMapper;
@@ -66,11 +67,7 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 	@Override
 	public float selectEvaluationRatingAvg(int cardNo) {
-		HashMap<String, Object> data = new HashMap<>();
-		data.put("cardNo", cardNo);
-		data.put("minArticleNo", Literal.Analysis.Average.MIN_ARTICLE_NO);
-		
-		return mapper.selectEvaluationRatingAvg(data);
+		return mapper.selectEvaluationRatingAvg(cardNo);
 	}
 
 
@@ -87,9 +84,14 @@ public class MysqlEvaluationDao implements EvaluationDao {
 
 
 	@Override
-	public void deleteEvaluationRatingByeRatingNo(int eRatingNo) {		
+	public void deleteEvaluationRatingByeRatingNo(int cardNo, int eRatingNo) {		
 		mapper.deleteEvaluationRatingByeRatingNo(eRatingNo);
 		mapper.deleteEvaluationRatingLikedByeRatingNo(eRatingNo);
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("cardNo", cardNo);
+		data.put("minArticleNo", Literal.Analysis.Average.MIN_ARTICLE_NO);
+		mapper.updateCardRatingByCardNo(data);
 	}
 
 
@@ -108,8 +110,13 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.setmId(mId);
 		data.setContent(content);
 		data.seteRating(eRating);
-
 		mapper.insertEvaluationRating(data);
+		
+		HashMap<String, Object> mapData = new HashMap<>();
+		mapData.put("cardNo", cardNo);
+		mapData.put("minArticleNo", Literal.Analysis.Average.MIN_ARTICLE_NO);
+		mapper.updateCardRatingByCardNo(mapData);
+		
 		
 		return data;
 	}
@@ -124,6 +131,7 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	}
 
 
+	
 	@Override
 	public int selectEvaluationRatingNoSumWithCardNo(String tName, String tConditionName, String tConditionValue) {
 		HashMap<String, String> data = new HashMap<>();
@@ -134,6 +142,7 @@ public class MysqlEvaluationDao implements EvaluationDao {
 	}
 
 
+	
 	@Override
 	public Card selectCardDbByCardNo(int cardNo) {
 		return mapper.selectCardDbByCardNo(cardNo);
@@ -173,6 +182,12 @@ public class MysqlEvaluationDao implements EvaluationDao {
 		data.put("limit", Literal.Ui.BEST_EVALUATION_RATING_LIST_LIMIT);
 		
 		return mapper.selectBestEvaluationRatingListWithCardNo(data);
+	}
+
+
+	@Override
+	public CardBasicInfo selectCardBasicInfo(int cardNo) {
+		return mapper.selectCardBasicInfoByCardNo(cardNo);
 	}
 
 

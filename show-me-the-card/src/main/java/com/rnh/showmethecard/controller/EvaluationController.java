@@ -18,6 +18,7 @@ import com.rnh.showmethecard.common.Point;
 import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 import com.rnh.showmethecard.model.dto.Member;
@@ -43,20 +44,18 @@ public class EvaluationController {
 		String mId = member.getmId();
 		int pageNo = 1;
 		
-		Card card = service.searchCardDb(cardNo);
-		HtmlParser htmlParser = new HtmlParser(card.getSiteUrl(), Literal.ParseHtml.From.DB);
-
+		Card card = service.searchCardDb(cardNo);		
 		//card
-		model.addAttribute("htmlParser", htmlParser);
+		model.addAttribute("htmlParser", service.searchCardBasicInfo(cardNo));
 		model.addAttribute("card", card);
 		//evaluation
-		//int pageNoSum = service.searchEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));		
-
+		//int pageNoSum = service.searchEvaluationRatingNoSum(Literal.Table.Name.EVALUATION_RATING, Literal.Table.Column.CARD_NO, String.valueOf(2));
+		
 		//model.addAttribute("evalPageNoMax", Math.ceil(pageNoSum / Literal.Ui.PAGER_LIMIT));
 		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, mId));
 		model.addAttribute("evalCommentList", service.searchEvaluationCommentList(cardNo));
 		model.addAttribute("evalRatingList", searchEvaluationRatingListWithPageNo(cardNo, req, pageNo));
-		model.addAttribute("eRatingAvg", service.searchEvaluationRatingAvg(cardNo)); //아무도 평가를 하지 않았을 때는 -1 반환
+		model.addAttribute("cRatingAvg", service.searchEvaluationRatingAvg(cardNo)); //아무도 평가를 하지 않았을 때는 -1 반환
 		model.addAttribute("myRating", service.searchEvaluationRatingBymId(cardNo, mId));		
 		model.addAttribute("bestEvalRatingList", service.searchBestEvaluationRatingList(cardNo, mId)); //list 값 없으면 [] 반환
 		
@@ -75,6 +74,7 @@ public class EvaluationController {
 		return service.searchEvaluationRatingListWithPageNo(cardNo, member.getmId(), pageNo);
 	}
 	
+	
 	//합치기
 	@RequestMapping(value="addevalrating.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -82,12 +82,31 @@ public class EvaluationController {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
 		EvaluationRating newRating = service.addEvaluationRating(cardNo, member.getmId(), content, eRating);
 		
-		
-		point.updateMemberPointAndLevel(Literal.Content.Member.EVALUATION_RATING, member);
-		
+		point.updateMemberPointAndLevel(Literal.Content.Member.EVALUATION_RATING, member);		
 		return new Gson().toJson(newRating);
 	}
+	
+	
+	@RequestMapping(value="delevalrating.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteEvaluationRating(HttpServletRequest req, int cardNo, int eRatingNo) {
+		Member member = (Member)req.getSession().getAttribute("loginuser");
+		service.deleteEvaluationRatingByeRatingNo(cardNo, eRatingNo);
+		
+		point.updateMemberPointAndLevel(Literal.Content.Member.DEL_EVALUATION_RATING, member);
+		return null;
+	}
 
+	
+	@RequestMapping(value="addevalratingliked.action", method=RequestMethod.POST)
+	@ResponseBody
+	public String addEvaluationRatingLiked(int eRatingNo, String mId, HttpServletRequest req) {
+		Member member = (Member)req.getSession().getAttribute("loginuser");
+		service.addEvaluationRatingLiked(eRatingNo, mId, member.getmId());
+		return null;
+	}
+	
+	
 	
 	@RequestMapping(value="addevalcomment.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -109,36 +128,18 @@ public class EvaluationController {
 		return new Gson().toJson(newComment);
 	}
 	
-
-	
-	@RequestMapping(value="addevalratingliked.action", method=RequestMethod.POST)
-	@ResponseBody
-	public String addEvaluationRatingLiked(int eRatingNo, String mId, HttpServletRequest req) {
-		Member member = (Member)req.getSession().getAttribute("loginuser");
-		service.addEvaluationRatingLiked(eRatingNo, mId, member.getmId());
-		return null;
-	}	
-		
-	
-	
-	@RequestMapping(value="delevalrating.action", method=RequestMethod.POST)
-	@ResponseBody
-	public String deleteEvaluationRating(HttpServletRequest req, int eRatingNo) {
-		Member member = (Member)req.getSession().getAttribute("loginuser");
-		service.deleteEvaluationRatingByeRatingNo(eRatingNo);
-		point.updateMemberPointAndLevel(Literal.Content.Member.DEL_EVALUATION_RATING, member);
-		return null;
-	}
 	
 	@RequestMapping(value="delevalcomment.action", method=RequestMethod.POST)
 	@ResponseBody
 	public String deleteEvaluationComment(HttpServletRequest req, int cardNo, int eCommentNo) {
 		Member member = (Member)req.getSession().getAttribute("loginuser");
 		service.deleteEvaluationCommentByeCommentNo(eCommentNo);
+		
 		boolean isExists = service.confirmEvaluationCommentOfmId(cardNo, member.getmId());
 		if (!isExists) {
 			point.updateMemberPointAndLevel(Literal.Content.Member.DEL_EVALUATION_COMMENT_ALL, member);
 		}
+		
 		return null;
 	}
 	

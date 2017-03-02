@@ -57,10 +57,9 @@ public class MyPageController {
 				if (goId == null) {
 					mId = member.getmId();
 					ownerPlag = true;
-				} else if(member.getmId() != goId) {
+				} else if(!(member.getmId().equals(goId))) {
 					mId = goId;
-				} else if(member.getmId() == goId) {					
-					System.out.println("dd");
+				} else if(member.getmId().equals(goId)) {					
 					ownerPlag = true;
 					mId = goId;
 				}

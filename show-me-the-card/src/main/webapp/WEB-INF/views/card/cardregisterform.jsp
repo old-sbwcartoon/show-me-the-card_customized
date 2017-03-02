@@ -11,7 +11,7 @@ $(document).ready(function() {
 	var title = "";
 	var mycContent2 = "";
 	$('#siteUrl').blur(function() {
-		siteUrl = $('#siteUrl').val();
+		siteUrl = encodeURIComponent($('#siteUrl').val()); // url encoding
 		$.ajax ({
 	       	url : "checkurl.action",
 	       	method : 'get',

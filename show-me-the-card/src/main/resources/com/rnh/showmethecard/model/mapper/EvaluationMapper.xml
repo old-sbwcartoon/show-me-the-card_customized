@@ -162,11 +162,8 @@
 </select>
 
 <select id="selectEvaluationRatingAvg" resultType="float" parameterType="HashMap">
-	select 
-		case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 1)
-			else -1
-		end
-	from EVALUATION_RATING
+	select C_RATING
+	from CARD_DB
 	where CARD_NO = #{cardNo}
 		AND deleted = 0
 </select>
@@ -242,6 +239,7 @@
 	<result property="discover" column="DISCOVERER" />
 	<result property="cName" column="C_NAME" />
 	<result property="cRating" column="C_RATING" />
+	<result property="cLevel" column="C_LEVEL" />
 </resultMap>
 
 <select id="selectCardDbByCardNo" resultMap="cardDbMap" parameterType="Integer">
@@ -252,8 +250,10 @@
 		, DISCOVERER
 		, C_NAME
 		, C_RATING
+		, C_LEVEL
 	from CARD_DB
 	where CARD_NO = #{cardNo}
+		AND deleted = 0
 </select>
 
 
@@ -271,14 +271,13 @@
 
 <select id="selectBestNamed" resultMap="BestNamedMap" parameterType="Integer">
 	select distinct m.M_Id, m.M_POINT, m.M_Level, f.F_NAME, f.F_POINT, max(myc.REG_DATE) REG_DATE, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
-	
-    from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c, F_TAG ft
+	from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c, F_TAG ft
 	where f.M_ID = m.M_ID
 		AND f.F_NO = myc.F_NO
 	    AND myc.CARD_NO = c.CARD_NO
  	    AND c.CARD_NO = #{ cardNo }
 		AND ft.F_NO = f.F_NO
--- 		AND f.SECRET = 0 
+ 		AND f.SECRET = 1 
     
 	    AND USERTYPE = 0
 	    AND f.deleted = 0
@@ -298,7 +297,37 @@
 			AND myc.deleted = 0
 		group by mt.MYC_NAME
         order by tagCount DESC, regDate DESC
-        limit 3;
+        limit 3
 </select>
+
+<update id="updateCardRatingByCardNo" parameterType="HashMap">
+	update CARD_DB
+	set C_RATING = (
+		select 
+			case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 1)
+				else -1
+			end
+		from EVALUATION_RATING
+		where CARD_NO = #{cardNo}
+			AND deleted = 0
+		)
+	where CARD_NO = #{cardNo}
+</update>
+
+
+<resultMap id="cardBasicInfoMap" type="CardBasicInfo">
+	<result property="title" column="C_NAME" />
+	<result property="url" column="SITE_URL" />
+	<result property="imgUrl" column="IMG_SRC" />
+	<result property="content" column="URLDESC" />
+</resultMap>
+
+<select id="selectCardBasicInfoByCardNo" resultMap="cardBasicInfoMap" parameterType="Integer">
+	select C_NAME, SITE_URL, IMG_SRC, URLDESC
+	from CARD_DB
+	where CARD_NO = #{cardNo}
+		AND deleted = 0
+</select>
+
 
 </mapper>

@@ -645,7 +645,8 @@ h2 {
 							url  : '/showmethecard/evaluation/delevalrating.action',
 							type : 'POST',
 							data : {
-								eRatingNo : evaluationNo
+								eRatingNo : evaluationNo,
+								cardNo : cardNo
 							},
 							success :
 								function() {
@@ -705,17 +706,17 @@ h2 {
 		<div class="row">
 			<div id="div-card-col" class="col-md-12" class="counter-item">				
 				<div id="div-thumbnail" style="float:left;">
-					<div id="div-thumbnail-img" class="text-center" onclick="window.open('${requestScope.htmlParser.url}')" title="${requestScope.htmlParser.url}로 이동">
-						<img id="img-thumbnail" src="${requestScope.htmlParser.img}" />
-						<span class="label label-danger" style="position: absolute; bottom: 0px; right: 0px">${ requestScope.card.cPoint }</span>
+					<div id="div-thumbnail-img" class="text-center" onclick="window.open('${requestScope.htmlParser.url}')" title="${requestScope.htmlParser.url}">
+						<img id="img-thumbnail" src="${requestScope.htmlParser.imgUrl}" />
+						<span class="label label-danger" style="position: absolute; bottom: 0px; right: 0px">${ requestScope.card.cLevel }</span>
 					</div>
 					<div id="div-thumbnail-text">
 						<div class="section-title text-center">
-							<input id="hidden-star-avg" type="hidden" value="${ requestScope.eRatingAvg }" />
+							<input id="hidden-star-avg" type="hidden" value="${ requestScope.cRatingAvg }" />
 							<span style="font-size: 18pt; color: gold;">
 								<span class="star"></span>
-								<c:if test="${ requestScope.eRatingAvg ne -1 }">
-									${ requestScope.eRatingAvg }
+								<c:if test="${ requestScope.cRatingAvg ne -1 }">
+									${ requestScope.cRatingAvg }
 								</c:if>
 							</span>
 						</div>
@@ -734,7 +735,7 @@ h2 {
 							<h2 style="padding-top: 20px;"></h2>
 						</div>
 						<div id="div-info-desc">
-							<input id="hidden-htmlparser-desc" type="hidden" value="${ requestScope.htmlParser.desc }" />
+							<input id="hidden-htmlparser-desc" type="hidden" value="${ requestScope.htmlParser.content }" />
 							<p style="padding:0px; margin:0px;"></p>
 						</div>
 					</div>
@@ -767,9 +768,7 @@ h2 {
 	    								<tr style="font-size: 18; color: white;">
 	    									<th>폴더 점수</th>
 	    									<th>폴더 이름</th>
-	    									<th>태그1</th>
-	    									<th>태그2</th>
-	    									<th>태그3</th>
+	    									<th>폴더 태그</th>
 	    									<th>마지막 업데이트</th>
 	    									<th>레벨</th>
 	    									<th>아이디</th>
@@ -780,9 +779,7 @@ h2 {
 	    									<tr style="font-size: 18; color: darkgray;">
 	    										<th>${ bestNamed.fPoint } 점</th>
 												<th>${ bestNamed.fName }</th>
-												<th>${ bestNamed.ftName1 }</th>
-												<th>${ bestNamed.ftName2 }</th>
-												<th>${ bestNamed.ftName3 }</th>
+												<th>${ bestNamed.ftName1 }, ${ bestNamed.ftName2 }, ${ bestNamed.ftName3 }</th>												
 												<th>${ bestNamed.mycRegDate }</th>
 	    										<th><img style="height: 35; width: 35;" src="/showmethecard/resources/level/${ bestNamed.mLevel }.PNG"></th>
 												<th><a href="/showmethecard/mypage/mypage.action?goId=${ bestNamed.mId }">${ bestNamed.mId }</a></th>
@@ -790,7 +787,7 @@ h2 {
 			    						</c:forEach>
 	    							</tbody>
 	    						</table>
-	    					</div>    					
+	    					</div>
 	    				</div><!-- col-md-6 end -->
 	    			</div><!--  row end -->
 	    			
@@ -934,8 +931,8 @@ h2 {
 										<i class="i-liked-sum service waves-effect liked-yet"
 											style="border: none; border-radius: 3px; padding: 10px 20px; display: none">
 												<input class="hidden-liked-sum" type="hidden" value="${ ratinglist.eLikedSum }" />
-												<span class="liked-sum">${ ratinglist.eLikedSum }</span>&nbsp;
-												<img class="img-liked" src="/showmethecard/resources/images/liked.png" style="width: 30px;" />
+												<span class="liked-sum" style="pointer-events: none;">${ ratinglist.eLikedSum }</span>&nbsp;
+												<img class="img-liked" src="/showmethecard/resources/images/liked.png" style="width: 30px; pointer-events: none;" />
 										</i>
 										<i class="i-liked-sum service waves-effect liked-already"
 											style="border: none; border-radius: 3px; padding: 10px 20px; background-color: #26a8e1; color: white; display: none">

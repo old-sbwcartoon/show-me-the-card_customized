@@ -130,6 +130,7 @@ $(document).ready(function () {
 			search();
    		}
    	});
+   	
 });
 
 function search() {
@@ -147,7 +148,7 @@ function search() {
 				dataType : "json",
 				success : function(data, status, xhr) {
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].mId+'">'+data[i].mId+'</a></th></tr>').appendTo('.member').attr('class', 'm');
+						$('<tr><th><img src="/showmethecard/resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+ data[i].mId+'" style="width:150px; height:80px;">'+data[i].mId+'</a></th></tr>').appendTo('.member').attr('class', 'm');
 					}
 				},
 				error : function(data) {
@@ -162,7 +163,7 @@ function search() {
 				success : function(data, status, xhr) {
 					$('.c').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><a href='+ data[i].siteUrl+' target=_blank>'+data[i].siteUrl+'</th><th>'+data[i].cName+'</th></tr>').appendTo('.card').attr('class','c');
+						$('<tr><th style="width: 200px; height:100px;"><a href='+ data[i].siteUrl+' target=_blank ><img style="width:100%; height:auto;" alt="'+data[i].cName+'" src="'+data[i].imgSrc+'"></a></th><th>'+data[i].cName+'</th></tr>').appendTo('.card').attr('class','c');
 					}
 				},
 				error : function(data) {
@@ -206,6 +207,7 @@ function search() {
 	          <thead>
 	            <tr style="font-size: 18; color: black;">
 	           		<th>카드</th>
+	           		<th>Title</th>
 				</tr>
 	          </thead>
 	          <tbody class="card">

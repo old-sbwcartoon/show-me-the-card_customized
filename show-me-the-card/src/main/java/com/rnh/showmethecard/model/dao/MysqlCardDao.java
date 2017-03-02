@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.rnh.showmethecard.model.dto.CardForInsert;
+import com.rnh.showmethecard.model.dto.CardHistory;
 import com.rnh.showmethecard.model.dto.MyCardList;
 import com.rnh.showmethecard.model.mapper.CardMapper;
 
@@ -71,7 +72,26 @@ public class MysqlCardDao implements CardDao {
 	public void upDelMyCardByMycNo(int mycNo){
 		cardMapper.upDelMyCardByMycNo(mycNo);
 	}
-
+	
+	@Override
+	public void insertCardHistory(CardHistory cardHistory){
+		cardMapper.insertCardHistory(cardHistory);
+	}
+	
+	@Override
+	public void updateCardDbPoint(int cardNo){
+		cardMapper.updateCardDbPoint(cardNo);
+	}
+	
+	@Override
+	public int selectCardDbAsCount(){
+		return cardMapper.selectCardDbAsCount();
+	}
+	
+	@Override
+	public int selectCardNoAtMyCardByMycNo(int mycNo){
+		return cardMapper.selectCardNoAtMyCardByMycNo(mycNo);
+	}
 }
 
 

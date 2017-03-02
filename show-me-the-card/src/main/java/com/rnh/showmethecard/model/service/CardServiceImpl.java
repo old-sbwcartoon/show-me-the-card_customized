@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Service;
 
+import com.rnh.showmethecard.common.Literal;
+import com.rnh.showmethecard.common.Point;
 import com.rnh.showmethecard.model.dao.CardDao;
 import com.rnh.showmethecard.model.dto.CardForInsert;
 import com.rnh.showmethecard.model.dto.MyCardList;
@@ -27,7 +29,7 @@ public class CardServiceImpl implements CardService {
 		return resultCardNo;
 	}
 	
-	
+	Point point;
 	@Override
 	public void insertMyCardOrCardDb(CardForInsert cardForInsert){
 		int cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
@@ -80,6 +82,8 @@ public class CardServiceImpl implements CardService {
 			//insertFolder
 		}else{
 			fNo = fNoList.get(fNoList.size() - 1);
+			
+			//point.makePointWithType(mycNo ,Literal.CardPoint.Type.SCRAP, mId); 
 			cardDao.insertMyCardWithMycNo(mycNo, fNo);
 		}
 	}

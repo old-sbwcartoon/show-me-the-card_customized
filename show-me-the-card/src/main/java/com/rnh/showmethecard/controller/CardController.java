@@ -94,10 +94,10 @@ public class CardController {
 			int tmp = myCardListList.get(i).getcLevel();
 			int level = 1;
 			switch (tmp){
-				case 1 : level = 80; break;
-				case 2 : level = 60; break;
-				case 3 : level = 40; break;
-				case 4 : level = 20; break;
+				case 1 : level = 100; break;
+				case 2 : level = 80; break;
+				case 3 : level = 60; break;
+				case 4 : level = 30; break;
 				case 5 : level = 0; break;
 			}
 			myCardListList.get(i).setcLevel(level);

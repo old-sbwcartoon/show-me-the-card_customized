@@ -81,7 +81,6 @@ public class HtmlParser {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		System.out.println(url);
 		setFrom(from);
 		setUrl(url);
 		if (isUrlOk()) {
@@ -306,7 +305,11 @@ public class HtmlParser {
 							break;
 						}
 					}
-					return getChoosedImg(firstImgStr);
+					if (firstImgStr != null) {
+						return getChoosedImg(firstImgStr);
+					} else {
+						return getChoosedImg("https://img.ashampoo.com/ashampoo.com_images/img/1/landingpage/snap4android_help/icon_tools_gallery.svg");
+					}
 				}
 				
 				
@@ -350,10 +353,10 @@ public class HtmlParser {
 		String choosedImgUrl = null;
 		
 		
-		switch (getFrom()) {
+		/*switch (getFrom()) {
 		
 		
-			case Literal.ParseHtml.From.WEB :
+			case Literal.ParseHtml.From.WEB :*/
 				if (imgStr != null) {
 					StringBuilder imgUrl = new StringBuilder(100);
 					String domain = getUrlDomain(getUrl());
@@ -377,13 +380,13 @@ public class HtmlParser {
 					
 					choosedImgUrl = imgUrl.toString();
 				}				
-				break;
+				/*break;
 				
 				
 			case Literal.ParseHtml.From.DB  :
 				choosedImgUrl = imgStr;
 				break;
-		}
+		}*/
 		
 		
 		

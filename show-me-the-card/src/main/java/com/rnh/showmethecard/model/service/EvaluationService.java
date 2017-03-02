@@ -5,6 +5,7 @@ import java.util.List;
 import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
@@ -25,7 +26,7 @@ public interface EvaluationService {
 
 	void deleteEvaluationCommentByeCommentNo(int eCommentNo);
 
-	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
+	void deleteEvaluationRatingByeRatingNo(int cardNo, int eRatingNo);
 
 	boolean confirmEvaluationRatingOfmId(int cardNo, String mId);
 
@@ -45,6 +46,6 @@ public interface EvaluationService {
 
 	List<EvaluationRating> searchBestEvaluationRatingList(int cardNo, String mId);
 
-	
+	CardBasicInfo searchCardBasicInfo(int cardNo);
 
 }

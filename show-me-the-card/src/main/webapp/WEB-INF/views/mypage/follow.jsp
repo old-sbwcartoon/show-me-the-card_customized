@@ -247,6 +247,20 @@ $(document).ready(function(){
     	</div>
     </div>
     <!-- End Chart Section --> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 </body>
 
  <script src="../resources/assets/js/script.js"></script>

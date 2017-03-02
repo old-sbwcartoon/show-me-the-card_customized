@@ -174,8 +174,8 @@
 				dataType : "json",
 				success : function(data, status, xhr) {
 					$('.d').remove();
-					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?gold='+data[i].mId+'">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+					for (var i = 0; i < data.length; i++) { 												
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -192,7 +192,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?gold='+data[i].mId+'">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -209,7 +209,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?gold='+data[i].mId+'">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -628,7 +628,7 @@
     								<c:forEach var="total" items="${ total }">
     									<tr>
     										<th><img style="height: 35; width: 35;" src="resources/level/${ total.mLevel }.PNG"></th>
-    										<th><a href="/showmethecard/mypage/mypage.action?gold=${ total.mId }">${ total.mId }</a></th>
+    										<th onclick="location.href='/showmethecard/mypage/mypage.action?goId=${ total.mId }'"><a>${ total.mId }</a></th>
     										<th>${ total.mPoint } 점</th>
     									</tr>
 		    						</c:forEach>

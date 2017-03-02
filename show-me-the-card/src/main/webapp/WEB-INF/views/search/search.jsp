@@ -213,12 +213,7 @@ function search() {
 		      </tbody>
 	      </table>
 	      </div>
-       </div>
-
-	<!-- Start Footer Section -->
-    <c:import url="/WEB-INF/views/include/footer.jsp" />
-    <!-- End Footer Section -->   
-    
+       </div>    
 </body>
 	<!-- Custom JavaScript -->
     <script src="../resources/assets/js/script.js"></script>

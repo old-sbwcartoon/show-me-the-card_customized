@@ -4,7 +4,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var pageOwner = "${pageOwner}";
-	alert(pageOwner);
 	var getFNo = ${getFNo};
 	$('#mycardlist').load("showmycardlist.action?fNo="+getFNo+"&pageOwner="+pageOwner);
 	var cardNum, check;
@@ -12,7 +11,7 @@ $(document).ready(function() {
 	var title = "";
 	var mycContent2 = "";
 	$('#siteUrl').blur(function() {
-		siteUrl = $('#siteUrl').val();
+		siteUrl = encodeURIComponent($('#siteUrl').val()); // url encoding
 		$.ajax ({
 	       	url : "checkurl.action",
 	       	method : 'get',

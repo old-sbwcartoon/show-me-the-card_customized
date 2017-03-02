@@ -174,8 +174,8 @@
 				dataType : "json",
 				success : function(data, status, xhr) {
 					$('.d').remove();
-					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?gold='+data[i].mId+'">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
+					for (var i = 0; i < data.length; i++) { 												
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#dailyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -192,7 +192,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?gold='+data[i].mId+'">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#weeklyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -209,7 +209,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?gold='+data[i].mId+'">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="height: 35; width: 35;" src="resources/level/'+data[i].mLevel+'.PNG"></th><th><a href="/showmethecard/mypage/mypage.action?goId='+data[i].mId+'"">'+data[i].mId+'</a></th><th>'+data[i].mPoint+'</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -226,7 +226,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="width: 150px; height: 115px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -243,7 +243,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="width: 150px; height: 115px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -260,7 +260,7 @@
 				success : function(data, status, xhr) {
 					$('.d').remove();
 					for (var i = 0; i < data.length; i++) {
-						$('<tr><th><img style="width:130; height:80px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
+						$('<tr><th><img style="width: 150px; height: 115px;" alt="'+data[i].siteUrl+'" src="'+data[i].imgSrc+'"></th><th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo='+data[i].cardNo+'">'+data[i].cName+'</a></th><th>'+data[i].discover+'</th><th>'+data[i].cPoint+'점</th></tr>').appendTo('#monthlyTable').attr('class','d');
 					}
 				},
 				error : function(data) {
@@ -315,6 +315,7 @@
 			}
 		});
 	});
+	
 	</script>
 </head>
 <body class="index">
@@ -553,7 +554,7 @@
     							<tbody>
     								<c:forEach var="totalCard" items="${ totalCard }">
     									<tr>
-    										<th><img style="width: 130px; height: 80px;" alt="${ totalCard.siteUrl }" src=" ${ totalCard.imgSrc }"></th>
+    										<th><img style="width: 150px; height: 115px;" alt="${ totalCard.siteUrl }" src=" ${ totalCard.imgSrc }"></th>
     										<th><a href="/showmethecard/evaluation/evaluationmain.action?cardNo=${ totalCard.cardNo }">${ totalCard.cName }</a></th>
     										<th>${ totalCard.discover }</th>
     										<th>${ totalCard.cPoint } 점</th>
@@ -628,7 +629,7 @@
     								<c:forEach var="total" items="${ total }">
     									<tr>
     										<th><img style="height: 35; width: 35;" src="resources/level/${ total.mLevel }.PNG"></th>
-    										<th><a href="/showmethecard/mypage/mypage.action?gold=${ total.mId }">${ total.mId }</a></th>
+    										<th onclick="location.href='/showmethecard/mypage/mypage.action?goId=${ total.mId }'"><a>${ total.mId }</a></th>
     										<th>${ total.mPoint } 점</th>
     									</tr>
 		    						</c:forEach>
@@ -651,7 +652,7 @@
     					<div id="userWeekly" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr style="font-size: 18; color: white;">
+    								<tr style="font-size: 18; color: white; height: 40px">
     									<th>레벨</th>
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>
@@ -664,7 +665,7 @@
     					<div id="userMonthly" class="tab-pane fade">
     						<table class="table">
     							<thead>
-    								<tr style="font-size: 18; color: white;">
+    								<tr style="font-size: 18; color: white; height: 50px">
     									<th>레벨</th>
     									<th style="width: 250">아이디</th>
     									<th style="width: 200">총점</th>

@@ -6,6 +6,7 @@ import java.util.List;
 import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
@@ -17,7 +18,7 @@ public interface EvaluationMapper {
 
 
 	
-	float selectEvaluationRatingAvg(HashMap<String, Object> data);
+	float selectEvaluationRatingAvg(int cardNo);
 
 	List<EvaluationRating> selectEvaluationRatingList(int cardNo);
 
@@ -55,5 +56,9 @@ public interface EvaluationMapper {
 	List<BestNamed> selectBestNamed(int cardNo);
 
 	List<EvaluationRating> selectBestEvaluationRatingListWithCardNo(HashMap<String, Object> data);
+	
+	void updateCardRatingByCardNo(HashMap<String, Object> data);
+
+	CardBasicInfo selectCardBasicInfoByCardNo(int cardNo);
 	
 }

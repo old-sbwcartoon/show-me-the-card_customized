@@ -5,6 +5,7 @@ import java.util.List;
 import com.rnh.showmethecard.model.dto.BestNamed;
 import com.rnh.showmethecard.model.dto.BestTag;
 import com.rnh.showmethecard.model.dto.Card;
+import com.rnh.showmethecard.model.dto.CardBasicInfo;
 import com.rnh.showmethecard.model.dto.EvaluationComment;
 import com.rnh.showmethecard.model.dto.EvaluationRating;
 
@@ -28,7 +29,7 @@ public interface EvaluationDao {
 	
 	void deleteEvaluationCommentByeCommentNo(int eCommentNo);
 
-	void deleteEvaluationRatingByeRatingNo(int eRatingNo);
+	void deleteEvaluationRatingByeRatingNo(int cardNo, int eRatingNo);
 
 	boolean selectExistsEvaluationRatingOfmId(int cardNo, String mId);
 
@@ -47,6 +48,8 @@ public interface EvaluationDao {
 	List<BestNamed> selectBestNamed(int cardNo);
 
 	List<EvaluationRating> selectBestEvaluationRatingListWithCardNo(int cardNo, String mId);
+
+	CardBasicInfo selectCardBasicInfo(int cardNo);
 
 
 	

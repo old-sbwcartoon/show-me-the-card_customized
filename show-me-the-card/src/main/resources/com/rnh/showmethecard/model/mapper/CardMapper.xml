@@ -57,7 +57,7 @@
 		SELECT card_no, #{fNo}, myc_comment, scrap_count FROM MY_CARD WHERE myc_no = #{mycNo}
 	</insert>
 	
-	<select id="selectFolderByMId" resultType="java.util.List" parameterType="String">
+	<select id="selectFolderByMId" resultType="Integer" parameterType="String">
 		SELECT f_no
 		FROM FOLDER
 		WHERE m_id = #{ mId } AND deleted = 0
@@ -69,7 +69,12 @@
 		DELETED ='1'
 		WHERE myc_no = #{ mycNo }		
 	</update>
-
+	
+	<select id="insertCardHistory" parameterType="CardHistory">
+		INSERT INTO rnh2.CARD_HISTORY
+		(card_no, ch_point, m_id, type)
+		VALUES (#{cardNo}, #{chPoint}, #{mId}, #{type})
+	</select>
 </mapper>
 
 

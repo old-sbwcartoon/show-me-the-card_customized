@@ -124,30 +124,34 @@ public class CardController {
 	
 	
 	@RequestMapping(value="scrap.action", method=RequestMethod.GET)
-	public void scrap(HttpSession session, HttpServletRequest req,int mycNo, String pageOwner){
+	public String scrap(HttpSession session, HttpServletRequest req,int mycNo, String pageOwner){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
 //		System.out.println(pageOwner);
 //		System.out.println(mycNo);
 		if(mId == pageOwner){
 			System.out.println("본인");
+			return "";
 		}else{
 			System.out.println("타인");
 			cardService.ScrapAction(mycNo, mId);
+			return "redirect:/mypage/mypage.action?gold="+pageOwner;
 		}
 	}
 	
 	@RequestMapping(value="delmycard.action", method=RequestMethod.GET)
-	public void delmycard(HttpSession session, HttpServletRequest req,int mycNo, String pageOwner){
+	public String delmycard(HttpSession session, HttpServletRequest req, int mycNo, String pageOwner){
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
 //		System.out.println(pageOwner);
 //		System.out.println(mycNo);
 		if(mId == pageOwner){
 			System.out.println("본인");
+			return "";
 		}else{
 			System.out.println("타인");
 			cardService.delMyCard(mycNo);
+			return "redirect:/mypage/mypage.action?gold="+pageOwner;
 		}
 	}	
 }

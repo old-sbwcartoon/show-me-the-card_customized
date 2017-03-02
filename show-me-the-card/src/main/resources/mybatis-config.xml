@@ -15,6 +15,7 @@
 	<typeAlias type="com.rnh.showmethecard.model.dto.Member" alias="Member" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Notice" alias="Notice" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.Card" alias="Card" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.CardHistory" alias="CardHistory" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.MyCardList" alias="MyCardList" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationComment" alias="EvaluationComment" />
 	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationRating" alias="EvaluationRating" />

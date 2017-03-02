@@ -54,7 +54,7 @@
 						<ul id="scrapUrl">
 							<li><a href="/showmethecard/mypage/scrap.action?mycNo=${ MyCardList.mycNo }&pageOwner=${pageOwner}"><i class="fa fa-facebook"></i>스크랩</a></li>
 							<li><a href="${ MyCardList.url }" target="_blank"><i class="fa fa-twitter"></i>이동</a></li>
-							<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }' target="_blank"><i class="fa fa-linkedin"></i>품평</a></li>
+							<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
 						</ul>
 						<br>
 	
@@ -74,7 +74,7 @@
 						<h3>${MyCardList.mycComment}</h3>
 				</div>
 				<c:if test="${ pageOwner == mId }">
-				<h3><a  href="/showmethecard/mypage/delmycard.action?mycNo=${ MyCardList.mycNo }&pageOwner=${pageOwner}" target="_blank" style="float:right;margin-top:10px;margin-right:10px;"><i class='glyphicon glyphicon-remove-circle'></i>삭제</a></h3>
+				<h3><a  href="/showmethecard/mypage/delmycard.action?mycNo=${ MyCardList.mycNo }&pageOwner=${pageOwner}" style="float:right;margin-top:10px;margin-right:10px;"><i class='glyphicon glyphicon-remove-circle'></i>삭제</a></h3>
 				</c:if>
 			</div>
 		</div>

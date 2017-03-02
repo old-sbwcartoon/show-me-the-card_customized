@@ -11,21 +11,16 @@
 
 <script type="text/javascript">		
 	$(document).ready(function() {
-		/* $('#resultTag').on("click", "span[id^=tag]",function(){
-			alert($(this).text());
-			
-			
-		}); */
-	 		/* $("#scrapUrl").on("click", "li[id^=scrap]", function(){
-	 			alert($(this).text());
-	 			debugger;
-	 			var ssss = $("#hiddenInput > input[id^=myc]").val();
-	 			alert(ssss);
-	 			
-	 			
-	 			
-				//alert(asdf);
-	 		}); */
+		/* var strColor = "";
+		var level = 1*$(".level").val();
+		switch (level){
+			case 1 : strColor = "100%"; alert(level);break;
+			case 2 : strColor = "60%"; alert(level);break;
+			case 3 : strColor = "50%"; alert(level);break;
+			case 4 : strColor = "40%"; alert(level);break;
+			case 5 : strColor = "30%"; alert(level);break;
+		}
+		$("#team > div > div").css("border", "10px solid hsl(200, 50% , "+ strColor +")"); */
 	}); 	
 </script>
 
@@ -39,7 +34,7 @@
 	
 	<div class="col-md-3 col-sm-6">
 	
-		<div style="border: 10px solid hsl(200, 75%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(200, 50%, 80%);">
+		<div style="border: 10px solid hsl(${MyCardList.cLevel}, 50%, 50%); height: 500px; margin-bottom:10px; border-radius: 25px; background-color:hsl(200, 50%, 80%);">
 			<div style="border: 5px solid hsl(200, 0%, 30%); height: 460px; margin:10px;">
 				<div class="team-member" style="margin: 10px;">
 					<div id="imgdiv"
@@ -47,7 +42,7 @@
 						<img id="imgSrc" src="${MyCardList.imgSrc}"
 							class="img-responsive thumbnail" alt="">
 					</div>
-
+					
 					<div class="team-details">
 						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
 						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>
@@ -68,6 +63,7 @@
 						<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}" />
 						<input id='toUrl' type="hidden" value="${MyCardList.url}" />
 						<input id='mycNo' type="hidden" value="${MyCardList.mycNo}" />
+						<input class='level' type="hidden" value="${MyCardList.cLevel}" />
 						</div>
 						<%-- <input id='incNum' type="hidden" value="${incNum}" /> --%>
 					</div>

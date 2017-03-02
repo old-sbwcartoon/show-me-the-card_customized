@@ -33,7 +33,7 @@ public class CardServiceImpl implements CardService {
 	@Override
 	public void insertMyCardOrCardDb(CardForInsert cardForInsert){
 		int cardNo = cardDao.selectCardDbBySiteUrl(cardForInsert.getSiteUrl());
-		System.out.println("사이트조회 서비스 : " + cardNo);
+		//System.out.println("사이트조회 서비스 : " + cardNo);
 		if(cardNo == 0){
 			//카드 db 저장
 			String discoverer = cardForInsert.getDiscoverer();
@@ -54,10 +54,10 @@ public class CardServiceImpl implements CardService {
 		cardDao.insertMyCard(cardForInsert);
 		
 		int mycNo = cardForInsert.getMycNo();
-		System.out.println(mycNo);
+		//System.out.println(mycNo);
 		
 //		int mycNo = cardForInsert.get
-		System.out.println("MYCARD INSERT 성공");
+		//System.out.println("MYCARD INSERT 성공");
 		
 		String mycName = "";
 		
@@ -66,7 +66,7 @@ public class CardServiceImpl implements CardService {
 			System.out.println(mycName);
 			cardDao.insertMyTag(mycNo, mycName);
 		}
-		System.out.println("MYCTAG INSERT 성공");
+		//System.out.println("MYCTAG INSERT 성공");
 	}
 	
 	@Override

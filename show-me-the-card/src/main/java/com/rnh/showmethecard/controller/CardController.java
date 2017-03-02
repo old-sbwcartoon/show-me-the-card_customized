@@ -90,6 +90,18 @@ public class CardController {
 		member = (Member) session.getAttribute("loginuser");
 		mId = member.getmId();
 		List<MyCardList> myCardListList= cardService.readMyCard(fNo);
+		for (int i = 0 ; i < myCardListList.size(); i ++){
+			int tmp = myCardListList.get(i).getcLevel();
+			int level = 1;
+			switch (tmp){
+				case 1 : level = 80; break;
+				case 2 : level = 60; break;
+				case 3 : level = 40; break;
+				case 4 : level = 20; break;
+				case 5 : level = 0; break;
+			}
+			myCardListList.get(i).setcLevel(level);
+		}
 		System.out.println(pageOwner);
 		int listLength = myCardListList.size();
 		

@@ -39,7 +39,7 @@
 	
 	
 	<select id="selectMyCardListByFNo" resultType="MyCardList" parameterType="int">
-		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName, cd.DISCOVERER discoverer, cd.URLDESC urlDesc
+		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName, cd.DISCOVERER discoverer, cd.URLDESC urlDesc, cd.c_level cLevel
 		FROM MY_CARD mc, CARD_DB cd
 		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO = #{fNo} AND mc.deleted = 0
 	</select>

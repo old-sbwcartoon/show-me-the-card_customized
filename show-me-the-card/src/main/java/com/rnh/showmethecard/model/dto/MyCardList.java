@@ -20,6 +20,8 @@ public class MyCardList implements Serializable {
 	private String imgSrc;
 	private String discoverer;
 	private String urlDesc;
+	private int cLevel;
+	
 	
 	public int getMycNo() {
 		return mycNo;
@@ -86,5 +88,11 @@ public class MyCardList implements Serializable {
 	}
 	public void setUrlDesc(String urlDesc) {
 		this.urlDesc = urlDesc;
+	}
+	public int getcLevel() {
+		return cLevel;
+	}
+	public void setcLevel(int cLevel) {
+		this.cLevel = cLevel;
 	}
 }

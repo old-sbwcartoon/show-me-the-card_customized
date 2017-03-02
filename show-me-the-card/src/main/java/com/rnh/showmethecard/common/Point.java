@@ -28,8 +28,9 @@ public class Point {
 	private CardDao cardDao;
 	private CardHistory cardHistory;
 	public void makePointWithType(int mycNo , String type, String mId){
-
-		int tmp = cardDao.selectCardDbAsCount();
+		if(mId == "director"){
+			int tmp = cardDao.selectCardDbAsCount();
+		}
 		int cardNo = cardDao.selectCardNoAtMyCardByMycNo(mycNo);
 		int chPoint = 0;
 		switch(type){
@@ -37,6 +38,8 @@ public class Point {
 		case "moveurl" : chPoint = 1;break;
 		case "ratingcard" : chPoint = 1;break;
 		}
+		
+		
 		cardHistory = new CardHistory();
 		cardHistory.setCardNo(cardNo);
 		cardHistory.setChPoint(chPoint);

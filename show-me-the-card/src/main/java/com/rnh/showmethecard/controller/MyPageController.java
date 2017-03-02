@@ -59,8 +59,7 @@ public class MyPageController {
 					ownerPlag = true;
 				} else if(member.getmId() != goId) {
 					mId = goId;
-				} else if(member.getmId() == goId) {					
-					System.out.println("dd");
+				} else if(member.getmId().equals(goId)) {					
 					ownerPlag = true;
 					mId = goId;
 				}

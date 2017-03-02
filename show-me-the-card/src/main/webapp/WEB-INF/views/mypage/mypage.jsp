@@ -327,6 +327,7 @@
 				//    alert("dddd");
 				//});
 					//$('#folderpage').on('longpress', "button[id^=folder_]",
+			if ( ${ ownerPlag } ) {
 					$('button[id^=folder_]').longpress(
 						function(event) { //long click
 							//longpress event
@@ -380,7 +381,7 @@
 						
 						
 						
-
+				};
 			});
 </script>
 

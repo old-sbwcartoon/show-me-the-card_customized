@@ -3,6 +3,7 @@ package com.rnh.showmethecard.model.dao;
 import java.util.List;
 
 import com.rnh.showmethecard.model.dto.CardForInsert;
+import com.rnh.showmethecard.model.dto.CardHistory;
 import com.rnh.showmethecard.model.dto.MyCardList;
 
 public interface CardDao {
@@ -20,4 +21,12 @@ public interface CardDao {
 	List<Integer> selectFolderByMId(String mId);
 	
 	void upDelMyCardByMycNo(int mycNo);
+	
+	void insertCardHistory(CardHistory cardHistory);
+	
+	void updateCardDbPoint(int cardNo);
+	
+	int selectCardDbAsCount();
+	
+	int selectCardNoAtMyCardByMycNo(int mycNo);
 }

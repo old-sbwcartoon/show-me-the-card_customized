@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.rnh.showmethecard.model.dto.CardForInsert;
+import com.rnh.showmethecard.model.dto.CardHistory;
 import com.rnh.showmethecard.model.dto.MyCardList;
 
 public interface CardMapper {
@@ -23,4 +24,6 @@ public interface CardMapper {
 	List<Integer> selectFolderByMId(String mId);
 	
 	void upDelMyCardByMycNo(int mycNo);
+	
+	void insertCardHistory(CardHistory cardHistory);
 }

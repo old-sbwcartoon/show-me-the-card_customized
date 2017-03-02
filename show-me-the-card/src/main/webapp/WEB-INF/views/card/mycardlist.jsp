@@ -52,7 +52,9 @@
 						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
 						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>
 						<ul id="scrapUrl">
+							<c:if test="${ pageOwner != mId }">
 							<li><a href="/showmethecard/mypage/scrap.action?mycNo=${ MyCardList.mycNo }&pageOwner=${pageOwner}"><i class="fa fa-facebook"></i>스크랩</a></li>
+							</c:if>
 							<li><a href="${ MyCardList.url }" target="_blank"><i class="fa fa-twitter"></i>이동</a></li>
 							<li><a href='/showmethecard/evaluation/evaluationmain.action?cardNo=${ MyCardList.cardNo }'><i class="fa fa-linkedin"></i>품평</a></li>
 						</ul>
@@ -62,6 +64,7 @@
 							<p>최초발견자 : ${MyCardList.discoverer}</p>
 						</div>
 						<div id="hiddenInput">
+						
 						<input id="cardNoCheckM" type="hidden" value="${MyCardList.cardNo}" />
 						<input id='toUrl' type="hidden" value="${MyCardList.url}" />
 						<input id='mycNo' type="hidden" value="${MyCardList.mycNo}" />

@@ -44,9 +44,6 @@ public class CardController {
 	
 	Gson gson = new Gson();
 	
-	
-	
-
 	@RequestMapping(value="cardregister.action", method=RequestMethod.GET)
 	public String cardRegisterForm(HttpSession session,Model model, String fNo, String pageOwner, HttpServletResponse response) {
 		member = (Member) session.getAttribute("loginuser");
@@ -135,6 +132,7 @@ public class CardController {
 		}else{
 			System.out.println("타인");
 			cardService.ScrapAction(mycNo, mId);
+			
 			return "redirect:/mypage/mypage.action?gold="+pageOwner;
 		}
 	}

@@ -26,4 +26,10 @@ public interface CardMapper {
 	void upDelMyCardByMycNo(int mycNo);
 	
 	void insertCardHistory(CardHistory cardHistory);
+	
+	void updateCardDbPoint(int cardNo);
+	
+	int selectCardDbAsCount();
+	
+	int selectCardNoAtMyCardByMycNo(int mycNo);
 }

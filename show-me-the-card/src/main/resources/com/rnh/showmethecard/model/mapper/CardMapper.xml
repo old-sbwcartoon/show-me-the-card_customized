@@ -28,8 +28,7 @@
 		VALUES (#{cardNo},#{fNo}, #{mycComment}, 0)	
 		
 	</insert>
-	<!-- card_no, f_no, 
-	#{cardNo}, #{fNo}, -->
+	
 	<insert id="insertMycTag" parameterType="HashMap">
 		
 		INSERT INTO rnh2.MYC_TAG
@@ -70,10 +69,25 @@
 		WHERE myc_no = #{ mycNo }		
 	</update>
 	
-	<select id="insertCardHistory" parameterType="CardHistory">
+	<insert id="insertCardHistory" parameterType="CardHistory">
 		INSERT INTO rnh2.CARD_HISTORY
 		(card_no, ch_point, m_id, type)
 		VALUES (#{cardNo}, #{chPoint}, #{mId}, #{type})
+		
+	</insert>
+	
+	<update id="updateCardDbPoint" parameterType="Integer">
+		UPDATE CARD_DB
+		SET c_point = ((SELECT sum(ch_point) FROM CARD_HISTORY where card_no = 7) * (c_rating + 1))
+		WHERE card_no = #{cardNo};
+	</update>
+	
+	<select id="selectCardDbAsCount" resultType="int">
+		SELECT round(count(c_point) * 0.1) from CARD_DB
+	</select>
+	
+	<select id="selectCardNoAtMyCardByMycNo" resultType="int" parameterType="int">
+		SELECT card_no FROM MY_CARD WHERE myc_no = #{mycNo}
 	</select>
 </mapper>
 

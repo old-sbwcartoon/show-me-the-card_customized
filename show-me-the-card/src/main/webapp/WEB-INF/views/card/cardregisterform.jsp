@@ -4,7 +4,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var pageOwner = "${pageOwner}";
-	alert(pageOwner);
 	var getFNo = ${getFNo};
 	$('#mycardlist').load("showmycardlist.action?fNo="+getFNo+"&pageOwner="+pageOwner);
 	var cardNum, check;

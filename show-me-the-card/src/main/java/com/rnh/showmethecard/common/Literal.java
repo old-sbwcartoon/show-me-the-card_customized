@@ -132,4 +132,15 @@ public class Literal {
 		
 		public static final int THRESHOLD  = 10; // 검색어 count 최소 percent
 	}
+	
+	public static class CardPoint {
+		
+		public static final double TOP_OF_TENPERCENT  = 0.1;
+		
+		public static class Type{
+			public static final String SCRAP = "scrap";
+			public static final String MOVEURL = "moveurl";
+			public static final String RATINGCARD = "ratingcard";
+		}
+	}
 }

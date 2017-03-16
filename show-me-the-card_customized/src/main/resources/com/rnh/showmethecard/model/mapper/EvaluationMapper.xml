@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rnh.showmethecard.model.mapper.EvaluationMapper">
+
+
+
+<insert id="insertEvaluationRating" parameterType="EvaluationRating"
+	useGeneratedKeys="true"	keyColumn="E_RATING_NO" keyProperty="eRatingNo">
+	insert into EVALUATION_RATING (
+		M_ID
+		, CARD_NO
+		, CONTENT
+		, E_RATING
+		)
+	select
+		#{mId}, #{cardNo}, #{content}, #{eRating}
+	from dual
+	where not exists (
+		select
+			M_ID, CARD_NO
+		from EVALUATION_RATING
+		where
+			CARD_NO = #{cardNo}
+			AND M_ID = #{mId}
+			AND deleted = 0
+		)
+</insert>
+
+
+<insert id="insertEvaluationComment" parameterType="EvaluationComment"
+	useGeneratedKeys="true"	keyColumn="E_COMMENT_NO" keyProperty="eCommentNo">
+	insert into EVALUATION_COMMENT (
+		M_ID
+		, CARD_NO
+		, CONTENT
+		)
+	values (
+		#{mId}
+		, #{cardNo}
+		, #{content}
+		)
+</insert>
+
+
+<insert id="insertEvaluationRatingLiked" parameterType="HashMap">
+	insert EVALUATION_RATING_LIKED (
+		E_RATING_NO
+		, LIKED_M_ID
+		)
+	select
+		#{eRatingNo}, #{likedmId}
+	from dual
+	where #{mId} != #{likedmId}
+		AND exists (
+			select
+				E_RATING_NO
+	        from EVALUATION_RATING
+	        where E_RATING_NO = #{eRatingNo}
+	        	AND deleted = 0
+        	)
+        AND not exists (
+			select
+				ER_LIKED
+			from EVALUATION_RATING_LIKED
+			where E_RATING_NO = #{eRatingNo}
+				AND LIKED_M_ID = #{likedmId}
+			)
+</insert>
+
+
+<resultMap id="evaluationRatingMap" type="EvaluationRating">
+		<id property="eRatingNo" column="E_RATING_NO" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="mId" column="M_ID" />
+        <result property="content" column="CONTENT" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="eRating" column="E_RATING" />
+	    <result property="deleted" column="deleted" />
+	    <result property="eLikedSum" column="E_LIKED_SUM" />
+</resultMap>
+
+<select id="selectEvaluationRatingBymId" resultMap="evaluationRatingMap" parameterType="HashMap">
+	select e.E_RATING_NO
+		, e.M_ID
+		, e.CARD_NO
+		, e.E_RATING
+		, e.CONTENT
+		, e.REG_DATE
+		, sum(ifnull(el.ER_LIKED, 0)) E_LIKED_SUM
+	from EVALUATION_RATING e
+		left outer join EVALUATION_RATING_LIKED el
+		on e.E_RATING_NO = el.E_RATING_NO
+	where e.CARD_NO = #{cardNo}
+		AND e.M_ID = #{mId}
+		AND e.deleted = 0
+	group by e.E_RATING_NO
+</select>
+
+
+<select id="selectEvaluationRatingLikedList" resultType="Integer" parameterType="Integer">
+	select sum(ER_LIKED)
+	from EVALUATION_RATING_LIKED
+	where E_RATING_LIKED_NO = #{ eRatingLikedNo }
+		AND deleted = 0
+</select>
+
+
+
+<resultMap id="evaluationRatingWithmLikedMap" type="EvaluationRating">
+		<id property="eRatingNo" column="E_RATING_NO" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="mId" column="M_ID" />
+        <result property="content" column="CONTENT" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="eRating" column="E_RATING" />
+	    <result property="deleted" column="deleted" />
+	    <result property="eLikedSum" column="E_LIKED_SUM" />
+	    <result property="mLiked" column="M_LIKED" />
+</resultMap>
+
+<select id="selectEvaluationRatingListWithPageNo" resultMap="evaluationRatingWithmLikedMap" parameterType="HashMap">
+	select e.E_RATING_NO
+			, e.CARD_NO
+			, e.M_ID
+			, e.CONTENT
+			, e.REG_DATE
+			, e.E_RATING
+			, e.deleted
+			, sum(ifnull(el.ER_LIKED, 0)) E_LIKED_SUM
+            , sum(ifnull((select el.LIKED_M_ID = #{mId}), 0)) M_LIKED
+	from EVALUATION_RATING e
+		left outer join EVALUATION_RATING_LIKED el
+		on e.E_RATING_NO = el.E_RATING_NO
+	where e.CARD_NO = #{cardNo}
+		AND e.deleted = 0
+		AND e.M_ID != #{mId}
+	group by e.E_RATING_NO
+	order by E_LIKED_SUM DESC, e.REG_DATE DESC
+	limit #{articleStartNo}, #{limit}
+</select>
+
+<select id="selectBestEvaluationRatingListWithCardNo" resultMap="evaluationRatingWithmLikedMap" parameterType="HashMap">
+	select e.E_RATING_NO
+			, e.CARD_NO
+			, e.M_ID
+			, e.CONTENT
+			, e.REG_DATE
+			, e.E_RATING
+			, e.deleted
+			, sum(ifnull(el.ER_LIKED, 0)) E_LIKED_SUM
+            , sum(ifnull((select el.LIKED_M_ID = #{mId}), 0)) M_LIKED
+	from EVALUATION_RATING e
+		left outer join EVALUATION_RATING_LIKED el
+		on e.E_RATING_NO = el.E_RATING_NO
+	where e.CARD_NO = #{cardNo}
+		AND e.deleted = 0
+	group by e.E_RATING_NO
+	order by E_LIKED_SUM DESC, e.REG_DATE DESC
+	limit #{limit}
+</select>
+
+<select id="selectEvaluationRatingAvg" resultType="float" parameterType="HashMap">
+	select C_RATING
+	from CARD_DB
+	where CARD_NO = #{cardNo}
+		AND deleted = 0
+</select>
+
+
+<resultMap id="evaluationCommentMap" type="EvaluationComment">
+		<id property="eCommentNo" column="E_COMMENT_NO" />
+		<result property="mId" column="M_ID" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="content" column="CONTENT" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="deleted" column="deleted" />
+</resultMap>
+
+<select id="selectEvaluationCommentList" resultMap="evaluationCommentMap" parameterType="Integer">
+	select E_COMMENT_NO
+		, M_ID
+		, CARD_NO
+		, CONTENT
+		, REG_DATE
+		, deleted
+	from EVALUATION_COMMENT
+	where CARD_NO = #{cardNo}
+		AND deleted = 0
+	order by REG_DATE DESC
+</select>
+
+
+<select id="selectExistsEvaluationRatingOfmId" resultType="boolean" parameterType="HashMap">
+	select exists (
+		select E_RATING_NO
+		from EVALUATION_RATING
+		where CARD_NO = #{cardNo}
+			AND M_ID = #{mId}
+			AND deleted = 0
+		limit 1
+		)
+</select>
+<select id="selectExistsEvaluationCommentOfmId" resultType="boolean" parameterType="HashMap">
+	select exists (
+		select E_COMMENT_NO
+		from EVALUATION_COMMENT
+		where CARD_NO = #{cardNo}
+			AND M_ID = #{mId}
+			AND deleted = 0
+		limit 1
+		)
+</select>
+
+<update id="deleteEvaluationRatingByeRatingNo" parameterType="Integer">
+	update EVALUATION_RATING
+	set deleted = 1
+	where E_RATING_NO = #{eRatingNo}
+</update>
+
+<delete id="deleteEvaluationRatingLikedByeRatingNo" parameterType="Integer">
+	delete from EVALUATION_RATING_LIKED
+	where E_RATING_NO = #{eRatingNo}
+</delete>
+
+<update id="deleteEvaluationCommentByeCommentNo" parameterType="Integer">
+	update EVALUATION_COMMENT
+	set deleted = 1
+	where E_COMMENT_NO = #{eCommentNo}
+</update>
+
+
+<resultMap id="cardDbMap" type="Card">
+	<id property="cardNo" column="CARD_NO" />
+	<result property="siteUrl" column="SITE_URL" />
+	<result property="cPoint" column="C_POINT" />
+	<result property="regDate" column="REG_DATE" />
+	<result property="discover" column="DISCOVERER" />
+	<result property="cName" column="C_NAME" />
+	<result property="cRating" column="C_RATING" />
+	<result property="cLevel" column="C_LEVEL" />
+</resultMap>
+
+<select id="selectCardDbByCardNo" resultMap="cardDbMap" parameterType="Integer">
+	select CARD_NO
+		, SITE_URL
+		, C_POINT
+		, REG_DATE
+		, DISCOVERER
+		, C_NAME
+		, C_RATING
+		, C_LEVEL
+	from CARD_DB
+	where CARD_NO = #{cardNo}
+		AND deleted = 0
+</select>
+
+
+<resultMap id="BestNamedMap" type="BestNamed">
+	<result property="mId" column="M_ID" />
+	<result property="mPoint" column="M_POINT" />
+	<result property="mLevel" column="M_Level" />
+	<result property="fName" column="F_NAME" />
+	<result property="fPoint" column="F_POINT" />
+	<result property="mycRegDate" column="REG_DATE" />
+	<result property="ftName1" column="FT_NAME1" />
+	<result property="ftName2" column="FT_NAME2" />
+	<result property="ftName3" column="FT_NAME3" />
+</resultMap>
+
+<select id="selectBestNamed" resultMap="BestNamedMap" parameterType="Integer">
+	select distinct m.M_Id, m.M_POINT, m.M_Level, f.F_NAME, f.F_POINT, max(myc.REG_DATE) REG_DATE, ft.FT_NAME1, ft.FT_NAME2, ft.FT_NAME3
+	from FOLDER f, MEMBER m, MY_CARD myc, CARD_DB c, F_TAG ft
+	where f.M_ID = m.M_ID
+		AND f.F_NO = myc.F_NO
+	    AND myc.CARD_NO = c.CARD_NO
+ 	    AND c.CARD_NO = #{ cardNo }
+		AND ft.F_NO = f.F_NO
+ 		AND f.SECRET = 1 
+    
+	    AND USERTYPE = 0
+	    AND f.deleted = 0
+	    AND m.deleted = 0
+	    AND myc.deleted = 0
+	    AND c.deleted = 0
+ 	group by m.M_ID, f.F_NAME, f.F_POINT, f.F_NO
+	order by f.F_POINT DESC, m.M_POINT DESC-- , REG_DATE DESC
+	limit 3
+</select>
+
+<select id="selectBestTag" resultType="BestTag" parameterType="BestTag">
+	select mt.MYC_NAME as bestTagName, max(mt.REG_DATE) as regDate, count(MYC_NAME) as tagCount
+        from MYC_TAG mt, MY_CARD myc
+        where mt.MYC_NO = myc.MYC_NO        
+			AND ${columnName} = #{valueNo}            
+			AND myc.deleted = 0
+		group by mt.MYC_NAME
+        order by tagCount DESC, regDate DESC
+        limit 3
+</select>
+
+<update id="updateCardRatingByCardNo" parameterType="HashMap">
+	update CARD_DB
+	set C_RATING = (
+		select 
+			case when count(CARD_NO) >= #{minArticleNo} then round(avg(E_RATING), 1)
+				else -1
+			end
+		from EVALUATION_RATING
+		where CARD_NO = #{cardNo}
+			AND deleted = 0
+		)
+	where CARD_NO = #{cardNo}
+</update>
+
+
+<resultMap id="cardBasicInfoMap" type="CardBasicInfo">
+	<result property="title" column="C_NAME" />
+	<result property="url" column="SITE_URL" />
+	<result property="imgUrl" column="IMG_SRC" />
+	<result property="content" column="URLDESC" />
+</resultMap>
+
+<select id="selectCardBasicInfoByCardNo" resultMap="cardBasicInfoMap" parameterType="Integer">
+	select C_NAME, SITE_URL, IMG_SRC, URLDESC
+	from CARD_DB
+	where CARD_NO = #{cardNo}
+		AND deleted = 0
+</select>
+
+
+</mapper>

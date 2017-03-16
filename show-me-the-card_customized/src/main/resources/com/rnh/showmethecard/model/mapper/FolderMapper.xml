@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.FolderMapper">	
+	
+	<select id="selectFolderById" resultType="Folder" parameterType="String">
+				
+		SELECT fd.F_NO fNO, F_NAME fName, F_POINT fPoint, secret, deleted, M_ID mId, ft.FT_NAME1 bestTag
+		FROM rnh2.FOLDER fd
+		LEFT JOIN rnh2.F_TAG ft
+        ON fd.F_NO = ft.F_NO
+		WHERE M_ID = #{ mId } AND deleted = 0; 
+	</select>
+	
+	<insert id="insertFolder" parameterType="Folder" useGeneratedKeys="true" 
+	 		keyColumn="F_NO" keyProperty="fNo">
+		INSERT INTO rnh2.FOLDER
+		(M_ID, F_NAME, secret )
+		VALUES
+		( #{ mId }, #{ fName }, #{ secret })
+	</insert> 
+	
+	<update id="updateFolder" parameterType="Folder">
+		UPDATE rnh2.FOLDER
+		SET
+		F_NAME = #{ fName }, SECRET = #{ secret }
+		WHERE f_NO = #{ fNo }
+	</update>
+	
+	
+	<update id="deleteFolder" parameterType="Folder">
+		UPDATE rnh2.FOLDER
+		SET
+		deleted = 1
+		WHERE f_NO = #{ fNo }
+	</update>
+	
+
+
+
+
+	
+	<select id="searchFollow" resultType="Member" parameterType="Friend">
+		SELECT M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, M_Level mLevel, USERTYPE
+		FROM rnh2.MEMBER
+		WHERE M_ID like concat('%',#{frId},'%') AND M_ID NOT IN (select FR_ID from rnh2.FRIEND where M_ID = #{mId})  
+        AND M_ID NOT LIKE #{mId} AND deleted=0 AND USERTYPE=0;  
+	</select>
+	
+	<select id="selectMyFollow" resultType="Member" parameterType="String">
+		SELECT M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, M_Level mLevel, USERTYPE
+		FROM rnh2.MEMBER
+		WHERE M_ID IN (select FR_ID from rnh2.FRIEND where M_ID = #{mId})  
+        AND deleted=0;  
+	</select>
+	
+	
+	<insert id="insertfollow" parameterType="Friend">
+		INSERT INTO rnh2.FRIEND
+		(M_ID, FR_ID)
+		VALUES
+		( #{ mId }, #{ frId })
+	</insert>
+	
+	
+	<delete id="deletefollow" parameterType="Friend">
+		DELETE FROM rnh2.FRIEND
+		WHERE M_ID = #{ mId } and FR_ID = #{ frId }; 
+		
+	</delete>
+	
+	<insert id="updateBestFolderTag">
+		
+			
+		
+		INSERT INTO rnh2.F_TAG
+		(F_NO, ${ftName})
+		VALUES
+		(${ fNo }, #{ bestTag })
+		ON DUPLICATE KEY
+		UPDATE		
+		${ftName} = #{bestTag}
+					
+		
+	</insert>
+	
+	
+	
+
+	<!--<select id="selectMemberByIdAndPasswd" resultType="Member" parameterType="HashMap">
+		SELECT M_ID mId, PASSWORD, M_NAME mName, EMAIL, PHONE, M_COUNT mCount, M_POINT mPoint, USERTYPE, DELETED, REG_DATE regDate
+		FROM rnh2.MEMBER
+		WHERE M_ID = #{ mId } AND PASSWORD = #{ password } AND DELETED = '0'
+	</select>
+	
+	<update id="updateMemberById" parameterType="Member">
+		UPDATE rnh2.MEMBER
+		SET
+		PASSWORD = #{ password }, M_NAME = #{ mName }, EMAIL = #{ email }, PHONE = #{ phone }
+		WHERE M_ID = #{ mId }
+	</update>
+
+	<update id="deleteMemberById" parameterType="Member">
+		UPDATE rnh2.MEMBER
+		SET
+		DELETED ='1'
+		WHERE M_ID = #{ mId };		
+	</update>	
+	
+	<select id="selectMembers" resultType="Member">
+		SELECT  M_ID mId, M_NAME mName, EMAIL, PHONE, M_POINT mPoint, USERTYPE, REG_DATE regDate
+		FROM rnh2.MEMBER
+		WHERE DELETED = '0'
+	</select>
+ -->	
+</mapper>
+
+
+

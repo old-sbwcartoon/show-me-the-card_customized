@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.QnaMapper">
+
+ 	<select id="SelectQnaList" resultType="Qna" parameterType="int">
+	
+		SELECT q_no qNo, title title, content content, m_id mId, reg_date regDate,
+				GROUP_NO groupNo, STEP step, DEPTH depth
+		FROM QNA		
+		WHERE deleted = '0'
+		ORDER BY GROUP_NO DESC, STEP ASC
+		
+	</select>
+	
+	<select id="SelectQnaCount" resultType="int">
+	
+		SELECT COUNT(*) AS COUNT
+		FROM QNA
+		WHERE deleted = '0'
+	
+	</select>
+	
+	<select id="SelectQnaByQnaNo" parameterType="int" resultType="Qna">
+	
+		SELECT Q_No qNo, title title, content content, m_id mId, reg_date regDate, 
+		GROUP_NO groupNo, STEP step, DEPTH depth
+		FROM QNA	
+		WHERE Q_NO = #{qNo}
+		ORDER BY GROUP_NO, STEP ASC
+		
+	</select>
+	
+	<insert id="InsertQna" parameterType="Qna" useGeneratedKeys="true" keyProperty="qNo" keyColumn="Q_NO">
+		<!--  
+		<selectKey keyProperty="qNo" keyColumn="Q_NO">
+			SELECT LAST_INSERT_ID() AS Q_NO
+		</selectKey>
+		-->
+	
+		INSERT INTO QNA
+		(TITLE, CONTENT, M_ID, GROUP_NO, STEP, DEPTH)
+		VALUES (#{title}, #{content}, #{mId}, 1, 1, 1 )
+		
+	</insert>
+	
+	<update id="UpdateQnaGroupNo" parameterType="Integer">
+	
+		UPDATE QNA
+		SET GROUP_NO = #{groupNo}
+		WHERE Q_NO = #{qNo}
+	
+	</update>
+		
+	<update id="DeleteQna" parameterType="Qna">
+	
+		UPDATE QNA
+		SET deleted = '1', TITLE = #{title}
+		WHERE Q_NO = #{qNo}			
+		
+	</update>
+	 
+	
+	<update id="UpdateQna" parameterType="Qna">
+	
+		UPDATE QNA
+		SET TITLE = #{title}, CONTENT = #{content}
+		WHERE Q_NO = #{qNo}	
+		
+	</update>	
+		
+	<select id="SelectQnaDetail" parameterType="int" resultType="Qna">
+	
+		SELECT q_no qNo, title title, content content, m_id mId, reg_date regDate, GROUP_NO groupNo, STEP step, DEPTH depth
+		FROM QNA
+		WHERE q_no = #{qNo}
+		
+	</select>
+	
+	<insert id="InsertReply" parameterType="Qna" useGeneratedKeys="true" keyProperty="qNo" keyColumn="Q_NO">
+	
+		INSERT INTO QNA
+		(TITLE, CONTENT, M_ID, GROUP_NO, STEP, DEPTH)
+		VALUES (#{title}, #{content}, #{mId}, #{groupNo}, #{step}+1, #{depth}+1 )	
+					
+	</insert>
+	
+	<update id="UpdateQnaStep" parameterType="Integer">
+	
+		UPDATE QNA
+		SET STEP = #{step} + 1
+		WHERE Q_NO = #{qNo}
+	
+	</update>
+	
+
+</mapper>
+
+
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.SearchMapper">
+
+ 	<select id="memberSearch" resultType="Member" parameterType="String">
+	 	select m.M_Level mLevel, m.M_ID mId
+		from MEMBER m, FOLDER f, F_TAG ft
+		where m.M_ID = f.M_ID and f.F_NO = ft.F_NO
+		and (ft.FT_NAME1 like concat('%',#{fName},'%') or ft.FT_NAME2 like concat('%',#{fName},'%') or ft.FT_NAME3 like concat('%',#{fName},'%'))
+	    order by m.M_POINT, f.F_POINT desc
+ 	</select>
+ 	
+ 	<select id="memberSearchCount" resultType="int">
+		SELECT COUNT(*) AS COUNT
+		FROM MEMBER
+		WHERE deleted = '0'
+	</select>	
+	
+	<select id="cardSearch" resultType="Card" parameterType="String">		
+		select cd.SITE_URL siteUrl, cd.C_NAME cName, mt.MYC_NAME, cd.CARD_NO, cd.IMG_SRC imgSrc,
+				count(*) as cmt, SUM(cd.C_POINT) as total, cd.SITE_URL, max(mt.REG_DATE) as regDate
+		from  MYC_TAG mt, MY_CARD myc, CARD_DB cd
+		where mt.MYC_NO = myc.MYC_NO AND myc.CARD_NO = cd.CARD_NO
+		AND mt.MYC_NAME like concat('%', #{cName}, '%')
+		group by mt.MYC_NAME, cd.CARD_NO, cd.SITE_URL
+		having sum(cmt) * (0.1) <![CDATA[ < ]]> cmt
+		order by imgSrc, cmt DESC, regDate DESC	
+	</select>
+	
+	<select id="cardSearchCount" resultType="int">
+		SELECT COUNT(*) AS COUNT
+		FROM MY_CARD
+		WHERE deleted = '0'
+	</select>
+	
+</mapper>
+
+
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지.클래스이름을 의미 -->
+<mapper namespace="com.rnh.showmethecard.model.mapper.CardMapper">
+
+	<select id="selectCardDbBySiteUrl" resultType="String">
+		SELECT card_no cardNo FROM CARD_DB WHERE site_url = #{siteUrl} AND deleted = 0;
+	</select>
+	
+	
+	
+	<insert id="insertCardDb" >
+	
+		INSERT INTO rnh2.CARD_DB
+		(site_url, c_point, discoverer, c_name, c_rating, img_src, urldesc)
+		VALUES (#{siteUrl}, 0, #{discoverer}, #{cName}, -1, #{imgSrc}, #{urlDesc})
+		
+	</insert>
+	
+	<insert id="insertMyCard" parameterType="CardForInsert" useGeneratedKeys="true" 
+	 		keyColumn="MYC_NO" keyProperty="mycNo">
+	
+		INSERT INTO rnh2.MY_CARD
+		(card_no, f_no, myc_comment, scrap_count)
+		VALUES (#{cardNo},#{fNo}, #{mycComment}, 0)	
+		
+	</insert>
+	
+	<insert id="insertMycTag" parameterType="HashMap">
+		
+		INSERT INTO rnh2.MYC_TAG
+		(myc_no, myc_name)
+		VALUES (#{mycNo}, #{mycName})
+		
+	</insert>
+	
+	
+	<select id="selectMyCardListByFNo" resultType="MyCardList" parameterType="int">
+		SELECT mc.MYC_NO  mycNo, mc.CARD_NO cardNo, mc.MYC_COMMENT mycComment, mc.SCRAP_COUNT scrapCount, cd.SITE_URL url, cd.IMG_SRC imgSrc, cd.C_NAME cName, cd.DISCOVERER discoverer, cd.URLDESC urlDesc, cd.c_level cLevel
+		FROM MY_CARD mc, CARD_DB cd
+		WHERE mc.CARD_NO = cd.CARD_NO AND mc.F_NO = #{fNo} AND mc.deleted = 0
+	</select>
+	
+	<insert id="insertMyCardWithCardNo" parameterType="CardForInsert">
+		INSERT INTO rnh2.MY_CARD
+		(card_no, f_no, myc_comment, scrap_count)
+		VALUES (#{cardNo},#{fNo}, #{mycComment}, 0)
+	</insert>
+	
+	<insert id="insertMyCardWithMycNo">
+		INSERT INTO rnh2.MY_CARD
+		(card_no, f_no, myc_comment, scrap_count)
+		SELECT card_no, #{fNo}, myc_comment, scrap_count FROM MY_CARD WHERE myc_no = #{mycNo}
+	</insert>
+	
+	<select id="selectFolderByMId" resultType="Integer" parameterType="String">
+		SELECT f_no
+		FROM FOLDER
+		WHERE m_id = #{ mId } AND deleted = 0
+	</select>
+	
+	<update id="upDelMyCardByMycNo" parameterType="int">
+		UPDATE rnh2.MY_CARD
+		SET
+		DELETED ='1'
+		WHERE myc_no = #{ mycNo }		
+	</update>
+	
+	<insert id="insertCardHistory" parameterType="CardHistory">
+		INSERT INTO rnh2.CARD_HISTORY
+		(card_no, ch_point, m_id, type)
+		VALUES (#{cardNo}, #{chPoint}, #{mId}, #{type})
+		
+	</insert>
+	
+	<update id="updateCardDbPoint" parameterType="Integer">
+		UPDATE CARD_DB
+		SET c_point = ((SELECT sum(ch_point) FROM CARD_HISTORY where card_no = 7) * (c_rating + 1))
+		WHERE card_no = #{cardNo};
+	</update>
+	
+	<select id="selectCardDbAsCount" resultType="int">
+		SELECT round(count(c_point) * 0.1) from CARD_DB
+	</select>
+	
+	<select id="selectCardNoAtMyCardByMycNo" resultType="int" parameterType="int">
+		SELECT card_no FROM MY_CARD WHERE myc_no = #{mycNo}
+	</select>
+</mapper>
+
+
+

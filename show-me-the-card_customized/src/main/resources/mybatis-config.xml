@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!-- 등록할 프로퍼티가 많은 경우 아래처럼 프로퍼티를 따로 등록한 후에 ${ }로 사용 가능 -->
+  <properties>
+  	<property name="driver" value="com.mysql.jdbc.Driver" />
+  	<property name="url" value="jdbc:mysql://210.16.214.202:3306/rnh2" />
+  	<property name="username" value="rnh2" />
+    <property name="password" value="tjthsdbdlchl" />
+  </properties>
+  
+  <typeAliases>
+	<typeAlias type="com.rnh.showmethecard.model.dto.Member" alias="Member" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Notice" alias="Notice" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Card" alias="Card" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.CardHistory" alias="CardHistory" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.MyCardList" alias="MyCardList" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationComment" alias="EvaluationComment" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.EvaluationRating" alias="EvaluationRating" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Folder" alias="Folder" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.MemberHistory" alias="MemberHistory" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Qna" alias="Qna" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.Friend" alias="Friend" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.CardForInsert" alias="CardForInsert" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.BestTag" alias="BestTag" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.BestNamed" alias="BestNamed" />
+	<typeAlias type="com.rnh.showmethecard.model.dto.CardBasicInfo" alias="CardBasicInfo" />
+  </typeAliases>
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+ <!-- SQL, Objects's Mapping Info -->
+  <mappers>
+  	<mapper resource="com/rnh/showmethecard/model/mapper/MemberMapper.xml"/>
+  	<mapper resource="com/rnh/showmethecard/model/mapper/NoticeMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/CardMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/EvaluationMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/FolderMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/QnaMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/ChartMapper.xml"/>
+ 	<mapper resource="com/rnh/showmethecard/model/mapper/SearchMapper.xml"/>
+  </mappers> 
+  
+</configuration>

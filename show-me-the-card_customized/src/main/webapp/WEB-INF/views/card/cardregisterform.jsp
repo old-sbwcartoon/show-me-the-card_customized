@@ -157,67 +157,70 @@ $(document).ready(function() {
 	
 	var tagArray  = new Array;
 	var tagCount  = 0;
-	var tf = true;
-	var strTmp = "";
-	$('#mycContent').bind('keydown', function(e) {
+	var isTagOk = false;
+	var isTagNull = false;
+	/* $('#mycContent').on('keydown', function(e) {
 		if (e.which == 32 || e.which == 13){
 			//debugger;
 			if(tagCount < 10){ 
 				addindex();
 			}else{
-        		alert("Tag는 10개 이하만 입력 가능합니다.");
-        		$('#mycContent').val("");
+        		alert("Tag는 최대 10개 입력 가능합니다.");
+        		$('#mycContent').val('');
         	}
-        }else if(e.which == 8){
-   
-        	
-        	
-        }else if(e.which >= 60 && e.which <= 90){
-        }else{
         }
-	});
-	$('#mycContent').bind('keyup', function(e) {
-        if (e.which == 32 && e.which == 13){
-        	
-        }else if(e.which == 8){
+	}); */
+	$('#mycContent').on('keyup', function(e) {
+		if (e.which == 32 || e.which == 13){
+			//debugger;
+			if(tagCount < 10){ 
+				addindex();
+			}else{
+        		alert("Tag는 최대 10개 입력 가능합니다.");
+        		$('#mycContent').val('');
+        	}
+        } else if (e.which == 8 && isTagNull) {
         	deleteindex();
-        }else{
-        	
-        }
+    	}
+		
+		if($(this).val().length == 0){
+        	isTagNull = true;
+        } else {
+        	isTagNull = false;
+        }		
 	});
 	
 	var addindex = function(){
 		
-			strTmp = $('#mycContent').val().replace(/ /g, '');
+			var strTmp = $('#mycContent').val().replace(/ /g, '');
 			
 			if(strTmp != ""){
 				//debugger;
-				tf=true;
+				isTagOk=true;
 				for(var i = 0 ; i < tagCount; i++){
 	   				if( tagArray[i] == strTmp){
-	   				tf=false;
+	   					isTagOk=false;
 	   				
-	       			alert("중복입니다.");
-	       			break;
+		       			alert("중복입니다.");
+		       			break;
 	   				}
 				}
 	   		
-				if(tf){
+				if(isTagOk){
 				tagArray.push(strTmp);
    				$("#resultTag").append("<span class='label label-success allTags' id='tag'>"+ strTmp +"  <i class='glyphicon glyphicon-remove-circle'></i></span>");
-   				debugger;
+   				//debugger;
    				tagCount++;
 				}
-				$('#mycContent').val("");
+				$('#mycContent').val('');
 			}
 	}
 	
 	var deleteindex = function(){
-		if( $('#mycContent').val() == ""){
 		$("#resultTag > span").last().remove();
 		tagArray.pop();
 		tagCount--;
-		}
+		
 		if(tagCount < 0){
 			tagCount = 0;
 		}
@@ -292,7 +295,7 @@ $(document).ready(function() {
 									
 									<div class="col-md-12 form-group waves-effect">
 										<p>Title</p><br>
-										<input type="text" class="form-control" placeholder="사이트 혹은 페이지의 이름입니다." id="cName" />
+										<input type="text" readonly="readonly" class="form-control" placeholder="사이트 혹은 페이지의 이름입니다." id="cName" />
 										<p class="help-block text-danger"></p>
 									</div>
 									<!-- <div><h2 id="resultTag2"></h2></div><br>

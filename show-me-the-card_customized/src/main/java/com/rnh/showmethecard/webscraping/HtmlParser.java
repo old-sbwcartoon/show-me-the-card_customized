@@ -419,7 +419,7 @@ public class HtmlParser {
 						sentenceNo++;
 					}
 				
-					String htmlTaggedStr = descBuilder.toString().replace("\n", "<br>");
+					String htmlTaggedStr = descBuilder.toString();
 					choosedDesc = htmlTaggedStr;
 				}
 				data = choosedDesc;

@@ -48,6 +48,7 @@
 		SELECT M_ID mId, POINT, left(REG_DATE, 10) regDate, CONTENT
 		FROM rnh2.MEMBER_HISTORY 
 		WHERE M_ID = #{ mId }
+		ORDER BY REG_DATE DESC
 	</select>
 	
 	<select id="selectPointExist" resultType="boolean" parameterType="HashMap">

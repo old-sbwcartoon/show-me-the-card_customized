@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%-- <%@ page import="com.rnh.showmethecard.model.dto.CardBasicInfo"%> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -10,9 +9,21 @@
 <!-- <script src="http://code.jquery.com/jquery-3.1.1.js"></script> -->
 <script type="text/javascript">		
 		$(document).ready(function() {
+			var desc = $('#hidden-content').val();
+			
+			$('#content').text(subStr(desc, 100));
+			
 			$('#moveToSite').click(function(){
 				window.open($("#toUrl").val());
 			});
+			
+			
+			function subStr(str, length) {
+		    	if (str.length > length) {
+		    		str = str.substring(0, length) + "..";
+			    }
+		    	return str;
+		    }
 		});
 </script>
 
@@ -44,7 +55,8 @@
 					<div class="team-details">
 						<h4 id="title">${title}</h4>
 						
-						<p id="content" class="description">${desc}</p>
+						<input id="hidden-content" type="hidden" value="${desc}" />
+						<p id="content" class="description"></p>
 						
 						<ul>
 							<li><a href="#"><i class="fa fa-facebook"></i>스크랩</a></li>

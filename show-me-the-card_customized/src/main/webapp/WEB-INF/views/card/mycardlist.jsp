@@ -11,6 +11,8 @@
 
 <script type="text/javascript">		
 	$(document).ready(function() {
+		
+		
 		/* var strColor = "";
 		var level = 1*$(".level").val();
 		switch (level){
@@ -21,6 +23,14 @@
 			case 5 : strColor = "30%"; alert(level);break;
 		}
 		$("#team > div > div").css("border", "10px solid hsl(200, 50% , "+ strColor +")"); */
+		
+		
+		function subStr(str, length) {
+	    	if (str.length > length) {
+	    		str = str.substring(0, length) + "..";
+		    }
+	    	return str;
+	    }
 	}); 	
 </script>
 
@@ -45,7 +55,19 @@
 					
 					<div class="team-details">
 						<h4 id="titleM" style="height:65px; overflow:hidden; padding-top: 2%;">${MyCardList.cName}</h4>
-						<p id="contentM" class="description" style="height:100px; overflow:hidden;">${MyCardList.urlDesc}</p>
+						
+						<p id="contentM" class="description" style="height:100px;">
+							<c:choose>
+								<c:when  test="${ MyCardList.urlDesc.length() > 100 }">
+									${ MyCardList.urlDesc.substring(0,100).concat('..') }
+								</c:when>
+								<c:otherwise>
+									${ MyCardList.urlDesc }
+								</c:otherwise>
+							</c:choose>
+						</p>
+						
+						
 						<ul id="scrapUrl">
 							<c:if test="${ pageOwner != mId }">
 							<li><a href="/showmethecard/mypage/scrap.action?mycNo=${ MyCardList.mycNo }&pageOwner=${pageOwner}"><i class="fa fa-facebook"></i>스크랩</a></li>

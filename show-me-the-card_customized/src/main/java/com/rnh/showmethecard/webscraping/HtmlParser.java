@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -148,7 +149,7 @@ public class HtmlParser {
 	private String getProtocolAddedUrl(String url) {
 		
 		if (url == "" || url == null) {
-			//do nothing1
+			//do nothing
 		} else {
 			//url 가공
 			String originalUrl = null;
@@ -173,14 +174,6 @@ public class HtmlParser {
 					return newUrl;
 				}
 			}
-//				if (!originalUrl.contains("www.")) { //접속 오류나면 www. 붙이고
-//					newUrl = protocolAddedUrl.append("www.").toString() + originalUrl;
-//					if (checkUrlOk(newUrl)) {
-//						setUrlOk(true);
-//						return newUrl;
-//					}
-//				}
-//			}
 				
 		}
 			
@@ -250,21 +243,12 @@ public class HtmlParser {
 					
 					//모든 word 추출
 					List<Sentence> sentenceList = new ArrayList<>();
-					ArrayList<Sentence> bestSentenceList = new ArrayList<>();
 					ArrayList<String> wordList = new ArrayList<>();
 					
 					
-//					List<kr.bydelta.koala.data.Sentence> krAnalyzedSentences = new kr.bydelta.koala.twt.Tagger().jTagParagraph(doc.text());
-//					for (kr.bydelta.koala.data.Sentence stc : krAnalyzedSentences) {
-//						System.out.println("###################################################################");
-//						System.out.println(stc);
-//					}
-//					System.out.println("######################################################################################################################################");
 					edu.stanford.nlp.simple.Document nlpDoc = new edu.stanford.nlp.simple.Document(doc.text());
 					
 					for (Sentence stc : nlpDoc.sentences()) {
-						System.out.println("******************************************************************");
-						System.out.println(stc);
 						boolean flag = false;
 						for (int i = 0; i < stc.length(); i++) { //sentence 1개 검사
 							String word = stc.word(i);
@@ -297,8 +281,6 @@ public class HtmlParser {
 							sentenceList.add(stc);
 						}
 					}
-					System.out.println("wwwwww" + wordList);
-					System.out.println("ssssss" + sentenceList);
 					//wordList 순서 정렬 //같은 단어가 모이도록
 					Collections.sort(wordList, new Comparator<String>() {
 
@@ -342,23 +324,8 @@ public class HtmlParser {
 							
 						}
 					}
-					System.out.println(wordMap);
-					ArrayList<String> sortedList = new ArrayList<>();
-					sortedList.addAll(wordCountMap.keySet());
-					System.out.println(sortedList);
-					Collections.sort(sortedList, new Comparator<String>() {
-						
-						@Override
-						public int compare(String obj1, String obj2) {
-							Object v1 = wordCountMap.get(obj1);
-							Object v2 = wordCountMap.get(obj2);
-							return ((Comparable<Integer>)v1).compareTo((Integer)v2);
-						}
-						
-					});
-					Collections.reverse(sortedList);
-					Iterator<String> er = sortedList.iterator();
-					System.out.println(sortedList);
+					
+					Iterator<String> er = sortMapByValue(wordCountMap).iterator();
 					int wordNo = 0;
 					StringBuilder descBuilder = new StringBuilder();
 					descBuilder.append("많이 나온 단어 : \n");
@@ -390,37 +357,18 @@ public class HtmlParser {
 							bestSentenceCountMap.put(i, stcCount);
 						}
 					}
-					
-					
-					
-					ArrayList<Integer> bestSentenceCountList = new ArrayList<>();
-					bestSentenceCountList.addAll(bestSentenceCountMap.keySet());
-					Collections.sort(bestSentenceCountList, new Comparator<Integer>() {
 
-						@Override
-						public int compare(Integer obj1, Integer obj2) {
-							int v1 = bestSentenceCountMap.get(obj1);
-							int v2 = bestSentenceCountMap.get(obj2);
-							return ((Comparable<Integer>)v1).compareTo(v2);
-						}
-						
-					});
-
-					System.out.println("DDDDD*************************************SSSSSSSSSSSSSSSSSSSSS***BBBBBBBBBBBBBBBBBBBAAAAAAAAAA");
-					Collections.reverse(bestSentenceCountList);
-					Iterator<Integer> sr = bestSentenceCountList.iterator();
+					Iterator<Integer> sr = sortMapByValue(bestSentenceCountMap).iterator();
 					descBuilder.append("\n단어가 포함된 문장 : ");
 					int sentenceNo = 0;
 					while (sentenceNo < maxDescSentenceNo && sr.hasNext()) {
 						int key = sr.next();
 						Sentence sstc = sentenceList.get(key);
-						System.out.println(subStrLength(sstc.toString(), 130) + " " + bestSentenceCountMap.get(key));
 						descBuilder.append("\n").append(subStrLength(sstc.toString(), 130)).append(" (" + bestSentenceCountMap.get(key) + ") ");
 						sentenceNo++;
 					}
 				
-					String htmlTaggedStr = descBuilder.toString();
-					choosedDesc = htmlTaggedStr;
+					choosedDesc = descBuilder.toString();
 				}
 				data = choosedDesc;
 				break;
@@ -440,7 +388,8 @@ public class HtmlParser {
 				
 				String choosedImg = setChoosedData(doc, keyImgList);
 				if (choosedImg == null) {
-					choosedImg = "https://img.ashampoo.com/ashampoo.com_images/img/1/landingpage/snap4android_help/icon_tools_gallery.svg";
+					String imgNullUrl = "https://img.ashampoo.com/ashampoo.com_images/img/1/landingpage/snap4android_help/icon_tools_gallery.svg";
+					choosedImg = imgNullUrl;
 				}				
 
 				data = getChoosedImg(choosedImg);
@@ -450,24 +399,21 @@ public class HtmlParser {
 		
 		return data;
 	}
-	private <E> void sortList(List<E> list, String sortKeyword) {
-		switch (sortKeyword) {
-			case Literal.ParseHtml.SortKeyword.KEY :
-				Collections.sort(list, new Comparator<E>() {
-
-					@Override
-					public int compare(E obj1, E obj2) {
-						return ((Comparable<E>) obj1).compareTo(obj2);
-					}
-					
-				});
-				break;
-				
-			case Literal.ParseHtml.SortKeyword.VALUE :
-				
-				break;
+	private <E, T> List<E> sortMapByValue(Map<E, T> map) {
+		List<E> list = new ArrayList<>();
+		list.addAll(map.keySet());
+		Collections.sort(list, new Comparator<E>() {
 		
-		}
+			@Override
+			public int compare(E obj1, E obj2) {
+				Object v1 = map.get(obj1);
+				Object v2 = map.get(obj2);
+				return ((Comparable<T>)v1).compareTo((T)v2);
+			}
+			
+		});
+		Collections.reverse(list);
+		return list;
 	}
 	
 	private String getAttrName(String keyStr) {

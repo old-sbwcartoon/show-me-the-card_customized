@@ -328,7 +328,7 @@ public class HtmlParser {
 					Iterator<String> er = sortMapByValue(wordCountMap).iterator();
 					int wordNo = 0;
 					StringBuilder descBuilder = new StringBuilder();
-					descBuilder.append("많이 나온 단어 : \n");
+					descBuilder.append("많이 나온 단어 : ");
 					ArrayList<String> bestWordList = new ArrayList<>();
 					while (wordNo < maxDescWordNo && er.hasNext()) {
 						String word = er.next();
@@ -336,7 +336,7 @@ public class HtmlParser {
 						descBuilder.append(word).append(", ");
 						wordNo++;
 					}
-					String bestWordStr = descBuilder.toString().substring(0, descBuilder.toString().lastIndexOf(",")); //마지막 ,표시 제거
+					String bestWordStr = descBuilder.toString().substring(0, descBuilder.toString().lastIndexOf(",")); //마지막 ", "표시 제거
 					descBuilder = new StringBuilder(bestWordStr);
 					
 					HashMap<Integer, Integer> bestSentenceCountMap = new HashMap<>();
@@ -364,11 +364,10 @@ public class HtmlParser {
 					while (sentenceNo < maxDescSentenceNo && sr.hasNext()) {
 						int key = sr.next();
 						Sentence sstc = sentenceList.get(key);
-						descBuilder.append("\n").append(subStrLength(sstc.toString(), 130)).append(" (" + bestSentenceCountMap.get(key) + ") ");
+						descBuilder.append(subStrLength(sstc.toString(), 130)).append(" (" + bestSentenceCountMap.get(key) + ") ").append(", ");
 						sentenceNo++;
 					}
-				
-					choosedDesc = descBuilder.toString();
+					choosedDesc = descBuilder.toString().substring(0, descBuilder.toString().lastIndexOf(",")); //마지막 ", "표시 제거
 				}
 				data = choosedDesc;
 				break;
@@ -387,10 +386,10 @@ public class HtmlParser {
 				keyImgList.add("link[rel$=icon][href~=favicon]");
 				
 				String choosedImg = setChoosedData(doc, keyImgList);
-				if (choosedImg == null) {
+				if (doc != null && doc.equals(domainDoc) && choosedImg == null) {
 					String imgNullUrl = "https://img.ashampoo.com/ashampoo.com_images/img/1/landingpage/snap4android_help/icon_tools_gallery.svg";
 					choosedImg = imgNullUrl;
-				}				
+				}
 
 				data = getChoosedImg(choosedImg);
 				break;

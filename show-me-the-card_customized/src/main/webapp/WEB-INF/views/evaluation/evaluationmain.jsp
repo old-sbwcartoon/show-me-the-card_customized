@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fb" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -291,8 +292,7 @@ h2 {
 			var cardNo = $('#cardNo').val();
 			var ratingAvg = $('#hidden-star-avg').val();
 			var title = $('#hidden-htmlparser-title').val();
-			var desc = "<c:out value='${htmlParser.content}'/>";
-			
+			var desc = "<c:out value='${htmlParser.content}' />";
 			
 		    /* 이미지 크기 결정 */
 			var imgDiv = $('#div-thumbnail-img');
@@ -342,8 +342,10 @@ h2 {
 		    $('#div-info-title').find('h2').text(subStr(title, 28)); */
 		    $('#div-info-title').find('h2').text(title);
 		    /* desc 문자열 길이 조정 후 적용하기 */
-		    $('#div-info-desc').find('p').html(desc);
-		    $('#div-info-desc').find('p').attr('title', $('#div-info-desc').find('p').text()); // add default tooltip
+		    if (desc != null && desc != "") {
+			    $('#div-info-desc').find('p').html(desc);
+			    $('#div-info-desc').find('p').attr('title', $('#div-info-desc').find('p').text()); // add default tooltip
+		    }
 		    
 		    /* best evaluation set font size */
 		    $('.div-eval-best').each(function() {
@@ -763,7 +765,6 @@ h2 {
 							<h2 style="padding-top: 20px;"></h2>
 						</div>
 						<div id="div-info-desc">
-							<input id="hidden-htmlparser-desc" type="hidden" value="${ requestScope.htmlParser.content }" />
 							<p style="padding:0px; margin:0px;"></p>
 						</div>
 					</div>

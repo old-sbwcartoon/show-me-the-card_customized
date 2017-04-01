@@ -44,11 +44,11 @@ public class EvaluationController {
 		String mId = member.getmId();
 		int pageNo = 1;
 		
-		Card card = service.searchCardDb(cardNo);		
+		Card card = service.searchCardDb(cardNo);System.out.println(service.searchCardBasicInfo(cardNo).getContent());
 		//card
 		model.addAttribute("htmlParser", service.searchCardBasicInfo(cardNo));
 		model.addAttribute("card", card);
-		
+
 		//evaluation
 		model.addAttribute("isEvalRating", service.confirmEvaluationRatingOfmId(cardNo, mId));
 		model.addAttribute("evalCommentList", service.searchEvaluationCommentList(cardNo));

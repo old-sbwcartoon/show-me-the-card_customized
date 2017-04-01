@@ -10,6 +10,10 @@ $(document).ready(function() {
 	var a = 0;
 	var title = "";
 	var mycContent2 = "";
+	$('#div-modal-body-slide').contents().css({
+		'display': 'none',
+		'opacity': '0'
+	});	
 	$('#siteUrl').blur(function() {
 		var siteUrl = encodeURIComponent($('#siteUrl').val()); // url encoding
 		$.ajax ({
@@ -19,8 +23,21 @@ $(document).ready(function() {
 	       	dataType : 'html',
 	       	//contentType:"application/text; charset=UTF-8",
 	       	success : function (data) {
+	       		//$("#div-modal-body-toggle").css('display', '');
+	       		$("#div-modal-body-slide").animate({
+	       			height: '732px'
+	       		}, 500, function() {
+	       			$(this).contents().css({
+	       				'display': '',
+	       				'opacity': '1',
+	       				'transition-timing-function': 'ease'
+	       			});
+	       		});
 	       		$("#resulttarget").html(data);
 	       		title=$('#title').text();
+	       		
+	       		
+	       		$('#siteUrl').val($("#toUrl").val());
 	       		$("#cName").attr("disabled",true).val(title);
 	       		a = 1;
 	       	},
@@ -289,7 +306,9 @@ $(document).ready(function() {
 										<input type="text" class="form-control" placeholder="이곳에 사이트 혹은 페이지 URL을 입력하세요 *" id="siteUrl" />
 										<p class="help-block text-danger"></p>
 									</div>
-									
+								</div>
+								<div id="div-modal-body-slide" class="col-md-12 wow fadeInLeft" data-wow-duration="2s"
+									data-wow-delay="600ms" style="height:0px;">
 									<div id="resulttarget">
 									</div>
 									
@@ -318,6 +337,9 @@ $(document).ready(function() {
 										<input type="text" class="form-control" placeholder="선택하신 사이트 혹은 페이지의 내용을 입력하세요 *" id="mycContent2" />
 										<p class="help-block text-danger"></p>
 									</div>
+									
+									
+									
 								</div>
 								<div class="clearfix"></div>
 								<div class="modal-footer">
@@ -329,8 +351,8 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				</div><!-- Modal body-->
+			</div><!-- Modal content-->
 		</div>
 	</div>
 	<!-- 모달 끝 -->

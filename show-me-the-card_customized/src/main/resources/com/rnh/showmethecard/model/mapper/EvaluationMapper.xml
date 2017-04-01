@@ -323,7 +323,7 @@
 </resultMap>
 
 <select id="selectCardBasicInfoByCardNo" resultMap="cardBasicInfoMap" parameterType="Integer">
-	select C_NAME, SITE_URL, IMG_SRC, URLDESC
+	select C_NAME, SITE_URL, IMG_SRC, replace(replace(URLDESC, char(13), ''), char(10), char(9)) URLDESC
 	from CARD_DB
 	where CARD_NO = #{cardNo}
 		AND deleted = 0
